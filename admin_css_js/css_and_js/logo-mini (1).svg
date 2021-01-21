@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="25px" height="26px" viewBox="0 0 25 26" enable-background="new 0 0 25 26" xml:space="preserve">
+<title>Plusadmin_mini</title>
+<desc>Created with Sketch.</desc>
+<g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<defs>
+						<path id="SVGID_1_" d="M13.189,6.207h1.544c3.733,0,6.795,3.063,6.795,6.794v6.794H16.97c-3.995,0-8.25-3.83-9.541-8.569
+							c0.096,3.013,1.024,6.157,3.918,8.569H9.803c-3.733,0-6.795-3.061-6.795-6.794V6.207h4.559c3.995,0,8.25,3.832,9.541,8.57
+							C17.012,11.763,16.083,8.62,13.189,6.207 M0.884,4.083v8.918c0,4.904,4.014,8.917,8.919,8.917h13.849v-8.917
+							c0-4.905-4.014-8.918-8.918-8.918H0.884z"/>
+					</defs>
+					<clipPath id="SVGID_2_">
+						<use xlink:href="#SVGID_1_"  overflow="visible"/>
+					</clipPath>
+					
+						<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="1064.168" y1="220.8135" x2="1064.244" y2="220.8135" gradientTransform="matrix(-302.2244 -257.8459 -257.8459 302.2244 378575.5938 207679.0156)">
+						<stop  offset="0" style="stop-color:#48BFAB"/>
+						<stop  offset="1" style="stop-color:#93C83E"/>
+					</linearGradient>
+					<polygon clip-path="url(#SVGID_2_)" fill="url(#SVGID_3_)" points="12.625,36.302 -11.927,14.624 8.48,-10.3 33.888,11.377 
+											"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

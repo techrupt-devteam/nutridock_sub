@@ -1,0 +1,8 @@
+
+[31-Mar-2020 14:04:43 UTC] PHP Warning:  Unterminated comment starting line 6981 in /home/doctoronhire/public_html/sahyadri_store/app/Http/Controllers/Admin/MobileapiController.php on line 6981
+[01-Apr-2020 10:50:15 UTC] PHP Warning:  Unterminated comment starting line 6663 in /home/sahyadriretail/public_html/app/Http/Controllers/Admin/MobileapiController.php on line 6663
+[04-Apr-2020 05:05:40 UTC] PHP Warning:  Unterminated comment starting line 557 in /home/sahyadriretail/public_html/app/Http/Controllers/Admin/MobileapiController.php on line 557
+[04-Apr-2020 05:05:44 UTC] PHP Warning:  Unterminated comment starting line 8995 in /home/sahyadriretail/public_html/app/Http/Controllers/Admin/MobileapiController.php on line 8995
+[12-Apr-2020 07:43:21 UTC] PHP Warning:  Unterminated comment starting line 6367 in /home/sahyadriretail/public_html/app/Http/Controllers/Admin/MobileapiController.php on line 6367
+[12-Apr-2020 08:12:35 UTC] PHP Warning:  Unterminated comment starting line 2420 in /home/sahyadriretail/public_html/app/Http/Controllers/Admin/MobileapiController.php on line 2420
+[20-Jun-2020 09:06:56 UTC] PHP Fatal error:  Can't use method return value in write context in /home/marutiseva/public_html/demo/admin/storage/framework/views/63491facd96dd4cabedb13a879b6291901ca1bb5.php on line 154

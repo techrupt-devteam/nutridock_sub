@@ -1,0 +1,265 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+use Session;
+use Sentinel;
+use Validator;
+use Razorpay\Api\Api;
+
+
+class MobileapiController extends Controller
+{
+    public function __construct()
+    {
+        if (isset($_SERVER['HTTP_ORIGIN']))
+        {
+                // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
+                // you want to allow, and if so:
+                header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Max-Age: 86400');    // cache for 1 day
+        }
+
+        // Access-Control headers are received during OPTIONS requests
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+        {
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            {
+                // may also be using PUT, PATCH, HEAD etc
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");                         
+            }    
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            {
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+
+            exit(0);
+        }
+        define('GOOGLE_API_KEY', 'AAAAiRGzWrQ:APA91bFM4WP5EtMe-UXi6NgqsxVJeZ_MtyNs3u6g98Fq_lwLTrmlncbIcQzQLjH8ekTCHHLA2Mwqmplt5616GkGLWMprLWpQNiw4Cda8d-FWiiCBB8DCVlcM7U2yL_OKBsZ7UdEJA0M8');
+        $this->min_order_value = 1;
+        $this->delivery_fees   = 1;
+    }
+
+    public function capture_payment(Request $request)
+    {
+       // $arr_data['transaction_id']    = $request->input('transaction_id');
+        
+        $token_id = base64_decode($request->input('token_id'));
+        $booking = \DB::table('booking')->where(['id'=>$token_id])->first();       
+        $amount_ = $booking->amount;
+        date_default_timezone_set("Asia/Kolkata");
+  
+        try 
+        {
+            $api      = new Api('rzp_live_IZMQ4kxcwLhCKH', 'aIRBD9hnISfVEJYsbjDSVuFr');
+            $payment  = $api->payment->fetch($request->input('razorpay_payment_id'))->capture(array('amount'=>$amount_*100));
+            $payment  = $api->payment->fetch($request->input('razorpay_payment_id'));
+        }
+        catch(Exception $e) 
+        {
+            header("Location: http://doctoronhire.com/seva/failed.php");
+            exit();
+        }
+        if($payment->status=="captured")
+        {
+            \DB::table('booking')->where(['id'=>$token_id])->update(['status'=>'Paid','booking_date'=>date('d/m/Y h:i:s A'),'transaction_id'=>$request->input('razorpay_payment_id')]);
+
+
+            $to = $booking->email;
+            $subject = 'Seva Booking Receipt';
+            $headers = "From: SEVA\r\n";
+            $headers .= "Reply-To: it@sevagroup.co.in\r\n";
+            
+            $headers .= "CC: prajakta.hoh@gmail.com\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+            $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Receipt</title>
+</head>
+
+<body>
+<table width="900px" border="0" cellspacing="0" cellpadding="10" style="margin:0 auto; font-family:Arial, Helvetica, sans-serif; font-size:12px">
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="10">
+  <tr>
+    <td><img src="http://doctoronhire.com/seva/assets/images/logo.png" /></td>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" style="font-size:14px; text-transform:uppercase; font-weight:bold; padding:5px 0">Receipt</td>
+  </tr>
+  <tr>
+    <td align="center" style="font-size:20px; text-transform:uppercase; font-weight:bold; padding:5px 0">Seva Automotive PVT.LTD.</td>
+  </tr>
+  <tr>
+    <td align="center" style="padding:5px 0">x-46, MIDC, AMBAD, Nashik - 422010.</td>
+  </tr>
+  <tr>
+    <td align="center" style="padding:5px 0">TEL :(0253) 6644444 (30 Lines), E-mail: seva.nsk.sal1@marutidealers.com</td>
+  </tr>
+  <tr>
+    <td align="center">
+    <ul style="padding-left:0; list-style:disc; margin:5px 0">
+    <li style="display:inline-block; padding:0 10px"><strong>GST No.: 27AAACS7220H1ZI </strong></li>
+    <li style="display:inline-block; padding:0 10px"><strong>CIN No. : U34300MH1981PTC023666</strong></li>
+    <li style="display:inline-block; padding:0 10px"><strong>PAN No.: AAACS7220H</strong></li>
+    </ul>
+    </td>
+  </tr>
+    </table>
+</td>
+    <td align="center"><img src="http://doctoronhire.com/seva/admin/admin_css_js/css_and_js/maruti-suzuki-logo.png" width="180" /></td>
+  </tr>
+</table>
+</td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="70%"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td>Receipt No.</td>
+            <td>#000'.$booking->id.'</td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>'.$booking->name.'</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>'.$booking->address.'</td>
+          </tr>
+          <tr>
+            <td>Remarks</td>
+            <td>Good</td>
+          </tr>
+          <tr>
+            <td>Order/ Inv No:</td>
+            <td>#00'.$booking->id.'</td>
+          </tr>
+          <tr>
+            <td>Model</td>
+            <td>'.$booking->varient.'</td>
+          </tr>
+        </table></td>
+        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td>Receipt Date</td>
+            <td>'.$booking->created_at.'</td>
+          </tr>
+          <tr>
+            <td>Receipt Amount</td>
+            <td>'.$booking->amount.'</td>
+          </tr>
+         
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="5">
+      <tr>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Srl</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Mode</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>DD/CC/CHQ No.</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Date</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Favouring</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Drwan On</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Deposit Bank Name</strong></td>
+        <td style="border:1px solid #000; border-width:1px 0"><strong>Amount</strong></td>
+      </tr>
+      <tr>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">1</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">Cash</td>
+        <td height="40" align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td align="left" valign="top" style="border:1px solid #000; border-width:0 0 1px 0">'.$booking->amount.'</td>
+      </tr>
+      
+      <tr>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+        <td style="border:1px solid #000; border-width:0 0 1px 0">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="5">
+          <tr>
+            <td>Total</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Amount In Words</td>
+            <td>Rupees: One Thousand</td>
+          </tr>
+          <tr>
+            <td>Terms &amp; Conditions</td>
+            <td>&nbsp;</td>
+          </tr>
+        </table></td>
+        <td><table width="100%" border="0" align="center" cellpadding="5" cellspacing="0">
+          <tr>
+            <td align="center">For Seva Automotive PVT.LTD.</td>
+          </tr>
+          <tr>
+            <td height="60" align="center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td align="center">authorized by</td>
+          </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
+
+';
+ mail($to, $subject, $message, $headers);
+
+
+             header("Location: http://doctoronhire.com/seva/success.php");
+            exit();
+        }
+        else
+        {
+            header("Location: http://doctoronhire.com/seva/failed.php");
+            exit();
+        }
+    }
+
+}
