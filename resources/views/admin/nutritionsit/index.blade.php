@@ -35,26 +35,29 @@
                   <th>Name</th>
                   <th>Eamil</th>
                   <th>Mobile</th>
+                  <th>state</th>
                   <th>City</th>
                   <th>Area</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                
+              
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
-                      <td>{{$value['role_name']}}</td>
-                      <td>{{$value['role_name']}}</td>
-                      <td>{{$value['role_name']}}</td>
-                      <td>{{$value['role_name']}}</td>
+                      <td>{{ucfirst($value->name)}}</td>
+                      <td>{{$value->email}}</td>
+                      <td>{{$value->mobile}}</td>
+                      <td>{{$value->state_name}}</td>
+                      <td>{{$value->city_name}}</td>
+                      <td>{{$value->area_name}}</td>
                       <td>
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['role_id']}}" title="Edit">
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
                        
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value['role_id']}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}"  class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

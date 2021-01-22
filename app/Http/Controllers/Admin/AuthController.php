@@ -47,7 +47,7 @@ class AuthController extends Controller
         //get module list type  wise 
         $get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
         //get module type
-        $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
+         $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
         }
         
         //dd($arr_user);

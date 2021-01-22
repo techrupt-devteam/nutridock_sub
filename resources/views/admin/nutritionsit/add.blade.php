@@ -32,7 +32,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" data-parsley-type="string" name="nutritionsit_name" placeholder="Nutritionsit Name" required="true">
+                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name" required="true">
                       </div>
                     </div>
                   </div>
@@ -57,7 +57,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true">
                           </div>
                       </div>
                     </div>
@@ -106,7 +106,13 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Role Name" required="true">
+                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
+                          <option value="">-Select Role-</option>t
+                          @foreach($role as $rvalue)
+
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+                          @endforeach
+                        </select>
                       </div>
                     </div>
                   </div>
@@ -129,18 +135,33 @@
 
 <script type="text/javascript">
 
-  $("select.city").change(function() {
-      var selectedCity = $(".city option:selected").val();
+  //load city drop down script 
+  $("select#nutritionsit_state").change(function() {
+      var state_id = $("#nutritionsit_state option:selected").val();
+      $.ajax({
+        type: "POST",
+        url: "{{url('/admin')}}/getCity",
+        data: {
+          state: state_id
+        }
+      }).done(function(data) {
+           $("#nutritionsit_city").html(data);
+      });
+    });
+ 
+  //load area drop down script 
+  $("select#nutritionsit_city").change(function() {
+      var city_id = $("#nutritionsit_city option:selected").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
         data: {
-          city: selectedCity
+          city: city_id
         }
       }).done(function(data) {
-           var result = data.split('|');
-           $("#area").html(result[0]);
+           $("#nutritionsit_area").html(data);
       });
     });
+
 </script>
 @endsection

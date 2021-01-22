@@ -166,11 +166,17 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/getmenu',	 				 'Admin\PermissionController@get_menu');
 	Route::post('/getmenulist',	 			 'Admin\PermissionController@get_menu_list');
 
-	//Nutritionsit Master Routes
+    //Nutritionsit Master Routes
 	Route::get('/manage_nutritionsit',		 'Admin\NutritionsitController@index');
 	Route::get('/add_nutritionsit',		 	 'Admin\NutritionsitController@add');
 	Route::post('/store_nutritionsit',		 'Admin\NutritionsitController@store');
 	Route::get('/edit_nutritionsit/{id}',	 'Admin\NutritionsitController@edit');
 	Route::post('/update_nutritionsit/{id}', 'Admin\NutritionsitController@update');
 	Route::get('/delete_nutritionsit/{id}',	 'Admin\NutritionsitController@delete');
+	
+	//ajax state city routes
+	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
+	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+
+
 });
