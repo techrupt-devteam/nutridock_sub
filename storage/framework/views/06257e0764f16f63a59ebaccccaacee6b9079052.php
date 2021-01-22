@@ -57,22 +57,14 @@
 <!-- Parsley -->
 <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/parsley.js"></script>
 
+
  <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script type="text/javascript">
-   $(document).ready(function () {    
-    /*$('#description_div').bind('cut copy paste', function (e) {
-        e.preventDefault();
-    });
-
-    $('#product_fetures_div').bind('cut copy paste', function (e) {
-        e.preventDefault();
-    });*/
-});
-</script>
+<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/select2/select2.full.min.js"></script>
 
   <script>
+    $('#nutritionsit_state').select2();
     $(function () {
       //$("#datepicker").datepicker({ format: "dd/mm/yyyy" }).val();
       //$("#datepicker1").datepicker({ format: "dd/mm/yyyy" }).val();

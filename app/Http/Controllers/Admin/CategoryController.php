@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\Category;
+use App\Models\Category;
 
 use Session;
 use Sentinel;

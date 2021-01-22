@@ -11,9 +11,94 @@
 |
 */
 
+/* @START: Front End Routes */
+
+
+Route::get('/clear', function() {
+
+	Artisan::call('cache:clear');
+	Artisan::call('config:clear');
+	Artisan::call('config:cache');
+	Artisan::call('view:clear');
+ 
+	return "Cleared!";
+ 
+ });
+ 
+ Route::get('/', 'HomeController@index')->name('index');
+ 
+ Route::get('dynamicModal/{id}',[
+	 'as'=>'dynamicModal',
+	 'uses'=> 'HomeController@loadModal'
+ ]);
+ 
+ Route::get('dynamicMenuModal/{id}',[
+	 'as'=>'dynamicMenuModal',
+	 'uses'=> 'MenuController@loadModal'
+ ]);
+ 
+ Route::post('/subscribe', 'HomeController@subscription');
+ Route::get('/about', 'AboutController@index')->name('about');
+ Route::get('/menu', 'MenuController@index')->name('menu');
+ Route::get('/page-not-found', 'PageNotFoundController@index')->name('page-not-found');
+ 
+ Route::get('/blog', 'BlogController@index')->name('blog');
+ /*Route::get('/blog_detail/{id}', 'BlogController@blog_detail')->name('blog_detail');*/
+ Route::get('/blog_detail/{any}', 'BlogController@blog_detail')->name('blog_detail');
+ 
+ Route::post('/comment/store_comment', 'CommentController@store')->name('store_comment');
+ Route::post('/comment/update_comment/{id}', 'CommentController@update')->name('update_comment');
+ Route::any('/comment/new_comment', 'CommentController@new_comment')->name('new_comment');
+ 
+ Route::get('/contact', 'ContactController@index')->name('contact');
+ Route::get('/subscribe-info', 'SubscribeinfoController@index')->name('subscribe-info');
+ Route::post('/contact-store', 'ContactController@store')->name('store');
+ Route::any('/mail', 'ContactController@sendMail')->name('sendMail');
+ Route::post('/newsletter_store', 'HomeController@store')->name('store');
+ 
+ Route::get('/faq', 'FaqController@index')->name('faq');
+ Route::get('/privacy_policy', 'PrivacyPolicyController@index')->name('privacy_policy');
+ Route::get('/terms_conditions', 'TermsConditionsController@index')->name('index');
+ 
+ 
+ /*Razorpay*/
+ Route::post('/page/payment','PaymentController@index');
+ Route::post('/capture_payment','PaymentController@capture_payment');
+ Route::get('success','PaymentController@success');
+ Route::get('failed','PaymentController@failed');
+ 
+ Route::post('/survey','LandingController@store_survey');
+ Route::post('/subscription','LandingController@store_subscription');
+ 
+ Route::any('/register','LandingRegisterController@user_register');
+ Route::post('/frontend/submitform/submitAddform', 'AjaxController@submitAddform');
+ Route::get('/thank-you', 'ThankYouController@index')->name('thank_you');
+ 
+ Route::get('/subscribe-now', 'SubscribeController@index')->name('index');
+ Route::get('getSubscribeNowPlanDuration/{id}', 'SubscribeController@SubscribeNowPlanDuration')->name('SubscribeNowPlanDuration');
+ Route::post('subscription_payment', 'SubscribeController@subscription_payment')->name('subscription_payment');
+ Route::get('subscription-success','SubscribeController@subscription_success');
+ Route::get('subscription-failed','SubscribeController@subscription_failed');
+ Route::any('search','SubscribeController@search');
+ Route::any('searchform','SubscribeController@searchform');
+ 
+ Route::get('/subscribe-now', 'SubscribeController@index')->name('index');
+ 
+ //Route::any('postDetails', 'SubscribeController@postDetails')->name('postDetails');
+ Route::any('postPersonalDetails', 'SubscribeController@postPersonalDetails')->name('postPersonalDetails');
+ Route::any('postFormDetails', 'SubscribeController@postFormDetails')->name('postFormDetails');
+ Route::any('getMealTypeDataAjax', 'SubscribeController@getMealTypeDataAjax')->name('getMealTypeDataAjax');
+ 
+ 
+ 
+ Route::get('subscription-payment/{any}', 'SubscribeController@subscription_payment1')->name('subscription_payment');
+
+/* @END: Front End Routes */
+
+
 
 Route::get('admin/', 									'Admin\AuthController@login');
-Route::get('/', 									'Admin\AuthController@login');
+//Route::get('/', 									'Admin\AuthController@login');
 Route::get('admin/login', 								'Admin\AuthController@login');
 Route::post('admin/login_process', 						'Admin\AuthController@login_process');
 Route::get('admin/forget_password', 					'Admin\AuthController@forget_password');
@@ -40,7 +125,7 @@ Route::post('/admin/change_password_process',		 					'Admin\AuthController@chang
 
 Route::post('/admin/getcity',		 					'Admin\BookingController@getcity');
 Route::post('/admin/getarea',		 					'Admin\BookingController@getarea');
-	Route::post('/admin/getpincode',		 				'Admin\BookingController@getpincode');
+Route::post('/admin/getpincode',		 				'Admin\BookingController@getpincode');
 
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
@@ -88,8 +173,4 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/edit_nutritionsit/{id}',	 'Admin\NutritionsitController@edit');
 	Route::post('/update_nutritionsit/{id}', 'Admin\NutritionsitController@update');
 	Route::get('/delete_nutritionsit/{id}',	 'Admin\NutritionsitController@delete');
-
-
-
-	
 });

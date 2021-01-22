@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\User;
-use App\Model\Role;
-use App\Model\ModuleType;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\ModuleType;
 
 use Session;
 use Sentinel;
