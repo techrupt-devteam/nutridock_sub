@@ -56,9 +56,9 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-                'plan_name' => 'required'
-                'plan_name' => 'required'
-                'plan_name' => 'required'
+                'plan_name' => 'required',
+                'plan_name' => 'required',
+                'plan_name' => 'required',
                 'plan_name' => 'required'
             ]);
 
@@ -97,7 +97,7 @@ class SubscriptionController extends Controller
                     $failed ++; 
                   }
               }*/
-          
+
             Session::flash('success', 'Success! Record added successfully.');
             return \Redirect::to('admin/manage_plan');
         }
