@@ -178,5 +178,26 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
 	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
 
+	//plan master routes
+	Route::get('/manage_plan',		  'Admin\PlanController@index');
+	Route::get('/add_plan',		 	  'Admin\PlanController@add');
+	Route::post('/store_plan',		  'Admin\PlanController@store');
+	Route::get('/edit_plan/{id}',	  'Admin\PlanController@edit');
+	Route::post('/update_plan/{id}',  'Admin\PlanController@update');
+	Route::get('/delete_plan/{id}',	  'Admin\PlanController@delete');
+	Route::post('/plan_status',	      'Admin\PlanController@status');
+
+	//Subscription master routes
+	Route::get('/manage_subscription_plan',		   'Admin\SubscriptionController@index');
+	Route::get('/add_subscription_plan',		   'Admin\SubscriptionController@add');
+	Route::post('/store_subscription_plan',		   'Admin\SubscriptionController@store');
+	Route::get('/edit_subscription_plan/{id}',	   'Admin\SubscriptionController@edit');
+	Route::post('/update_subscription_plan/{id}',  'Admin\SubscriptionController@update');
+	Route::get('/delete_subscription_plan/{id}',   'Admin\SubscriptionController@delete');
+	Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
+	
+	//
+
+
 
 });

@@ -15,23 +15,23 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
-class NutritionsitController extends Controller
+class OperationManagerController extends Controller
 {
-    public function __construct(USer $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
+    public function __construct(USer $OperationManager,Location $Location,City $City,Role $Role,State $State)
     {
         $data                = [];
         $this->email         = "bhushantechrupt@gmail.com";
         $this->Host          = "smtp.gmail.com";
         $this->Port          = 587;
         $this->Password      = "bhushan@9912";
-        $this->base_model    = $Nutritionsit; 
+        $this->base_model    = $OperationManager; 
         $this->base_location = $Location; 
         $this->base_city     = $City; 
         $this->base_state    = $State; 
         $this->base_role     = $Role;  
-        $this->title         = "Nutritionsit";
-        $this->url_slug      = "nutritionsit";
-        $this->folder_path   = "admin/nutritionsit/";
+        $this->title         = "operationmanager";
+        $this->url_slug      = "operationmanager";
+        $this->folder_path   = "admin/operationmanager/";
     }
     
     //nutritionsit folder index view call  function

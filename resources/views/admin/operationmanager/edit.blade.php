@@ -161,6 +161,9 @@
     $(document).ready(function() {
        getCity(); 
        getArea();   
+
+
+
     });
 
     function getCity() 
