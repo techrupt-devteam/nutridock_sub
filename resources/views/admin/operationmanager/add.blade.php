@@ -1,5 +1,4 @@
 @extends('admin.layout.master')
- 
 @section('content')
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -22,21 +21,18 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
+           @include('admin.layout._status_msg')
           <div class="box box-primary">
-           <!--  <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
-            <!-- /.box-header -->
-            <!-- form start --> 
-             @include('admin.layout._status_msg')
-              <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+            <!-- form start -->
+            <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+             
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name" required="true">
                       </div>
                     </div>
                   </div>
@@ -48,7 +44,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}">
+                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true">
                       </div>
                       </div>
                     </div>
@@ -61,7 +57,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true">
                           </div>
                       </div>
                     </div>
@@ -77,13 +73,7 @@
                          <select class="form-control" name="nutritionsit_state" id="nutritionsit_state" required="true">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
-                          @php 
-                            $selected = "";
-                            if($data['state'] == $svalue->id){
-                             $selected ="selected";
-                            }
-                          @endphp
-                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>t
+                          <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
                           @endforeach
                         </select>
                       </div>
@@ -126,24 +116,9 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                   <div class="col-md-12">
-                      <div class="box-body"><span><b>Do You want to change nutrionsit password please check checkbox on update password</b></span> <hr/>
-                        <div class="col-md-4">
-                          <div class="form-group" >
-                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="nutritionsit_update">  Update Passsword</label></label>
-                              <input type="text" class="form-control"  id="nutritionsit_password_new" name="nutritionsit_password_new" placeholder="New Password" style="display: none !important;">
-                              <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
-                          </div>
-                        </div>
-                      </div>
-                   </div>  
-                </div>
-              <!-- /.box-footer-body -->
+                </div>   
               <div class="box-footer">
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                <button type="submit" class="btn btn-primary pull-right">Submit</button>
               </div>
             </form>
           </div>
@@ -156,47 +131,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-  <script type="text/javascript">
-    $(document).ready(function() {
-       getCity(); 
-       getArea();   
-    });
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    function getCity() 
-    {        
-        var state_id = $('#nutritionsit_state').val()                   
-        var city_id  = <?php echo  $data['city'];?>;            
-        $.ajax({
-            url: "{{url('/admin')}}/getCity",
-            type: 'post',
-            data: { state: state_id ,city:city_id},
-            success: function (data) 
-            {
-              $("#nutritionsit_city").html(data);
-            }
-        });
-    };
-
-    function getArea() 
-    {        
-        var city_id = <?php echo  $data['city'];?>;   
-        var area_id = <?php echo  $data['area'];?>;
-        $.ajax({
-            url: "{{url('/admin')}}/getArea",
-            type: 'post',
-            data: {city: city_id,area:area_id},
-            success: function (data) 
-            {
-              $("#nutritionsit_area").html(data);
-            }
-        });
-    };
+<script type="text/javascript">
 
   //load city drop down script 
-  $("#nutritionsit_state").change(function() {
-    
-      var state_id = $("#nutritionsit_state").val();
+  $("select#nutritionsit_state").change(function() {
+      var state_id = $("#nutritionsit_state option:selected").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getCity",
@@ -209,8 +150,8 @@
     });
  
   //load area drop down script 
-  $("#nutritionsit_city").change(function() {
-      var city_id = $("#nutritionsit_city").val();
+  $("select#nutritionsit_city").change(function() {
+      var city_id = $("#nutritionsit_city option:selected").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
@@ -220,20 +161,6 @@
       }).done(function(data) {
            $("#nutritionsit_area").html(data);
       });
-    });
-
-   //checkbox show hide
-   $(function () {
-        $("#chkPassword").click(function () {
-            if ($(this).is(":checked")) {
-                $("#nutritionsit_password_new").show();
-                $("#nutritionsit_password_new").attr("required","true");
-            } else {
-                $("#nutritionsit_password_new").hide();
-                $("#nutritionsit_password_new").removeAttr("required");
-                $(".parsley-required").hide();
-            }
-        });
     });
 
 </script>

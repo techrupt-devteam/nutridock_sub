@@ -70,7 +70,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_state" id="nutritionsit_state" required="true">
+                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
@@ -82,7 +82,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_city" id="nutritionsit_city" required="true">
+                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true">
                           <option value="">-Select City-</option>t
                           <option value=""></option>t
                         </select>
@@ -93,7 +93,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_area" id="nutritionsit_area" required="true">
+                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
                           <option value="">-Select Area-</option>t
                           <option value=""></option>t
                         </select>

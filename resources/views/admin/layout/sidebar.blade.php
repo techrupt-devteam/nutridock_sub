@@ -66,7 +66,7 @@
             </ul>
         </li> 
 
-        <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') active @endif ">
+        <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') active @endif ">
             <a href="#">
               <i class="fa fa-television"></i> <span>Master</span>
               <span class="pull-right-container">
@@ -89,13 +89,19 @@
                 </a>
               </li>
                <li @if(Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan') class="active" @endif>
-                <a href="{{url('/admin')}}/manage_permission">
+                <a href="{{url('/admin')}}/manage_subscription_plan">
                   <i class="fa fa-circle-o"></i> <span> Subscription Plan </span>
                   <span class="pull-right-container">
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') class="active" @endif>
+              <li @if(Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_plan">
+                  <i class="fa fa-circle-o"></i> <span> Plan </span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li><li @if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_permission">
                   <i class="fa fa-circle-o"></i> <span> Location </span>
                   <span class="pull-right-container">
