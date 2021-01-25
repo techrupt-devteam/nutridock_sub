@@ -43,9 +43,9 @@
                       <div class="form-group">
                         <label for="role_name">Meal Plan<span style="color:red;" >*</span></label>
                         <select class="form-control select2" name="plan_id" id="plan_id" required="true" data-parsley-errors-container="#plan_error" data-parsley-error-message="Please select meal plan.">
-                          <option value="">-Select City-</option>
+                          <option value=" ">-Select Plan-</option>
                           @foreach($plan as $pvalue)
-                          <option value="{{$pvalue->id}}">{{$pvalue->plan_name}}</option>
+                          <option value="{{$pvalue->plan_id}}">{{$pvalue->plan_name}}</option>
                           @endforeach
                         </select>
                         <div id="plan_error" style="color:red;"></div>
@@ -56,7 +56,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2 " name="city" id="city" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
+                         <select class="form-control select2 " name="city" id="city" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_area();">
                           <option value="">-Select City-</option>
                           @foreach($city as $cvalue)
                           <option value="{{$cvalue->id}}">{{$cvalue->city_name}}</option>
@@ -112,7 +112,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-rupee"></i>
                                   </div>
-                                  <input type="text" class="form-control" placeholder="Enter Price" id="price" name="price1" required="true" data-parsley-errors-container="#meal_price1" data-parsley-error-message="Please enter price.">
+                                  <input type="text" class="form-control" placeholder="Enter Price" id="price1" name="price1" required="true" data-parsley-errors-container="#meal_price1" data-parsley-error-message="Please enter price.">
                                 </div>
                                 <span id="meal_price1" style="color:red;"></span>
                             </td>
@@ -139,11 +139,16 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script type="text/javascript"> 
   //load area drop down script 
 
-  $("select#city").change(function() {
-      var city_id = $("#city option:selected").val();
+
+
+  function get_area()
+  {
+   
+      var city_id = $("#city").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
@@ -153,8 +158,7 @@
       }).done(function(data) {
            $("#area").html(data);
       });
-    });
-
+  }
   function addWebinarRow()
   {
       var duration_flag = $('#duration_flag').val();

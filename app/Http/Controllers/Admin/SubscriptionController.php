@@ -29,11 +29,18 @@ class SubscriptionController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = $this->base_model->where('is_deleted','<>','1')->get();
+        $data     = \DB::table('nutri_mst_subscription_plan')
+                    ->join('city','nutri_mst_subscription_plan.city','=','city.id')
+                    ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
+                    ->where('nutri_mst_subscription_plan.is_deleted','<>','1')
+                    ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
+                    ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->get();
+        //
         if(!empty($data))
         {
             $arr_data = $data->toArray();
         }
+       // dd($arr_data);
         $data['data']      = $arr_data;
         $data['page_name'] = "Manage";
         $data['url_slug']  = $this->url_slug;
@@ -56,10 +63,10 @@ class SubscriptionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-                'plan_name' => 'required',
-                'plan_name' => 'required',
-                'plan_name' => 'required',
-                'plan_name' => 'required'
+                'sub_name' => 'required',
+                'plan_id' => 'required',
+                'city' => 'required',
+                'area' => 'required'
             ]);
 
         if ($validator->fails()) 
@@ -67,39 +74,57 @@ class SubscriptionController extends Controller
             return $validator->errors()->all();
         }
       
-        /*$is_exist = $this->base_model->where(['plan_name'=>$request->input('plan_name')])->count();
+       /* $is_exist = $this->base_model->where(['sub_name'=>$request->input('sub_name')])->count();
 
         if($is_exist)
         {
-            Session::flash('error', "plan already exist!");
+            Session::flash('error', "Subscription Plan already exist!");
             return \Redirect::back();
         }*/
 
-        $arr_data                 = [];
-        $arr_data['plan_name']   = $request->input('plan_name');
+        $arr_data                = [];
+        $arr_data['sub_name']    = $request->input('sub_name');
+        $arr_data['plan_id']     = $request->input('plan_id');
+        $arr_data['city']        = $request->input('city');
+        $arr_data['area']        = $request->input('area');
         $plan = $this->base_model->create($arr_data);
       
         if(!empty($plan))
         {
 
-             /* $failed = 0;  
-              $webinar_flag = $request->input('webinar_flag');
-              for ($wb=1; $wb <= $webinar_flag; $wb ++) 
-              { 
-                 if(!empty($request->input('webinar_title'.$wb))){
-                    $arr_data1                     = [];
-                    $arr_data1['webinar_title']    = ucfirst($request->input('webinar_title'.$wb));
-                    $arr_data1['webinar_date']     = date('Y-m-d',strtotime($request->input('webinar_date'.$wb)));
-                    $arr_data1['fund_id']          = $request->input('fund_id');
-                    $arr_data1['webinar_url']      = $request->input('webinar_url'.$wb);
-                    $arr_data1['webinar_type']      = $request->input('web_type_video'.$wb);
-                    $webinar  = \DB::table('fund_webinar')->insert($arr_data1); 
-                    $failed ++; 
+            $failed = 0;  
+            $duration_flag = $request->input('duration_flag');
+            for($d=1; $d <= $duration_flag; $d++) 
+            { 
+                if(!empty($request->input('duration'.$d))){
+                  $arr_data1                     = [];
+                  $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
+                  $arr_data1['sub_plan_id']      = $plan->sub_plan_id;
+                  
+                  if($request->input('price_type'.$d)=='meal'){
+                    $arr_data1['price_per_meal'] = $request->input('price'.$d);
                   }
-              }*/
+                  else
+                  {
+                    $arr_data1['price_per_pack'] = $request->input('price'.$d);
+                  }  
 
+                  $subscription_duration  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
+                  if($subscription_duration)
+                  {
+                    $failed = 0;
+                  }else
+                  {
+                    $failed++;
+                  }
+                }
+            }
+          }
+        
+        
+        if($failed==0){
             Session::flash('success', 'Success! Record added successfully.');
-            return \Redirect::to('admin/manage_plan');
+            return \Redirect::to('admin/manage_subscription_plan');
         }
         else
         {
@@ -111,13 +136,19 @@ class SubscriptionController extends Controller
     public function edit($id)
     {
         $arr_data = [];
-        $data     = $this->base_model->where(['plan_id'=>$id])->first();
+        $data     = $this->base_model->where(['sub_plan_id'=>$id])->first();
+        $city     = $this->base_city->get();
+        $plan     = $this->base_plan->where('is_active','=','1')->get();
+        $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->orderBy('duration_id', 'ASC')->get();
         if(!empty($data))
         {
             $arr_data = $data->toArray();
         }   
        
         $data['data']      = $arr_data;
+        $data['city']      =  $city;
+        $data['plan']      =  $plan;
+        $data['duration']  =  $subscription_duration;
         $data['page_name'] = "Edit";
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
@@ -127,36 +158,127 @@ class SubscriptionController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-                'plan_name' => 'required'
+                'sub_name' => 'required',
+                'plan_id' => 'required',
+                'city' => 'required',
+                'area' => 'required'
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-        $is_exist = $this->base_model->where('plan_id','<>',$id)->where(['plan_name'=>$request->input('plan_name')])
-                    ->count();
-        if($is_exist)
+       
+        $arr_data               = [];
+        
+        $arr_data['sub_name']    = $request->input('sub_name');
+        $arr_data['plan_id']     = $request->input('plan_id');
+        $arr_data['city']        = $request->input('city');
+        $arr_data['area']        = $request->input('area');
+
+        $module_update = $this->base_model->where(['plan_id'=>$id])->update($arr_data);
+        
+        $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete();
+
+         $failed = 0;  
+            $duration_flag = $request->input('duration_flag');
+            for($d=1; $d <= $duration_flag; $d++) 
+            { 
+                if(!empty($request->input('duration'.$d))){
+                  $arr_data1                     = [];
+                  $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
+                  $arr_data1['sub_plan_id']      = $id;
+                  
+                  if($request->input('price_type'.$d)=='meal'){
+                    $arr_data1['price_per_meal'] = $request->input('price'.$d);
+                  }
+                  else
+                  {
+                    $arr_data1['price_per_pack'] = $request->input('price'.$d);
+                  }  
+
+                  $subscription_duration  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
+                  if($subscription_duration)
+                  {
+                    $failed = 0;
+                  }else
+                  {
+                    $failed++;
+                  }
+                }
+            }
+
+
+        if($failed==0){
+            Session::flash('success', 'Success! Record update successfully.');
+            return \Redirect::to('admin/manage_subscription_plan');
+        }
+        else
         {
-            Session::flash('error', "plan already exist!");
+            Session::flash('error', "Error! Oop's something went wrong.");
             return \Redirect::back();
         }
-        $arr_data               = [];
-        $arr_data['plan_name']   = $request->input('plan_name');
-        $module_update = $this->base_model->where(['plan_id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record update successfully.');
-        return \Redirect::to('admin/manage_plan');
-        
     }
+
+    public function detail(Request $request)
+    {
+        $plan_id = $request->input('plan_id');
+        $plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
+        $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$plan_id])->orderBy('duration_id', 'ASC')->get();
+        $html='<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"><b>Subscription Plan :</b> '.ucfirst($plan_details->sub_name).'</h4>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered">
+                    <thead style="background-color: #ccb591;">
+                       <tr>
+                         <th>Duration</th>
+                         <th>Meal Plan</th>
+                         <th>Price</th>
+                       </tr> 
+                    </thead>
+                    <tbody>';
+        foreach ($variable as $key => $value) 
+        {   
+            $type ="";
+            $price = "";
+            if(!empty($value->price_per_meal))
+            {
+                $type = "Per Meal";
+                $price =  $value->price_per_meal;
+            }                  
+            if(!empty($value->price_per_pack))
+            {
+                $type = "Per Pack"; 
+                $price = 
+            }
+                                               
+            $html.= '<tr>
+                        <td>'.$value->duration.'Days </td>
+                        <td>'.$type.'</td>
+                        <td>'..'</td>  
+                    </tr>';               
+        }     
+
+        $htm.='</tbody>
+                </table>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>';
+              return $html;
+    } 
 
     public function delete($id)
     {
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
-        $this->base_model->where(['plan_id'=>$id])->update($arr_data);
+        $this->base_model->where(['sub_plan_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
     } 
-
 
     public function status(Request $request)
     {
@@ -172,7 +294,7 @@ class SubscriptionController extends Controller
         {
          $arr_data['is_active'] = '0';
         }   
-        $this->base_model->where(['plan_id'=>$plan_id])->update($arr_data);
+        $this->base_model->where(['sub_plan_id'=>$plan_id])->update($arr_data);
         //return \Redirect::back();
     }
 }

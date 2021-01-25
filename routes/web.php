@@ -39,6 +39,7 @@ Route::get('/clear', function() {
  
  Route::post('/subscribe', 'HomeController@subscription');
  Route::get('/about', 'AboutController@index')->name('about');
+ Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
  Route::get('/menu', 'MenuController@index')->name('menu');
  Route::get('/page-not-found', 'PageNotFoundController@index')->name('page-not-found');
  
@@ -195,6 +196,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_subscription_plan/{id}',  'Admin\SubscriptionController@update');
 	Route::get('/delete_subscription_plan/{id}',   'Admin\SubscriptionController@delete');
 	Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
+	Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
 	
 	//
 
