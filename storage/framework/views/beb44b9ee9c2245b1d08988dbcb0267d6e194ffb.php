@@ -38,16 +38,16 @@
       <meta content=""name="description">
       <meta content=""name="keywords">
       <?php } ?>
-      <link rel="icon"href="{{url('')}}/public/front/img/favicon.png">
-      <link rel="apple-touch-icon"href="{{url('')}}/public/front/img/apple-touch-icon.png">
+      <link rel="icon"href="<?php echo e(url('')); ?>/public/front/img/favicon.png">
+      <link rel="apple-touch-icon"href="<?php echo e(url('')); ?>/public/front/img/apple-touch-icon.png">
       <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
-      <!--<link rel="stylesheet"href="{{url('')}}/public/front/vendor/bootstrap/css/bootstrap.min.css">-->
+      <!--<link rel="stylesheet"href="<?php echo e(url('')); ?>/public/front/vendor/bootstrap/css/bootstrap.min.css">-->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <!--<link rel="stylesheet"rel="preload"href="{{url('')}}/public/front/vendor/icofont/icofont.min.css">-->
+      <!--<link rel="stylesheet"rel="preload"href="<?php echo e(url('')); ?>/public/front/vendor/icofont/icofont.min.css">-->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet"href="{{url('')}}/public/front/vendor/owl.carousel/assets/owl.carousel.min.css">
+      <link rel="stylesheet"href="<?php echo e(url('')); ?>/public/front/vendor/owl.carousel/assets/owl.carousel.min.css">
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
-      <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
+      <link rel="stylesheet"href="<?php echo e(url('')); ?>/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
       <script>!function(e,t,a,n,g){e[n]=e[n]||[],e[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var m=t.getElementsByTagName(a)[0],r=t.createElement(a);r.async=!0,r.src="https://www.googletagmanager.com/gtm.js?id=GTM-MQV3CBB",m.parentNode.insertBefore(r,m)}(window,document,"script","dataLayer")</script>
       <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -92,24 +92,24 @@
       </div>
       <header class="fixed-top"id="header">
          <div class="align-items-center container d-flex">
-            <a href="{{url('')}}"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo.png"> </a>
-            <a href="{{url('')}}/subscribe_info" class="btn btn-outline-success d-md-none d-sm-none m-order-btn p-1" style="right: 148px;">Subscribe</a>
+            <a href="<?php echo e(url('')); ?>"class="logo mobile-logo"><img alt="nutridock"src="<?php echo e(url('')); ?>/public/front/img/logo.png"> </a>
+            <a href="<?php echo e(url('')); ?>/subscribe_info" class="btn btn-outline-success d-md-none d-sm-none m-order-btn p-1" style="right: 148px;">Subscribe</a>
             <a href="http://order.nutridock.com/"class="btn btn-success d-md-none d-sm-none m-order-btn p-1"target="_tab">Order Now</a>
             <nav class="d-none d-lg-block ml-auto nav-menu">
                <ul class="nav">
-                  <li id="home"><a href="{{url('')}}">Home</a></li>
-                  <li><a href="{{url('')}}/about">About</a></li>
-                  <li><a href="{{url('')}}/menu">Menu</a></li>
-                  <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
-                  <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
-                  <li><a href="{{url('')}}/faq">FAQ</a></li> -->
-                  <li><a href="{{url('')}}/contact">Contact</a></li>
+                  <li id="home"><a href="<?php echo e(url('')); ?>">Home</a></li>
+                  <li><a href="<?php echo e(url('')); ?>/about">About</a></li>
+                  <li><a href="<?php echo e(url('')); ?>/menu">Menu</a></li>
+                  <li><a href="<?php echo e(url('')); ?>/subscribe-info">Subscription</a></li>
+                  <!-- <li><a href="<?php echo e(url('')); ?>/blog">BLOG</a></li>
+                  <li><a href="<?php echo e(url('')); ?>/faq">FAQ</a></li> -->
+                  <li><a href="<?php echo e(url('')); ?>/contact">Contact</a></li>
                   <li class="under-line-none"><a  data-toggle="modal" data-target="#login" class="btn btn-outline-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none" >Login</a></li>
                   <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li>
                </ul>
             </nav>
          </div>
-         <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
+         <!--<script src="<?php echo e(url('')); ?>/public/front/vendor/jquery/jquery.min.js"></script>-->
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       </header>
 
@@ -126,7 +126,7 @@
          <div class="row login-box no-gutters">
             <div class="col-md-5 col-pad-0 bg-img none-992 d-none d-md-block"> 
               <a href="javascript:void(0)"> 
-                <img src="{{url('')}}/public/front/img/logo.png" class="login-logo">
+                <img src="<?php echo e(url('')); ?>/public/front/img/logo.png" class="login-logo">
             </a>
               <h4>Welcome Back</h4>
               <p>To Keep connected with us please login with your personal info.</p>
@@ -144,7 +144,7 @@
                 <div class="details">
                   <h3 class="text-center d-none d-md-block">Sign into your account</h3>
                   <div class="login-logo d-none-md d-lg-none text-center"> <a href="javascript:void(0)"> 
-                     <img src="{{url('')}}/public/front/img/logo.png" class="login-logo" style="max-width: 75px;"> 
+                     <img src="<?php echo e(url('')); ?>/public/front/img/logo.png" class="login-logo" style="max-width: 75px;"> 
                      </a> 
                   </div>
                   <div class="">
@@ -226,4 +226,4 @@
 		}
 	});
 });
- </script>
+ </script><?php /**PATH C:\xampp\htdocs\nutridock_sub\resources\views/layouts/header.blade.php ENDPATH**/ ?>

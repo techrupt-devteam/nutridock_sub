@@ -17,7 +17,7 @@
 		<div class="container">
 			<div class="row mb-60">
 				<div class="col-lg-4 col-md-12 text-center text-md-left">
-					<a href="index.php"><img src="{{url('')}}/public/front/img/logo-white.svg" alt="Nutridock Restaurant & Catering" style="max-width:100px"></a>
+					<a href="index.php"><img src="<?php echo e(url('')); ?>/public/front/img/logo-white.svg" alt="Nutridock Restaurant & Catering" style="max-width:100px"></a>
 					<p class="text-center text-md-left" style="color:#959595;font-size:14px">We are here to help you make the shift from restrictive dieting to mindful eating, in a way that is easy and enjoyable.</p>
 					<ul class="contact-info-list pl-0 text-left">
 						<li class="media mb-10 media.inline-block">
@@ -46,12 +46,12 @@
 							<h3 class="widget-title">Recent Posts</h3>
 							<ul class="links-darkgrey list-unstyled pl-0">
 								<?php foreach($recent_data as $row): ?>
-									<li class="media post type-post"><a class="media-left"><img src="{{url('')}}/uploads/images/{{$row->image}}"alt=""class="attachment-thumbnail size-thumbnail wp-post-image"></a>
+									<li class="media post type-post"><a class="media-left"><img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($row->image); ?>"alt=""class="attachment-thumbnail size-thumbnail wp-post-image"></a>
 										<div class="media-body">
 										    <?php $link = $row->link;
                                         $dashedTitle = str_replace(" ", "-", $link); ?>
-											<h4><a href="{{url('')}}/blog_detail/{{$dashedTitle}}"><!--{!! substr(strip_tags($row->blog_title), 0, 35) !!}-->{!! $row->blog_title !!}</a></h4>
-											<div class="item-meta"><span class="widget-post-date"><i class="color-main fa fa-calendar"></i>{{ date('F d, Y', strtotime($row->created_at)) }}</span></div>
+											<h4><a href="<?php echo e(url('')); ?>/blog_detail/<?php echo e($dashedTitle); ?>"><!--<?php echo substr(strip_tags($row->blog_title), 0, 35); ?>--><?php echo $row->blog_title; ?></a></h4>
+											<div class="item-meta"><span class="widget-post-date"><i class="color-main fa fa-calendar"></i><?php echo e(date('F d, Y', strtotime($row->created_at))); ?></span></div>
 										</div>
 									</li>
 									<?php endforeach; ?>
@@ -64,7 +64,8 @@
 						<div class="widget" id="mwt_recent-2">
 							<h3 class="widget-title">Newsletter</h3>
 							<p class="mb-3" style="color:#ddd">Enter Email here to be updated. We promise not to send you spam!</p>
-							<form action="{{url('/')}}/subscribe" class="form-inline newsletter" method="post" onsubmit="return submitUserForm1()">{{csrf_field()}}
+							<form action="<?php echo e(url('/')); ?>/subscribe" class="form-inline newsletter" method="post" onsubmit="return submitUserForm1()"><?php echo e(csrf_field()); ?>
+
 								<input class="email" type="email" name="email" placeholder="Subscribe to our newsletter" required>
 								<br>
 								<br>
@@ -88,29 +89,29 @@
 			</div>
 			<div class="col-md-6">
 				<ul class="breadcrumb">
-					<li><a href="{{url('')}}">Home</a></li>
-					<li><a href="{{url('')}}/about">About</a></li>
-					<li><a href="{{url('')}}/menu">Menu</a></li>
-					<li><a href="{{url('')}}/blog">Blog</a></li>
-					<li><a href="{{url('')}}/faq">Faq</a></li>
+					<li><a href="<?php echo e(url('')); ?>">Home</a></li>
+					<li><a href="<?php echo e(url('')); ?>/about">About</a></li>
+					<li><a href="<?php echo e(url('')); ?>/menu">Menu</a></li>
+					<li><a href="<?php echo e(url('')); ?>/blog">Blog</a></li>
+					<li><a href="<?php echo e(url('')); ?>/faq">Faq</a></li>
 						<li><a href="https://forms.gle/7L9DEok2KCsdXBTT9">Feedback</a></li>
-					<li><a href="{{url('')}}/contact">Contact</a></li>
+					<li><a href="<?php echo e(url('')); ?>/contact">Contact</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 </div>
 <a href="https://wa.link/3o9k29" target="_blank" class="whatsapp-link">
-    <img src="{{url('')}}/public/front/img/whatsapp-icon.svg">
+    <img src="<?php echo e(url('')); ?>/public/front/img/whatsapp-icon.svg">
 </a>
 <div class="sticky-container d-none d-md-block">
 	<ul class="sticky">
 		<li class="hover-item">
-			<a href="http://order.nutridock.com/" class="hvr-icon-wobble-horizontal"><img src="{{url('')}}/public/front/img/order-cart.svg"> <b class="footer-sticky1">Order Now</b></a>
+			<a href="http://order.nutridock.com/" class="hvr-icon-wobble-horizontal"><img src="<?php echo e(url('')); ?>/public/front/img/order-cart.svg"> <b class="footer-sticky1">Order Now</b></a>
 		</li>
 
 		<li class="hover-item">
-			<a href="{{url('')}}/subscribe_info" class="hvr-icon-wobble-horizontal"><img src="{{url('')}}/public/front/img/diat-plan.svg"> <b class="footer-sticky1">Subscription</b></a>
+			<a href="<?php echo e(url('')); ?>/subscribe_info" class="hvr-icon-wobble-horizontal"><img src="<?php echo e(url('')); ?>/public/front/img/diat-plan.svg"> <b class="footer-sticky1">Subscription</b></a>
 		</li>
 	</ul>
 </div>
@@ -118,36 +119,36 @@
 <div class="footer-fix-menu">
     <div class="row no-gutters">
         <div class="col-4 border-right">
-            <a href="{{url('')}}/menu" class="footer-m-link">
+            <a href="<?php echo e(url('')); ?>/menu" class="footer-m-link">
                 <i class="fa fa-cutlery"></i>
-                 <!--<img class="d-block mx-auto" src="{{url('')}}/public/front/img/pizza.svg" style="width: 26px;" />-->
+                 <!--<img class="d-block mx-auto" src="<?php echo e(url('')); ?>/public/front/img/pizza.svg" style="width: 26px;" />-->
                 Menu
             </a>
         </div>
         <div class="col-4 border-right">
             <a href="http://order.nutridock.com/" target="_blank" class="footer-m-link order">
                 <i class="fa fa-shopping-basket"></i>
-                <!--<img class="d-block mx-auto" src="{{url('')}}/public/front/img/food-serving.svg" style="width: 26px;" />-->
+                <!--<img class="d-block mx-auto" src="<?php echo e(url('')); ?>/public/front/img/food-serving.svg" style="width: 26px;" />-->
                 Order
             </a>
         </div>
         <div class="col-4">
-            <a href="{{url('')}}/subscribe_info" class="footer-m-link">
+            <a href="<?php echo e(url('')); ?>/subscribe_info" class="footer-m-link">
                 <!-- <i class="fa fa-phone" aria-hidden="true"></i> -->
-                <img class="d-block mx-auto" src="{{url('')}}/public/front/img/diat-plan.svg" style="width: 26px;" />
+                <img class="d-block mx-auto" src="<?php echo e(url('')); ?>/public/front/img/diat-plan.svg" style="width: 26px;" />
                Subscription
             </a>
         </div>
     </div>
 </div>
 
-<script src="{{url('')}}/public/front/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="{{url('')}}/public/front/vendor/jquery.easing/jquery.easing.min.js"></script>
-<script src="{{url('')}}/public/front/vendor/waypoints/jquery.waypoints.min.js"></script>
-<script src="{{url('')}}/public/front/vendor/owl.carousel/owl.carousel.min.js"></script>
-<script src="{{url('')}}/public/front/vendor/venobox/venobox.min.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/vendor/jquery.easing/jquery.easing.min.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/vendor/waypoints/jquery.waypoints.min.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/vendor/venobox/venobox.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
-<script src="{{url('')}}/public/front/js/main.js"></script>
+<script src="<?php echo e(url('')); ?>/public/front/js/main.js"></script>
 <script>
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();
@@ -155,7 +156,7 @@ $(document).ready(function() {
 });
 
 function setNavigation() {
-	var url = '{{url('')}}';
+	var url = '<?php echo e(url('')); ?>';
 	var path = window.location.href;
 	var parts = url.split("/");
 	var last_part = parts[parts.length - 2];
@@ -203,4 +204,4 @@ $(document).ready(function() {
 	var e = $(this).attr("data-val");
 	$(".divReply" + e).show(), $(".blog_id").val(e)
 })
-</script>
+</script><?php /**PATH C:\xampp\htdocs\nutridock_sub\resources\views/layouts/footer.blade.php ENDPATH**/ ?>
