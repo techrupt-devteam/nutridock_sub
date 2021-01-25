@@ -23,8 +23,8 @@
           @include('admin.layout._status_msg')
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-              <a href="{{url('/admin')}}/add_location" class="btn btn-primary btn-xs" style="float: right;">Add location</a>
+            
+              <a href="{{url('/admin')}}/add_location" class="btn btn-primary btn-sm" style="float: right;">Add location</a>
             </div>
             
             
@@ -34,10 +34,10 @@
                 <thead>
                 <tr>
                   <th>Sr. No.</th>
+                  <th>State</th>
                   <th>City</th>
                   <th>Area</th>
-                  <th>Active/Inactive</th>
-                  <th>Action</th>
+                  <th class="text-center">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,29 +47,31 @@
                         {{$key+1}}
                       </td>
                       <td>
-                        {{$value->city}}
+                        {{$value->name}}
+                      </td>
+                      <td>
+                        {{$value->city_name}}
                       </td>
                       <td>
                         {{$value->area}}
                       </td>
-                      <td>
-                        @if($value->is_active==1)
-                          <a class="btn btn-success btn-xs" href="{{url('/admin')}}/change_location_status/{{base64_encode($value->id)}}">Active</a>
+                      
+                       <td class="text-center">
+                      <!--   @if($value->is_active=='1')
+                           @php $checked="checked"; $style="success"; @endphp 
                         @else
-                          <a class="btn btn-danger btn-xs" href="{{url('/admin')}}/change_location_status/{{base64_encode($value->id)}}">Inactive</a>
+                           @php $checked=""; $style="danger";@endphp 
                         @endif
-                      </td> 
-                      <td>
-                        <a href="{{url('/admin')}}/edit_location/{{$value->id}}" title="Edit">
+                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" > -->
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{url('/admin')}}/view_location/{{$value->id}}" title="View">
-                          <i class="fa fa-eye"></i>
-                        </a>
-                        <a href="{{url('/admin')}}/delete_location/{{$value->id}}" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                       
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
-                      </td>   
+                      </td>
+                      
                     </tr>
                   @endforeach
                 </tbody>

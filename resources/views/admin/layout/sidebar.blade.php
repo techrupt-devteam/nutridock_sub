@@ -82,8 +82,8 @@
                 </a>
               </li>
               <li @if(Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager') class="active" @endif>
-                <a href="{{url('/admin')}}/manage_role">
-                  <i class="fa fa-circle-o"></i> <span>Operation Manager </span>
+                <a href="{{url('/admin')}}/manage_operation_manager">
+                  <i class="fa fa-circle-o"></i> <span>Operation Manager</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
@@ -102,7 +102,7 @@
                   </span>
                 </a>
               </li><li @if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') class="active" @endif>
-                <a href="{{url('/admin')}}/manage_permission">
+                <a href="{{url('/admin')}}/manage_location">
                   <i class="fa fa-circle-o"></i> <span> Location </span>
                   <span class="pull-right-container">
                   </span>
@@ -142,13 +142,13 @@
               </li>
             </ul>
         </li>
-        <li @if(Request::segment(2)=='manage_users' || Request::segment(2)=='add_user'|| Request::segment(2)=='edi_usert') class="active" @endif>
+      <!--   <li @if(Request::segment(2)=='manage_users' || Request::segment(2)=='add_user'|| Request::segment(2)=='edi_usert') class="active" @endif>
           <a href="{{url('/admin')}}/manage_users">
             <i class="fa fa-users"></i> <span>Users</span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li>
+        </li> -->
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>

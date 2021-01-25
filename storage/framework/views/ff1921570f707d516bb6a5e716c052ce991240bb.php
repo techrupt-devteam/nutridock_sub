@@ -1,18 +1,18 @@
-@extends('admin.layout.master')
  
-@section('content')
+<?php $__env->startSection('content'); ?>
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
+        <?php echo e($page_name." ".$title); ?>
+
+        
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
+        <li><a href="<?php echo e(url('/admin')); ?>/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?php echo e(url('/admin')); ?>/manage_category">Manage <?php echo e($title); ?></a></li>
+        <li class="active"><?php echo e($page_name." ".$title); ?></li>
       </ol>
     </section>
 
@@ -24,19 +24,20 @@
           <!-- general form elements -->
           <div class="box box-primary">
            <!--  <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
+              <h3 class="box-title"><?php echo e($page_name." ".$title); ?></h3>
             </div> -->
             <!-- /.box-header -->
             <!-- form start --> 
-             @include('admin.layout._status_msg')
-              <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
-              {!! csrf_field() !!}
+             <?php echo $__env->make('admin.layout._status_msg', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+              <form action="<?php echo e(url('/admin')); ?>/update_<?php echo e($url_slug); ?>/<?php echo e($data['id']); ?>" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+              <?php echo csrf_field(); ?>
+
               <div class="row">
                 <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Nutritionsit Name"  value="<?php echo e($data['name']); ?>"required="true">
                       </div>
                     </div>
                   </div>
@@ -48,7 +49,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}">
+                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Nutritionsit Email" required="true" value="<?php echo e($data['email']); ?>">
                       </div>
                       </div>
                     </div>
@@ -61,7 +62,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Nutritionsit Mobile" required="true"  value="<?php echo e($data['mobile']); ?>">
                           </div>
                       </div>
                     </div>
@@ -76,15 +77,15 @@
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
                          <select class="form-control" name="operation_manager_state" id="operation_manager_state" required="true">
                           <option value="">-Select State-</option>t
-                          @foreach($state as $svalue)
-                          @php 
+                          <?php $__currentLoopData = $state; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $svalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <?php 
                             $selected = "";
                             if($data['state'] == $svalue->id){
                              $selected ="selected";
                             }
-                          @endphp
-                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>t
-                          @endforeach
+                          ?>
+                          <option value="<?php echo e($svalue->id); ?>" <?php echo e($selected); ?>><?php echo e($svalue->name); ?></option>t
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
                     </div>
@@ -118,10 +119,10 @@
                         <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
                         <select class="form-control" name="operation_manager_role" id="operation_manager_role" required="true" readonly>
                           <option value="">-Select Role-</option>t
-                          @foreach($role as $rvalue)
+                          <?php $__currentLoopData = $role; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rvalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
-                          @endforeach
+                          <option value="<?php echo e($rvalue->role_id); ?>" <?php if($rvalue->role_id==2) echo "selected"; ?>><?php echo e($rvalue->role_name); ?></option>t
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
                     </div>
@@ -134,7 +135,7 @@
                           <div class="form-group" >
                               <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="operation_manager_update">  Update Passsword</label></label>
                               <input type="text" class="form-control"  id="operation_manager_password_new" name="operation_manager_password_new" placeholder="New Password" style="display: none !important;">
-                              <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
+                              <input type="hidden" class="form-control"  id="password" name="password" value="<?php echo e($data['password']); ?>">        
                           </div>
                         </div>
                       </div>
@@ -142,7 +143,7 @@
                 </div>
               <!-- /.box-footer-body -->
               <div class="box-footer">
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
+                <a href="<?php echo e(url('/admin')); ?>/manage_<?php echo e($url_slug); ?>"  class="btn btn-default">Back</a>
                 <button type="submit" class="btn btn-primary pull-right">Update</button>
               </div>
             </form>
@@ -171,7 +172,7 @@
         var state_id = $('#operation_manager_state').val()                   
         var city_id  = <?php echo  $data['city'];?>;            
         $.ajax({
-            url: "{{url('/admin')}}/getCity",
+            url: "<?php echo e(url('/admin')); ?>/getCity",
             type: 'post',
             data: { state: state_id ,city:city_id},
             success: function (data) 
@@ -186,7 +187,7 @@
         var city_id = <?php echo  $data['city'];?>;   
         var area_id = <?php echo  $data['area'];?>;
         $.ajax({
-            url: "{{url('/admin')}}/getArea",
+            url: "<?php echo e(url('/admin')); ?>/getArea",
             type: 'post',
             data: {city: city_id,area:area_id},
             success: function (data) 
@@ -202,7 +203,7 @@
       var state_id = $("#operation_manager_state").val();
       $.ajax({
         type: "POST",
-        url: "{{url('/admin')}}/getCity",
+        url: "<?php echo e(url('/admin')); ?>/getCity",
         data: {
           state: state_id
         }
@@ -216,7 +217,7 @@
       var city_id = $("#operation_manager_city").val();
       $.ajax({
         type: "POST",
-        url: "{{url('/admin')}}/getArea",
+        url: "<?php echo e(url('/admin')); ?>/getArea",
         data: {
           city: city_id
         }
@@ -240,4 +241,6 @@
     });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\nutridock_sub\resources\views/admin/operationmanager/edit.blade.php ENDPATH**/ ?>

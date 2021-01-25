@@ -53,11 +53,17 @@
                       <td>{{$value->city_name}}</td>
                       <td>{{$value->area_name}}</td>
                       <td>
+                        @if($value->is_active=='1')
+                           @php $checked="checked"; $style="success"; @endphp 
+                        @else
+                           @php $checked=""; $style="danger";@endphp 
+                        @endif
+                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
                        
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}"  class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
@@ -77,5 +83,34 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+ <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+<script type="text/javascript">
+    function change_Status(id,plan_id) 
+    {  
+
+        swal({
+          title: "Nutritionsit status",
+          text:  "Are You sure to change status",
+          icon:  "warning",
+          dangerMode: true,
+          }).then(function(isConfirm) {
+          if (isConfirm) { 
+          var status = $("#"+id+"_is_active").prop('checked');
+          var plan_ids = plan_id;
+          //alert(status);
+           $.ajax({
+                url: "{{url('/admin')}}/status_nutritionsit",
+                type: 'post',
+                data: {status:status,plan_ids:plan_id},
+                success: function (data) 
+                {
+                  swal("Good job!", "Nutritionsit status successfully changed !", "success");
+                }
+            });
+          }
+        });
+     }
+</script>
 @endsection

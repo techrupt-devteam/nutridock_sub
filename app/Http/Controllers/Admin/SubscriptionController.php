@@ -30,10 +30,11 @@ class SubscriptionController extends Controller
     {
         $arr_data = [];
         $data     = \DB::table('nutri_mst_subscription_plan')
+                     ->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
                     ->join('city','nutri_mst_subscription_plan.city','=','city.id')
                     ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
                     ->where('nutri_mst_subscription_plan.is_deleted','<>','1')
-                    ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
+                    ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name','nutri_mst_plan.plan_name')
                     ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->get();
         //
         if(!empty($data))
@@ -222,24 +223,45 @@ class SubscriptionController extends Controller
     public function detail(Request $request)
     {
         $plan_id = $request->input('plan_id');
-        $plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
+
+        $plan_details     = \DB::table('nutri_mst_subscription_plan')
+                            ->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
+                            ->join('city','nutri_mst_subscription_plan.city','=','city.id')
+                            ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
+                            ->where('nutri_mst_subscription_plan.sub_plan_id','=',$plan_id)
+                            ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name','nutri_mst_plan.plan_name')
+                            ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->first();
+        //$plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
+
+
         $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$plan_id])->orderBy('duration_id', 'ASC')->get();
         $html='<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><b>Subscription Plan :</b> '.ucfirst($plan_details->sub_name).'</h4>
+                <h4 class="modal-title"><b>Subscription Plan :</b> '.ucfirst($plan_details->sub_name).' </h4>
+                <hr/>
+                <div class="row">
+                  <div class="col-md-4"><h5 class="modal-title"><b>Plan Name: </b>'.ucfirst($plan_details->plan_name).'</h5></div>
+                  <div class="col-md-4"><h5 class="modal-title"><b>City: </b>'.ucfirst($plan_details->city_name).'</h5></div>
+                  <div class="col-md-4"><h5 class="modal-title"><b>Area: </b>'.ucfirst($plan_details->area_name).'</h5></div>
+                </div>
+                
+             
+               
               </div>
               <div class="modal-body">
                 <table class="table table-bordered">
                     <thead style="background-color: #ccb591;">
                        <tr>
+                         <th>Sr.No</th>
                          <th>Duration</th>
                          <th>Meal Plan</th>
                          <th>Price</th>
                        </tr> 
                     </thead>
                     <tbody>';
-        foreach ($variable as $key => $value) 
+         $i=1;           
+        foreach ($subscription_duration as $value) 
         {   
             $type ="";
             $price = "";
@@ -251,22 +273,23 @@ class SubscriptionController extends Controller
             if(!empty($value->price_per_pack))
             {
                 $type = "Per Pack"; 
-                $price = 
+                $price = $value->price_per_pack;
             }
                                                
             $html.= '<tr>
-                        <td>'.$value->duration.'Days </td>
+                        <td>'.$i.' </td>
+                        <td>'.$value->duration.' Days</td>
                         <td>'.$type.'</td>
-                        <td>'..'</td>  
+                        <td> <i class="fa fa-rupee"></i> '.$price.'</td>  
                     </tr>';               
+        $i++;
         }     
 
-        $htm.='</tbody>
+        $html.='</tbody>
                 </table>
                 </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+              
             </div>';
               return $html;
     } 

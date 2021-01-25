@@ -1,18 +1,18 @@
-@extends('admin.layout.master')
  
-@section('content')
+<?php $__env->startSection('content'); ?>
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
+        <?php echo e($page_name." ".$title); ?>
+
+        
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('/')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
+        <li><a href="<?php echo e(url('/')); ?>/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?php echo e(url('/')); ?>/manage_<?php echo e($url_slug); ?>">Manage <?php echo e($title); ?></a></li>
+        <li class="active"><?php echo e($page_name." ".$title); ?></li>
       </ol>
     </section>
 
@@ -24,13 +24,14 @@
           <!-- general form elements -->
           <div class="box box-primary">
         <!--     <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
+              <h3 class="box-title"><?php echo e($page_name." ".$title); ?></h3>
             </div> -->
             <!-- /.box-header -->
             <!-- form start -->
-            <form action="{{url('/admin')}}/update_location/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
-              @include('admin.layout._status_msg')
-              {!! csrf_field() !!}
+            <form action="<?php echo e(url('/admin')); ?>/update_location/<?php echo e($data['id']); ?>" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+              <?php echo $__env->make('admin.layout._status_msg', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+              <?php echo csrf_field(); ?>
+
               
               <div class="box-body">
                 <div class="row">
@@ -39,15 +40,15 @@
                       <label for="oldpassword">State<span style="color:red;" >*</span></label>
                       <select class="form-control select2" id="state" name="state" required="true" onchange="get_city();">
                         <option value="">Select State</option>
-                        @foreach($state as $svalue)
-                         @php 
+                        <?php $__currentLoopData = $state; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $svalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                         <?php 
                             $selected = "";
                             if($data['state'] == $svalue->id){
                              $selected ="selected";
                             }
-                          @endphp
-                        <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
-                        @endforeach
+                          ?>
+                        <option value="<?php echo e($svalue->id); ?>" <?php echo e($selected); ?>><?php echo e($svalue->name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
@@ -56,22 +57,22 @@
                       <label for="oldpassword">City<span style="color:red;" >*</span></label>
                       <select class="form-control select2" id="city" name="city" required="true">
                         <option value="">Select City</option>
-                         @foreach($city as $cvalue)
-                           @php 
+                         <?php $__currentLoopData = $city; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cvalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                           <?php 
                               $selected = "";
                               if($data['city'] == $cvalue->id){
                                $selected ="selected";
                               }
-                            @endphp
-                          <option value="{{$cvalue->id}}" {{$selected}}>{{$cvalue->city_name}}</option>
-                          @endforeach
+                            ?>
+                          <option value="<?php echo e($cvalue->id); ?>" <?php echo e($selected); ?>><?php echo e($cvalue->city_name); ?></option>
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Area<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" required="true" value="{{$data['area']}}">
+                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" required="true" value="<?php echo e($data['area']); ?>">
                     </div>
                   </div>  
                </div>
@@ -105,7 +106,7 @@
         var city_id  = <?php echo $data['city']?>;    
        // alert(city_id);        
         $.ajax({
-            url: "{{url('/admin')}}/getCity",
+            url: "<?php echo e(url('/admin')); ?>/getCity",
             type: 'post',
             data: { state: state_id ,city:city_id},
             success: function (data) 
@@ -119,7 +120,7 @@
     var state_id = $("#state").val();
     $.ajax({
       type: "POST",
-      url: "{{url('/admin')}}/getCity",
+      url: "<?php echo e(url('/admin')); ?>/getCity",
       data: {
         state: state_id
       }
@@ -128,4 +129,5 @@
     });
   }      
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\nutridock_sub\resources\views/admin/location/edit.blade.php ENDPATH**/ ?>

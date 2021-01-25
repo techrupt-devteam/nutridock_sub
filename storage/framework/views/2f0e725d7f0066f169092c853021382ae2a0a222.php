@@ -1,17 +1,17 @@
-@extends('admin.layout.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
+        <?php echo e($page_name." ".$title); ?>
+
+        
       </h1>
       <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
+        <li><a href="<?php echo e(url('/admin')); ?>/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?php echo e(url('/admin')); ?>/manage_category">Manage <?php echo e($title); ?></a></li>
+        <li class="active"><?php echo e($page_name." ".$title); ?></li>
       </ol>
     </section>
 
@@ -21,12 +21,13 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
-           @include('admin.layout._status_msg')
+           <?php echo $__env->make('admin.layout._status_msg', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
           <div class="box box-primary">
             <!-- form start -->
-            <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+            <form action="<?php echo e(url('/admin')); ?>/store_<?php echo e($url_slug); ?>" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
              
-              {!! csrf_field() !!}
+              <?php echo csrf_field(); ?>
+
               <div class="row">
                 <div class="col-md-4">
                     <div class="box-body">
@@ -72,9 +73,9 @@
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true">
                           <option value="">-Select State-</option>t
-                          @foreach($state as $svalue)
-                          <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
-                          @endforeach
+                          <?php $__currentLoopData = $state; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $svalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($svalue->id); ?>"><?php echo e($svalue->name); ?></option>t
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
                     </div>
@@ -108,10 +109,10 @@
                         <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
                         <select class="form-control" name="operation_manager_role" id="operation_manager_role" required="true" readonly>
                           <option value="">-Select Role-</option>t
-                          @foreach($role as $rvalue)
+                          <?php $__currentLoopData = $role; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rvalue): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
-                          @endforeach
+                          <option value="<?php echo e($rvalue->role_id); ?>" <?php if($rvalue->role_id==1) echo "selected"; ?>><?php echo e($rvalue->role_name); ?></option>t
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                       </div>
                     </div>
@@ -140,7 +141,7 @@
       var state_id = $("#operation_manager_state option:selected").val();
       $.ajax({
         type: "POST",
-        url: "{{url('/admin')}}/getCity",
+        url: "<?php echo e(url('/admin')); ?>/getCity",
         data: {
           state: state_id
         }
@@ -154,7 +155,7 @@
       var city_id = $("#operation_manager_city option:selected").val();
       $.ajax({
         type: "POST",
-        url: "{{url('/admin')}}/getArea",
+        url: "<?php echo e(url('/admin')); ?>/getArea",
         data: {
           city: city_id
         }
@@ -164,4 +165,5 @@
     });
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\nutridock_sub\resources\views/admin/operationmanager/add.blade.php ENDPATH**/ ?>

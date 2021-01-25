@@ -109,6 +109,10 @@
 		<li class="hover-item">
 			<a href="http://order.nutridock.com/" class="hvr-icon-wobble-horizontal"><img src="<?php echo e(url('')); ?>/public/front/img/order-cart.svg"> <b class="footer-sticky1">Order Now</b></a>
 		</li>
+
+		<li class="hover-item">
+			<a href="<?php echo e(url('')); ?>/subscribe_info" class="hvr-icon-wobble-horizontal"><img src="<?php echo e(url('')); ?>/public/front/img/diat-plan.svg"> <b class="footer-sticky1">Subscription</b></a>
+		</li>
 	</ul>
 </div>
 

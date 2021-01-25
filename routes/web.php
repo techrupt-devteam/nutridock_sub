@@ -133,6 +133,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/dashbord',		 	 'Admin\AuthController@dashbord');
 
 	//user table
+	
 	Route::get('/manage_users',		 'Admin\UserController@index');
 	Route::get('/add_user',		 	 'Admin\UserController@add');
 	Route::post('/store_user',		 'Admin\UserController@store');
@@ -142,6 +143,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/getArea',	 		 'Admin\UserController@getArea');
 
 	//Module Master Routes
+	
 	Route::get('/manage_module',		 'Admin\ModuleController@index');
 	Route::get('/add_module',		 	 'Admin\ModuleController@add');
 	Route::post('/store_module',		 'Admin\ModuleController@store');
@@ -150,6 +152,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/delete_module/{id}',	 'Admin\ModuleController@delete');
 
 	//Role Master Routes
+	
 	Route::get('/manage_role',		 'Admin\RoleController@index');
 	Route::get('/add_role',		 	 'Admin\RoleController@add');
 	Route::post('/store_role',		 'Admin\RoleController@store');
@@ -158,6 +161,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/delete_role/{id}',	 'Admin\RoleController@delete');
 
 	//Role Permisssions
+	
 	Route::get('/manage_permission',		 'Admin\PermissionController@index');
 	Route::get('/add_permission',		 	 'Admin\PermissionController@add');
 	Route::post('/store_permission',		 'Admin\PermissionController@store');
@@ -168,18 +172,22 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/getmenulist',	 			 'Admin\PermissionController@get_menu_list');
 
     //Nutritionsit Master Routes
+	
 	Route::get('/manage_nutritionsit',		 'Admin\NutritionsitController@index');
 	Route::get('/add_nutritionsit',		 	 'Admin\NutritionsitController@add');
 	Route::post('/store_nutritionsit',		 'Admin\NutritionsitController@store');
 	Route::get('/edit_nutritionsit/{id}',	 'Admin\NutritionsitController@edit');
 	Route::post('/update_nutritionsit/{id}', 'Admin\NutritionsitController@update');
 	Route::get('/delete_nutritionsit/{id}',	 'Admin\NutritionsitController@delete');
-	
+	Route::post('/status_nutritionsit',	     'Admin\NutritionsitController@status');
+
 	//ajax state city routes
+	
 	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
 	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
 
 	//plan master routes
+	
 	Route::get('/manage_plan',		  'Admin\PlanController@index');
 	Route::get('/add_plan',		 	  'Admin\PlanController@add');
 	Route::post('/store_plan',		  'Admin\PlanController@store');
@@ -189,6 +197,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/plan_status',	      'Admin\PlanController@status');
 
 	//Subscription master routes
+	
 	Route::get('/manage_subscription_plan',		   'Admin\SubscriptionController@index');
 	Route::get('/add_subscription_plan',		   'Admin\SubscriptionController@add');
 	Route::post('/store_subscription_plan',		   'Admin\SubscriptionController@store');
@@ -198,8 +207,25 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
 	Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
 	
-	//
+	//operation manager  routes
+	
+	Route::get('/manage_operation_manager',		 'Admin\OperationManagerController@index');
+	Route::get('/add_operation_manager',		 'Admin\OperationManagerController@add');
+	Route::post('/store_operation_manager',		 'Admin\OperationManagerController@store');
+	Route::get('/edit_operation_manager/{id}',	 'Admin\OperationManagerController@edit');
+	Route::post('/update_operation_manager/{id}','Admin\OperationManagerController@update');
+	Route::get('/delete_operation_manager/{id}', 'Admin\OperationManagerController@delete');
+	Route::post('/status_operation_manager',	  'Admin\OperationManagerController@status');
 
+	//operation manager routes
+	
+	Route::get('/manage_location',		  'Admin\LocationsController@index');
+	Route::get('/add_location',		  'Admin\LocationsController@add');
+	Route::post('/store_location',		  'Admin\LocationsController@store');
+	Route::get('/edit_location/{id}',	  'Admin\LocationsController@edit');
+	Route::post('/update_location/{id}', 'Admin\LocationsController@update');
+	Route::get('/delete_location/{id}',  'Admin\LocationsController@delete');
+	Route::post('/status_location',	  'Admin\LocationsController@status');
 
 
 });

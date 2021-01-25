@@ -66,7 +66,7 @@
             </ul>
         </li> 
 
-        <li class="treeview  <?php if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'): ?> active <?php endif; ?> ">
+        <li class="treeview  <?php if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'): ?> active <?php endif; ?> ">
             <a href="#">
               <i class="fa fa-television"></i> <span>Master</span>
               <span class="pull-right-container">
@@ -82,21 +82,27 @@
                 </a>
               </li>
               <li <?php if(Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'): ?> class="active" <?php endif; ?>>
-                <a href="<?php echo e(url('/admin')); ?>/manage_role">
-                  <i class="fa fa-circle-o"></i> <span>Operation Manager </span>
+                <a href="<?php echo e(url('/admin')); ?>/manage_operation_manager">
+                  <i class="fa fa-circle-o"></i> <span>Operation Manager</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
               </li>
                <li <?php if(Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'): ?> class="active" <?php endif; ?>>
-                <a href="<?php echo e(url('/admin')); ?>/manage_permission">
+                <a href="<?php echo e(url('/admin')); ?>/manage_subscription_plan">
                   <i class="fa fa-circle-o"></i> <span> Subscription Plan </span>
                   <span class="pull-right-container">
                   </span>
                 </a>
               </li>
-              <li <?php if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'): ?> class="active" <?php endif; ?>>
-                <a href="<?php echo e(url('/admin')); ?>/manage_permission">
+              <li <?php if(Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'): ?> class="active" <?php endif; ?>>
+                <a href="<?php echo e(url('/admin')); ?>/manage_plan">
+                  <i class="fa fa-circle-o"></i> <span> Plan </span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li><li <?php if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'): ?> class="active" <?php endif; ?>>
+                <a href="<?php echo e(url('/admin')); ?>/manage_location">
                   <i class="fa fa-circle-o"></i> <span> Location </span>
                   <span class="pull-right-container">
                   </span>
@@ -136,13 +142,13 @@
               </li>
             </ul>
         </li>
-        <li <?php if(Request::segment(2)=='manage_users' || Request::segment(2)=='add_user'|| Request::segment(2)=='edi_usert'): ?> class="active" <?php endif; ?>>
+      <!--   <li <?php if(Request::segment(2)=='manage_users' || Request::segment(2)=='add_user'|| Request::segment(2)=='edi_usert'): ?> class="active" <?php endif; ?>>
           <a href="<?php echo e(url('/admin')); ?>/manage_users">
             <i class="fa fa-users"></i> <span>Users</span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li>
+        </li> -->
         <li class="treeview <?php if(Request::segment(2)=='change_password'): ?> active <?php endif; ?>">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>
