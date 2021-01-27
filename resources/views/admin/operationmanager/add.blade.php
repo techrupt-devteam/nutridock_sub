@@ -82,7 +82,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" >
+                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" onchange="getArea();">
                           <option value="">-Select City-</option>t
                           <option value=""></option>t
                         </select>
@@ -93,7 +93,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true" onchange="getArea();">
+                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true">
                           <option value="">-Select Area-</option>t
                           <option value=""></option>t
                         </select>
@@ -110,7 +110,7 @@
                           <option value="">-Select Role-</option>t
                           @foreach($role as $rvalue)
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach
                         </select>
                       </div>

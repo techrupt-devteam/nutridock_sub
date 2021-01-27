@@ -109,7 +109,7 @@
                         <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
                           <option value="">-Select Role-</option>t
                           @foreach($role as $rvalue)
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach
                         </select>
                       </div>
