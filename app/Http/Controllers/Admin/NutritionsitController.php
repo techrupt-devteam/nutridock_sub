@@ -45,6 +45,8 @@ class NutritionsitController extends Controller
                      ->join('locations','users.area','=','locations.id')
                      ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
                      ->where('users.roles','=',1)
+                     ->where('users.is_deleted','<>',1)
+                     ->orderBy('id', 'DESC')
                      ->get();
 
          if(!empty($data))
@@ -59,8 +61,8 @@ class NutritionsitController extends Controller
         $data['title']     = $this->title;
         return view($this->folder_path.'index',$data);
     }
- 
 
+   
     //nutritionsit folder add view call function for insert data
     public function add()
     {
@@ -232,13 +234,7 @@ class NutritionsitController extends Controller
         
     }
 
-    public function delete($id)
-    {
-        $this->base_model->where(['id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();
-    }
-
+   
      public function send_mail($html_body,$reciver_mail,$subject)
      {
             $html_content ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -283,6 +279,32 @@ class NutritionsitController extends Controller
             } 
                
       }
+
+
+    public function delete($id)
+    {
+        $arr_data               = [];
+        $arr_data['is_deleted'] = '1';
+        $this->base_model->where(['id'=>$id])->update($arr_data);
+        Session::flash('success', 'Success! Record deleted successfully.');
+        return \Redirect::back();
+    } 
+
+    public function status(Request $request)
+    {
+        $status  = $request->status;
+        $id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+           $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+           $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['id'=>$id])->update($arr_data);
+    }
 
 
 }

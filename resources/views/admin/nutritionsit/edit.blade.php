@@ -74,7 +74,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_state" id="nutritionsit_state" required="true">
+                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity()">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           @php 
@@ -92,7 +92,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_city" id="nutritionsit_city" required="true">
+                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()">
                           <option value="">-Select City-</option>t
                           <option value=""></option>t
                         </select>
@@ -103,7 +103,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control" name="nutritionsit_area" id="nutritionsit_area" required="true">
+                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
                           <option value="">-Select Area-</option>t
                           <option value=""></option>t
                         </select>
@@ -159,11 +159,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script type="text/javascript">
     $(document).ready(function() {
-       getCity(); 
-       getArea();   
+       get_City(); 
+       get_Area();   
     });
 
-    function getCity() 
+    function get_City() 
     {        
         var state_id = $('#nutritionsit_state').val()                   
         var city_id  = <?php echo  $data['city'];?>;            
@@ -178,7 +178,7 @@
         });
     };
 
-    function getArea() 
+    function get_Area() 
     {        
         var city_id = <?php echo  $data['city'];?>;   
         var area_id = <?php echo  $data['area'];?>;
@@ -194,8 +194,8 @@
     };
 
   //load city drop down script 
-  $("#nutritionsit_state").change(function() {
-    
+  //$("#nutritionsit_state").change(function() {
+    function getCity(){
       var state_id = $("#nutritionsit_state").val();
       $.ajax({
         type: "POST",
@@ -206,10 +206,12 @@
       }).done(function(data) {
            $("#nutritionsit_city").html(data);
       });
-    });
+    }
+   // });
  
   //load area drop down script 
-  $("#nutritionsit_city").change(function() {
+ // $("#nutritionsit_city").change(function() {
+     function getArea(){
       var city_id = $("#nutritionsit_city").val();
       $.ajax({
         type: "POST",
@@ -220,7 +222,8 @@
       }).done(function(data) {
            $("#nutritionsit_area").html(data);
       });
-    });
+       }
+    //});
 
    //checkbox show hide
    $(function () {

@@ -32,7 +32,8 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Name</th>
+                  <th>Subscription Plan Name</th>
+                  <th>Plan Name</th>
                   <th>City</th>
                   <th>Area</th>
                   <th>Action</th>
@@ -44,6 +45,7 @@
                     <tr>
                       <td>{{$key+1}}</td>
                       <td>{{ucfirst($value->sub_name)}}</td>
+                      <td>{{ucfirst($value->plan_name)}}</td>
                       <td>{{ucfirst($value->city_name)}}</td>
                       <td>{{ucfirst($value->area_name)}}</td>
                    
@@ -118,7 +120,7 @@
               data: {status:status,plan_ids:plan_id},
               success: function (data) 
               {
-                swal("Good job!", "plan status successfully changed !", "success");
+                swal("Success", "Subscription plan status successfully changed !", "success");
               }
           });
         }

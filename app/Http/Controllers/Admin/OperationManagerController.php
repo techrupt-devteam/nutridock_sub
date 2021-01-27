@@ -29,12 +29,12 @@ class OperationManagerController extends Controller
         $this->base_city     = $City; 
         $this->base_state    = $State; 
         $this->base_role     = $Role;  
-        $this->title         = "operationmanager";
-        $this->url_slug      = "operationmanager";
+        $this->title         = "Operation Manager";
+        $this->url_slug      = "operation_manager";
         $this->folder_path   = "admin/operationmanager/";
     }
     
-    //nutritionsit folder index view call  function
+    //operation_manager folder index view call  function
     public function index()
     {
         $arr_data = [];
@@ -44,15 +44,15 @@ class OperationManagerController extends Controller
                      ->join('city','users.city','=','city.id')
                      ->join('locations','users.area','=','locations.id')
                      ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
-                     ->where('users.roles','=',1)
+                     ->where('users.roles','=',2)
+                     ->where('users.is_deleted','<>',1)
+                     ->orderBy('id', 'DESC')
                      ->get();
 
          if(!empty($data))
         {
             $arr_data = $data->toArray();
         }     
-         
-      
         $data['data']      = $arr_data;
         $data['page_name'] = "Manage";
         $data['url_slug']  = $this->url_slug;
@@ -61,7 +61,7 @@ class OperationManagerController extends Controller
     }
  
 
-    //nutritionsit folder add view call function for insert data
+    //operation_manager folder add view call function for insert data
     public function add()
     {
         $role              = $this->base_role->get();
@@ -75,17 +75,17 @@ class OperationManagerController extends Controller
     }
 
 
-    //store nutritionsit save function     
+    //store operation_manager save function     
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-                'nutritionsit_name'   => 'required',
-                'nutritionsit_email'  => 'required',
-                'nutritionsit_mobile' => 'required',
-                'nutritionsit_city'   => 'required',
-                'nutritionsit_state'  => 'required',
-                'nutritionsit_area'   => 'required',
-                'nutritionsit_role'   => 'required'
+                'operation_manager_name'   => 'required',
+                'operation_manager_email'  => 'required',
+                'operation_manager_mobile' => 'required',
+                'operation_manager_city'   => 'required',
+                'operation_manager_state'  => 'required',
+                'operation_manager_area'   => 'required',
+                'operation_manager_role'   => 'required'
             ]);
 
         if ($validator->fails()) 
@@ -93,31 +93,31 @@ class OperationManagerController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['name'=>$request->input('nutritionsit_name'),'mobile'=>$request->input('nutritionsit_mobile')])->count();
+        $is_exist = $this->base_model->where(['name'=>$request->input('operation_manager_name'),'mobile'=>$request->input('operation_manager_mobile')])->count();
 
         if($is_exist)
         {
-            Session::flash('error', "Nutritionsit already exist!");
+            Session::flash('error', "operation_manager already exist!");
             return \Redirect::back();
         }
 
         $password             = uniqid();
         $arr_data                          = [];
-        $arr_data['name']     = $request->input('nutritionsit_name');
-        $arr_data['email']    = $request->input('nutritionsit_email');
-        $arr_data['mobile']   = $request->input('nutritionsit_mobile');
-        $arr_data['city']     = $request->input('nutritionsit_city');
-        $arr_data['state']    = $request->input('nutritionsit_state');
-        $arr_data['area']     = $request->input('nutritionsit_area');
-        $arr_data['roles']    = $request->input('nutritionsit_role');
+        $arr_data['name']     = $request->input('operation_manager_name');
+        $arr_data['email']    = $request->input('operation_manager_email');
+        $arr_data['mobile']   = $request->input('operation_manager_mobile');
+        $arr_data['city']     = $request->input('operation_manager_city');
+        $arr_data['state']    = $request->input('operation_manager_state');
+        $arr_data['area']     = $request->input('operation_manager_area');
+        $arr_data['roles']    = $request->input('operation_manager_role');
         $arr_data['password'] = bcrypt($password);
 
-        $store_nutritionsit = $this->base_model->create($arr_data);
+        $store_operation_manager = $this->base_model->create($arr_data);
       
-        if(!empty($store_nutritionsit))
+        if(!empty($store_operation_manager))
         {
             $arr_dat = []; 
-            $arr_dat['user_id'] = $store_nutritionsit->id; 
+            $arr_dat['user_id'] = $store_operation_manager->id; 
             $arr_dat['completed_at'] = 1; 
             $arr_dat['completed'] = 1;   
             $activations = \DB::table('activations')->insert($arr_dat);
@@ -128,16 +128,15 @@ class OperationManagerController extends Controller
                 <tr>
                   <td style="color: #1a2127; font-family: Arial, sans-serif;">
                     <h1 style="font-size: 24px; color: #6dc83c;">Welcome to Nutridock Team,</h1>
-                    <h2 style="margin: 0px;text-transform: uppercase">Hello, '.ucfirst($request->input('nutritionsit_name')).'</h2>
+                    <h2 style="margin: 0px;text-transform: uppercase">Hello, '.ucfirst($request->input('operation_manager_name')).'</h2>
                   </td>
                 </tr>
                 <tr>
                   <td style="color: #222; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
-                    <p style="margin: 0;">To start using your Nutridock account, login to Nutrionist Panel using following login credentials:</p>
-                    <p><b>Nutridock Panel Url</b>: nutridoc.com</p>
-                    <p><b>Username:</b> '.ucfirst($request->input('nutritionsit_email')).'</p>
+                    <p style="margin: 0;">To start using your Nutridock account, login to Operation Panel using following login credentials:</p>
+                    <p><b>Operation Panel Url</b>: nutridoc.com</p>
+                    <p><b>Username:</b> '.ucfirst($request->input('operation_manager_email')).'</p>
                     <p><b>Password:</b> '.$password.'</p>
-
                   </td>
                 </tr>
                 <tr>
@@ -148,12 +147,12 @@ class OperationManagerController extends Controller
               </table>
             </td></tr>';
 
-            $subject ="Nutritionsit Login Details";
+            $subject ="Operation Panel Login Details";
 
-            $this->send_mail($html,$request->input('nutritionsit_email'),$subject);
+            $this->send_mail($html,$request->input('operation_manager_email'),$subject);
             
             Session::flash('success', 'Success! Record added successfully.'.uniqid());
-            return \Redirect::to('admin/manage_nutritionsit');
+            return \Redirect::to('admin/manage_operation_manager');
         }
         else
         {
@@ -162,7 +161,7 @@ class OperationManagerController extends Controller
         }
     }
    
-    //nutritionsit folder edit view call function for edit 
+    //operation_manager folder edit view call function for edit 
     public function edit($id)
     {
         $arr_data = [];
@@ -183,62 +182,56 @@ class OperationManagerController extends Controller
         return view($this->folder_path.'edit',$data);
     }
 
-    //nutritionsit update function 
+    //operation_manager update function 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-                'nutritionsit_name'   => 'required',
-                'nutritionsit_email'  => 'required',
-                'nutritionsit_mobile' => 'required',
-                'nutritionsit_city'   => 'required',
-                'nutritionsit_state'  => 'required',
-                'nutritionsit_area'   => 'required',
-                'nutritionsit_role'   => 'required'
+                'operation_manager_name'   => 'required',
+                'operation_manager_email'  => 'required',
+                'operation_manager_mobile' => 'required',
+                'operation_manager_city'   => 'required',
+                'operation_manager_state'  => 'required',
+                'operation_manager_area'   => 'required',
+                'operation_manager_role'   => 'required'
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
 
-        $is_exist = $this->base_model->where('id','<>',$id)->where(['name'=>$request->input('nutritionsit_name'),'mobile'=>$request->input('nutritionsit_mobile')])
+        $is_exist = $this->base_model->where('id','<>',$id)->where(['name'=>$request->input('operation_manager_name'),'mobile'=>$request->input('operation_manager_mobile')])
                     ->count();
 
         if($is_exist)
         {
-            Session::flash('error', "Nutritionsit already exist!");
+            Session::flash('error', "operation_manager already exist!");
             return \Redirect::back();
         }
         $arr_data             = [];
-        $arr_data['name']     = $request->input('nutritionsit_name');
-        $arr_data['email']    = $request->input('nutritionsit_email');
-        $arr_data['mobile']   = $request->input('nutritionsit_mobile');
-        $arr_data['city']     = $request->input('nutritionsit_city');
-        $arr_data['state']    = $request->input('nutritionsit_state');
-        $arr_data['area']     = $request->input('nutritionsit_area');
-        $arr_data['roles']    = $request->input('nutritionsit_role');
+        $arr_data['name']     = $request->input('operation_manager_name');
+        $arr_data['email']    = $request->input('operation_manager_email');
+        $arr_data['mobile']   = $request->input('operation_manager_mobile');
+        $arr_data['city']     = $request->input('operation_manager_city');
+        $arr_data['state']    = $request->input('operation_manager_state');
+        $arr_data['area']     = $request->input('operation_manager_area');
+        $arr_data['roles']    = $request->input('operation_manager_role');
 
-        if(!empty($request->input('nutritionsit_password_new'))){
-            $arr_data['password'] = bcrypt($request->input('nutritionsit_password_new'));
+        if(!empty($request->input('operation_manager_password_new'))){
+            $arr_data['password'] = bcrypt($request->input('operation_manager_password_new'));
         }else
         {
             $arr_data['password'] = bcrypt($request->input('password'));  
         }
 
 
-        $update_nutritionsit  = $this->base_model->where(['id'=>$id])->update($arr_data);
+        $update_operation_manager  = $this->base_model->where(['id'=>$id])->update($arr_data);
 
         Session::flash('success', 'Success! Record update successfully.');
-        return \Redirect::to('admin/manage_nutritionsit');
+        return \Redirect::to('admin/manage_operation_manager');
         
     }
 
-    public function delete($id)
-    {
-        $this->base_model->where(['id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();
-    }
-
+  
      public function send_mail($html_body,$reciver_mail,$subject)
      {
             $html_content ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -283,6 +276,32 @@ class OperationManagerController extends Controller
             } 
                
       }
+
+    public function delete($id)
+    {
+        $arr_data               = [];
+        $arr_data['is_deleted'] = '1';
+        $this->base_model->where(['id'=>$id])->update($arr_data);
+        Session::flash('success', 'Success! Record deleted successfully.');
+        return \Redirect::back();
+    } 
+
+    public function status(Request $request)
+    {
+        $status  = $request->status;
+        $id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+           $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+           $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['id'=>$id])->update($arr_data);
+        //return \Redirect::back();
+    }
 
 
 }

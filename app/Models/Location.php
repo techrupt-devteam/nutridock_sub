@@ -9,8 +9,9 @@ class Location extends Model
     protected $table 	   = "locations";
     protected $primaryKey  = "id";
     protected $fillable = [
-		"city_id",
+		"city",
 		"area",
+		"state",
 		"is_active"
 	];
 
