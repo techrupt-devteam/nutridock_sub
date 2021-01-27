@@ -61,8 +61,8 @@ class NutritionsitController extends Controller
         $data['title']     = $this->title;
         return view($this->folder_path.'index',$data);
     }
- 
 
+   
     //nutritionsit folder add view call function for insert data
     public function add()
     {

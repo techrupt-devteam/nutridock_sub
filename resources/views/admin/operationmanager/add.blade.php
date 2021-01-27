@@ -32,7 +32,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Nutritionsit Name" required="true">
+                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Operation Manager Name" required="true">
                       </div>
                     </div>
                   </div>
@@ -44,7 +44,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Nutritionsit Email" required="true">
+                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Operation Manager Email" required="true">
                       </div>
                       </div>
                     </div>
@@ -57,7 +57,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Nutritionsit Mobile" required="true">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Operation Manager Mobile" required="true">
                           </div>
                       </div>
                     </div>
@@ -70,7 +70,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true">
+                         <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true" onchange="getCity();">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
@@ -82,7 +82,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true">
+                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" >
                           <option value="">-Select City-</option>t
                           <option value=""></option>t
                         </select>
@@ -93,7 +93,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true">
+                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true" onchange="getArea();">
                           <option value="">-Select Area-</option>t
                           <option value=""></option>t
                         </select>
@@ -136,8 +136,9 @@
 <script type="text/javascript">
 
   //load city drop down script 
-  $("select#operation_manager_state").change(function() {
-      var state_id = $("#operation_manager_state option:selected").val();
+  //$("select#operation_manager_state").change(function() {
+    function  getCity(){
+      var state_id = $("#operation_manager_state").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getCity",
@@ -147,11 +148,15 @@
       }).done(function(data) {
            $("#operation_manager_city").html(data);
       });
-    });
+    }  
+
+
+   // });
  
   //load area drop down script 
-  $("select#operation_manager_city").change(function() {
-      var city_id = $("#operation_manager_city option:selected").val();
+  //$("select#operation_manager_city").change(function() {
+      function  getArea(){
+      var city_id = $("#operation_manager_city").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
@@ -161,7 +166,8 @@
       }).done(function(data) {
            $("#operation_manager_area").html(data);
       });
-    });
+    }
+   // });
 
 </script>
 @endsection

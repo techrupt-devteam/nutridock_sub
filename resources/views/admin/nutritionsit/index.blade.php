@@ -106,7 +106,7 @@
                 data: {status:status,plan_ids:plan_id},
                 success: function (data) 
                 {
-                  swal("Good job!", "Nutritionsit status successfully changed !", "success");
+                  swal("Success", "Nutritionsit status successfully changed !", "success");
                 }
             });
           }

@@ -180,6 +180,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_nutritionsit/{id}', 'Admin\NutritionsitController@update');
 	Route::get('/delete_nutritionsit/{id}',	 'Admin\NutritionsitController@delete');
 	Route::post('/status_nutritionsit',	     'Admin\NutritionsitController@status');
+	Route::post('/calender',	             'Admin\NutritionsitController@calender');
 
 	//ajax state city routes
 	

@@ -100,7 +100,7 @@
               data: {status:status,plan_ids:plan_id},
               success: function (data) 
               {
-                swal("Good job!", "plan status successfully changed !", "success");
+                swal("Success", "plan status successfully changed !", "success");
               }
           });
         }

@@ -106,7 +106,7 @@
                 data: {status:status,plan_ids:plan_id},
                 success: function (data) 
                 {
-                  swal("Good job!", "Operation Manager status successfully changed !", "success");
+                  swal("Success", "Operation Manager status successfully changed !", "success");
                 }
             });
           }
