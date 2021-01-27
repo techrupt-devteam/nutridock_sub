@@ -31,20 +31,20 @@
                 <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name" required="true">
+                        <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
+                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Operation Manager Name" required="true">
                       </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_email">Email<span style="color:red;" >*</span></label>
+                        <label for="operation_manager_email">Email<span style="color:red;" >*</span></label>
                         <div class="input-group">
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true">
+                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Operation Manager Email" required="true">
                       </div>
                       </div>
                     </div>
@@ -52,12 +52,12 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Mobile<span style="color:red;" >*</span></label>
+                        <label for="operation_manager_name">Mobile<span style="color:red;" >*</span></label>
                          <div class="input-group">
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Operation Manager Mobile" required="true">
                           </div>
                       </div>
                     </div>
@@ -69,8 +69,8 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity();">
+                        <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true" onchange="getCity();">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
@@ -81,10 +81,10 @@
                   </div><div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()">
-                          <option value="">-Select City-</option>
-                          <option value=""></option>
+                        <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" onchange="getArea();">
+                          <option value="">-Select City-</option>t
+                          <option value=""></option>t
                         </select>
                       </div>
                     </div>
@@ -92,10 +92,10 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
+                        <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true">
                           <option value="">-Select Area-</option>t
-                          <option value=""></option>
+                          <option value=""></option>t
                         </select>
                       </div>
                     </div>
@@ -105,11 +105,12 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
-                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
+                        <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
+                        <select class="form-control" name="operation_manager_role" id="operation_manager_role" required="true" readonly>
                           <option value="">-Select Role-</option>t
                           @foreach($role as $rvalue)
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach
                         </select>
                       </div>
@@ -135,9 +136,9 @@
 <script type="text/javascript">
 
   //load city drop down script 
-//  $("select#nutritionsit_state").change(function() {
-   function  getCity(){
-      var state_id = $("#nutritionsit_state").val();
+  //$("select#operation_manager_state").change(function() {
+    function  getCity(){
+      var state_id = $("#operation_manager_state").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getCity",
@@ -145,15 +146,17 @@
           state: state_id
         }
       }).done(function(data) {
-           $("#nutritionsit_city").html(data);
+           $("#operation_manager_city").html(data);
       });
-    }
-  //  });
+    }  
+
+
+   // });
  
   //load area drop down script 
-  //$("select#nutritionsit_city").change(function() {
+  //$("select#operation_manager_city").change(function() {
       function  getArea(){
-      var city_id = $("#nutritionsit_city").val();
+      var city_id = $("#operation_manager_city").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
@@ -161,10 +164,10 @@
           city: city_id
         }
       }).done(function(data) {
-           $("#nutritionsit_area").html(data);
+           $("#operation_manager_area").html(data);
       });
     }
-  //  });
+   // });
 
 </script>
 @endsection

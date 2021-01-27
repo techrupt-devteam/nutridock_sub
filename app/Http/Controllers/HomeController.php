@@ -42,11 +42,26 @@ class HomeController extends Controller
     }
 
 
-    /*public function landing()
-    {
-        return view('landing');
+    public function dashboard()
+    {   
+        $data=[];
+        $data['seo_title'] = "Home";
+
+         /*Recent Data*/
+        $recent_data = [];
+        $recent_value     = \DB::table('blog')
+                        ->orderby('id','DESC')
+                        ->limit(3)
+                        ->get();
+        if($recent_value)
+        {
+            $recent_data = $recent_value->toArray();
+        }
+        $data['recent_data']  = $recent_data;
+       
+        return view('dashboard',$data);
     }
-*/
+
 
     public function index()
     {

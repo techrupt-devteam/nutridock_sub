@@ -23,46 +23,42 @@
           @include('admin.layout._status_msg')
           <div class="box">
             <div class="box-header">
-            
-              <a href="{{url('/admin')}}/add_location" class="btn btn-primary btn-sm" style="float: right;">Add location</a>
+              <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Operation Manager</a>
             </div>
-            
-            
             <!-- /.box-header -->
-            <div class="box-body" style="overflow-x:auto;">
+            <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Sr. No.</th>
-                  <th>State</th>
+                  <th>Sr.No.</th>
+                  <th>Name</th>
+                  <th>Eamil</th>
+                  <th>Mobile</th>
+                  <th>state</th>
                   <th>City</th>
                   <th>Area</th>
-                  <th class="text-center">Action</th>
+                  <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
+              
                   @foreach($data as $key=>$value)
                     <tr>
+                      <td>{{$key+1}}</td>
+                      <td>{{ucfirst($value->name)}}</td>
+                      <td>{{$value->email}}</td>
+                      <td>{{$value->mobile}}</td>
+                      <td>{{$value->state_name}}</td>
+                      <td>{{$value->city_name}}</td>
+                      <td>{{$value->area_name}}</td>
                       <td>
-                        {{$key+1}}
-                      </td>
-                      <td>
-                        {{$value->name}}
-                      </td>
-                      <td>
-                        {{$value->city_name}}
-                      </td>
-                      <td>
-                        {{$value->area}}
-                      </td>
-                      
-                       <td class="text-center">
-                      <!--   @if($value->is_active=='1')
+                         @if($value->is_active=='1')
                            @php $checked="checked"; $style="success"; @endphp 
                         @else
                            @php $checked=""; $style="danger";@endphp 
                         @endif
-                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" > -->
+                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
@@ -71,7 +67,6 @@
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
-                      
                     </tr>
                   @endforeach
                 </tbody>
@@ -88,5 +83,34 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+ <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+<script type="text/javascript">
+    function change_Status(id,plan_id) 
+    {  
+
+        swal({
+          title: "Operation Manager status",
+          text:  "Are You sure to change status",
+          icon:  "warning",
+          dangerMode: true,
+          }).then(function(isConfirm) {
+          if (isConfirm) { 
+          var status = $("#"+id+"_is_active").prop('checked');
+          var plan_ids = plan_id;
+          //alert(status);
+           $.ajax({
+                url: "{{url('/admin')}}/status_operation_manager",
+                type: 'post',
+                data: {status:status,plan_ids:plan_id},
+                success: function (data) 
+                {
+                  swal("Success", "Operation Manager status successfully changed !", "success");
+                }
+            });
+          }
+        });
+     }
+</script>
 @endsection

@@ -35,20 +35,20 @@
                 <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                        <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
+                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" placeholder="Operation Manager Name"  value="{{$data['name']}}"required="true">
                       </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_email">Email<span style="color:red;" >*</span></label>
+                        <label for="operation_manager_email">Email<span style="color:red;" >*</span></label>
                         <div class="input-group">
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}">
+                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Operation Manager Email" required="true" value="{{$data['email']}}">
                       </div>
                       </div>
                     </div>
@@ -56,12 +56,12 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Mobile<span style="color:red;" >*</span></label>
+                        <label for="operation_manager_name">Mobile<span style="color:red;" >*</span></label>
                          <div class="input-group">
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Operation Manager Mobile" required="true"  value="{{$data['mobile']}}">
                           </div>
                       </div>
                     </div>
@@ -73,8 +73,8 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity()">
+                        <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true" onchange="getCity();">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           @php 
@@ -91,8 +91,8 @@
                   </div><div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()">
+                        <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" onchange="getArea();">
                           <option value="">-Select City-</option>t
                           <option value=""></option>t
                         </select>
@@ -102,8 +102,8 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
+                        <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true">
                           <option value="">-Select Area-</option>t
                           <option value=""></option>t
                         </select>
@@ -115,12 +115,12 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
-                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
+                        <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
+                        <select class="form-control" name="operation_manager_role" id="operation_manager_role" required="true" readonly>
                           <option value="">-Select Role-</option>t
                           @foreach($role as $rvalue)
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach
                         </select>
                       </div>
@@ -132,8 +132,8 @@
                       <div class="box-body"><span><b>Do You want to change nutrionsit password please check checkbox on update password</b></span> <hr/>
                         <div class="col-md-4">
                           <div class="form-group" >
-                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="nutritionsit_update">  Update Passsword</label></label>
-                              <input type="text" class="form-control"  id="nutritionsit_password_new" name="nutritionsit_password_new" placeholder="New Password" style="display: none !important;">
+                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="operation_manager_update">  Update Passsword</label></label>
+                              <input type="text" class="form-control"  id="operation_manager_password_new" name="operation_manager_password_new" placeholder="New Password" style="display: none !important;">
                               <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
                           </div>
                         </div>
@@ -161,11 +161,14 @@
     $(document).ready(function() {
        get_City(); 
        get_Area();   
+
+
+
     });
 
     function get_City() 
     {        
-        var state_id = $('#nutritionsit_state').val()                   
+        var state_id = $('#operation_manager_state').val()                   
         var city_id  = <?php echo  $data['city'];?>;            
         $.ajax({
             url: "{{url('/admin')}}/getCity",
@@ -173,7 +176,7 @@
             data: { state: state_id ,city:city_id},
             success: function (data) 
             {
-              $("#nutritionsit_city").html(data);
+              $("#operation_manager_city").html(data);
             }
         });
     };
@@ -188,15 +191,15 @@
             data: {city: city_id,area:area_id},
             success: function (data) 
             {
-              $("#nutritionsit_area").html(data);
+              $("#operation_manager_area").html(data);
             }
         });
     };
 
   //load city drop down script 
-  //$("#nutritionsit_state").change(function() {
+ 
     function getCity(){
-      var state_id = $("#nutritionsit_state").val();
+      var state_id = $("#operation_manager_state").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getCity",
@@ -204,15 +207,13 @@
           state: state_id
         }
       }).done(function(data) {
-           $("#nutritionsit_city").html(data);
+           $("#operation_manager_city").html(data);
       });
-    }
-   // });
+   }
  
   //load area drop down script 
- // $("#nutritionsit_city").change(function() {
-     function getArea(){
-      var city_id = $("#nutritionsit_city").val();
+    function getArea(){
+      var city_id = $("#operation_manager_city").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getArea",
@@ -220,20 +221,19 @@
           city: city_id
         }
       }).done(function(data) {
-           $("#nutritionsit_area").html(data);
+           $("#operation_manager_area").html(data);
       });
-       }
-    //});
-
+    }
+   
    //checkbox show hide
    $(function () {
         $("#chkPassword").click(function () {
             if ($(this).is(":checked")) {
-                $("#nutritionsit_password_new").show();
-                $("#nutritionsit_password_new").attr("required","true");
+                $("#operation_manager_password_new").show();
+                $("#operation_manager_password_new").attr("required","true");
             } else {
-                $("#nutritionsit_password_new").hide();
-                $("#nutritionsit_password_new").removeAttr("required");
+                $("#operation_manager_password_new").hide();
+                $("#operation_manager_password_new").removeAttr("required");
                 $(".parsley-required").hide();
             }
         });
