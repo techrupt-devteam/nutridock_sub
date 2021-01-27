@@ -1,5 +1,4 @@
-@extends('layouts.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <main>
    <section class="user-panel">
       <div class="container">
@@ -51,7 +50,7 @@
                   <div class="user-details">
                   <div class="inner">
                      <div>
-                        <img src="{{url('')}}/public/front/img/no-image.jpeg" alt="user" class="profile-img">
+                        <img src="<?php echo e(url('')); ?>/public/front/img/no-image.jpeg" alt="user" class="profile-img">
                      </div>
                      <div>
                         <div class="name">Surendra Singh Rathore</div>
@@ -179,4 +178,5 @@
      </div>
    </div>
  </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\nutridock_sub\resources\views/dashboard.blade.php ENDPATH**/ ?>
