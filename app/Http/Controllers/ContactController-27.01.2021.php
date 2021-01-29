@@ -87,34 +87,16 @@ class ContactController extends Controller
             $cc = 'developer@techrupt.in';
             $bcc = array('it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
             $subject = 'Thank You for connecting with us';
-            $customer_mail = Mail::send('contactmail', $data, function($message) use($to, $subject, $cc, $bcc) {
+            Mail::send('contactmail', $data, function($message) use($to, $subject, $cc, $bcc) {
                 $message->to($to);
                 $message->cc($cc);
                 $message->bcc($bcc);
                 $message->subject($subject);
-                $message->from('admin@nutridock.com','Nutridock-Admin');
+                $message->from('admin@nutridock.com','Nutridock');
             });
-
-            //send  admin  mail  function 
-           // $to = $arr_data['email'];
-           
-            $to1 = 'webdeveloper@techrupt.in';
-            //$bcc = array('admin@nutridock.com','it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
-            $subject1 = 'New Customer Entry';
-            Mail::send('admincontactmail', $data, function($message) use($to1, $subject1) {
-                $message->to($to);
-                //$message->cc($cc);
-                //$message->bcc($bcc);
-                $message->subject($subject1);
-                $message->from('admin@nutridock.com','Nutridock-Admin');
-            });
-   
-
-
-
             /* @End: code to send email through smtp */
             
-            /*$to = $request->input('email', null); 
+            $to = $request->input('email', null); 
 
             $subject = 'Nutridock';
             $headers = "From: admin@nutridock.com\r\n";//
@@ -125,8 +107,10 @@ class ContactController extends Controller
             $headers .= "BCC: urvashitikmani1310@gmail.com\r\n";
             $headers .= "BCC: geoshinsam@gmail.com\r\n";
             $headers .= "BCC: sales@nutridock.com\r\n";
-            $headers .= "BCC: webdeveloper@techrupt.in\r\n";
-         
+            
+           /* $headers = "From: pagarelaxmi@gmail.com\r\n";
+            $headers .= "Reply-To: pagarelaxmi@gmail.com\r\n";
+            $headers .= "CC: laxmipagare99@gmail.com\r\n";*/
         
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
@@ -199,7 +183,7 @@ class ContactController extends Controller
 
                 </body>
                 </html>';
-                mail ('urvashitikmani1310@gmail.com',"Nutridock - New contact info received",$message2,$headers);*/
+                mail ('urvashitikmani1310@gmail.com',"Nutridock - New contact info received",$message2,$headers);
                 
                 
             return redirect('/thank-you'); 

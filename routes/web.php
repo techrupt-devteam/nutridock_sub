@@ -25,6 +25,10 @@ Route::get('/clear', function() {
  
  });
  
+Route::get('/test', function () {
+    return view('admincontactmail');
+});
+
  Route::get('/', 'HomeController@index')->name('index');
  
  Route::get('dynamicModal/{id}',[
