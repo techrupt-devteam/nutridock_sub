@@ -5,12 +5,18 @@
       @foreach($arr_data as $row)
       <div <?php if($single_data['id']==$row['id']) {?> class="carousel-item active" <?php }else{ ?> class="carousel-item" <?php } ?> >
          <img src="{{url('')}}/uploads/images/{{$row['image']}}" class="d-block w-100" alt="...">
-         <div class="carousel-caption text-md-left text-center">
+         <div class="carousel-caption home-slider">
+            <h3>Thick and Luscious Smoothies</h3>
+            <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.!</p>
+            <a href="http://order.nutridock.com/" target="_tab" class="btn btn-success btn-lg">Order Now</a>
+            <a href="{{url('')}}/subscribe_info" class="btn btn-outline-dark btn-lg">Subscription</a>
+          </div>  
+         <!-- <div class="carousel-caption text-md-left text-center">
             <div class="" data-aos="zoom-out" data-aos-delay="100">
               <a href="http://order.nutridock.com/" target="_tab" class="btn btn-success btn-lg">Order Now</a>
               <a href="{{url('')}}/subscribe_info" class="btn btn-outline-success btn-lg">Subscription</a>
             </div>
-         </div>
+         </div> -->
       </div>
       @endforeach
    </div>
@@ -18,7 +24,9 @@
    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
    <div class="sketch-slider" style=""></div>
 </div>
-<style>.sketch-slider{position:absolute;bottom:0;left:0;width:100%;z-index:3;background:url('{{url('')}}/public/front/img/sketch.png') repeat center bottom;background-size:auto 100%;height:40px}</style>
+<style>
+.sketch-slider{position:absolute;bottom:0;left:0;width:100%;z-index:3;background:url('{{url('')}}/public/front/img/sketch.png') repeat center bottom;background-size:auto 100%;height:40px}
+</style>
 <main id="main">
    <section class="elementor-element">
       <div class="container">

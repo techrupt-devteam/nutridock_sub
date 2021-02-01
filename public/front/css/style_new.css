@@ -187,18 +187,37 @@ margin:1.5rem .5rem!important
 }
 }
 .carousel-caption {
-	position:absolute;
-	padding-top:1.25rem;
-	padding-bottom:1.25rem;
-	color:#222;
-	bottom:10%;
-	z-index:99;
-	font-family:"Prata", Arial, Helvetica, sans-serif;
-	font-size:20px;
-	right:8%;
-	text-align:center;
-	width:320px;
-	left:auto
+	position: absolute;
+	padding-top: 1.25rem;
+	padding-bottom: 1.25rem;
+	color: #222;
+	z-index: 99;
+	font-family: "Prata", Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	text-align: left;
+	top: 50%;
+	transform: translate(-0%, -25%);
+	bottom: auto;	
+	max-width: 600px;
+}
+.home-slider h3 {
+    font-size: 45px;
+    font-weight: 600;
+    color: #1c2a39;
+}
+.btn-outline-dark{
+	color: #1c2a39;
+}
+.btn-outline-dark:hover {
+    background-color: #1c2a39;
+    border-color: #1c2a39;
+}
+.home-slider p {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+	color: #111;
+	margin-bottom: 2rem;
 }
 .slider-containt {
 	font-family:"Prata", Arial, Helvetica, sans-serif;
@@ -4022,7 +4041,7 @@ font-size:.9375rem;
 	margin:0;
 	position:fixed;
 	right:-88px;
-	bottom:35%;
+	bottom:25%;
 	width:140px;
 	z-index:99
 }
