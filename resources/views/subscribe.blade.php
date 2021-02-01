@@ -327,7 +327,7 @@ label {
                     </div>
                   </div>
                   <div class="wizgard-footer">                  
-                    <button class="btn btn-secondary pb-1 pt-1 nextBtn pull-right" type="button" > Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" > Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button>
                   </div>
               </div>
@@ -427,13 +427,13 @@ label {
                 <div class="col-sm-12 mb-3">
                   <div class="row">
                     <div class="col-lg-12">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" style="z-index: auto;">
                         <label class="control-label">Any lifestyle disease? (Diabetes,Cholesterol,etc)</label>
                         <textarea class="form-control" rows="2" name="lifestyle_disease" id="lifestyle_disease" placeholder="Any lifestyle disease"></textarea>
                       </div>
                     </div>
                     <div class="col-lg-12">
-                      <div class="form-group label-floating">
+                      <div class="form-group label-floating" style="z-index: auto;">
                         <label class="control-label">Any food preparation instructions?</label>
                         <textarea class="form-control" rows="2" name="food_precautions" id="food_precautions" placeholder="Any Food Precautions"></textarea>
                       </div>
@@ -443,7 +443,7 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-secondary pb-1 pt-1 nextBtn pull-right" type="submit" >
+                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -498,7 +498,7 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-secondary pb-1 pt-1 nextBtn pull-right" type="button" >
+                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -588,7 +588,7 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-secondary pb-1 pt-1 nextBtn pull-right" type="button" >
+                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button>
                   </div>
