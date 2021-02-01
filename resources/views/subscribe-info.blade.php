@@ -5,114 +5,85 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="{{url('')}}/public/front/img/proper-nutrition.png" alt="Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness." style="max-height: 520px;width: 100%">
-      <div class="carousel-caption">
-        <h1 class="ff-h1 _38">Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness.
-        </h1>
-        <!-- <form action="{{url('')}}/search" target="blank" method="GET"> -->
-        <div class="input-group mx-auto" style="max-width: 460px;">
-          <input type="number" class="form-control pincode" placeholder="Pincode" maxlength="6"  aria-describedby="basic-addon3" required="required">
-         <!--  <input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Mobile" name="phone_no" required="required" maxlength="10" minlength="10" > -->
-          <div class="input-group-append">
-            <span class="input-group-text btn btn-darkblue">
-              <!-- <a href="https://nutridock.com/subscribe_now" class="text-white btn get-start-btn">Get Started</a> -->
-              <button type="submit" value="submit" class="text-white btn get-start-btn" onclick="searchPincode()">Get Started</button>
-            </span>
-          </div>
-        </div>
-        <div class="mx-auto text-left" style="max-width: 460px">
-        <span id="err_pincode_not_available" style="color: red;font-size: 15px;"></span>
-        <span id="err_pincode_value" style="color: red;font-size: 15px;"></span>
-        </div>
-        <!-- </form> -->
-      </div>  
-
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/Pre-workout.png" alt="Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress." style="max-height: 520px;width: 100%">
-      <div class="carousel-caption">
-        <h1 class="ff-h1 _38">Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress.  <br/> Subscribe Now!
-        </h1>
-        
-        <div class="input-group mx-auto" style="max-width: 460px;">
-          <input type="text" class="form-control pincode1" placeholder="Pincode" maxlength="6"  aria-describedby="basic-addon3" required="required">
-          <div class="input-group-append">
-            <span class="input-group-text btn btn-darkblue">
-              <!-- <a href="https://nutridock.com/subscribe_now" class="text-white btn get-start-btn">Get Started</a> -->
-               <button type="submit" value="submit" class="text-white btn get-start-btn" onclick="searchPincode1()">Get Started</button>
-            </span>
-          </div>
-        </div>
-        <div class="mx-auto text-left" style="max-width: 460px">
-          <span id="err_pincode_not_available1" style="color: red;font-size: 15px;"></span>
-          <span id="err_pincode_value1" style="color: red;font-size: 15px;"></span>
-        </div>
-      </div>   
+       
+
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/expert-nutritionist.png" alt="You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. " style="max-height: 520px;width: 100%">
-      <div class="carousel-caption">
-        <h1 class="ff-h1 _38">You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. 
-        </h1>
-        
-       <div class="input-group mx-auto" style="max-width: 460px;">
-          <input type="text" class="form-control pincode2" id="command" placeholder="Pincode" maxlength="6"  aria-describedby="basic-addon3" required="required">
-          <div class="input-group-append">
-            <span class="input-group-text btn btn-darkblue">
-              <!-- <a href="https://nutridock.com/subscribe_now" class="text-white btn get-start-btn">Get Started</a> -->
-              <button type="submit" value="submit" class="text-white btn get-start-btn" onclick="searchPincode2()">Get Started</button>
-            </span>
-          </div>
-        </div>
-        <div class="mx-auto text-left" style="max-width: 460px">
-        <span id="err_pincode_not_available2" style="color: red;font-size: 15px;"></span>
-        <span id="err_pincode_value2" style="color: red;font-size: 15px;"></span>
-      </div>   
-    </div>
+      
+
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/group-woman.png" alt="Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. " style="max-height: 520px;width: 100%">
-      <div class="carousel-caption">
-        <h1 class="ff-h1 _38">Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. 
-        </h1>
-        
-        <div class="input-group mx-auto" style="max-width: 460px;">
-          <input type="text" class="form-control pincode3" id="command" placeholder="Pincode" maxlength="6" aria-describedby="basic-addon3" required="required">
-          <div class="input-group-append">
-            <span class="input-group-text btn btn-darkblue">
-              <!-- <a href="https://nutridock.com/subscribe_now" class="text-white btn get-start-btn">Get Started</a> -->
-              <button type="submit" value="submit" class="text-white btn get-start-btn" onclick="searchPincode3()">Get Started</button>
-            </span>
-          </div>
-        </div>
-        <div class="mx-auto text-left" style="max-width: 460px">
-        <span id="err_pincode_not_available3" style="color: red;font-size: 15px;"></span>
-        <span id="err_pincode_value3" style="color: red;font-size: 15px;"></span>
-      </div>
-      </div>   
+      
+
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/eating-well.png" alt="Eating well is a habit. Cultivate it with our subscription plans customised as per your needs and loaded with flavours. " style="max-height: 520px;width: 100%">
-      <div class="carousel-caption">
-        <h1 class="ff-h1 _38">Eating well is a habit. Cultivate it with our subscription plans customised as per your needs and loaded with flavours. 
-        </h1>
-        
-       <div class="input-group mx-auto" style="max-width: 460px;">
-          <input type="text" class="form-control pincode4" id="command" placeholder="Pincode" maxlength="6" aria-describedby="basic-addon3" required="required">
-          <div class="input-group-append">
-            <span class="input-group-text btn btn-darkblue">
-              <!-- <a href="https://nutridock.com/subscribe_now" class="text-white btn get-start-btn">Get Started</a> -->
-              <button type="submit" value="submit" class="text-white btn get-start-btn" onclick="searchPincode4()">Get Started</button>
-            </span>
-          </div>
-        </div>
-        <div class="mx-auto text-left" style="max-width: 460px">
-          <span id="err_pincode_not_available4" style="color: red;font-size: 15px;"></span>
-          <span id="err_pincode_value4" style="color: red;font-size: 15px;"></span>
-        </div>
-        
-      </div>   
+       
+
     </div>
   </div>
+</div>
+
+<div class="select-our-plan-new">
+  <div class="align-self-center">
+    <div class="zig-zac-text-div">
+      <form>
+        <div class="form-group">
+         <div class="row">
+           <div class="col-md-8 col-lg-7" style="max-width: 380px;">
+            <label class="label-control">Number of Meals</label>
+            <div class="chk-toolbar has-error">
+                @foreach($data['getMealTypeData'] as $getMealTypeData)
+                    <input type="checkbox" id="radio{{ $getMealTypeData['meal_type_name'] }}" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id valid" value="{{ $getMealTypeData['meal_type_id'] }}" onclick="calculatePrice();" required="required" aria-required="true" aria-invalid="false">
+                    <label for="radio{{ $getMealTypeData['meal_type_name'] }}">{{ $getMealTypeData['meal_type_name'] }}</label>
+                @endforeach
+              </div>
+           </div>
+           <div class="col-md-4 col-xl-3">
+            <label class="label-control">Number&nbsp;of&nbsp;days</label>
+            <select class="form-control" name="radNoOfDays" id="noofdays" onclick="calculatePrice();">
+            @foreach($data['getSubscribeNowPlan']['duration'] as $key => $duration_dtl)
+            <option value="{{ $duration_dtl['subscribe_now_duration'] }}">{{ $duration_dtl['subscribe_now_duration'] }}</option>
+            @endforeach
+          </select>
+           </div>
+         </div> 
+          
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-6 col-sm-4">
+              <label class="label-control">Pincode</label>
+              <input type="number" placeholder="Pincode" class="form-control pincode_form" maxlength="6" required="required">
+            </div>
+            <div class="col-6 col-sm-4">
+              <span class="Plans-price" style="margin-top: 31px; text-align:left" id="rs_html">Rs.</span>
+              <span class="Plans-price" style="margin-top: 31px; text-align:left" id="final_value"></span>
+              <span style="color:red; font-size: 12px;"> * 5% GST applicable </span>
+            </div>
+            <div class="col-6 col-sm-4 align-self-center pt-2">
+              <button type="submit" value="submit" class="btn btn-darkblue text-white" onclick="searchPincodeForm()">Get Started</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+            <span id="err_pincode_not_available_form" style="color: red; font-size: 14px;"></span>
+              <span id="err_pincode_value_form" style="color: red; font-size: 14px;"></span>
+          </div>
+          </div>
+        </div>
+      </form>
+      <a href="{{url('')}}/faq" style="color: #222;" class="d-block mt-2 text-center"> 
+        <strong style="color: red;">*</strong> 
+        Please find answers to all your subscription related queries
+      </a>
+    </div>
+  </div> 
 </div>
 
 
@@ -167,269 +138,7 @@
       </div>
     </div>
   </section>
-  <section class="meal-plan-d">
-    <div class="container-fluid pl-0 pr-0">
-      <div class="row no-gutters">
-        <div class="col-4">
-          <article class="item__module">
-            <figure class="item_img img-intro">
-              <img src="{{url('')}}/public/front/img/1-1.jpg" alt="" class="img-fluid">
-            </figure>
-            <div class="image_content">
-              <div class="image_content_inner">
-                <div class="wrapper">
-                    <div class="item_introtext">
-                      80% Nutrition
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div class="col-4">
-          <article class="item__module">
-            <figure class="item_img img-intro">
-              <img src="{{url('')}}/public/front/img/1-2.jpg" alt="" class="img-fluid">
-            </figure>
-            <div class="image_content">
-              <div class="image_content_inner">
-                <div class="wrapper">
-                    <div class="item_introtext">
-                      20% Activity
-                    </div>
-                  </div>
-              </div>
-            </div>
-          </article>
-        </div>
-        <div class="col-4">
-          <article class="item__module">
-            <figure class="item_img img-intro">
-              <img src="{{url('')}}/public/front/img/1-3.jpg" alt="" class="img-fluid">
-            </figure>
-            <div class="image_content">
-              <div class="image_content_inner">
-                <div class="wrapper">
-                    <div class="item_introtext">
-                      100% results
-                    </div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="What-you-get">
-    <div class="container">
-      <div class="special-heading text-center mb-4" style="margin-top: -14px;">
-        <h3 class="section_header margin_0"> 
-          <span class="darkgrey light-weight text-transform-none">What 
-            <strong>will you get?</strong> </span> 
-          </h3>
-         <!--  <p class="mx-auto" style="max-width: 700px">Nutritdock ensures our food has all these qualities and more.Here is a quick view on what you can expect from our subscription plans.</p> -->
-      </div>
-      <div class="row row-xl row-30 row-md-40 row-lg-50 align-items-center">
-        <div class="col-md-5 col-xl-4">
-          <div class="row row-30 row-md-40 row-lg-50 bordered-2">
-            <div class="col-sm-6 col-md-12">
-              <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right">
-                <div class="unit flex-column flex-lg-row-reverse">
-                  <div class="unit-left">
-                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/tailor-made-nutrition.svg" /> </div>
-                  </div>
-                  <div class="unit-body">
-                    <h4 class="box-icon-classic-title"><a href="#">Tailor Made Nutrition</a></h4>
-                    <p class="box-icon-classic-text">
-                      Our nutritionists create meal plans that are centered around your preferences, body type and medical conditions. The meals are, thus, customized to suit you.
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-12">
-              <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right wow fadeInLeft">
-                <div class="unit flex-column flex-lg-row-reverse">
-                  <div class="unit-left">
-                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/delicious-meals.svg" /> </div>
-                  </div>
-                  <div class="unit-body">
-                    <h4 class="box-icon-classic-title"><a href="#">Flavoursome Food</a></h4>
-                    <p class="box-icon-classic-text">
-                      Nutridock is here to bust the myth of ‘healthy food can’t be tasty’. Our food, created by professional chefs, is always a delight for the senses.
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-2 col-xl-4 d-none d-md-block wow fadeScale"> <img src="{{url('')}}/public/front/img/index-1-399x407.png" alt="" width="399" height="407" class="img-fluid"> </div>
-        <div class="col-md-5 col-xl-4">
-          <div class="row row-30 row-md-40 row-lg-50 bordered-2">
-            <div class="col-sm-6 col-md-12">
-              <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
-                <div class="unit flex-column flex-lg-row">
-                  <div class="unit-left">
-                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/sustainable-plans.svg" /> </div>
-                  </div>
-                  <div class="unit-body">
-                    <h4 class="box-icon-classic-title"><a href="#">Sustainable Plan</a></h4>
-                    <p class="box-icon-classic-text">
-                      Our healthy meal plans are unlike those diets that stay in and out of fashion. Our meal plans have a long-term impact on your overall health. Nothing fad about them, they are here to stay for long!
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="col-sm-6 col-md-12">
-              <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
-                <div class="unit flex-column flex-lg-row">
-                  <div class="unit-left">
-                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/personalised-nutritionist.svg" /> </div>
-                  </div>
-                  <div class="unit-body">
-                    <h4 class="box-icon-classic-title"><a href="#">Personalised nutritionist</a></h4>
-                    <p class="box-icon-classic-text">A personal nutritionist will be assigned to you to create your meal plans, monitor your health, tweak and tailor your diet, and undertake weekly checkups</p>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="Subscription-Plans">
-    <div class="container">
-     <div class="row">  
-      <div class="col-md-6  d-none d-md-block d-lg-block">
-        <div class="zig-zag-left-image fit-home"></div>
-       <!--  <img src="{{url('')}}/public/front/img/10.jpeg" alt="New York" style="max-height: 520px;width: 100%"> -->
-      </div>
-      <div class="col-md-6 align-self-center">
-        <div class="zig-zac-text-div">
-          <h2>Our Subscription Plans</h2>
-          <form>
-            <div class="form-group">
-              <label class="label-control">Number of Meals</label>
-              <div class="chk-toolbar has-error">
-                @foreach($data['getMealTypeData'] as $getMealTypeData)
-                    <input type="checkbox" id="radio{{ $getMealTypeData['meal_type_name'] }}" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id valid" value="{{ $getMealTypeData['meal_type_id'] }}" onclick="calculatePrice();" required="required" aria-required="true" aria-invalid="false">
-                    <label for="radio{{ $getMealTypeData['meal_type_name'] }}">{{ $getMealTypeData['meal_type_name'] }}</label>
-                @endforeach
-                  <!--<input type="checkbox" id="radioBreakfast" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id valid" value="1" onclick="calculatePrice();" required="required" aria-required="true" aria-invalid="false">
-                    <label for="radioBreakfast">Breakfast</label>
-                  <input type="checkbox" id="radioLunch" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id" value="2" onclick="calculatePrice();" required="required" aria-required="true" aria-invalid="false">
-                    <label for="radioLunch">Lunch</label>
-                  <input type="checkbox" id="radioSnack" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id" value="3" onclick="calculatePrice();" required="required" aria-required="true" aria-invalid="false">
-                    <label for="radioSnack">Snack</label>
-                  <input type="checkbox" id="radioDinner" name="radioFruit[]" data-value="radioFruitValue" class="meal_type_id" value="4" onclick="calculatePrice();" required="required" aria-required="true">
-                    <label for="radioDinner">Dinner</label>-->
-              </div>
-
-            </div>
-            <div class="form-group">
-              
-              <div class="row">
-                <div class="col-4 pr-0 px-md-2">
-                  <label class="label-control">Pincode</label>
-                  <input type="number" placeholder="Pincode" class="form-control pincode_form" maxlength="6" required="required">
-                  
-
-                </div>
-                <div class="col-4 ">
-                  <label class="label-control">Number&nbsp;of&nbsp;days</label>
-                  <select class="form-control" name="radNoOfDays" id="noofdays" onclick="calculatePrice();">
-                  @foreach($data['getSubscribeNowPlan']['duration'] as $key => $duration_dtl)
-                  <option value="{{ $duration_dtl['subscribe_now_duration'] }}">{{ $duration_dtl['subscribe_now_duration'] }}</option>
-                  @endforeach
-                  <!--<option>7</option>
-                  <option>15</option>
-                  <option>30</option>
-                  <option>60</option>-->
-                </select>
-                </div>
-                <div class="col-4 col-lg-4 px-0 px-md-2">
-                  <span class="Plans-price" style="margin-top: 31px; text-align:left" id="rs_html">Rs.</span>
-                  <span class="Plans-price" style="margin-top: 31px; text-align:left" id="final_value"></span>
-                  <span style="color:red; font-size: 12px;"><b>* 5% GST applicable</b></span>
-                </div>
-
-
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                <span id="err_pincode_not_available_form" style="color: red; font-size: 14px;"></span>
-                  <span id="err_pincode_value_form" style="color: red; font-size: 14px;"></span>
-              </div>
-              </div>
-
-            </div>
-            <!--<a href="{{url('')}}/subscribe_now" class="btn btn-darkblue text-white">Get Started</a>-->
-            <button type="submit" value="submit" class="btn btn-darkblue text-white" onclick="searchPincodeForm()">Get Started</button><br>
-            
-          </form>
-          <a href="{{url('')}}/faq" style="color: #222;" class="d-block mt-3"> <strong style="color: red;">*</strong> Please find answers to all your subscription related queries</a>
-        </div>
-      </div>
-     </div> 
-    </div>
-  </section>
-   
-  <!--Only Mobile -->
-  <!-- <section class="d-block d-md-none d-lg-none">
-    <div class="container">
-      <div class="w-100 d-flex justify-content-center mt-3"> 
-        <ul class="nav nav-pills Categories-portfolio" role="tablist">
-          <li class="nav-item"> <a class="nav-link active pl-3 pr-3" data-toggle="pill" href="#tab1"> 7 </a> </li>
-          <li class="nav-item"> <a class="nav-link pl-3 pr-3" data-toggle="pill" href="#tab2"> 15 </a> </li>
-          <li class="nav-item"> <a class="nav-link pl-3 pr-3" data-toggle="pill" href="#tab3"> 30 </a> </li>
-          <li class="nav-item"> <a class="nav-link pl-3 pr-3" data-toggle="pill" href="#tab4"> 60 </a> </li>
-        </ul>
-      </div>
-      <div class="w-100 d-flex justify-content-center mt-2 text-center">
-        <div class="tab-content w-100">
-          <div id="tab1" class="tab-pane active filter-active">
-            <div>
-              <div class="plan-card-title">7 MEALS</div>
-              <div class="plane-time-text">per week</div>
-              <div class="meal-price-text">$11.49 / meal</div>
-              <div class="meal-price-text bottom-padding"> </div>
-              <a href="" class="btn btn-success btn-lg">Select the 4 meal plan</a></div>
-          </div>
-          <div id="tab2" class="tab-pane">
-            <div>
-              <div class="plan-card-title">15 MEALS</div>
-              <div class="plane-time-text">per week</div>
-              <div class="meal-price-text">$11.49 / meal</div>
-              <div class="meal-price-text bottom-padding"> </div>
-              <a href="" class="btn btn-success btn-lg">Select the 6 meal plan</a></div>
-          </div>
-
-          <div id="tab3" class="tab-pane">
-            <div>
-              <div class="plan-card-title">30 Days MEALS</div>
-              <div class="plane-time-text">per week</div>
-              <div class="meal-price-text">$11.49 / meal</div>
-              <div class="meal-price-text bottom-padding"> </div>
-              <a href="{{url('')}}/subscribe_now" class="btn btn-success btn-lg">Select the 6 meal plan</a></div>
-          </div>
-
-          <div id="tab4" class="tab-pane">
-            <div>
-              <div class="plan-card-title">60 Days MEALS</div>
-              <div class="plane-time-text">per week</div>
-              <div class="meal-price-text">$11.49 / meal</div>
-              <div class="meal-price-text bottom-padding"> </div>
-              <a href="" class="btn btn-success btn-lg">Select the 6 meal plan</a></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
 
   <section class="section bg-green"><!-- bg-default -->
     <div class="container">
@@ -554,6 +263,143 @@
       </div>
     </div>
   </section>
+
+  <section class="What-you-get">
+    <div class="container">
+      <div class="special-heading text-center mb-4" style="margin-top: -14px;">
+        <h3 class="section_header margin_0"> 
+          <span class="darkgrey light-weight text-transform-none">What 
+            <strong>will you get?</strong> </span> 
+          </h3>
+         <!--  <p class="mx-auto" style="max-width: 700px">Nutritdock ensures our food has all these qualities and more.Here is a quick view on what you can expect from our subscription plans.</p> -->
+      </div>
+      <div class="row row-xl row-30 row-md-40 row-lg-50 align-items-center">
+        <div class="col-md-5 col-xl-4">
+          <div class="row row-30 row-md-40 row-lg-50 bordered-2">
+            <div class="col-sm-6 col-md-12">
+              <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right">
+                <div class="unit flex-column flex-lg-row-reverse">
+                  <div class="unit-left">
+                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/tailor-made-nutrition.svg" /> </div>
+                  </div>
+                  <div class="unit-body">
+                    <h4 class="box-icon-classic-title"><a href="#">Tailor Made Nutrition</a></h4>
+                    <p class="box-icon-classic-text">
+                      Our nutritionists create meal plans that are centered around your preferences, body type and medical conditions. The meals are, thus, customized to suit you.
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-12">
+              <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right wow fadeInLeft">
+                <div class="unit flex-column flex-lg-row-reverse">
+                  <div class="unit-left">
+                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/delicious-meals.svg" /> </div>
+                  </div>
+                  <div class="unit-body">
+                    <h4 class="box-icon-classic-title"><a href="#">Flavoursome Food</a></h4>
+                    <p class="box-icon-classic-text">
+                      Nutridock is here to bust the myth of ‘healthy food can’t be tasty’. Our food, created by professional chefs, is always a delight for the senses.
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 col-xl-4 d-none d-md-block wow fadeScale"> <img src="{{url('')}}/public/front/img/index-1-399x407.png" alt="" width="399" height="407" class="img-fluid"> </div>
+        <div class="col-md-5 col-xl-4">
+          <div class="row row-30 row-md-40 row-lg-50 bordered-2">
+            <div class="col-sm-6 col-md-12">
+              <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
+                <div class="unit flex-column flex-lg-row">
+                  <div class="unit-left">
+                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/sustainable-plans.svg" /> </div>
+                  </div>
+                  <div class="unit-body">
+                    <h4 class="box-icon-classic-title"><a href="#">Sustainable Plan</a></h4>
+                    <p class="box-icon-classic-text">
+                      Our healthy meal plans are unlike those diets that stay in and out of fashion. Our meal plans have a long-term impact on your overall health. Nothing fad about them, they are here to stay for long!
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-sm-6 col-md-12">
+              <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
+                <div class="unit flex-column flex-lg-row">
+                  <div class="unit-left">
+                    <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/personalised-nutritionist.svg" /> </div>
+                  </div>
+                  <div class="unit-body">
+                    <h4 class="box-icon-classic-title"><a href="#">Personalised nutritionist</a></h4>
+                    <p class="box-icon-classic-text">A personal nutritionist will be assigned to you to create your meal plans, monitor your health, tweak and tailor your diet, and undertake weekly checkups</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="meal-plan-d">
+    <div class="container-fluid pl-0 pr-0">
+      <div class="row no-gutters">
+        <div class="col-4">
+          <article class="item__module">
+            <figure class="item_img img-intro">
+              <img src="{{url('')}}/public/front/img/1-1.jpg" alt="" class="img-fluid">
+            </figure>
+            <div class="image_content">
+              <div class="image_content_inner">
+                <div class="wrapper">
+                    <div class="item_introtext">
+                      80% Nutrition
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-4">
+          <article class="item__module">
+            <figure class="item_img img-intro">
+              <img src="{{url('')}}/public/front/img/1-2.jpg" alt="" class="img-fluid">
+            </figure>
+            <div class="image_content">
+              <div class="image_content_inner">
+                <div class="wrapper">
+                    <div class="item_introtext">
+                      20% Activity
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="col-4">
+          <article class="item__module">
+            <figure class="item_img img-intro">
+              <img src="{{url('')}}/public/front/img/1-3.jpg" alt="" class="img-fluid">
+            </figure>
+            <div class="image_content">
+              <div class="image_content_inner">
+                <div class="wrapper">
+                    <div class="item_introtext">
+                      100% results
+                    </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   
   
   <div class="section-2 gray">
