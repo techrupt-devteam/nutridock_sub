@@ -15,11 +15,7 @@ class MenuModel extends Model
                             'image',
                             'specification_id',
                             'multiple_image',
-                            'ingredients',
-                            'calories',
-                            'proteins',
-                            'carbohydrates',
-                            'fats'
+                            'ingredients'
                         ];
 }
 	
