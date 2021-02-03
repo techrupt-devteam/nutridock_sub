@@ -42,12 +42,41 @@ class AuthController extends Controller
         
         //get_role_permission  
         if($arr_user->roles!='admin'){
-        $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
+        $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
+        //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
         $permission_arr = explode(",",$get_permission_data[0]->permission_access);
         //get module list type  wise 
-        $get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+        //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+        
+         $get_module_data = \DB::table('module')->get()->toarray();
+         $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
+
+         $parent_menu = [];
+         $sub_menu = [];
+         foreach ($get_parent_menu as $key1 => $pmvalue) 
+         {
+             
+                $parent_menu[$key1][] = $pmvalue->module_name;
+                $parent_menu[$key1][] = $pmvalue->module_url;
+                $parent_menu[$key1][] = $pmvalue->module_id;
+                
+                $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
+                if(count($get_child_menu)>0)
+                {   
+                    foreach ($get_child_menu as $key2 => $cmvalue) {
+                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
+                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
+                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
+                    }
+                }
+        }
+
+
+
+//dd($sub_menu);
+
         //get module type
-         $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
+       //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
         }
         
         //dd($arr_user);
@@ -81,8 +110,13 @@ class AuthController extends Controller
                 $request->session()->put("module_data",$get_module_data);
                 $request->session()->save();
 
-                 $request->session()->put("module_type",$get_module_type);
+                $request->session()->put("parent_menu",$parent_menu);
                 $request->session()->save();
+                $request->session()->put("sub_menu",$sub_menu);
+                $request->session()->save();
+
+                /* $request->session()->put("module_type",$get_module_type);
+                $request->session()->save();*/
             }
 
             return redirect('admin/dashbord');

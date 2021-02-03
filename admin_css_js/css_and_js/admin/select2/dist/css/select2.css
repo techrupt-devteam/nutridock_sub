@@ -49,8 +49,8 @@
 
 .select2-dropdown {
   background-color: white;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+  /*border: 1px solid #aaa;
+  border-radius: 4px;*/
   box-sizing: border-box;
   display: block;
   position: absolute;
@@ -175,8 +175,6 @@
 
 .select2-container--default .select2-selection--multiple {
   background-color: white;
-  border: 1px solid #aaa;
-  border-radius: 4px;
   cursor: text; }
   .select2-container--default .select2-selection--multiple .select2-selection__rendered {
     box-sizing: border-box;
@@ -197,9 +195,9 @@
     margin-top: 5px;
     margin-right: 10px; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #e4e4e4;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+    background-color: #000000;
+   /* border: 1px solid #aaa;
+    border-radius: 4px;*/
     cursor: default;
     float: left;
     margin-right: 5px;
@@ -298,8 +296,8 @@
 
 .select2-container--classic .select2-selection--single {
   background-color: #f7f7f7;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+ /* border: 1px solid #aaa;
+  border-radius: 4px;*/
   outline: 0;
   background-image: -webkit-linear-gradient(top, white 50%, #eeeeee 100%);
   background-image: -o-linear-gradient(top, white 50%, #eeeeee 100%);
@@ -351,8 +349,8 @@
 
 .select2-container--classic[dir="rtl"] .select2-selection--single .select2-selection__arrow {
   border: none;
-  border-right: 1px solid #aaa;
-  border-radius: 0;
+  /*border-right: 1px solid #aaa;
+  border-radius: 0;*/
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   left: 1px;
@@ -389,8 +387,8 @@
 
 .select2-container--classic .select2-selection--multiple {
   background-color: white;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+ /* border: 1px solid #aaa;
+  border-radius: 4px;*/
   cursor: text;
   outline: 0; }
   .select2-container--classic .select2-selection--multiple:focus {
@@ -403,8 +401,8 @@
     display: none; }
   .select2-container--classic .select2-selection--multiple .select2-selection__choice {
     background-color: #e4e4e4;
-    border: 1px solid #aaa;
-    border-radius: 4px;
+  /*  border: 1px solid #aaa;
+    border-radius: 4px;*/
     cursor: default;
     float: left;
     margin-right: 5px;

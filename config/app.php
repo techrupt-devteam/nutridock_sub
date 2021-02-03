@@ -178,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -231,7 +232,10 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Sentinel'     => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Pusher'       => Pusher\Pusher::class,
-        'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel'        => Maatwebsite\Excel\Facades\Excel::class, 
+        'Image'        => Intervention\Image\Facades\Image::class,
+        'Input'        => Illuminate\Support\Facades\Input::class,
+
 
     ],
 

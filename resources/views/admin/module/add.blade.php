@@ -29,6 +29,20 @@
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-12">
+
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="module_name">Parent Module<span style="color:red;" >*</span></label>
+                        <select name="parent_id" id="parent_id" class="form-control" onchange="getModuleUrl();">
+                          <option value="">-Select Type-</option>
+                          @foreach($type as $tvalue)
+                          <option value="{{$tvalue->module_id}}"> {{$tvalue->module_name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
@@ -37,7 +51,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-4 module_url">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="module_name">Module Url<span style="color:red;" >*</span></label>
@@ -45,19 +59,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="type">Type<span style="color:red;" >*</span></label>
-                        <select name="type_id" id="type_id" class="form-control" required="true">
-                         <option value="">-Select-</option>  
-                         @foreach($type as $cvalue)
-                         <option value="{{$cvalue->type_id}}">{{$cvalue->type_name}}</option>  
-                         @endforeach
-                         </select>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>  
              
@@ -75,4 +77,22 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script type="text/javascript">
+
+    function getModuleUrl() {
+        var parent_id = $('#parent_id').val();
+         if(parent_id !=0 ) {
+                $(".module_url").show();
+                $("#module_url").attr("required","true");
+            } else {
+                $(".module_url").hide();
+                $("#module_url").removeAttr("required");
+                $(".parsley-required").hide();
+            }
+ 
+
+
+    }
+  </script>
 @endsection

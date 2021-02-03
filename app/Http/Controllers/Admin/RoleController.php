@@ -4,15 +4,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\User;
 use Session;
 use Sentinel;
 use Validator;
 use DB;
 class RoleController extends Controller
 {
-    public function __construct(Role $Role)
+    public function __construct(Role $Role ,User $User)
     {
         $data               = [];
+        $this->base_user    = $User; 
         $this->base_model   = $Role; 
         $this->title        = "Role";
         $this->url_slug     = "role";
@@ -119,8 +121,18 @@ class RoleController extends Controller
 
     public function delete($id)
     {
-        $this->base_model->where(['role_id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();
+        $user_data = $this->base_user->where('roles','=',$id)->where('is_deleted','=','0')->get();   
+        if(count($user_data)>0)
+        {
+            Session::flash('error', 'Error! Role can not delete. beacause role assign user.');
+            return \Redirect::back();
+        }
+        else
+        {
+            $this->base_model->where(['role_id'=>$id])->delete();
+            Session::flash('success', 'Success! Record deleted successfully.');
+            return \Redirect::back();
+        }
+        
     }
 }

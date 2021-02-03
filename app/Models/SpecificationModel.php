@@ -5,10 +5,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class SpecificationModel extends Model 
 {
-    protected $table = 'specification';
-
+    protected $table = 'nutri_mst_menu_specification';
+    protected $primaryKey  = "id";
     protected $fillable = [
-                            'name'
-                        ];
+                            'specification_title',
+                            'icon_image'
+                          ];
 }
 	

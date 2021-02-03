@@ -24,7 +24,8 @@ class ModuleController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = $this->base_model::find(1)->with(['moduletype'])->get();
+        //$data     = $this->base_model::find(1)->with(['moduletype'])->get();
+        $data     = $this->base_model->get();
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -38,7 +39,7 @@ class ModuleController extends Controller
  
     public function add()
     {
-        $type = $this->moduletype->get();
+        $type = $this->base_model->where(['parent_id'=>0])->get();
         $data['page_name'] = "Add";
         $data['type']      = $type;
         $data['title']     = $this->title;
@@ -50,8 +51,8 @@ class ModuleController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'module_name' => 'required',
-                'type_id'  => 'required',
-                'module_url'  => 'required'
+               //  'type_id'  => 'required',
+               // 'module_url'  => 'required'
 
             ]);
 
@@ -60,7 +61,7 @@ class ModuleController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['module_name'=>$request->input('module_name'),'type_id'=>$request->input('type_id')])->count();
+        $is_exist = $this->base_model->where(['module_name'=>$request->input('module_name')])->count();
 
         if($is_exist)
         {
@@ -70,7 +71,7 @@ class ModuleController extends Controller
 
         $arr_data                  = [];
         $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['type_id']       = $request->input('type_id');
+        $arr_data['parent_id']     = (!empty($request->input('parent_id'))) ? $request->input('parent_id') : 0 ;
         $arr_data['module_url']    = $request->input('module_url');
         $user = $this->base_model->create($arr_data);
       
@@ -94,9 +95,9 @@ class ModuleController extends Controller
         {
             $arr_data = $data->toArray();
         }
-
-        $type = $this->moduletype->get();        
-        $data['type']      = $type;
+        $parent = $this->base_model->where(['parent_id'=>0])->get();
+      
+        $data['parent']    = $parent;
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";
         $data['url_slug']  = $this->url_slug;
@@ -108,24 +109,24 @@ class ModuleController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'module_name' => 'required',
-                'type_id'  => 'required',
-                'module_url'  => 'required'
+               /* 'parent_id'  => 'required',
+                'module_url'  => 'required'*/
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-        $is_exist = $this->base_model->where('module_id','<>',$id)->where(['module_name'=>$request->input('module_name'),'type_id'=>$request->input('type_id')])
+        $is_exist = $this->base_model->where('module_id','<>',$id)->where(['module_name'=>$request->input('module_name')])
                     ->count();
         if($is_exist)
         {
             Session::flash('error', "Record already exist!");
             return \Redirect::back();
         }
-        $arr_data               = [];
+        $arr_data                  = [];
         $arr_data['module_name']   = $request->input('module_name');
         $arr_data['module_url']    = $request->input('module_url');
-        $arr_data['type_id']       = $request->input('type_id');
+        $arr_data['parent_id']     = $request->input('parent_id');
         $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');
         return \Redirect::to('admin/manage_module');

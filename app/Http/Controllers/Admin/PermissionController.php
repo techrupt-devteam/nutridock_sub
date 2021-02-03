@@ -30,8 +30,8 @@ class PermissionController extends Controller
       $arr_data = [];
       $data     = \DB::table('permission')
                    ->join('role','permission.role_id','=','role.role_id')
-                   ->join('module_type','permission.type_id','=','module_type.type_id')
-                   ->select('role.role_name','module_type.type_name','permission.*')
+                  // ->join('module_type','permission.type_id','=','module_type.type_id')
+                   ->select('role.role_name','permission.*')
                    ->orderBy('permission.per_id','DESC')
                    ->get()->toArray();
       /*if(!empty($data))
@@ -49,10 +49,11 @@ class PermissionController extends Controller
  
     public function add()
     {
-      $type = $this->moduletype->get();
+      //$type = $this->moduletype->get();
+      $module = $this->module->get();
       $role = $this->role->get();
       $data['page_name'] = "Add";
-      $data['type']      = $type;
+      $data['module']      = $module;
       $data['role']      = $role;
       $data['title']     = $this->title;
       $data['url_slug']  = $this->url_slug;
@@ -61,13 +62,14 @@ class PermissionController extends Controller
     
     public function get_menu(Request $request)
     {
-       $type_id = $request->type_id;
+      
        $per_id  =  $request->per_id;
        if(!empty($per_id)){
        $get_permission_data = $this->base_model->where(['per_id'=>$per_id])->select('permission_access')->first();
        $permission_arr = explode(",",$get_permission_data['permission_access']);
        }
-       $model_list = $this->module->where(['type_id'=>$type_id])->get();
+     //  $model_list = $this->module->where(['type_id'=>$type_id])->get();
+       $model_list = $this->module->get();
        $html="";
        $html.='<div class="col-md-6" style="margin-left: 12px;">
                 <table class="table table-bordered table-striped">
@@ -111,7 +113,7 @@ class PermissionController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'role_id' => 'required',
-                'type_id'  => 'required',
+             //   'type_id'  => 'required',
             ]);
 
         if ($validator->fails()) 
@@ -132,7 +134,7 @@ class PermissionController extends Controller
        
         $arr_data                       = [];
         $arr_data['role_id']            = $request->input('role_id');
-        $arr_data['type_id']            = $request->input('type_id');
+        //$arr_data['type_id']            = $request->input('type_id');
         $arr_data['permission_access']  = $permissions_data;
         $permissions = $this->base_model->create($arr_data);
         if(!empty($permissions))
@@ -156,9 +158,9 @@ class PermissionController extends Controller
             $arr_data = $data->toArray();
         }
 
-        $type = $this->moduletype->get();
-        $role = $this->role->get();        
-        $data['type']      = $type;
+        $module   = $this->module->get();
+        $role     = $this->role->get();        
+        $data['module']    = $module;
         $data['role']      = $role;
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";
@@ -170,10 +172,11 @@ class PermissionController extends Controller
     public function get_menu_list(Request $request)
     {
 
-       $type_id = $request->type_id;
+       //$type_id = $request->type_id;
        $per_id  =  $request->per_id;
 
-       $model_list = $this->module->where(['type_id'=>$type_id])->get();
+       //$model_list = $this->module->where(['type_id'=>$type_id])->get();
+       $model_list = $this->module->get();
        $get_permission_data = $this->base_model->where(['per_id'=>$per_id])->select('permission_access')->first();
        $permission_arr = explode(",",$get_permission_data['permission_access']);
        /*print_r($permission_arr);
@@ -210,7 +213,7 @@ class PermissionController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'role_id' => 'required',
-                'type_id'  => 'required',
+                //'type_id'  => 'required',
             ]);
         if ($validator->fails()) 
         {
@@ -229,7 +232,7 @@ class PermissionController extends Controller
         $permissions_data = implode(",",$request->input('permission_access'));
         $arr_data                       = [];
         $arr_data['role_id']            = $request->input('role_id');
-        $arr_data['type_id']            = $request->input('type_id');
+       // $arr_data['type_id']            = $request->input('type_id');
         $arr_data['permission_access']  = $permissions_data;
         $module_update = $this->base_model->where(['per_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');

@@ -62,9 +62,18 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 
+<style type="text/css">
+  .parsley-custom-error-message{
+    color: red!important;
+  }
+  .select2-container--default .select2-selection--multiple {
+    background-color: white !important;
+    cursor: text;
+  }
 
+</style>
   <script>
-
+    $(".alert").fadeOut(5000);
   
     $(function () {
 
