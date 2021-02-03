@@ -64,6 +64,11 @@
   .inr_font_size_12{
     font-size: 12px;
   }
+    .alert_msg{
+    max-width: 374px;
+    margin-left: auto;
+    border-radius: 0px;
+  }
   </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">

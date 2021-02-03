@@ -46,39 +46,31 @@ Route::get('/test', function () {
  Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
  Route::get('/menu', 'MenuController@index')->name('menu');
  Route::get('/page-not-found', 'PageNotFoundController@index')->name('page-not-found');
- 
  Route::get('/blog', 'BlogController@index')->name('blog');
  /*Route::get('/blog_detail/{id}', 'BlogController@blog_detail')->name('blog_detail');*/
- Route::get('/blog_detail/{any}', 'BlogController@blog_detail')->name('blog_detail');
- 
+ Route::get('/blog_detail/{any}', 'BlogController@blog_detail')->name('blog_detail'); 
  Route::post('/comment/store_comment', 'CommentController@store')->name('store_comment');
  Route::post('/comment/update_comment/{id}', 'CommentController@update')->name('update_comment');
  Route::any('/comment/new_comment', 'CommentController@new_comment')->name('new_comment');
- 
  Route::get('/contact', 'ContactController@index')->name('contact');
  Route::get('/subscribe-info', 'SubscribeinfoController@index')->name('subscribe-info');
  Route::post('/contact-store', 'ContactController@store')->name('store');
  Route::any('/mail', 'ContactController@sendMail')->name('sendMail');
  Route::post('/newsletter_store', 'HomeController@store')->name('store');
- 
  Route::get('/faq', 'FaqController@index')->name('faq');
  Route::get('/privacy_policy', 'PrivacyPolicyController@index')->name('privacy_policy');
  Route::get('/terms_conditions', 'TermsConditionsController@index')->name('index');
- 
  
  /*Razorpay*/
  Route::post('/page/payment','PaymentController@index');
  Route::post('/capture_payment','PaymentController@capture_payment');
  Route::get('success','PaymentController@success');
  Route::get('failed','PaymentController@failed');
- 
  Route::post('/survey','LandingController@store_survey');
  Route::post('/subscription','LandingController@store_subscription');
- 
  Route::any('/register','LandingRegisterController@user_register');
  Route::post('/frontend/submitform/submitAddform', 'AjaxController@submitAddform');
  Route::get('/thank-you', 'ThankYouController@index')->name('thank_you');
- 
  Route::get('/subscribe-now', 'SubscribeController@index')->name('index');
  Route::get('getSubscribeNowPlanDuration/{id}', 'SubscribeController@SubscribeNowPlanDuration')->name('SubscribeNowPlanDuration');
  Route::post('subscription_payment', 'SubscribeController@subscription_payment')->name('subscription_payment');
@@ -86,57 +78,47 @@ Route::get('/test', function () {
  Route::get('subscription-failed','SubscribeController@subscription_failed');
  Route::any('search','SubscribeController@search');
  Route::any('searchform','SubscribeController@searchform');
- 
  Route::get('/subscribe-now', 'SubscribeController@index')->name('index');
- 
  //Route::any('postDetails', 'SubscribeController@postDetails')->name('postDetails');
  Route::any('postPersonalDetails', 'SubscribeController@postPersonalDetails')->name('postPersonalDetails');
  Route::any('postFormDetails', 'SubscribeController@postFormDetails')->name('postFormDetails');
  Route::any('getMealTypeDataAjax', 'SubscribeController@getMealTypeDataAjax')->name('getMealTypeDataAjax');
- 
- 
- 
  Route::get('subscription-payment/{any}', 'SubscribeController@subscription_payment1')->name('subscription_payment');
 
 /* @END: Front End Routes */
 
+Route::get('admin/', 							'Admin\AuthController@login');
+//Route::get('/', 			   					'Admin\AuthController@login');
+Route::get('admin/login', 						'Admin\AuthController@login');
+Route::post('admin/login_process', 				'Admin\AuthController@login_process');
+Route::get('admin/forget_password', 			'Admin\AuthController@forget_password');
+Route::post('admin/forget_password_process', 	'Admin\AuthController@forget_password_process');
+Route::get('admin/logout',		 				'Admin\AuthController@logout');
+Route::post('admin/capture_payment',		 	'Admin\MobileapiController@capture_payment');
+Route::post('admin/offer_capture_payment',		'Admin\MobileapiController@offer_capture_payment');
+Route::get('admin/hardcoded_receipt',		 	'Admin\MobileapiController@hardcoded_receipt');
+Route::post('/admin/getvarient',		 		'Admin\BookingController@getvarient');
+Route::post('/admin/getvarientnexa',		 	'Admin\BookingController@getvarientnexa');
+Route::post('/admin/getvarientcomm',		 	'Admin\BookingController@getvarientcomm');
+Route::post('/admin/getcolor',		 			'Admin\BookingController@getcolor');
+Route::post('/admin/getcolornexa',		 		'Admin\BookingController@getcolornexa');
+Route::post('/admin/getcolorcomm',		 		'Admin\BookingController@getcolorcomm');
+Route::post('/admin/getprice',		 			'Admin\BookingController@getprice');
+Route::get('/admin/change_password',		 	'Admin\AuthController@change_password');
+Route::post('/admin/change_password_process',	'Admin\AuthController@change_password_process');
+Route::post('/admin/getcity',		 			'Admin\BookingController@getcity');
+Route::post('/admin/getarea',		 			'Admin\BookingController@getarea');
+Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
 
-Route::get('admin/', 									'Admin\AuthController@login');
-//Route::get('/', 									'Admin\AuthController@login');
-Route::get('admin/login', 								'Admin\AuthController@login');
-Route::post('admin/login_process', 						'Admin\AuthController@login_process');
-Route::get('admin/forget_password', 					'Admin\AuthController@forget_password');
-Route::post('admin/forget_password_process', 			'Admin\AuthController@forget_password_process');
-Route::get('admin/logout',		 						'Admin\AuthController@logout');
-Route::post('admin/capture_payment',		 			'Admin\MobileapiController@capture_payment');
-Route::post('admin/offer_capture_payment',		 			'Admin\MobileapiController@offer_capture_payment');
-
-Route::get('admin/hardcoded_receipt',		 			'Admin\MobileapiController@hardcoded_receipt');
-
-Route::post('/admin/getvarient',		 				'Admin\BookingController@getvarient');
-Route::post('/admin/getvarientnexa',		 				'Admin\BookingController@getvarientnexa');
-Route::post('/admin/getvarientcomm',		 				'Admin\BookingController@getvarientcomm');
-
-Route::post('/admin/getcolor',		 					'Admin\BookingController@getcolor');
-Route::post('/admin/getcolornexa',		 					'Admin\BookingController@getcolornexa');
-Route::post('/admin/getcolorcomm',		 					'Admin\BookingController@getcolorcomm');
-
-Route::post('/admin/getprice',		 					'Admin\BookingController@getprice');
-
-Route::get('/admin/change_password',		 					'Admin\AuthController@change_password');
-Route::post('/admin/change_password_process',		 					'Admin\AuthController@change_password_process');
 
 
-Route::post('/admin/getcity',		 					'Admin\BookingController@getcity');
-Route::post('/admin/getarea',		 					'Admin\BookingController@getarea');
-Route::post('/admin/getpincode',		 				'Admin\BookingController@getpincode');
-
+/*******************************************@BHUSHUAN ADMIN_ROUTES @***************************************************/
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
 	Route::get('/dashbord',		 	 'Admin\AuthController@dashbord');
 
-	//user table
+	//user table 
 	
 	Route::get('/manage_users',		 'Admin\UserController@index');
 	Route::get('/add_user',		 	 'Admin\UserController@add');
@@ -202,35 +184,69 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/plan_status',	      'Admin\PlanController@status');
 
 	//Subscription master routes
-	
-	Route::get('/manage_subscription_plan',		   'Admin\SubscriptionController@index');
-	Route::get('/add_subscription_plan',		   'Admin\SubscriptionController@add');
-	Route::post('/store_subscription_plan',		   'Admin\SubscriptionController@store');
-	Route::get('/edit_subscription_plan/{id}',	   'Admin\SubscriptionController@edit');
-	Route::post('/update_subscription_plan/{id}',  'Admin\SubscriptionController@update');
-	Route::get('/delete_subscription_plan/{id}',   'Admin\SubscriptionController@delete');
-	Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
-	Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
+
+	 Route::get('/manage_subscription_plan',	   'Admin\SubscriptionController@index');
+	 Route::get('/add_subscription_plan',		   'Admin\SubscriptionController@add');
+	 Route::post('/store_subscription_plan',	   'Admin\SubscriptionController@store');
+	 Route::get('/edit_subscription_plan/{id}',	   'Admin\SubscriptionController@edit');
+	 Route::post('/update_subscription_plan/{id}', 'Admin\SubscriptionController@update');
+	 Route::get('/delete_subscription_plan/{id}',  'Admin\SubscriptionController@delete');
+	 Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
+	 Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
 	
 	//operation manager  routes
-	
-	Route::get('/manage_operation_manager',		 'Admin\OperationManagerController@index');
-	Route::get('/add_operation_manager',		 'Admin\OperationManagerController@add');
-	Route::post('/store_operation_manager',		 'Admin\OperationManagerController@store');
-	Route::get('/edit_operation_manager/{id}',	 'Admin\OperationManagerController@edit');
-	Route::post('/update_operation_manager/{id}','Admin\OperationManagerController@update');
-	Route::get('/delete_operation_manager/{id}', 'Admin\OperationManagerController@delete');
-	Route::post('/status_operation_manager',	  'Admin\OperationManagerController@status');
+
+	 Route::get('/manage_operation_manager',	  'Admin\OperationManagerController@index');
+	 Route::get('/add_operation_manager',		  'Admin\OperationManagerController@add');
+	 Route::post('/store_operation_manager',	  'Admin\OperationManagerController@store');
+	 Route::get('/edit_operation_manager/{id}',	  'Admin\OperationManagerController@edit');
+	 Route::post('/update_operation_manager/{id}','Admin\OperationManagerController@update');
+	 Route::get('/delete_operation_manager/{id}', 'Admin\OperationManagerController@delete');
+	 Route::post('/status_operation_manager',	  'Admin\OperationManagerController@status');
 
 	//operation manager routes
 	
-	Route::get('/manage_location',		  'Admin\LocationsController@index');
-	Route::get('/add_location',		  'Admin\LocationsController@add');
-	Route::post('/store_location',		  'Admin\LocationsController@store');
-	Route::get('/edit_location/{id}',	  'Admin\LocationsController@edit');
-	Route::post('/update_location/{id}', 'Admin\LocationsController@update');
-	Route::get('/delete_location/{id}',  'Admin\LocationsController@delete');
-	Route::post('/status_location',	  'Admin\LocationsController@status');
+	 Route::get('/manage_location',		  'Admin\LocationsController@index');
+	 Route::get('/add_location',		  'Admin\LocationsController@add');
+	 Route::post('/store_location',		  'Admin\LocationsController@store');
+	 Route::get('/edit_location/{id}',	  'Admin\LocationsController@edit');
+	 Route::post('/update_location/{id}', 'Admin\LocationsController@update');
+	 Route::get('/delete_location/{id}',  'Admin\LocationsController@delete');
+	 Route::post('/status_location',	  'Admin\LocationsController@status');
 
+	// Menu category routes
+	 Route::get('/manage_menucategory',		 'Admin\MenuCategoryController@index');
+	 Route::get('/add_menucategory',		 'Admin\MenuCategoryController@add');
+	 Route::post('/store_menucategory',		 'Admin\MenuCategoryController@store');
+	 Route::get('/edit_menucategory/{id}',	 'Admin\MenuCategoryController@edit');
+	 Route::post('/update_menucategory/{id}','Admin\MenuCategoryController@update');
+	 Route::get('/delete_menucategory/{id}', 'Admin\MenuCategoryController@delete');
+	
+	// Menu Specification routes
+	 Route::get('/manage_menu_specification', 		'Admin\MenuSpecificationController@index');
+	 Route::get('/add_menu_specification',	 		'Admin\MenuSpecificationController@add');
+	 Route::post('/store_menu_specification', 		'Admin\MenuSpecificationController@store');
+	 Route::get('/edit_menu_specification/{id}',	'Admin\MenuSpecificationController@edit');
+	 Route::post('/update_menu_specification/{id}',	'Admin\MenuSpecificationController@update');
+	 Route::get('/delete_menu_specification/{id}', 	'Admin\MenuSpecificationController@delete');
+
+	// Menu Routes
+	 Route::get('/manage_menu', 		'Admin\MenuController@index');
+	 Route::get('/add_menu',	 		'Admin\MenuController@add');
+	 Route::post('/store_menu', 		'Admin\MenuController@store');
+ 	 Route::get('/edit_menu/{id}',		'Admin\MenuController@edit');
+ 	 Route::post('/update_menu/{id}',	'Admin\MenuController@update');
+	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
+
+	// Assign location wise menu  
+	  Route::get('/manage_assign_location_menu', 		'Admin\AssignLocationMenuController@index');
+	  Route::get('/add_assign_location_menu',	 		'Admin\AssignLocationMenuController@add');
+	  Route::post('/store_assign_location_menu', 		'Admin\AssignLocationMenuController@store');
+ 	  Route::get('/edit_assign_location_menu/{id}',		'Admin\AssignLocationMenuController@edit');
+ 	  Route::post('/update_assign_location_menu/{id}',	'Admin\AssignLocationMenuController@update');
+	  Route::get('/delete_assign_location_menu/{id}', 	'Admin\AssignLocationMenuController@delete');
 
 });
+
+
+/**********************************************************************************************/

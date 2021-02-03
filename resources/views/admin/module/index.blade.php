@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_module" class="btn btn-primary btn-sm" style="float: right;">Add Menu</a>
+              <a href="{{url('/admin')}}/add_module" class="btn btn-primary btn-sm" style="float: right;">Add Module</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -34,7 +34,7 @@
                   <th>Sr.No.</th>
                   <th>Name</th>
                   <th>URL</th>
-                  <th>Type</th>
+                 <!--  <th>Type</th> -->
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -45,7 +45,7 @@
                       <td>{{$key+1}}</td>
                       <td>{{$value['module_name']}}</td>
                       <td>{{$value['module_url']}}</td>
-                      <td>{{$value['moduletype']['type_name']}}</td>
+             
                       <td>
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['module_id']}}"  class="btn btn-primary btn-sm"  title="Edit">
                           <i class="fa fa-edit"></i>

@@ -12,10 +12,10 @@ class ModuleType extends Model
 		"type_name",
 		"type_id"
     ];
-    public function Module()
+  /*  public function Module()
     {
         return $this->hasMany('App\Models\Module','type_id');
-    } 
+    } */
 
     public function Permission()
     {

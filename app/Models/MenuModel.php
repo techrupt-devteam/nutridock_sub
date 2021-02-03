@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MenuModel extends Model 
 {
-    protected $table = 'menu';
+    protected $table = 'nutri_mst_menu';
 
     protected $fillable = [
                             'menu_title',
@@ -13,9 +13,13 @@ class MenuModel extends Model
     	                    'menu_description',
     	                    'what_makes_dish_special',
                             'image',
+                            'specification_id',
                             'multiple_image',
-                            'specification',
-                            'ingredients'
+                            'ingredients',
+                            'calories',
+                            'proteins',
+                            'carbohydrates',
+                            'fats'
                         ];
 }
 	

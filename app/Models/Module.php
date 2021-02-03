@@ -10,12 +10,12 @@ class Module extends Model
     protected $primaryKey  = "module_id";
     protected $fillable = [
 		"module_name",
-		"type_id",
+		"parent_id",
         "module_url"
     ];
 
-    public function ModuleType()
+   /* public function ModuleType()
     {
         return $this->belongsTo('App\Models\ModuleType','type_id');
-    }
+    }*/
 }

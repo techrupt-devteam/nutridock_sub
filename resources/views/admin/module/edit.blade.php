@@ -32,7 +32,23 @@
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['module_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
+
+                
                 <div class="col-md-12">
+                  <div class="col-md-4">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="module_name">Module Type<span style="color:red;" >*</span></label>
+                      <select name="parent_id" id="parent_id" class="form-control" required="true" onchange="getModuleUrl();">
+                        <option value="">-Select Type-</option>
+                        <option value= 0 <?php if(0==$data['parent_id']){ echo "Selected"; }?>> Parent </option>
+                        @foreach($parent as $tvalue)
+                        <option value="{{$tvalue->module_id}}" <?php if($tvalue->module_id==$data['parent_id']){ echo "Selected"; }?>> {{$tvalue->module_name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                 </div>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
@@ -41,24 +57,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-4 module_url">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="module_name">Module Url<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" required="true" value="{{$data['module_url']}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="type">Type<span style="color:red;" >*</span></label>
-                        <select name="type_id" id="type_id" class="form-control" required="true">
-                         <option value="">-Select-</option>  
-                         @foreach($type as $tvalue)
-                         <option value="{{$tvalue->type_id}}" @if($tvalue->type_id==$data['type_id']) selected @endif>{{$tvalue->type_name}}</option>  
-                         @endforeach
-                         </select>
                       </div>
                     </div>
                   </div>
@@ -80,4 +83,22 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script type="text/javascript">
+getModuleUrl();
+    function getModuleUrl() {
+        var parent_id = $('#parent_id').val();
+         if(parent_id !=0 ) {
+                $(".module_url").show();
+                $("#module_url").attr("required","true");
+            } else {
+                $(".module_url").hide();
+                $("#module_url").removeAttr("required");
+                $(".parsley-required").hide();
+            }
+ 
+
+
+    }
+  </script>
 @endsection

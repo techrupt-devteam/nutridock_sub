@@ -101,8 +101,8 @@
                                 <input type="text" class="form-control" placeholder="Enter Duration Days" id="duration1" name="duration1" required="true" data-parsley-errors-container="#duration_msg1" data-parsley-error-message="Enter Duration Days">
                                 <div class="input-group-addon btn-default">
                                     Days
-                                  </div>
-                                <span id="duration_msg1" style="color:red;"></span></div>
+                                  </div></div>
+                                <span id="duration_msg1" style="color:red;"></span>
                             </td>
                             <td>
                                  <input type="radio" id="price_type1" name="price_type1" required="true" value="meal" data-parsley-errors-container="#meal_type1" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal</b>
@@ -162,6 +162,7 @@
            $("#area").html(data);
       });
   }
+
   function addDurationRow()
   {
       var duration_flag = $('#duration_flag').val();
@@ -169,7 +170,7 @@
       $('#duration_flag').val(duration_flag);
        var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days"> <span id="duration_msg'+duration_flag +'" style="color:red;"></span> <div class="input-group-addon btn-default"> Days</div></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price' + duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#duration_body').append(tr);
-        $("#webinar_date"+duration_flag).datepicker({ format: "yyyy-mm-dd",autoclose: true}).val();
+     
   }
 
 

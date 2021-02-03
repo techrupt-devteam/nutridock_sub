@@ -33,7 +33,7 @@
                 <tr>
                   <th>Sr.No.</th>
                   <th>Role</th>
-                  <th>Type</th>
+
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -42,7 +42,6 @@
                     <tr>
                       <td>{{$key+1}}</td>
                       <td>{{$value->role_name}}</td>
-                      <td>{{$value->type_name}}</td>
                       <td>
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->per_id}}"  class="btn btn-primary btn-sm"  title="Edit">
                           <i class="fa fa-edit"></i>
