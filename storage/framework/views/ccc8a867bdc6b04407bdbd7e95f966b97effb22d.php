@@ -1,32 +1,23 @@
-@extends('layouts.master')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
    <div class="carousel-inner">
-      @foreach($arr_data as $row)
+      <?php $__currentLoopData = $arr_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
       <div <?php if($single_data['id']==$row['id']) {?> class="carousel-item active" <?php }else{ ?> class="carousel-item" <?php } ?> >
-         <img src="{{url('')}}/uploads/images/{{$row['image']}}" class="d-block w-100" alt="...">
-         <div class="carousel-caption home-slider">
-            <h3>Thick and Luscious Smoothies</h3>
-            <p>Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.!</p>
-            <a href="http://order.nutridock.com/" target="_tab" class="btn btn-success btn-lg">Order Now</a>
-            <a href="{{url('')}}/subscribe_info" class="btn btn-outline-dark btn-lg">Subscription</a>
-          </div>  
-         <!-- <div class="carousel-caption text-md-left text-center">
+         <img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($row['image']); ?>" class="d-block w-100" alt="...">
+         <div class="carousel-caption text-md-left text-center">
             <div class="" data-aos="zoom-out" data-aos-delay="100">
               <a href="http://order.nutridock.com/" target="_tab" class="btn btn-success btn-lg">Order Now</a>
-              <a href="{{url('')}}/subscribe_info" class="btn btn-outline-success btn-lg">Subscription</a>
+              <a href="<?php echo e(url('')); ?>/subscribe_info" class="btn btn-outline-success btn-lg">Subscription</a>
             </div>
-         </div> -->
+         </div>
       </div>
-      @endforeach
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
    </div>
    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
    <div class="sketch-slider" style=""></div>
 </div>
-<style>
-.sketch-slider{position:absolute;bottom:0;left:0;width:100%;z-index:3;background:url('{{url('')}}/public/front/img/sketch.png') repeat center bottom;background-size:auto 100%;height:40px}
-</style>
+<style>.sketch-slider{position:absolute;bottom:0;left:0;width:100%;z-index:3;background:url('<?php echo e(url('')); ?>/public/front/img/sketch.png') repeat center bottom;background-size:auto 100%;height:40px}</style>
 <main id="main">
    <section class="elementor-element">
       <div class="container">
@@ -39,11 +30,11 @@
             <div class="col-md-4">
                <div class="elementor-image-box-wrapper">
                   <?php if($cnt==1){ ?>
-                  <figure class="elementor-image-box-img"> <img src="{{url('')}}/public/front/img/1.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
+                  <figure class="elementor-image-box-img"> <img src="<?php echo e(url('')); ?>/public/front/img/1.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
                   <?php }elseif($cnt==2){ ?>
-                  <figure class="elementor-image-box-img"> <img src="{{url('')}}/public/front/img/2.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
+                  <figure class="elementor-image-box-img"> <img src="<?php echo e(url('')); ?>/public/front/img/2.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
                   <?php }else{ ?>
-                  <figure class="elementor-image-box-img"> <img src="{{url('')}}/public/front/img/3.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
+                  <figure class="elementor-image-box-img"> <img src="<?php echo e(url('')); ?>/public/front/img/3.jpg" class="attachment-full size-full" alt="" width="66" height="54"> </figure>
                   <?php } ?>
                   <div class="elementor-image-box-content">
                      <p class="elementor-image-box-title"><?php echo $row['title']; ?></p>
@@ -63,18 +54,18 @@
          <div class="">
             <div class="w-100 d-flex justify-content-center mt-3">
                <ul class="nav nav-pills Categories-portfolio" role="tablist">
-                  @foreach($cate_data as $key => $row)
+                  <?php $__currentLoopData = $cate_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <li class="nav-item">
-                     <a @if($key==0) class="nav-link active" @endif class="nav-link" data-toggle="pill" href="#tab{{$row->menu_category_id}}">
-                     {{$row->name}} </a> 
+                     <a <?php if($key==0): ?> class="nav-link active" <?php endif; ?> class="nav-link" data-toggle="pill" href="#tab<?php echo e($row->menu_category_id); ?>">
+                     <?php echo e($row->name); ?> </a> 
                   </li>
-                  @endforeach
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                </ul>
             </div>
             <div class="w-100 d-flex justify-content-center mt-2">
                <div class="tab-content w-100">
-                  @foreach($cate_data as $count => $row)
-                  <div id="tab{{$row->menu_category_id}}" @if($count==0) class="tab-pane active filter-active" @else class="container tab-pane" @endif><br>
+                  <?php $__currentLoopData = $cate_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $count => $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                  <div id="tab<?php echo e($row->menu_category_id); ?>" <?php if($count==0): ?> class="tab-pane active filter-active" <?php else: ?> class="container tab-pane" <?php endif; ?>><br>
                   <div class="row">
                      <?php $menu_data=\DB::table('menu')->where('menu_category_id',$row->menu_category_id)->limit(4)->get();
                         foreach($menu_data as $menu_row):
@@ -85,14 +76,14 @@
                               <div class="meal-img">
                               <a data-toggle="modal" data-target="#myModal" 
                                 id="getMenu" 
-                                data-url="{{ route('dynamicModal',['id'=>$menu_row->id])}}" border="0">
-                                 <img src="{{url('')}}/uploads/images/{{$menu_row->image}}" class="img-fluid">
+                                data-url="<?php echo e(route('dynamicModal',['id'=>$menu_row->id])); ?>" border="0">
+                                 <img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($menu_row->image); ?>" class="img-fluid">
                                 </a>                              
                               </div>
                               <div>
                                  <div class="nutridock-meal mt-2">
-                                    <div class="nutridock-meal-name text-center"> <span title="{{$menu_row->menu_title}}"> {{$menu_row->menu_title}}</span> </div>
-                                    <div class="nutridock-meal-ingredients text-center"> <span class="txt-side-dish-s" title="with Sautéed Carrots &amp; French Green Beans">{{$menu_row->menu_description}}</span> </div>
+                                    <div class="nutridock-meal-name text-center"> <span title="<?php echo e($menu_row->menu_title); ?>"> <?php echo e($menu_row->menu_title); ?></span> </div>
+                                    <div class="nutridock-meal-ingredients text-center"> <span class="txt-side-dish-s" title="with Sautéed Carrots &amp; French Green Beans"><?php echo e($menu_row->menu_description); ?></span> </div>
                                     <div class="nutridock-icon over-xs-limit">
                                        <?php $whats_inside_value=\DB::table('whats_inside')->where('menu_id',$menu_id)->orderBy('id','Asc')->limit('1')->get();
                                           foreach($whats_inside_value as $whats_inside_row);?>
@@ -111,15 +102,15 @@
                                        <div class="meal-icon">
                                           <a href="javascript:" class="tooltip" title="<?php echo $specifiction_row->name; ?>">
                                           <span class="tooltiptext"><?php echo $specifiction_row->name; ?></span>
-                                          <img src="{{url('')}}/uploads/images/{{$spec_row->icon_image}}" alt="<?php echo $specifiction_row->name; ?>">
+                                          <img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($spec_row->icon_image); ?>" alt="<?php echo $specifiction_row->name; ?>">
                                           </a>
                                        </div>
                                        <?php endforeach; ?>
                                        <div class="meal-icon">
                                        <a class="tooltip" data-toggle="modal" data-target="#myModal" 
                                        id="getMenu" 
-                                       data-url="{{ route('dynamicModal',['id'=>$menu_row->id])}}" border="0" style="cursor: pointer;">
-                                          <span class="tooltiptext">show more</span> <img src="{{url('')}}/public/front/img/designs-menu.png" alt="show more"> </a> 
+                                       data-url="<?php echo e(route('dynamicModal',['id'=>$menu_row->id])); ?>" border="0" style="cursor: pointer;">
+                                          <span class="tooltiptext">show more</span> <img src="<?php echo e(url('')); ?>/public/front/img/designs-menu.png" alt="show more"> </a> 
                                        </div>
                                     </div>
                                  </div>
@@ -130,13 +121,13 @@
                      <?php endforeach; ?>
                   </div>
                </div>
-               @endforeach
+               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
          </div>
       </div>
       </div>
       <div class="text-center">
-         <a href="{{url('')}}/menu" class="btn btn-dark btn-lg">View Menu</a>
+         <a href="<?php echo e(url('')); ?>/menu" class="btn btn-dark btn-lg">View Menu</a>
       </div>
    </section>
    <section class="buyer-section">
@@ -153,13 +144,13 @@
                }?>
             <div class="row mt-3">
                <div class="col-md-6 col-lg-5 offset-lg-1">
-                  <div class="buyer-img"> <img src="{{url('')}}/uploads/images/{{$row1->image}}" class="img-fluid"> </div>
+                  <div class="buyer-img"> <img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($row1->image); ?>" class="img-fluid"> </div>
                </div>
                <div class="col-md-6">
                   <div class="buyer-containt">
                      <div>
-                        <h3>{{$row1->title}}</h3>
-                        <p>{{$row1->title_description}}</p>
+                        <h3><?php echo e($row1->title); ?></h3>
+                        <p><?php echo e($row1->title_description); ?></p>
                      </div>
                   </div>
                </div>
@@ -169,13 +160,13 @@
                <div class="col-md-6 col-lg-5 offset-lg-1 order-2">
                   <div class="buyer-containt">
                      <div>
-                        <h3>{{$row1->title}}</h3>
-                        <p>{{$row1->title_description}}</p>
+                        <h3><?php echo e($row1->title); ?></h3>
+                        <p><?php echo e($row1->title_description); ?></p>
                      </div>
                   </div>
                </div>
                <div class="col-md-5 order-md-2">
-                  <div class="buyer-img"> <img src="{{url('')}}/uploads/images/{{$row1->image}}" class="img-fluid"> </div>
+                  <div class="buyer-img"> <img src="<?php echo e(url('')); ?>/uploads/images/<?php echo e($row1->image); ?>" class="img-fluid"> </div>
                </div>
             </div>
             <?php } ?>
@@ -188,7 +179,7 @@
          <div class="row">
             <div class="col-lg-4 col-md-4">
                <div class="newsletter-image">
-                  <img class="img-responsive center-block" src="{{url('')}}/public/front/img/15.jpg" alt="">
+                  <img class="img-responsive center-block" src="<?php echo e(url('')); ?>/public/front/img/15.jpg" alt="">
                </div>
             </div>
             <div class="col-lg-8 col-md-8 text-center">
@@ -197,8 +188,9 @@
                     The secret of getting healthy life, with  free guide to easy and enjoyable nutrition, Grab it now!    
                   </h4>
                </div>
-               <form action="{{url('/')}}/subscribe" method="post" class="form-inline" onsubmit="return submitUserForm()">
-                  {{csrf_field()}}
+               <form action="<?php echo e(url('/')); ?>/subscribe" method="post" class="form-inline" onsubmit="return submitUserForm()">
+                  <?php echo e(csrf_field()); ?>
+
                   <div class="row">
                      <div class="col-lg-5 col-md-4 col-sm-7 mb-2">
                         <div class="form-group">
@@ -253,4 +245,5 @@ $(document).ready(function(){
     });
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\nutridock_sub\resources\views/index.blade.php ENDPATH**/ ?>

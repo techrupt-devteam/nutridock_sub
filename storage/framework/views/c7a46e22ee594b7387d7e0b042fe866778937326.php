@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><!-- <?php echo e($page_name." ".$title); ?> --></h3>
-              <a href="<?php echo e(url('/admin')); ?>/add_<?php echo e($url_slug); ?>" class="btn btn-primary btn-sm" style="float: right;">Add <?php echo e(ucfirst($url_slug)); ?></a>
+              <a href="<?php echo e(url('/admin')); ?>/add_<?php echo e($url_slug); ?>" class="btn btn-primary btn-xs" style="float: right;">Add <?php echo e(ucfirst($url_slug)); ?></a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -44,10 +44,9 @@
                       <td><?php echo e($value->role_name); ?></td>
                       <td><?php echo e($value->type_name); ?></td>
                       <td>
-                        <a href="<?php echo e(url('/admin')); ?>/edit_<?php echo e($url_slug); ?>/<?php echo e($value->per_id); ?>"  class="btn btn-primary btn-sm"  title="Edit">
+                        <a href="<?php echo e(url('/admin')); ?>/edit_<?php echo e($url_slug); ?>/<?php echo e($value->per_id); ?>" title="Edit">
                           <i class="fa fa-edit"></i>
-                        </a>
-                        <a href="<?php echo e(url('/admin')); ?>/delete_<?php echo e($url_slug); ?>/<?php echo e($value->per_id); ?>"  class="btn btn-default btn-sm"  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        </a><a href="<?php echo e(url('/admin')); ?>/delete_<?php echo e($url_slug); ?>/<?php echo e($value->per_id); ?>" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

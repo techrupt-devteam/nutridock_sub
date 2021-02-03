@@ -56,20 +56,16 @@
 <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/dist/js/demo.js"></script>
 <!-- Parsley -->
 <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/parsley.js"></script>
-<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
-<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
-<link rel="stylesheet" href="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/select2/dist/css/select2.min.css">
 
+
+ <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/select2/select2.full.min.js"></script>
 
   <script>
-
-  
+    $('#nutritionsit_state').select2();
     $(function () {
-
-      $('.select2').select2();
-      
       //$("#datepicker").datepicker({ format: "dd/mm/yyyy" }).val();
       //$("#datepicker1").datepicker({ format: "dd/mm/yyyy" }).val();
       $('.my-colorpicker1').colorpicker()
@@ -89,7 +85,8 @@
         'autoWidth'   : false
       })
     })
-
+  </script>
+   <script type="text/javascript">
  $(document).ready(function(){
   $("#datepicker").change(function(){
       var startDate = new Date($('#datepicker').val());

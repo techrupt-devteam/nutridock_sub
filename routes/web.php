@@ -31,6 +31,10 @@ Route::get('/test', function () {
 
  Route::get('/', 'HomeController@index')->name('index');
  
+ Route::get('/order_index', function () {
+    return view('ordernow/index');
+});
+
  Route::get('dynamicModal/{id}',[
 	 'as'=>'dynamicModal',
 	 'uses'=> 'HomeController@loadModal'

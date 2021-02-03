@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><!-- <?php echo e($page_name." ".$title); ?> --></h3>
-              <a href="<?php echo e(url('/admin')); ?>/add_module" class="btn btn-primary btn-sm" style="float: right;">Add Menu</a>
+              <a href="<?php echo e(url('/admin')); ?>/add_module" class="btn btn-primary btn-xs" style="float: right;">Add Menu</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -47,11 +47,11 @@
                       <td><?php echo e($value['module_url']); ?></td>
                       <td><?php echo e($value['moduletype']['type_name']); ?></td>
                       <td>
-                        <a href="<?php echo e(url('/admin')); ?>/edit_<?php echo e($url_slug); ?>/<?php echo e($value['module_id']); ?>"  class="btn btn-primary btn-sm"  title="Edit">
+                        <a href="<?php echo e(url('/admin')); ?>/edit_<?php echo e($url_slug); ?>/<?php echo e($value['module_id']); ?>" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
                        
-                        <a href="<?php echo e(url('/admin')); ?>/delete_<?php echo e($url_slug); ?>/<?php echo e($value['module_id']); ?>"  class="btn btn-danger btn-sm"  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="<?php echo e(url('/admin')); ?>/delete_<?php echo e($url_slug); ?>/<?php echo e($value['module_id']); ?>" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>

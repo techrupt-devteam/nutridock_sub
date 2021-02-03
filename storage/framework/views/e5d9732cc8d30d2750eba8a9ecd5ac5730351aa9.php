@@ -29,8 +29,7 @@
   <link rel="stylesheet" href="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
-
+   <link rel="stylesheet" href="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,9 +40,7 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
   <style type="text/css">
   .parsley-required{
     color: red;
