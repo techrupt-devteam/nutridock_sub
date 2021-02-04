@@ -42,9 +42,22 @@ class AssignLocationMenuController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = $this->base_model->orderby('assign_menu_id','DESC')->get();
+        $data     = \DB::table('nutri_mst_assign_location_menu')
+                     ->join('state','nutri_mst_assign_location_menu.state_id','=','state.id')
+                     ->join('city','nutri_mst_assign_location_menu.city_id','=','city.id')
+                     ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
+                     ->join('nutri_mst_menu','nutri_mst_assign_location_menu.menu_id','=','nutri_mst_menu.id')
+                     ->select('nutri_mst_menu.menu_title','state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_assign_location_menu.*')
+                     ->where('nutri_mst_assign_location_menu.is_deleted','<>',1)
+                     ->orderBy('nutri_mst_assign_location_menu.assign_menu_id', 'DESC')
+                     ->get();
+
+        if(!empty($data))
+        {
+            $arr_data = $data->toArray();
+        }     
        
-        $data['data']      =  $data->toArray();
+        $data['data']      = $arr_data;
         $data['page_name'] = "Manage";
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
@@ -155,7 +168,7 @@ class AssignLocationMenuController extends Controller
         $arr_data['city_id']   = $request->input('city_id');
         $arr_data['area_id']   = $request->input('area_id');
         $arr_data['menu_id']   = $request->input('menu_id');
-        $assign_location_menu_update = $this->base_model->where(['id'=>$id])->update($arr_data);
+        $assign_location_menu_update = $this->base_model->where(['assign_menu_id'=>$id])->update($arr_data);
         
         Session::flash('success', $this->Update );
         return \Redirect::to('admin/manage_assign_location_menu');        
@@ -164,11 +177,30 @@ class AssignLocationMenuController extends Controller
     //Assign Menu delete function
     public function delete($id)
     {
-        $id= base64_decode($id);
-        $this->base_model->where(['id'=>$id])->delete();
-      
-        Session::flash('success', $this->Delete);
+        $id = base64_decode($id);
+        $arr_data               = [];
+        $arr_data['is_deleted'] = '1';
+        $this->base_model->where(['assign_menu_id'=>$id])->update($arr_data);
+        Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
+    } 
+
+    //on off staus
+    public function status(Request $request)
+    {
+        $status  = $request->status;
+        $id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+           $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+           $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['assign_menu_id'=>$id])->update($arr_data);
+        //return \Redirect::back();
     }
 
 }

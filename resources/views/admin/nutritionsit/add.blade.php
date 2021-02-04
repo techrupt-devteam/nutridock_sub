@@ -71,9 +71,9 @@
                       <div class="form-group">
                         <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity();">
-                          <option value="">-Select State-</option>t
+                          <option value="">-Select State-</option>
                           @foreach($state as $svalue)
-                          <option value="{{$svalue->id}}">{{$svalue->name}}</option>t
+                          <option value="{{$svalue->id}}">{{$svalue->name}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -94,7 +94,7 @@
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
-                          <option value="">-Select Area-</option>t
+                          <option value="">-Select Area-</option>
                           <option value=""></option>
                         </select>
                       </div>
@@ -107,7 +107,7 @@
                       <div class="form-group">
                         <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
                         <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
-                          <option value="">-Select Role-</option>t
+                          <option value="">-Select Role-</option>
                           @foreach($role as $rvalue)
                           <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach

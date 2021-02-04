@@ -44,21 +44,21 @@
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
-                      <td>{{$value['menu_id']}}</td>
-                      <td>{{$value['state_id']}}</td>
-                      <td>{{$value['city_id']}}</td>
-                      <td>{{$value['area_id']}}</td>
+                      <td>{{ucfirst($value->menu_title)}}</td>
+                      <td>{{ucfirst($value->state_name)}}</td>
+                      <td>{{ucfirst($value->city_name)}}</td>
+                      <td>{{ucfirst($value->area_name)}}</td>
                       <td>
-                        @if($value['is_active']=='1')
+                        @if($value->is_active=='1')
                            @php $checked="checked"; $style="success"; @endphp 
                         @else
                            @php $checked=""; $style="danger";@endphp 
                         @endif
-                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo base64_encode($value['assign_menu_id']); ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value['assign_menu_id'])}}" class="btn btn-sm btn-primary" title="Edit">
+                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->assign_menu_id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->assign_menu_id)}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value['assign_menu_id'])}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->assign_menu_id)}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
@@ -85,7 +85,7 @@
     function change_Status(id,plan_id) 
     {  
         swal({
-          title: "Operation Manager status",
+          title: "Assign Menu status",
           text:  "Are You sure to change status",
           icon:  "warning",
           dangerMode: true,
@@ -100,7 +100,7 @@
                 data: {status:status,plan_ids:plan_id},
                 success: function (data) 
                 {
-                  swal("Success", "Operation Manager status successfully changed !", "success");
+                  swal("Success", "Assign location menu status successfully changed !", "success");
                 }
             });
           }

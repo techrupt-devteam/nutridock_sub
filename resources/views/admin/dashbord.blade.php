@@ -25,7 +25,7 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-      @if(empty($session_permissions))
+      @if(empty($session_permissions) && $session_user->roles!='admin')
       <div class="col-md-12">
           <div class="alert alert-danger" role="alert">
             <strong>Sorry!</strong>  Admin not approve your access permission please contact with us.

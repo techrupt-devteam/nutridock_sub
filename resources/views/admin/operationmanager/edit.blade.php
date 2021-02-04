@@ -75,7 +75,7 @@
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" required="true" onchange="getCity();">
-                          <option value="">-Select State-</option>t
+                          <option value="">-Select State-</option>
                           @foreach($state as $svalue)
                           @php 
                             $selected = "";
@@ -83,7 +83,7 @@
                              $selected ="selected";
                             }
                           @endphp
-                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>t
+                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
                           @endforeach
                         </select>
                       </div>
@@ -93,8 +93,8 @@
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_city" id="operation_manager_city" required="true" onchange="getArea();">
-                          <option value="">-Select City-</option>t
-                          <option value=""></option>t
+                          <option value="">-Select City-</option>
+                          <option value=""></option>
                         </select>
                       </div>
                     </div>
@@ -104,8 +104,8 @@
                       <div class="form-group">
                         <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_area" id="operation_manager_area" required="true">
-                          <option value="">-Select Area-</option>t
-                          <option value=""></option>t
+                          <option value="">-Select Area-</option>
+                          <option value=""></option>
                         </select>
                       </div>
                     </div>
@@ -117,10 +117,10 @@
                       <div class="form-group">
                         <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
                         <select class="form-control" name="operation_manager_role" id="operation_manager_role" required="true" readonly>
-                          <option value="">-Select Role-</option>t
+                          <option value="">-Select Role-</option>
                           @foreach($role as $rvalue)
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==2) echo "selected"; ?>>{{$rvalue->role_name}}</option>
                           @endforeach
                         </select>
                       </div>

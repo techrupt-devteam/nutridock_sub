@@ -242,13 +242,14 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::post('/update_menu/{id}',	'Admin\MenuController@update');
 	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
 
-	// Assign location wise menu  
-	  Route::get('/manage_assign_location_menu', 		'Admin\AssignLocationMenuController@index');
-	  Route::get('/add_assign_location_menu',	 		'Admin\AssignLocationMenuController@add');
-	  Route::post('/store_assign_location_menu', 		'Admin\AssignLocationMenuController@store');
- 	  Route::get('/edit_assign_location_menu/{id}',		'Admin\AssignLocationMenuController@edit');
- 	  Route::post('/update_assign_location_menu/{id}',	'Admin\AssignLocationMenuController@update');
-	  Route::get('/delete_assign_location_menu/{id}', 	'Admin\AssignLocationMenuController@delete');
+	// Assign location wise menu Routes  
+	Route::get('/manage_assign_location_menu', 		'Admin\AssignLocationMenuController@index');
+	Route::get('/add_assign_location_menu',	 		'Admin\AssignLocationMenuController@add');
+	Route::post('/store_assign_location_menu', 		'Admin\AssignLocationMenuController@store');
+	Route::get('/edit_assign_location_menu/{id}',		'Admin\AssignLocationMenuController@edit');
+	Route::post('/update_assign_location_menu/{id}',	'Admin\AssignLocationMenuController@update');
+	Route::get('/delete_assign_location_menu/{id}', 	'Admin\AssignLocationMenuController@delete');
+	Route::post('/status_assign_menu',	  		'Admin\AssignLocationMenuController@status');
 
 });
 
