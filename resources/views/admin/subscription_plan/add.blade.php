@@ -129,7 +129,8 @@
                 </div>
               </div>
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-default" onclick="window.history.back()">Back</button>
               </div>
             </form>
           </div>
