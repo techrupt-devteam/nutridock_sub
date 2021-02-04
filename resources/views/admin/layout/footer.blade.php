@@ -73,7 +73,7 @@
 
 </style>
   <script>
-    $(".alert").fadeOut(5000);
+    $(".alert1").fadeOut(5000);
   
     $(function () {
 

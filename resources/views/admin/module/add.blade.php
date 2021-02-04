@@ -30,10 +30,10 @@
               <div class="row">
                 <div class="col-md-12">
 
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="module_name">Parent Module<span style="color:red;" >*</span></label>
+                        <label for="module_name">Parent Module</label>
                         <select name="parent_id" id="parent_id" class="form-control" onchange="getModuleUrl();">
                           <option value="">-Select Type-</option>
                           @foreach($type as $tvalue)
@@ -43,7 +43,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="module_name">Module Name<span style="color:red;" >*</span></label>
@@ -51,11 +51,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4 module_url">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="module_name">Module Url<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" required="true">
+                        <label for="module_name">Module Url</label>
+                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="module_name">Module Url Slug</label>
+                        <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug">
                       </div>
                     </div>
                   </div>

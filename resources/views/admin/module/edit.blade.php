@@ -35,13 +35,13 @@
 
                 
                 <div class="col-md-12">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="module_name">Module Type<span style="color:red;" >*</span></label>
-                      <select name="parent_id" id="parent_id" class="form-control" required="true" onchange="getModuleUrl();">
+                      <label for="module_name">Module Type</label>
+                      <select name="parent_id" id="parent_id" class="form-control"  onchange="getModuleUrl();">
                         <option value="">-Select Type-</option>
-                        <option value= 0 <?php if(0==$data['parent_id']){ echo "Selected"; }?>> Parent </option>
+                      
                         @foreach($parent as $tvalue)
                         <option value="{{$tvalue->module_id}}" <?php if($tvalue->module_id==$data['parent_id']){ echo "Selected"; }?>> {{$tvalue->module_name}}</option>
                         @endforeach
@@ -49,7 +49,7 @@
                     </div>
                   </div>
                  </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="menu_name">Module Name<span style="color:red;" >*</span></label>
@@ -57,11 +57,19 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4 module_url">
+                  <div class="col-md-3 module_url">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="module_name">Module Url<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" required="true" value="{{$data['module_url']}}">
+                        <label for="module_name">Module Url</label>
+                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" value="{{$data['module_url']}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="module_name">Module Url Slug</label>
+                        <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug" value="{{$data['module_url_slug']}}">
                       </div>
                     </div>
                   </div>
@@ -85,7 +93,7 @@
   <!-- /.content-wrapper -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <script type="text/javascript">
-getModuleUrl();
+/*getModuleUrl();
     function getModuleUrl() {
         var parent_id = $('#parent_id').val();
          if(parent_id !=0 ) {
@@ -99,6 +107,6 @@ getModuleUrl();
  
 
 
-    }
+    }*/
   </script>
 @endsection

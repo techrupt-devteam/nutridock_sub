@@ -69,10 +69,11 @@ class ModuleController extends Controller
             return \Redirect::back();
         }
 
-        $arr_data                  = [];
-        $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['parent_id']     = (!empty($request->input('parent_id'))) ? $request->input('parent_id') : 0 ;
-        $arr_data['module_url']    = $request->input('module_url');
+        $arr_data                       = [];
+        $arr_data['module_name']        = $request->input('module_name');
+        $arr_data['parent_id']          = (!empty($request->input('parent_id'))) ? $request->input('parent_id') : 0 ;
+        $arr_data['module_url']         = $request->input('module_url');
+        $arr_data['module_url_slug']    = $request->input('module_url_slug');
         $user = $this->base_model->create($arr_data);
       
         if(!empty($user))
@@ -123,10 +124,11 @@ class ModuleController extends Controller
             Session::flash('error', "Record already exist!");
             return \Redirect::back();
         }
-        $arr_data                  = [];
-        $arr_data['module_name']   = $request->input('module_name');
-        $arr_data['module_url']    = $request->input('module_url');
-        $arr_data['parent_id']     = $request->input('parent_id');
+        $arr_data                       = [];
+        $arr_data['module_name']        = $request->input('module_name');
+        $arr_data['module_url']         = $request->input('module_url');
+        $arr_data['parent_id']          = (!empty($request->input('parent_id'))) ? $request->input('parent_id') : 0 ;
+        $arr_data['module_url_slug']    = $request->input('module_url_slug');
         $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record update successfully.');
         return \Redirect::to('admin/manage_module');

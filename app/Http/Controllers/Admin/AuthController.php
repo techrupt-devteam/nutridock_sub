@@ -44,7 +44,10 @@ class AuthController extends Controller
         if($arr_user->roles!='admin'){
         $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
         //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
-        $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+        if(!empty($get_permission_data))
+        {
+            $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+        }
         //get module list type  wise 
         //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
         
@@ -59,6 +62,7 @@ class AuthController extends Controller
                 $parent_menu[$key1][] = $pmvalue->module_name;
                 $parent_menu[$key1][] = $pmvalue->module_url;
                 $parent_menu[$key1][] = $pmvalue->module_id;
+                $parent_menu[$key1][] = $pmvalue->module_url_slug;
                 
                 $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
                 if(count($get_child_menu)>0)
@@ -67,6 +71,7 @@ class AuthController extends Controller
                       $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
                       $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
                       $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
+                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
                     }
                 }
         }
@@ -104,19 +109,29 @@ class AuthController extends Controller
             $request->session()->put("user",$arr_user);
             $request->session()->save();  
             if($arr_user->roles!='admin'){
-                $request->session()->put("permissions",$permission_arr);
-                $request->session()->save(); 
 
+                if(!empty($get_permission_data))
+                {
+                  $request->session()->put("permissions",$permission_arr);
+                  $request->session()->save(); 
+                }else
+                {
+                  $request->session()->put("permissions",[]);
+                  $request->session()->save();  
+                }
+                
                 $request->session()->put("module_data",$get_module_data);
                 $request->session()->save();
 
                 $request->session()->put("parent_menu",$parent_menu);
                 $request->session()->save();
+                
                 $request->session()->put("sub_menu",$sub_menu);
                 $request->session()->save();
 
                 /* $request->session()->put("module_type",$get_module_type);
                 $request->session()->save();*/
+
             }
 
             return redirect('admin/dashbord');

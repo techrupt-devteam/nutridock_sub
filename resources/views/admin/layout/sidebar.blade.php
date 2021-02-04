@@ -192,46 +192,21 @@
         </li>
     @else
 <!--------------------Dynamic Menu with permission---------------------->
-
-
-     <?php /*  @foreach($session_module as $module_value)
-
-           @if(in_array($module_value->module_id,$session_permissions) && $module_value->parent_id==0)
-            <li  class="treeview">
-                <a href="#">
-                <i class="fa fa-television"></i> <span>{{$module_value->module_name}}</span>
-                <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                </a>
-            <ul class="treeview-menu"> 
-            @endif 
-             @if(in_array($module_value->module_id,$session_permissions) && $module_value->parent_id!=0)
-           <li <?php if(Request::segment(2)==$module_value->module_url){?> class="active" <?php }?>>
-              <a href="{{url('/admin')}}/{{$module_value->module_url}}">
-                 <i class="fa fa-television"></i> <span>{{$module_value->module_name}}</span>
-                <span class="pull-right-container">
-                </span>
-              </a> 
-            </li> 
-             @elseif($module_value->parent_id!=0) 
-             </ul>
-               </li>
-               @endif   @endforeach*/?>
-          
-        <?php // dd($session_parent_menu); ?>
         @foreach($session_parent_menu as $parent_value)
           @if(!empty($parent_value[1]))
-            @if(in_array($parent_value[2],$session_permissions))
-              <li @if(Request::segment(2)=='{{$parent_value[1]}}') class="active" @endif>
+            @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions))
+              <li @if(Request::segment(2)=='manage_'.$parent_value[3] || Request::segment(2)=='add_'.$parent_value[3] || Request::segment(2)=='edit_'.$parent_value[3]) class="active" @endif>
                 <a href="{{url('/admin')}}/{{$parent_value[1]}}">
                   <i class="fa fa-television"></i> <span>{{$parent_value[0]}}</span>
                 </a>
               </li>
              @endif
           @else
-          <li class="treeview" >
-              @if(in_array($parent_value[2],$session_permissions))
+          <?php
+            $active_menu = explode(",",$parent_value[3]);
+          ?>
+          <li class="treeview <?php foreach($active_menu as $acvalue){?>@if(Request::segment(2)=='manage_'.$acvalue || Request::segment(2)=='add_'.$acvalue || Request::segment(2)=='edit_'.$acvalue) active @endif<?php }?>">
+              @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions) )
                 <a href="#">
                   <i class="fa fa-television"></i> <span>{{$parent_value[0]}}</span>
                   <span class="pull-right-container">
@@ -242,8 +217,9 @@
               <ul class="treeview-menu">
                 @foreach($session_sub_menu[$parent_value[0]] as $sub_value)
                   @foreach($sub_value as $sub_menu)
-                    @if(in_array($sub_menu[0],$session_permissions))
-                    <li>
+
+                    @if(isset($session_permissions) && in_array($sub_menu[0],$session_permissions) && !empty($session_permissions))
+                    <li @if(Request::segment(2)=='manage_'.$sub_menu[3] || Request::segment(2)=='add_'.$sub_menu[3] || Request::segment(2)=='edit_'.$sub_menu[3]) class="active" @endif>
                       <a href="{{url('/admin')}}/{{$sub_menu[2]}}">
                          <i class="fa fa-television"></i> <span>{{$sub_menu[1]}}</span>
                         <span class="pull-right-container">
@@ -258,6 +234,7 @@
            @endif 
          @endforeach
     @endif
+
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>

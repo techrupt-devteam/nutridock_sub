@@ -10,8 +10,11 @@ class Module extends Model
     protected $primaryKey  = "module_id";
     protected $fillable = [
 		"module_name",
-		"type_id",
-        "module_url"
+		"parent_id",
+        "type_id",
+        "module_url",
+        "module_url_slug"
+
     ];
 
     public function ModuleType()

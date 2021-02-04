@@ -165,12 +165,8 @@ class MenuController extends Controller
                 </div>
             </article>
             </div>';
-
-        $htmlData .= '</div>';
-
-
-
-
+            $htmlData .= '</div>';
+        
         //dd($menu_data);
         return($htmlData);
        // return view('index',['data'=>$id]);
