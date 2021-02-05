@@ -53,6 +53,7 @@
                           <option value="{{$cvalue->id}}" @if($cvalue->id==$data['menu_category_id']) selected @endif>{{$cvalue->name}}</option>
                           @endforeach
                          </select>
+                         <div id="#name_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
@@ -280,8 +281,9 @@
               </div> 
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
+              
+                <button type="submit" class="btn btn-primary ">Update</button> 
+                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
           </div>

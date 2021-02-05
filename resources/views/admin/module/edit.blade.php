@@ -77,8 +77,8 @@
               </div>  
               <!-- /.box-body -->
               <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
               </div>
             </form>
           </div>

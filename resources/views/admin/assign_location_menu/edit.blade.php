@@ -33,11 +33,11 @@
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['assign_menu_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
                 <div class="row">  
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="state_id" id="state_id" required="true" onchange="getCity();">
+                         <select class="form-control select2" name="state_id" id="state_id" required="true"  data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state." onchange="getCity();">
                           <option value="">-Select State-</option>
                           @foreach($state as $svalue)
                           @php 
@@ -49,56 +49,63 @@
                           <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
                           @endforeach
                         </select>
+                         <div id="state_error" style="color:red;"></div>
                       </div>
                     </div>
-                  </div><div class="col-md-3">
+                  </div><div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="city_id" id="city_id" required="true" onchange="getArea();">
+                         <select class="form-control select2" name="city_id" id="city_id" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." required="true" onchange="getArea();">
                           <option value="">-Select City-</option>
                           <option value=""></option>
                         </select>
+                          <div id="city_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="area_id">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="area_id" id="area_id" required="true">
+                         <select class="form-control select2" name="area_id" id="area_id" required="true"  data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
                           <option value="">-Select Area-</option>
                           <option value=""></option>
                         </select>
+                            <div id="area_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="operation_manager_name">Menu<span style="color:red;" >*</span></label>
-                        <select class="form-control select2" name="menu_id" id="menu_id" required="true" data-parsley-errors-container="#menu_error" data-parsley-error-message="Please select menu.">
-                          <option value="">-Select Menu-</option>
-                          @foreach($menu as $mvalue)
-                            @php 
-                            $selected = "";
-                            if($data['menu_id'] == $mvalue->id){
-                             $selected ="selected";
-                            }
-                          @endphp
-                          <option value="{{$mvalue->id}}" {{$selected}}>{{$mvalue->menu_title}}</option>
-                          @endforeach
-                        </select>
-                        <div id="menu_error" style="color:red;"></div>
-                      </div>
-                    </div>
-                  </div>
+                 
                 </div>
-           
+                  <div class="row">
+                    <?php $menu_id = explode(",",$data['menu_id']); ?> 
+                      <div class="col-md-12">
+                        <div class="box-body">
+                           <table id="menu-item"  class="table table-striped table-bordered ">
+                              <thead class="btn-default">
+                              <!--   <th><input type="checkbox" name="menu[]" class="all" id="menu" value="0" <?php echo (in_array(0, $menu_id) ? 'checked' : '')?> onclick="all_click();">&nbsp;&nbsp;All  </th> -->
+
+                              <th><input type="checkbox" name="menu[]" class="all" id="menu" value="0">&nbsp;&nbsp;All  </th>
+                                <th>Menu Name</th>
+                             </thead>
+                              <tbody>
+                                @foreach($menu as $key => $mvalue)
+                                  <tr>
+                                    <td><input type="checkbox" name="menu[]"  class="checkbox_allmenu" id="menu" <?php echo (in_array($mvalue->id, $menu_id) ? 'checked' : '')?> value="{{$mvalue->id}}"></td>
+                                    <td>{{$mvalue->menu_title}}</td>
+                                  </tr>  
+                                @endforeach
+                              </tbody>
+                           </table>
+                         </div>
+                      </div>
+                    </div> 
               <!-- /.box-footer-body -->
               <div class="box-footer">
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
+               
+                <button type="submit" class="btn btn-primary">Update</button>
+                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
           </div>
@@ -111,7 +118,9 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
        get_City(); 
@@ -179,20 +188,39 @@
            $("#area_id").html(data);
       });
     }
-   
-   //checkbox show hide
-   $(function () {
-        $("#chkPassword").click(function () {
-            if ($(this).is(":checked")) {
-                $("#operation_manager_password_new").show();
-                $("#operation_manager_password_new").attr("required","true");
-            } else {
-                $("#operation_manager_password_new").hide();
-                $("#operation_manager_password_new").removeAttr("required");
-                $(".parsley-required").hide();
-            }
-        });
-    });
+  
+//chjeckbnox
+function all_click()
+{
+    var chk_value = $(".checkbox_allmenu").prop("checked");
+    if(chk_value==true){
+       $(".checkbox_allmenu").prop("checked",false);
+    }
+    else
+    {
+      $(".checkbox_allmenu").prop('checked', true);
+    }
+}  
+
+
+function allrm_click()
+{
+    var chk_value = $(".all").prop("checked");
+    if(chk_value==true){
+       $(".all").prop("checked",false);
+    }
+    else
+    {
+      $(".all").prop('checked', true);
+    }
+}
+
+//mewnu
+$('#menu-item').dataTable( {
+ "scrollY": "200px",
+"scrollCollapse": true,
+"paging": false
+} );
 
 </script>
 @endsection

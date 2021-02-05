@@ -9,6 +9,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use Config;
 class ModuleController extends Controller
 {
     public function __construct(Module $Module,ModuleType $moduletype)
@@ -19,6 +20,13 @@ class ModuleController extends Controller
         $this->title        = "Module";
         $this->url_slug     = "module";
         $this->folder_path  = "admin/module/";
+
+        //Message
+        $this->Insert = Config::get('constants.messages.Insert');
+        $this->Update = Config::get('constants.messages.Update');
+        $this->Delete = Config::get('constants.messages.Delete');
+        $this->Error = Config::get('constants.messages.Error');
+        $this->Is_exists = Config::get('constants.messages.Is_exists');
     }
 
     public function index()
@@ -65,7 +73,7 @@ class ModuleController extends Controller
 
         if($is_exist)
         {
-            Session::flash('error', "module already exist!");
+            Session::flash('error',$this->Is_exists);
             return \Redirect::back();
         }
 
@@ -78,12 +86,12 @@ class ModuleController extends Controller
       
         if(!empty($user))
         {
-            Session::flash('success', 'Success! Record added successfully.');
+            Session::flash('success', $this->Insert);
             return \Redirect::to('admin/manage_module');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error',  $this->Error);
             return \Redirect::back();
         }
     }
@@ -121,7 +129,7 @@ class ModuleController extends Controller
                     ->count();
         if($is_exist)
         {
-            Session::flash('error', "Record already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
         $arr_data                       = [];
@@ -130,7 +138,7 @@ class ModuleController extends Controller
         $arr_data['parent_id']          = (!empty($request->input('parent_id'))) ? $request->input('parent_id') : 0 ;
         $arr_data['module_url_slug']    = $request->input('module_url_slug');
         $module_update = $this->base_model->where(['module_id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record update successfully.');
+        Session::flash('success',  $this->Update);
         return \Redirect::to('admin/manage_module');
         
     }
@@ -138,7 +146,7 @@ class ModuleController extends Controller
     public function delete($id)
     {
         $this->base_model->where(['module_id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
+        Session::flash('success', $this->Delete);
         return \Redirect::back();
     }
 }

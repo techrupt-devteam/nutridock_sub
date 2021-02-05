@@ -32,7 +32,6 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Menu Name</th>
                   <th>state</th>
                   <th>City</th>
                   <th>Area</th>
@@ -44,11 +43,12 @@
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
-                      <td>{{ucfirst($value->menu_title)}}</td>
                       <td>{{ucfirst($value->state_name)}}</td>
                       <td>{{ucfirst($value->city_name)}}</td>
                       <td>{{ucfirst($value->area_name)}}</td>
                       <td>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->assign_menu_id;?>);">
+                           <i class="fa fa-info-circle"></i> View Menu</button>
                         @if($value->is_active=='1')
                            @php $checked="checked"; $style="success"; @endphp 
                         @else
@@ -76,6 +76,15 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
+  </div>
+  <div class="modal fade" id="modal-details" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div id="content">
+          
+        </div>
+      </div>
+    </div>
   </div>
   <!-- /.content-wrapper -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
@@ -106,5 +115,22 @@
           }
         });
      }
+
+    function viewDetails(assign_menu_id) 
+    { 
+      var assign_menu_id = assign_menu_id;
+      //alert(status);
+       $.ajax({
+            url: "{{url('/admin')}}/assign_menu_details",
+            type: 'post',
+            data: {assign_menu_id:assign_menu_id},
+            success: function (data) 
+            {
+              $('#content').html(data);
+            }
+        });
+    }
+
+    $('#modal-details').modal({backdrop: 'static', keyboard: false})  
 </script>
 @endsection

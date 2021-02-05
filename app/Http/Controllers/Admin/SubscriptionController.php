@@ -30,11 +30,11 @@ class SubscriptionController extends Controller
     {
         $arr_data = [];
         $data     = \DB::table('nutri_mst_subscription_plan')
-                     ->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
+                     //->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
                     ->join('city','nutri_mst_subscription_plan.city','=','city.id')
                     ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
                     ->where('nutri_mst_subscription_plan.is_deleted','<>','1')
-                    ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name','nutri_mst_plan.plan_name')
+                    ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
                     ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->get();
         //
         if(!empty($data))
@@ -65,7 +65,7 @@ class SubscriptionController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'sub_name' => 'required',
-                'plan_id' => 'required',
+                //'plan_id' => 'required',
                 'city' => 'required',
                 'area' => 'required'
             ]);
@@ -85,7 +85,7 @@ class SubscriptionController extends Controller
 
         $arr_data                = [];
         $arr_data['sub_name']    = $request->input('sub_name');
-        $arr_data['plan_id']     = $request->input('plan_id');
+      //  $arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
         $arr_data['area']        = $request->input('area');
         $plan = $this->base_model->create($arr_data);
@@ -101,6 +101,7 @@ class SubscriptionController extends Controller
                   $arr_data1                     = [];
                   $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
                   $arr_data1['sub_plan_id']      = $plan->sub_plan_id;
+                  $arr_data1['discount_price']   = $request->input('discount_price'.$d);
                   
                   if($request->input('price_type'.$d)=='meal'){
                     $arr_data1['price_per_meal'] = $request->input('price'.$d);
@@ -160,7 +161,7 @@ class SubscriptionController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'sub_name' => 'required',
-                'plan_id' => 'required',
+                //'plan_id' => 'required',
                 'city' => 'required',
                 'area' => 'required'
             ]);
@@ -188,6 +189,7 @@ class SubscriptionController extends Controller
                   $arr_data1                     = [];
                   $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
                   $arr_data1['sub_plan_id']      = $id;
+                  $arr_data1['discount_price']   = $request->input('discount_price'.$d);
                   
                   if($request->input('price_type'.$d)=='meal'){
                     $arr_data1['price_per_meal'] = $request->input('price'.$d);
@@ -225,11 +227,11 @@ class SubscriptionController extends Controller
         $plan_id = $request->input('plan_id');
 
         $plan_details     = \DB::table('nutri_mst_subscription_plan')
-                            ->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
+                           
                             ->join('city','nutri_mst_subscription_plan.city','=','city.id')
                             ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
                             ->where('nutri_mst_subscription_plan.sub_plan_id','=',$plan_id)
-                            ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name','nutri_mst_plan.plan_name')
+                            ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
                             ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->first();
         //$plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
 
@@ -241,9 +243,11 @@ class SubscriptionController extends Controller
                 <h4 class="modal-title"><b>Subscription Plan :</b> '.ucfirst($plan_details->sub_name).' </h4>
                 <hr/>
                 <div class="row">
-                  <div class="col-md-4"><h5 class="modal-title"><b>Plan Name: </b>'.ucfirst($plan_details->plan_name).'</h5></div>
+              
                   <div class="col-md-4"><h5 class="modal-title"><b>City: </b>'.ucfirst($plan_details->city_name).'</h5></div>
+                  <div class="col-md-4"><h5 class="modal-title"></h5></div>
                   <div class="col-md-4"><h5 class="modal-title"><b>Area: </b>'.ucfirst($plan_details->area_name).'</h5></div>
+                   
                 </div>
                 
              
@@ -257,6 +261,7 @@ class SubscriptionController extends Controller
                          <th>Duration</th>
                          <th>Meal Plan</th>
                          <th>Price</th>
+                         <th>Discount Price</th>
                        </tr> 
                     </thead>
                     <tbody>';
@@ -280,7 +285,8 @@ class SubscriptionController extends Controller
                         <td>'.$i.' </td>
                         <td>'.$value->duration.' Days</td>
                         <td>'.$type.'</td>
-                        <td> <i class="fa fa-rupee"></i> '.$price.'</td>  
+                        <td> <i class="fa fa-rupee"></i> '.number_format($price,2).'</td>  
+                        <td> <i class="fa fa-rupee"></i> '.number_format($value->discount_price,2).'</td>  
                     </tr>';               
         $i++;
         }     

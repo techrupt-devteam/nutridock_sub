@@ -36,7 +36,7 @@
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="menu_name">plan Name<span style="color:red;" >*</span></label>
+                        <label for="menu_name">Plan Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="plan_name" name="plan_name" placeholder="Plan Name" value="{{$data['plan_name']}}" required="true">
                       </div>
                     </div>
@@ -45,8 +45,9 @@
               </div>  
               <!-- /.box-body -->
               <div class="box-footer">
+              
+                <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
               </div>
             </form>
           </div>
