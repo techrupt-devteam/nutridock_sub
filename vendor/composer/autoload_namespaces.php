@@ -10,4 +10,5 @@ return array(
     'Requests' => array($vendorDir . '/rmccue/requests/library'),
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
+    'HTMLPurifier' => array($vendorDir . '/ezyang/htmlpurifier/library'),
 );

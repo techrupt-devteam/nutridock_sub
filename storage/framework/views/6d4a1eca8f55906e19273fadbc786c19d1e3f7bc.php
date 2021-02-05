@@ -149,6 +149,8 @@
 <script src="<?php echo e(url('')); ?>/public/front/vendor/venobox/venobox.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script src="<?php echo e(url('')); ?>/public/front/js/main.js"></script>
+<!-- Parsley -->
+<script src="<?php echo e(url('/admin_css_js')); ?>/css_and_js/admin/parsley.js"></script>
 <script>
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();

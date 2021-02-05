@@ -77,7 +77,7 @@
 
        <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Menu</span>
+              <i class="fa fa-cutlery"></i> <span>Menu</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span> 
@@ -116,7 +116,7 @@
 
         <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Master</span>
+              <i class="fa fa-cubes"></i> <span>Master</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -161,7 +161,7 @@
  
          <li class="treeview  @if(Request::segment(2)=='manage_module' || Request::segment(2)=='add_module' || Request::segment(2)=='edit_module' ||Request::segment(2)=='manage_role' || Request::segment(2)=='add_role' || Request::segment(2)=='edit_role'||Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Role Setting</span>
+              <i class="fa fa-sitemap"></i> <span>Role Setting</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

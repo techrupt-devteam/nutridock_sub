@@ -81,7 +81,8 @@
       <!-- <span class="logo-mini" style="color: black"><img src="{{url('/admin_css_js')}}/css_and_js/logo-mini.svg" style="width: 60%;"><h3>Nutridock</h3></span>
       logo for regular state and mobile devices
       <span class="logo-lg" style="color: black"><img src="{{url('/admin_css_js')}}/css_and_js/logo-mini.svg" style="width:13%"></span> -->
-      <img src="{{url('/admin_css_js')}}/css_and_js/logo-mini.svg" style="width:13%"> <span><b>Nutridock</b></span>   
+      <img src="{{url('/admin_css_js')}}/css_and_js/logo-mini.svg" style="width:32px"> 
+       <span style="display: inline-block;transform: translate(0px, 2px);"><b>Nutridock</b></span>   
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
