@@ -49,15 +49,11 @@
               <div class="box-footer">
                   <div class="row">
                     <div class="col-md-12">
-<<<<<<< HEAD
+
                       <button type="submit" class="btn btn-primary">Submit</button>
                       <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
                      
-=======
-                    
-                     <button type="submit" class="btn btn-primary">Submit</button>
-                       <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
->>>>>>> d5f24a0440749279248d0718b4e4ff27d24ad3d1
+
                     </div>
                   </div>
               </div>

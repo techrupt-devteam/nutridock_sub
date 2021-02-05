@@ -44,12 +44,12 @@
                       <td>{{$value['name']}}</td>
                       <td>
                         <div class="btn-group">
-                          <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value['id'])}}"  class="btn btn-default"  title="Edit">
-                            <i class="fa fa-pencil text-success"></i>
+                          <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value['id'])}}"  class="btn btn-primary"  title="Edit">
+                            <i class="fa fa-pencil"></i>
                           </a>
                          
                           <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value['id'])}}"   class="btn btn-default "  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
-                            <i class="fa fa-trash text-danger"></i>
+                            <i class="fa fa-trash "></i>
                           </a>
                         </div>
                        
