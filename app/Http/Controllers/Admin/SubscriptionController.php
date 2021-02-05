@@ -11,7 +11,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
-
+use Config;
 class SubscriptionController extends Controller
 {
     public function __construct(SubscriptionPlan $Subscription,Location $Location,City $City,Plan $Plan)
@@ -24,6 +24,12 @@ class SubscriptionController extends Controller
         $this->title         = "Subscription Plan";
         $this->url_slug      = "subscription_plan";
         $this->folder_path   = "admin/subscription_plan/";
+                //Message
+        $this->Insert = Config::get('constants.messages.Insert');
+        $this->Update = Config::get('constants.messages.Update');
+        $this->Delete = Config::get('constants.messages.Delete');
+        $this->Error = Config::get('constants.messages.Error');
+        $this->Is_exists = Config::get('constants.messages.Is_exists');
     }
 
     public function index()
@@ -125,12 +131,12 @@ class SubscriptionController extends Controller
         
         
         if($failed==0){
-            Session::flash('success', 'Success! Record added successfully.');
+            Session::flash('success', $this->Insert);
             return \Redirect::to('admin/manage_subscription_plan');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error', $this->Error);
             return \Redirect::back();
         }
     }
@@ -173,7 +179,7 @@ class SubscriptionController extends Controller
         $arr_data               = [];
         
         $arr_data['sub_name']    = $request->input('sub_name');
-        $arr_data['plan_id']     = $request->input('plan_id');
+        //$arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
         $arr_data['area']        = $request->input('area');
 
@@ -212,12 +218,12 @@ class SubscriptionController extends Controller
 
 
         if($failed==0){
-            Session::flash('success', 'Success! Record update successfully.');
+            Session::flash('success', $this->Update);
             return \Redirect::to('admin/manage_subscription_plan');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error', $this->Delete);
             return \Redirect::back();
         }
     }

@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Menu Category</a>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Cloude Kitchen</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -33,21 +33,27 @@
                 <tr>
                   <th>Sr.No.</th>
                   <th>Name</th>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Area</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                
+            
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
-                      <td>{{$value['name']}}</td>
+                      <td>{{$value->kitchen_name}}</td>
+                      <td>{{$value->state_name}}</td>
+                      <td>{{$value->city_name}}</td>
+                      <td>{{$value->area_name}}</td>
                       <td>
                         <div class="btn-group">
-                          <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value['id'])}}"  class="btn btn-default"  title="Edit">
+                          <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->kitchen_id)}}"  class="btn btn-default"  title="Edit">
                             <i class="fa fa-pencil text-success"></i>
                           </a>
-                          <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value['id'])}}"   class="btn btn-default "  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                          <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->kitchen_id)}}"   class="btn btn-default "  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                             <i class="fa fa-trash text-danger"></i>
                           </a>
                         </div>

@@ -252,6 +252,16 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/status_assign_menu',	  		     'Admin\AssignLocationMenuController@status');
 	Route::post('/assign_menu_details',	  		   'Admin\AssignLocationMenuController@detail');
 
+	//Kitchen Routes
+	Route::get('/manage_kitchen',	      'Admin\KitchenController@index');
+	Route::get('/add_kitchen',		      'Admin\KitchenController@add');
+	Route::post('/store_kitchen',	 	  'Admin\KitchenController@store');
+	Route::get('/edit_kitchen/{id}',	  'Admin\KitchenController@edit');
+	Route::post('/update_kitchen/{id}',   'Admin\KitchenController@update');
+	Route::get('/delete_kitchen/{id}',    'Admin\KitchenController@delete');
+	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
+
+
 });
 
 
