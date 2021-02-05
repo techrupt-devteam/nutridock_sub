@@ -9,6 +9,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use Config;
 class RoleController extends Controller
 {
     public function __construct(Role $Role ,User $User)
@@ -19,6 +20,12 @@ class RoleController extends Controller
         $this->title        = "Role";
         $this->url_slug     = "role";
         $this->folder_path  = "admin/role/";
+          //Message
+        $this->Insert = Config::get('constants.messages.Insert');
+        $this->Update = Config::get('constants.messages.Update');
+        $this->Delete = Config::get('constants.messages.Delete');
+        $this->Error = Config::get('constants.messages.Error');
+        $this->Is_exists = Config::get('constants.messages.Is_exists');
     }
 
     public function index()
@@ -59,7 +66,7 @@ class RoleController extends Controller
 
         if($is_exist)
         {
-            Session::flash('error', "Role already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
 
@@ -69,12 +76,12 @@ class RoleController extends Controller
       
         if(!empty($role))
         {
-            Session::flash('success', 'Success! Record added successfully.');
+            Session::flash('success', $this->Insert);
             return \Redirect::to('admin/manage_role');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error', $this->Error);
             return \Redirect::back();
         }
     }
@@ -108,13 +115,13 @@ class RoleController extends Controller
                     ->count();
         if($is_exist)
         {
-            Session::flash('error', "Role already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
         $arr_data               = [];
         $arr_data['role_name']   = $request->input('role_name');
         $module_update = $this->base_model->where(['role_id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record update successfully.');
+        Session::flash('success',  $this->Update);
         return \Redirect::to('admin/manage_role');
         
     }
@@ -130,7 +137,7 @@ class RoleController extends Controller
         else
         {
             $this->base_model->where(['role_id'=>$id])->delete();
-            Session::flash('success', 'Success! Record deleted successfully.');
+            Session::flash('success', $this->Delete);
             return \Redirect::back();
         }
         

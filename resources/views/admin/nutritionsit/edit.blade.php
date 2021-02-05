@@ -36,7 +36,8 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                        <input type="text" class="form-control"  data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter nutritionsit name." id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                            <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
@@ -48,33 +49,36 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}">
+                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email.">
                       </div>
+                        <div id="email_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="nutritionsit_name">Mobile<span style="color:red;" >*</span></label>
+                        <label for="nutritionsit_name">Mobile No<span style="color:red;" >*</span></label>
                          <div class="input-group">
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}">
+                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}" data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no.">
                           </div>
+                        <div id="mobile_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">  
+
                 </select>
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity()">
-                          <option value="">-Select State-</option>
+                         <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity()" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state.">
+                          <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
                           @php 
                             $selected = "";
@@ -82,19 +86,21 @@
                              $selected ="selected";
                             }
                           @endphp
-                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
+                          <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>t
                           @endforeach
                         </select>
+                         <div id="state_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div><div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()">
-                          <option value="">-Select City-</option>
-                          <option value=""></option>
+                         <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
+                          <option value="">-Select City-</option>t
+                          <option value=""></option>t
                         </select>
+                          <div id="city_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
@@ -102,30 +108,33 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true">
-                          <option value="">-Select Area-</option>
-                          <option value=""></option>
+                         <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
+                          <option value="">-Select Area-</option>t
+                          <option value=""></option>t
                         </select>
+                        <div id="area_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
                 </div>
-                 <div class="row">  
+                 <input type="hidden" name="nutritionsit_role" value="1">
+                 <!-- <div class="row">  
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
-                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly>
-                          <option value="">-Select Role-</option>
+                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly  data-parsley-errors-container="#role_error" data-parsley-error-message="Please select role.">
+                          <option value="">-Select Role-</option>t
                           @foreach($role as $rvalue)
 
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>
+                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
                           @endforeach
                         </select>
+                        <div id="role_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="row">
                    <div class="col-md-12">
                       <div class="box-body"><span><b>Do You want to change nutrionsit password please check checkbox on update password</b></span> <hr/>
@@ -141,8 +150,9 @@
                 </div>
               <!-- /.box-footer-body -->
               <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
+                
               </div>
             </form>
           </div>

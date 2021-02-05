@@ -39,7 +39,8 @@
                 </div>
               </div>  
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>  
+                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
           </div>
