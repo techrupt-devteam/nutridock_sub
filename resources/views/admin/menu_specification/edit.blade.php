@@ -1,6 +1,5 @@
 @extends('admin.layout.master')
- 
-@section('content')
+ @section('content')
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -24,13 +23,13 @@
           <!-- general form elements -->
            @include('admin.layout._status_msg')
           <div class="box">
-            <div class="box-header with-border">
+            <div class="box-header">
               <h3 class="box-title">{{ $page_name." ".$title }}
                 {{-- <small>Preview</small> --}}
               </h3>
               <ol class="breadcrumb">
                 <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
                 <li class="active">{{ $page_name." ".$title }}</li>
               </ol>
             </div>
@@ -40,18 +39,16 @@
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-12">
+                <div class="">
                   <div class="col-md-4">
-                    <div class="box-body">
                       <div class="form-group">
                         <label for="name">Specification Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="specification_title" name="specification_title" placeholder="Specification Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the specification name." value="{{$data['specification_title']}}">
                          <div id="name_error" style="color:red;"></div>
                       </div>
-                    </div>
                   </div>
+                  <div class="clearfix"></div>
                   <div class="col-md-4">
-                    <div class="box-body">
                       <div class="form-group">
                         <label for="name">Specification Icon<span style="color:red;" >*</span></label>
                          <div class="input-group">
@@ -63,7 +60,6 @@
                        </div>
                        <div id="icon_error" style="color:red;"></div>
                       </div>
-                    </div>
                   </div>
                 </div>
               </div>  
