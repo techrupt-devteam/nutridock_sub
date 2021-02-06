@@ -8,6 +8,7 @@
 
     $session_parent_menu = Session::get('parent_menu');
     $session_sub_menu = Session::get('sub_menu');
+
   }
 ?>
  <!-- Left side column. contains the logo and sidebar -->
@@ -111,13 +112,14 @@
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') class="active" @endif>
+             
+              <!-- <li @if(Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_assign_location_menu">
                   <i class="fa fa-circle-o"></i> <span>Assign Location To Menu</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
-              </li>
+              </li> -->
             </ul>
         </li>  
 

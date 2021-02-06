@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,6 +18,8 @@ use App\Models\SubscribeNowPlan;
 use App\Models\FoodAvoid;
 use App\Models\MealType;
 use App\Models\SubscribeNow;
+use App\Models\SubscriptionPlan;
+
 
 use Session;
 use Sentinel;
@@ -27,7 +29,7 @@ use URL;
 use Mail;
 use Razorpay\Api\Api;
 
-class SubscribeController extends Controller
+class SignUpController extends Controller
 {
     function __construct()
     {
@@ -45,6 +47,10 @@ class SubscribeController extends Controller
             $recent_data = $recent_value->toArray();
         }
         $data['recent_data']  = $recent_data;
+
+         /* Start: get data for subscription plan */
+         Arr::set($data, 'getSubscriptionPlan', SubscriptionPlan::getData());
+         /* End: get data for subscription plan */ 
 
         /* Start: get data for physical_activity */
         Arr::set($data, 'getPhysicalActivityData', PhysicalActivity::getData());
@@ -66,7 +72,7 @@ class SubscribeController extends Controller
         Arr::set($data, 'getSubscribeNowData', SubscribeNow::getData());
         /* End: get data for Subscribe Now details */
         
-        return view('subscribe')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
+        return view('sign_up')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
     }  
 
 
@@ -472,12 +478,13 @@ class SubscribeController extends Controller
                         ->orderby('id','DESC')
                         ->limit(3)
                         ->get();
-
-        if($recent_value) {
+        if($recent_value)
+        {
             $recent_data = $recent_value->toArray();
         }
+        $data['recent_data']  = $recent_data;
         
-        $data['recent_data']  = $recent_data;        
+        
         return view('subscription-failed',$data);
     }
     

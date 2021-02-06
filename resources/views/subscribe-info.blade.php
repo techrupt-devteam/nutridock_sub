@@ -8,23 +8,15 @@
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/Pre-workout.png" alt="Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress." style="max-height: 520px;width: 100%">
-       
-
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/expert-nutritionist.png" alt="You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. " style="max-height: 520px;width: 100%">
-      
-
     </div>
     <div class="carousel-item">
-      <img src="{{url('')}}/public/front/img/group-woman.png" alt="Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. " style="max-height: 520px;width: 100%">
-      
-
+      <img src="{{url('')}}/public/front/img/group-woman.png" alt="Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. " style="max-height: 520px;width: 100%">    
     </div>
     <div class="carousel-item">
       <img src="{{url('')}}/public/front/img/eating-well.png" alt="Eating well is a habit. Cultivate it with our subscription plans customised as per your needs and loaded with flavours. " style="max-height: 520px;width: 100%">
-       
-
     </div>
   </div>
 </div>
@@ -52,8 +44,7 @@
             @endforeach
           </select>
            </div>
-         </div> 
-          
+         </div>           
         </div>
         <div class="form-group">
           <div class="row">

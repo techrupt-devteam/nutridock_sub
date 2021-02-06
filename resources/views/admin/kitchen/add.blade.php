@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="row">  
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="state_id">State<span style="color:red;" >*</span></label>
@@ -75,7 +75,7 @@
                          <div id="state_error" style="color:red;"></div>
                       </div>
                     </div>
-                  </div><div class="col-md-4">
+                  </div><div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
@@ -87,7 +87,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="area_id">Area<span style="color:red;" >*</span></label>
@@ -99,10 +99,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-           
-              <div class="row">
-                <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">Pincode<span style="color:red;" >*</span></label>
@@ -116,7 +113,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8">
+                </div>
+           
+                <div class="row">
+                  <div class="col-md-12">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="area_id">Address<span style="color:red;" >*</span></label>
@@ -125,15 +125,87 @@
                       </div>
                     </div>
                   </div>
-                </div>  
-               <div class="box-footer">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                      <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
+                </div>
+                <div class="row">
+                   <div class="col-md-12">
+                      <div class="box-header">
+                        <h3 class="box-title"><i class="fa fa-gear"></i> Kitchen settings</h3>
+                      </div>
+                    </div>
+                   <div class="col-md-6">
+                      <div class="box-body">
+                          <div class="form-group">
+                            <label for="area_id">Assign User To Kitchen </label>
+                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th></th>
+                                      <th>Menu Name</th>
+                                  </thead>
+                                  <tbody>
+                                    @foreach($users as $key => $uvalue)
+                                      <tr>
+                                        <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" ></td>
+                                        <td>{{ucfirst($uvalue->name)-ucfirst($uvalue->role_name)}}</td>
+                                      </tr>  
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>  
                    </div>
-                  </div>
-              </div>
+                   <div class="col-md-6">
+                      <div class="box-body">
+                          <div class="form-group">
+                            <label for="area_id">Assign Subscription Plan</label>
+                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th></th>
+                                      <th>Menu Name</th>
+                                  </thead>
+                                  <tbody>
+                                 
+                                      <tr>
+                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="" ></td>
+                                        <td></td>
+                                      </tr>  
+                                 
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>
+                   </div> 
+                </div>
+                <div class="row">
+                   <div class="col-md-6">
+                      <div class="box-body">
+                          <div class="form-group">
+                            <label for="area_id">Assign User To Kitchen </label>
+                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th></th>
+                                      <th>Menu Name</th>
+                                  </thead>
+                                  <tbody>
+                                  
+                                      <tr>
+                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="" ></td>
+                                        <td></td>
+                                      </tr>  
+                                  
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>  
+                   </div> 
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
+                     </div>
+                    </div>
+                </div>
             </form>
           </div>
           <!-- /.box -->
