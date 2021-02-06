@@ -7,6 +7,10 @@ use App\Models\Kitchen;
 use App\Models\Location;
 use App\Models\city;
 use App\Models\State;
+use App\Models\User;
+use App\Models\MenuModel;
+use App\Models\SubscriptionPlan;
+use App\Models\Role;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -17,22 +21,28 @@ use DB;
 use Config;
 class KitchenController extends Controller
 {
-    public function __construct(Kitchen $Kitchen,Location $Location,City $City,State $State)
+    public function __construct(Kitchen $Kitchen,Location $Location,City $City,State $State,SubscriptionPlan $SubscriptionPlan,User $User,MenuModel $MenuModel,Role $Role)
     {
-        $data                = [];
-        $this->base_model    = $Kitchen; 
-        $this->base_location = $Location; 
-        $this->base_city     = $City; 
-        $this->base_state    = $State; 
-        $this->title         = "Cloude Kitchen";
-        $this->url_slug      = "kitchen";
-        $this->folder_path   = "admin/Kitchen/";
+        $data                  = [];
+        $this->base_model      = $Kitchen; 
+        $this->base_location   = $Location; 
+        $this->base_city       = $City; 
+        $this->base_state      = $State; 
+        $this->base_user       = $User; 
+        $this->base_menu_model = $MenuModel; 
+        $this->base_role       = $Role; 
+        $this->base_subscription_plan = $SubscriptionPlan; 
+
+
+        $this->title           = "Cloude Kitchen";
+        $this->url_slug        = "kitchen";
+        $this->folder_path     = "admin/Kitchen/";
         //Message
-        $this->Insert        = Config::get('constants.messages.Insert');
-        $this->Update        = Config::get('constants.messages.Update');
-        $this->Delete        = Config::get('constants.messages.Delete');
-        $this->Error         = Config::get('constants.messages.Error');
-        $this->Is_exists     = Config::get('constants.messages.Is_exists');
+        $this->Insert          = Config::get('constants.messages.Insert');
+        $this->Update          = Config::get('constants.messages.Update');
+        $this->Delete          = Config::get('constants.messages.Delete');
+        $this->Error           = Config::get('constants.messages.Error');
+        $this->Is_exists       = Config::get('constants.messages.Is_exists');
     }
     
     // folder index view call  function
@@ -65,12 +75,27 @@ class KitchenController extends Controller
     public function add()
     {
        
-        $state             = $this->base_state->get();
-        $data['page_name'] = "Add";
-        
+        $state              = $this->base_state->get();
+        $menu_model         = $this->base_menu_model->select('menu_title','id');
+        $users              =  \DB::table('users')
+                                ->join('role','users.roles','=','role.role_id')
+                                ->select('role.role_name','users.*')
+                                ->where('users.is_deleted','<>',1)
+                                ->where('users.is_active','=',1)
+                                ->orderBy('users.id', 'DESC')
+                                ->get(); 
+        //dd($users);
+        $subscription_plan  = $this->base_subscription_plan->where('is_deleted','=',0)->get();
+
+
+        $data['page_name']  = "Add";
+        //$data['subscriptionplan']      = $subscription_plan;
+        $data['menu']       = $menu_model;
+        $data['users']      = $users;
+
         $data['state']      = $state;
-        $data['title']     = $this->title;
-        $data['url_slug']  = $this->url_slug;
+        $data['title']      = $this->title;
+        $data['url_slug']   = $this->url_slug;
         return view($this->folder_path.'add',$data);
     }
 
