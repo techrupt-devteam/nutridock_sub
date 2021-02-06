@@ -18,9 +18,11 @@ class Kitchen extends Model
 		"address",
 		"nutritionsit_id",
 		"user_id",
+		"menu_id",
 		"sub_plan_id",
 		"area_id",
 		"customer_key",
-		"is_deleted"
+		"is_deleted",
+		""
     ];
 }

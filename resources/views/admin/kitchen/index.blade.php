@@ -40,7 +40,6 @@
                 </tr>
                 </thead>
                 <tbody>
-            
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
@@ -49,7 +48,9 @@
                       <td>{{$value->city_name}}</td>
                       <td>{{$value->area_name}}</td>
                       <td>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->kitchen_id;?>);"><i class="fa fa-info-circle"></i> Kitchen Details</button>
                         <div class="btn-group">
+
                           <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->kitchen_id)}}"  class="btn btn-default"  title="Edit">
                             <i class="fa fa-pencil text-success"></i>
                           </a>
@@ -74,5 +75,36 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
- 
+ <div class="modal fade static" id="modal-details">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div id="content">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+ <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
+<script type="text/javascript">
+
+
+    function viewDetails(kitchen_id) 
+    { 
+
+      var kit_id = kitchen_id;
+      //alert(status);
+       $.ajax({
+            url: "{{url('/admin')}}/kitchen_details",
+            type: 'post',
+            data: {kitchen_id:kit_id},
+            success: function (data) 
+            {
+              $('#content').html(data);
+            }
+        });
+    }
+ </script>
+
 @endsection
