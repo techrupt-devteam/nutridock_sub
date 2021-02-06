@@ -15,13 +15,11 @@
 
 
 Route::get('/clear', function() {
-
 	Artisan::call('cache:clear');
 	Artisan::call('config:clear');
 	Artisan::call('config:cache');
 	Artisan::call('view:clear');
- 
-	return "Cleared!";
+ 	return "Cleared!";
  
  });
  
@@ -114,7 +112,11 @@ Route::post('/admin/getcity',		 			'Admin\BookingController@getcity');
 Route::post('/admin/getarea',		 			'Admin\BookingController@getarea');
 Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
+/*********************************@RAJ FRONT_ROUTES @****************************************/
+Route::get('/sign-up',		 	 'Front\SignUpController@index');
 
+
+/**********************************************************************************************/
 
 
 /*******************************************@BHUSHUAN ADMIN_ROUTES @***************************************************/

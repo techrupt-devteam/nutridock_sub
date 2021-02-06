@@ -472,13 +472,12 @@ class SubscribeController extends Controller
                         ->orderby('id','DESC')
                         ->limit(3)
                         ->get();
-        if($recent_value)
-        {
+
+        if($recent_value) {
             $recent_data = $recent_value->toArray();
         }
-        $data['recent_data']  = $recent_data;
         
-        
+        $data['recent_data']  = $recent_data;        
         return view('subscription-failed',$data);
     }
     
