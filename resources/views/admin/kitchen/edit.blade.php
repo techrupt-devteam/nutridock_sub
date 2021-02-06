@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="row">  
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
@@ -87,7 +87,7 @@
                          <div id="state_error" style="color:red;"></div>
                       </div>
                     </div>
-                  </div><div class="col-md-4">
+                  </div><div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
@@ -99,7 +99,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="area_id">Area<span style="color:red;" >*</span></label>
@@ -111,9 +111,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">Pincode<span style="color:red;" >*</span></label>
@@ -127,7 +125,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-8">
+                </div>
+                <div class="row">
+                
+                  <div class="col-md-12">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="area_id">Address<span style="color:red;" >*</span></label>
@@ -136,6 +137,91 @@
                       </div>
                     </div>
                   </div>
+                </div>
+                  <div class="row">
+                   <div class="col-md-12">
+                      <div class="box-header">
+                        <h3 class="box-title"><i class="fa fa-gear"></i> Kitchen settings</h3>
+                      </div>
+                    </div>
+                   <div class="col-md-6">
+                        <div class="box-body">
+                          <?php $user_data         = explode(",",$data['user_id']); ?> 
+                          <?php $menu_data         = explode(",",$data['menu_id']); ?> 
+                          <?php $subscription_data = explode(",",$data['sub_plan_id']); ?> 
+                          <div class="form-group">
+                            <label for="area_id">Assign User To Kitchen </label>
+                                <table id="user-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th width="5%"></th>
+                                      <th>Menu Name</th>
+                                      <th>Role</th>
+                                      <th>Details</th>
+                                  </thead>
+                                  <tbody>
+                                    @foreach($users as $key => $uvalue)
+                                      <tr>
+                                        <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" <?php echo (in_array($uvalue->id, $user_data) ? 'checked' : '')?>></td>
+                                        <td>{{ucfirst($uvalue->name)}}</td>
+                                        <td>{{ucfirst($uvalue->role_name)}}</td>
+                                        <td>
+                                            <strong>State:</strong>{{ucfirst($uvalue->state_name)}},
+                                            <strong>city:</strong>{{ucfirst($uvalue->city_name)}} ,
+                                            <strong>Area:</strong> {{ucfirst($uvalue->area_name)}}
+                                        </td>
+                                      </tr>  
+                                    @endforeach
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>  
+                   </div>
+                   <div class="col-md-6">
+                      <div class="box-body">
+                          <div class="form-group">
+                            <label for="area_id">Assign Subscription Plan</label>
+                                <table id="sub-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th width="5%"></th>
+                                      <th>Subscription Plan</th>
+                                  </thead>
+                                  <tbody>
+                                    @foreach($subscriptionplan as $key => $svalue)
+                                      <tr>
+                                        <td><input type="checkbox" name="subscription_plan[]" class="checkbox_allmenu" id="subscription_plan" value="{{$svalue->sub_plan_id}}" <?php echo (in_array($svalue->sub_plan_id, $subscription_data) ? 'checked' : '')?>></td>
+                                        <td>{{$svalue->sub_name}}</td>
+                                      </tr>  
+                                     @endforeach
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>
+                   </div> 
+                </div>
+                <div class="row">
+                   <div class="col-md-6">
+                      <div class="box-body">
+                          <div class="form-group">
+                            <label for="area_id">Assign Menu To Kitchen </label>
+                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                  <thead class="btn-default">
+                                      <th width="5%"></th>
+                                      <th>Menu Name</th>
+                                  </thead>
+                                  <tbody>
+                                  
+                                      @foreach($menu as $key => $mvalue)
+                                      <tr>
+                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="{{$mvalue->id}}" <?php echo (in_array($mvalue->id, $menu_data) ? 'checked' : '')?>></td>
+                                        <td>{{$mvalue->menu_title}}</td>
+                                      </tr>  
+                                     @endforeach 
+                                  
+                                  </tbody>
+                                </table>
+                          </div>
+                      </div>  
+                   </div> 
                 </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -154,8 +240,34 @@
   </div>
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
   <script type="text/javascript">
+//datatable script 
+  $('#user-item').dataTable({
+      
+      "scrollY": "200px",
+      "info": false, 
+      "scrollCollapse": true,
+      "paging": false
+  });
 
+  $('#sub-item').dataTable({
+    "searching": false,
+     "scrollY": "200px",  
+     "info": false, 
+    "scrollCollapse": true,
+    "paging": false
+  });
+
+  $('#menu-item').dataTable({
+      "scrollY": "200px",
+      "searching": false,     
+      "info": false, 
+      "scrollCollapse": true,
+      "info": false, 
+      "paging": false
+  }); 
     $(document).ready(function() 
     {
         get_City(); 

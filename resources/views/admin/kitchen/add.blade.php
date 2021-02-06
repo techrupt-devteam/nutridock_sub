@@ -136,16 +136,24 @@
                       <div class="box-body">
                           <div class="form-group">
                             <label for="area_id">Assign User To Kitchen </label>
-                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                <table id="user-item"  class="table table-striped table-bordered ">
                                   <thead class="btn-default">
-                                      <th></th>
+                                      <th width="5%"></th>
                                       <th>Menu Name</th>
+                                      <th>Role</th>
+                                      <th>Details</th>
                                   </thead>
                                   <tbody>
                                     @foreach($users as $key => $uvalue)
                                       <tr>
-                                        <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" ></td>
-                                        <td>{{ucfirst($uvalue->name)-ucfirst($uvalue->role_name)}}</td>
+                                        <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}"></td>
+                                        <td>{{ucfirst($uvalue->name)}}</td>
+                                        <td>{{ucfirst($uvalue->role_name)}}</td>
+                                        <td>
+                                            <strong>State:</strong>{{ucfirst($uvalue->state_name)}},
+                                            <strong>city:</strong>{{ucfirst($uvalue->city_name)}} ,
+                                            <strong>Area:</strong> {{ucfirst($uvalue->area_name)}}
+                                        </td>
                                       </tr>  
                                     @endforeach
                                   </tbody>
@@ -157,18 +165,18 @@
                       <div class="box-body">
                           <div class="form-group">
                             <label for="area_id">Assign Subscription Plan</label>
-                                <table id="menu-item"  class="table table-striped table-bordered ">
+                                <table id="sub-item"  class="table table-striped table-bordered ">
                                   <thead class="btn-default">
-                                      <th></th>
-                                      <th>Menu Name</th>
+                                      <th width="5%"></th>
+                                      <th>Subscription Plan</th>
                                   </thead>
                                   <tbody>
-                                 
+                                    @foreach($subscriptionplan as $key => $svalue)
                                       <tr>
-                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="" ></td>
-                                        <td></td>
+                                        <td><input type="checkbox" name="subscription_plan[]" class="checkbox_allmenu" id="subscription_plan" value="{{$svalue->sub_plan_id}}"></td>
+                                        <td>{{$svalue->sub_name}}</td>
                                       </tr>  
-                                 
+                                     @endforeach
                                   </tbody>
                                 </table>
                           </div>
@@ -179,18 +187,20 @@
                    <div class="col-md-6">
                       <div class="box-body">
                           <div class="form-group">
-                            <label for="area_id">Assign User To Kitchen </label>
+                            <label for="area_id">Assign Menu To Kitchen </label>
                                 <table id="menu-item"  class="table table-striped table-bordered ">
                                   <thead class="btn-default">
-                                      <th></th>
+                                      <th width="5%"></th>
                                       <th>Menu Name</th>
                                   </thead>
                                   <tbody>
                                   
+                                      @foreach($menu as $key => $mvalue)
                                       <tr>
-                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="" ></td>
-                                        <td></td>
+                                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="{{$mvalue->id}}"></td>
+                                        <td>{{$mvalue->menu_title}}</td>
                                       </tr>  
+                                     @endforeach 
                                   
                                   </tbody>
                                 </table>
@@ -218,7 +228,34 @@
   </div>
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
- <script type="text/javascript">
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <script type="text/javascript">
+  //datatable script 
+  $('#user-item').dataTable({
+      
+      "scrollY": "200px",
+      "info": false, 
+      "scrollCollapse": true,
+      "paging": false
+  });
+
+  $('#sub-item').dataTable({
+    "searching": false,
+     "scrollY": "200px",  
+     "info": false, 
+    "scrollCollapse": true,
+    "paging": false
+  });
+
+  $('#menu-item').dataTable({
+      "scrollY": "200px",
+      "searching": false,     
+      "info": false, 
+      "scrollCollapse": true,
+      "info": false, 
+      "paging": false
+  });  
   //load city drop down script 
     function  getCity(){
       var state_id = $("#state_id").val();

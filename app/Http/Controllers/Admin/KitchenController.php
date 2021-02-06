@@ -76,23 +76,23 @@ class KitchenController extends Controller
     {
        
         $state              = $this->base_state->get();
-        $menu_model         = $this->base_menu_model->select('menu_title','id');
+        $menu_model         = $this->base_menu_model->select('menu_title','id')->get();
         $users              =  \DB::table('users')
                                 ->join('role','users.roles','=','role.role_id')
-                                ->select('role.role_name','users.*')
+                                ->join('state','users.state','=','state.id')
+                                ->join('city','users.city','=','city.id')
+                                ->join('locations','users.area','=','locations.id')
+                                ->select('role.role_name','users.*','state.name as state_name','city.city_name','locations.area as area_name')
                                 ->where('users.is_deleted','<>',1)
                                 ->where('users.is_active','=',1)
                                 ->orderBy('users.id', 'DESC')
                                 ->get(); 
         //dd($users);
-        $subscription_plan  = $this->base_subscription_plan->where('is_deleted','=',0)->get();
-
-
+        $subscription_plan  = $this->base_subscription_plan->where('is_active','=',1)->where('is_deleted','<>',1)->get();
         $data['page_name']  = "Add";
-        //$data['subscriptionplan']      = $subscription_plan;
+        $data['subscriptionplan'] = $subscription_plan;
         $data['menu']       = $menu_model;
         $data['users']      = $users;
-
         $data['state']      = $state;
         $data['title']      = $this->title;
         $data['url_slug']   = $this->url_slug;
@@ -126,6 +126,11 @@ class KitchenController extends Controller
             return \Redirect::back();
         }
 
+        
+        $menu_data         = implode(",",$request->input('menu'));
+        $subscriptionplan_data = implode(",",$request->input('subscription_plan'));
+        $users_data        = implode(",",$request->input('users'));
+
         $arr_data                    = [];
         $arr_data['kitchen_name']    = $request->input('kitchen_name');
         $arr_data['customer_key']    = $request->input('customer_key');
@@ -134,6 +139,9 @@ class KitchenController extends Controller
         $arr_data['area_id']         = $request->input('area_id');
         $arr_data['pincode']         = $request->input('pincode');
         $arr_data['address']         = $request->input('address');
+        $arr_data['menu_id']         = $menu_data;
+        $arr_data['sub_plan_id']     = $subscriptionplan_data;
+        $arr_data['user_id']         = $users_data;
 
         $store_kitchen = $this->base_model->create($arr_data);
       
@@ -156,6 +164,21 @@ class KitchenController extends Controller
         $arr_data = [];
         $data     = $this->base_model->where(['kitchen_id'=>$id])->first();
         $state             = $this->base_state->get();
+
+        $menu_model         = $this->base_menu_model->select('menu_title','id')->get();
+        $users              =  \DB::table('users')
+                                ->join('role','users.roles','=','role.role_id')
+                                ->join('state','users.state','=','state.id')
+                                ->join('city','users.city','=','city.id')
+                                ->join('locations','users.area','=','locations.id')
+                                ->select('role.role_name','users.*','state.name as state_name','city.city_name','locations.area as area_name')
+                                ->where('users.is_deleted','<>',1)
+                                ->where('users.is_active','=',1)
+                                ->orderBy('users.id', 'DESC')
+                                ->get(); 
+        //dd($users);
+        $subscription_plan  = $this->base_subscription_plan->where('is_active','=',1)->where('is_deleted','<>',1)->get();
+
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -163,6 +186,9 @@ class KitchenController extends Controller
        
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";
+        $data['subscriptionplan'] = $subscription_plan;
+        $data['menu']       = $menu_model;
+        $data['users']      = $users;
         $data['state']     = $state;
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
@@ -194,6 +220,10 @@ class KitchenController extends Controller
             return \Redirect::back();
         }
 
+        $menu_data                   = implode(",",$request->input('menu'));
+        $subscriptionplan_data       = implode(",",$request->input('subscription_plan'));
+        $users_data                  = implode(",",$request->input('users'));
+
         $arr_data                    = [];
         $arr_data['kitchen_name']    = $request->input('kitchen_name');
         $arr_data['customer_key']    = $request->input('customer_key');
@@ -202,6 +232,9 @@ class KitchenController extends Controller
         $arr_data['area_id']         = $request->input('area_id');
         $arr_data['pincode']         = $request->input('pincode');
         $arr_data['address']         = $request->input('address');
+         $arr_data['menu_id']        = $menu_data;
+        $arr_data['sub_plan_id']     = $subscriptionplan_data;
+        $arr_data['user_id']         = $users_data;
 
         $update_kitchen  = $this->base_model->where(['kitchen_id'=>$id])->update($arr_data);
 
@@ -238,6 +271,92 @@ class KitchenController extends Controller
         $this->base_model->where(['id'=>$id])->update($arr_data);
         //return \Redirect::back();
     }
+    
+    public function detail(Request $request)
+    {
+        $kitchen_id = $request->input('kitchen_id');   
 
+        $kitchen            = $this->base_model->where(['kitchen_id'=>$kitchen_id])->first();
+
+      
+        $user_data         = explode(",",  $kitchen->user_id); 
+        $menu_data         = explode(",",  $kitchen->menu_id); 
+        $subscription_data = explode(",",  $kitchen->sub_plan_id); 
+
+
+        $state              = $this->base_state->get();
+        $menu_model         = $this->base_menu_model->select('menu_title','id')->whereIn('id', $menu_data)->get();
+
+
+        $users              =   \DB::table('users')
+                                ->join('role','users.roles','=','role.role_id')
+                                ->join('state','users.state','=','state.id')
+                                ->join('city','users.city','=','city.id')
+                                ->join('locations','users.area','=','locations.id')
+                                ->select('role.role_name','users.*','state.name as state_name','city.city_name','locations.area as area_name')
+                                ->where('users.is_deleted','<>',1)
+                                ->where('users.is_active','=',1)
+                                ->whereIn('users.id', $user_data)
+                                ->orderBy('users.id', 'DESC')
+                                ->get(); 
+        //dd($users);
+        $subscription_plan  = $this->base_subscription_plan->where('is_active','=',1)->whereIn('sub_plan_id', $subscription_data)->where('is_deleted','<>',1)->get();
+
+
+
+
+        $html='<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">TEST </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-md-12"><h6><b>Customer Key:</b></h6></div>
+                  </div>
+                  <hr/>
+                  <div class="row">
+                    <div class="col-md-12"> 
+                       <div class="panel panel-info">
+                          <div class="panel-heading"><b>Assign User</b></div>
+                          <div class="panel-body"><ul>';
+                            foreach ($users as $key => $uvalue) {
+                                 $html .= '<li>'.$uvalue->name.' Role:-<b>'.$uvalue->role_name.'</b></li>';
+                            }
+                    $html .= '</ul></div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="panel panel-warning">
+                            <div class="panel-heading"><b>Subscription plan</b></div>
+                            <div class="panel-body"><ul>';
+                            foreach ($subscription_plan as $key => $svalue) {
+                                 $html .= '<li>'.$svalue->sub_name.'</li>';
+                            }
+                    $html .= '</ul></div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-md-12"> 
+                        <div class="panel panel-danger">
+                          <div class="panel-heading"><b>Assign Menu</b></div>
+                          <div class="panel-body"><ul>';
+                          
+                          foreach ($menu_model as $key => $mvalue) {
+                            $html .= '<li>'.$mvalue->menu_title.'</li>';
+                          }
+
+                          $html .= '</ul></div>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+                <div class="modal-footer">
+               </div>';
+        return $html;
+    } 
 
 }

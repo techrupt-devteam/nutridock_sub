@@ -262,6 +262,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_kitchen/{id}',   'Admin\KitchenController@update');
 	Route::get('/delete_kitchen/{id}',    'Admin\KitchenController@delete');
 	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
+	Route::post('/kitchen_details',	      'Admin\KitchenController@detail');
 
 
 });
