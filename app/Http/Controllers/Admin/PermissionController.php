@@ -11,6 +11,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use Config;
 class PermissionController extends Controller
 {
     public function __construct(Permission $Permission,Module $Module,ModuleType $moduletype,Role $Role)
@@ -23,6 +24,12 @@ class PermissionController extends Controller
         $this->title        = "Permission";
         $this->url_slug     = "permission";
         $this->folder_path  = "admin/permission/";
+           //Message
+        $this->Insert = Config::get('constants.messages.Insert');
+        $this->Update = Config::get('constants.messages.Update');
+        $this->Delete = Config::get('constants.messages.Delete');
+        $this->Error = Config::get('constants.messages.Error');
+        $this->Is_exists = Config::get('constants.messages.Is_exists');
     }
 
     public function index()
@@ -126,7 +133,7 @@ class PermissionController extends Controller
        
         if($is_exist)
         {
-            Session::flash('error', "Permission already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
         
@@ -139,12 +146,12 @@ class PermissionController extends Controller
         $permissions = $this->base_model->create($arr_data);
         if(!empty($permissions))
         {
-            Session::flash('success', 'Success! Record added successfully.');
+            Session::flash('success', $this->Insert);
             return \Redirect::to('admin/manage_permission');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error', $this->Error);
             return \Redirect::back();
         }
     }
@@ -224,7 +231,7 @@ class PermissionController extends Controller
         
         if($is_exist)
         {
-            Session::flash('error', "Role already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
 
@@ -235,14 +242,14 @@ class PermissionController extends Controller
        // $arr_data['type_id']            = $request->input('type_id');
         $arr_data['permission_access']  = $permissions_data;
         $module_update = $this->base_model->where(['per_id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record update successfully.');
+        Session::flash('success',  $this->Update);
         return \Redirect::to('admin/manage_permission');
     }
 
     public function delete($id)
     {
         $this->base_model->where(['per_id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
+        Session::flash('success',  $this->Delete);
         return \Redirect::back();
     }
 }

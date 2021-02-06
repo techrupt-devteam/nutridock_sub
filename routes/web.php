@@ -126,13 +126,13 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 
 	//user table 
 	
-	Route::get('/manage_users',		 'Admin\UserController@index');
+	/*Route::get('/manage_users',		 'Admin\UserController@index');
 	Route::get('/add_user',		 	 'Admin\UserController@add');
 	Route::post('/store_user',		 'Admin\UserController@store');
 	Route::get('/edit_user/{id}',	 'Admin\UserController@edit');
 	Route::post('/update_user/{id}', 'Admin\UserController@update');
 	Route::get('/delete_user/{id}',	 'Admin\UserController@delete');
-	Route::post('/getArea',	 		 'Admin\UserController@getArea');
+	Route::post('/getArea',	 		 'Admin\UserController@getArea');*/
 
 	//Module Master Routes
 	
@@ -200,15 +200,15 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	 Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
 	 Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
 	
-	//operation manager  routes
+	//user manager  routes
 
-	 Route::get('/manage_operation_manager',	  'Admin\OperationManagerController@index');
-	 Route::get('/add_operation_manager',		  'Admin\OperationManagerController@add');
-	 Route::post('/store_operation_manager',	  'Admin\OperationManagerController@store');
-	 Route::get('/edit_operation_manager/{id}',	  'Admin\OperationManagerController@edit');
-	 Route::post('/update_operation_manager/{id}','Admin\OperationManagerController@update');
-	 Route::get('/delete_operation_manager/{id}', 'Admin\OperationManagerController@delete');
-	 Route::post('/status_operation_manager',	  'Admin\OperationManagerController@status');
+	 Route::get('/manage_user_manager',	  'Admin\OperationManagerController@index');
+	 Route::get('/add_user_manager',		  'Admin\OperationManagerController@add');
+	 Route::post('/store_user_manager',	  'Admin\OperationManagerController@store');
+	 Route::get('/edit_user_manager/{id}',	  'Admin\OperationManagerController@edit');
+	 Route::post('/update_user_manager/{id}','Admin\OperationManagerController@update');
+	 Route::get('/delete_user_manager/{id}', 'Admin\OperationManagerController@delete');
+	 Route::post('/status_user_manager',	  'Admin\OperationManagerController@status');
 
 	//operation manager routes
 	
@@ -245,13 +245,24 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
 
 	// Assign location wise menu Routes  
-	Route::get('/manage_assign_location_menu', 		'Admin\AssignLocationMenuController@index');
-	Route::get('/add_assign_location_menu',	 		'Admin\AssignLocationMenuController@add');
-	Route::post('/store_assign_location_menu', 		'Admin\AssignLocationMenuController@store');
-	Route::get('/edit_assign_location_menu/{id}',		'Admin\AssignLocationMenuController@edit');
-	Route::post('/update_assign_location_menu/{id}',	'Admin\AssignLocationMenuController@update');
-	Route::get('/delete_assign_location_menu/{id}', 	'Admin\AssignLocationMenuController@delete');
-	Route::post('/status_assign_menu',	  		'Admin\AssignLocationMenuController@status');
+	Route::get('/manage_assign_location_menu', 		 'Admin\AssignLocationMenuController@index');
+	Route::get('/add_assign_location_menu',	 		 'Admin\AssignLocationMenuController@add');
+	Route::post('/store_assign_location_menu', 		 'Admin\AssignLocationMenuController@store');
+	Route::get('/edit_assign_location_menu/{id}',	 'Admin\AssignLocationMenuController@edit');
+	Route::post('/update_assign_location_menu/{id}', 'Admin\AssignLocationMenuController@update');
+	Route::get('/delete_assign_location_menu/{id}',  'Admin\AssignLocationMenuController@delete');
+	Route::post('/status_assign_menu',	  		     'Admin\AssignLocationMenuController@status');
+	Route::post('/assign_menu_details',	  		   'Admin\AssignLocationMenuController@detail');
+
+	//Kitchen Routes
+	Route::get('/manage_kitchen',	      'Admin\KitchenController@index');
+	Route::get('/add_kitchen',		      'Admin\KitchenController@add');
+	Route::post('/store_kitchen',	 	  'Admin\KitchenController@store');
+	Route::get('/edit_kitchen/{id}',	  'Admin\KitchenController@edit');
+	Route::post('/update_kitchen/{id}',   'Admin\KitchenController@update');
+	Route::get('/delete_kitchen/{id}',    'Admin\KitchenController@delete');
+	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
+
 
 });
 

@@ -8,6 +8,7 @@
 
     $session_parent_menu = Session::get('parent_menu');
     $session_sub_menu = Session::get('sub_menu');
+
   }
 ?>
  <!-- Left side column. contains the logo and sidebar -->
@@ -75,9 +76,9 @@
             </ul>
         </li> 
 
-       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') active @endif ">
+       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Menu</span>
+              <i class="fa fa-cutlery"></i> <span>Menu</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span> 
@@ -104,19 +105,27 @@
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') class="active" @endif>
+              <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
+                <a href="{{url('/admin')}}/manage_kitchen">
+                  <i class="fa fa-circle-o"></i> <span>Cloude Kitchens</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+             
+              <!-- <li @if(Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_assign_location_menu">
                   <i class="fa fa-circle-o"></i> <span>Assign Location To Menu</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
-              </li>
+              </li> -->
             </ul>
         </li>  
 
-        <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') active @endif ">
+        <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'||Request::segment(2)=='manage_user_manager' || Request::segment(2)=='add_user_manager' || Request::segment(2)=='edit_user_manager') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Master</span>
+              <i class="fa fa-cubes"></i> <span>Master</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -129,27 +138,29 @@
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager') class="active" @endif>
-                <a href="{{url('/admin')}}/manage_operation_manager">
-                  <i class="fa fa-circle-o"></i> <span>Operation Manager</span>
+              <li @if(Request::segment(2)=='manage_user_manager' || Request::segment(2)=='add_user_manager' || Request::segment(2)=='edit_user_manager') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_user_manager">
+                  <i class="fa fa-circle-o"></i> <span>User Manager</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
               </li>
-               <li @if(Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan') class="active" @endif>
+              <li @if(Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_subscription_plan">
-                  <i class="fa fa-circle-o"></i> <span> Subscription Plan </span>
+                  <i class="fa fa-circle-o"></i> <span>Subscription Plan</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') class="active" @endif>
+              
+              <!-- <li @if(Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_plan">
                   <i class="fa fa-circle-o"></i> <span> Plan </span>
                   <span class="pull-right-container">
                   </span>
                 </a>
-              </li><li @if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') class="active" @endif>
+              </li> -->
+              <li @if(Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_location">
                   <i class="fa fa-circle-o"></i> <span> Location </span>
                   <span class="pull-right-container">
@@ -161,7 +172,7 @@
  
          <li class="treeview  @if(Request::segment(2)=='manage_module' || Request::segment(2)=='add_module' || Request::segment(2)=='edit_module' ||Request::segment(2)=='manage_role' || Request::segment(2)=='add_role' || Request::segment(2)=='edit_role'||Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') active @endif ">
             <a href="#">
-              <i class="fa fa-television"></i> <span>Role Setting</span>
+              <i class="fa fa-sitemap"></i> <span>Role Setting</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

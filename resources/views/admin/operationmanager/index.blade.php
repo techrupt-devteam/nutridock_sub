@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Operation Manager</a>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}_manager" class="btn btn-primary btn-sm" style="float: right;">Add User</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -38,6 +38,7 @@
                   <th>state</th>
                   <th>City</th>
                   <th>Area</th>
+                  <th>Role</th>
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -52,6 +53,7 @@
                       <td>{{$value->state_name}}</td>
                       <td>{{$value->city_name}}</td>
                       <td>{{$value->area_name}}</td>
+                      <td>{{$value->role_name}}</td>
                       <td>
                          @if($value->is_active=='1')
                            @php $checked="checked"; $style="success"; @endphp 
@@ -59,11 +61,11 @@
                            @php $checked=""; $style="danger";@endphp 
                         @endif
                         <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}_manager/{{$value->id}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
                        
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->id}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}_manager/{{$value->id}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
@@ -91,7 +93,7 @@
     {  
 
         swal({
-          title: "Operation Manager status",
+          title: "User status",
           text:  "Are You sure to change status",
           icon:  "warning",
           dangerMode: true,
@@ -101,7 +103,7 @@
           var plan_ids = plan_id;
           //alert(status);
            $.ajax({
-                url: "{{url('/admin')}}/status_operation_manager",
+                url: "{{url('/admin')}}/status_user_manager",
                 type: 'post',
                 data: {status:status,plan_ids:plan_id},
                 success: function (data) 

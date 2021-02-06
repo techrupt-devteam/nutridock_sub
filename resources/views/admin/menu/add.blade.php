@@ -40,12 +40,13 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="name">Category Name<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" id="category_id" name="category_id" placeholder="Specification Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please select category.">
+                         <select class="form-control select2" id="category_id" name="category_id"required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please select category.">
                           <option value="">-Select Category-</option>
                           @foreach($category as $cvalue)
                           <option value="{{$cvalue->id}}">{{$cvalue->name}}</option>
                           @endforeach
                          </select>
+                          <div id="#name_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
@@ -240,8 +241,9 @@
               <div class="box-footer">
                   <div class="row">
                     <div class="col-md-12">
-                      <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                     <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                  
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
                     </div>
                   </div>
               </div>

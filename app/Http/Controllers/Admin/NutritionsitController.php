@@ -15,6 +15,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use Config;
 class NutritionsitController extends Controller
 {
     public function __construct(USer $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
@@ -32,6 +33,12 @@ class NutritionsitController extends Controller
         $this->title         = "Nutritionsit";
         $this->url_slug      = "nutritionsit";
         $this->folder_path   = "admin/nutritionsit/";
+         //Message
+        $this->Insert        = Config::get('constants.messages.Insert');
+        $this->Update        = Config::get('constants.messages.Update');
+        $this->Delete        = Config::get('constants.messages.Delete');
+        $this->Error         = Config::get('constants.messages.Error');
+        $this->Is_exists     = Config::get('constants.messages.Is_exists');
     }
     
     //nutritionsit folder index view call  function
@@ -95,11 +102,11 @@ class NutritionsitController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['name'=>$request->input('nutritionsit_name'),'mobile'=>$request->input('nutritionsit_mobile')])->count();
+        $is_exist = $this->base_model->where(['email'=>$request->input('nutritionsit_email')])->count();
 
         if($is_exist)
         {
-            Session::flash('error', "Nutritionsit already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
 
@@ -154,12 +161,12 @@ class NutritionsitController extends Controller
 
             $this->send_mail($html,$request->input('nutritionsit_email'),$subject);
             
-            Session::flash('success', 'Success! Record added successfully.'.uniqid());
+            Session::flash('success', $this->Insert);
             return \Redirect::to('admin/manage_nutritionsit');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error', $this->Error);
             return \Redirect::back();
         }
     }
@@ -207,7 +214,7 @@ class NutritionsitController extends Controller
 
         if($is_exist)
         {
-            Session::flash('error', "Nutritionsit already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
         $arr_data             = [];
@@ -229,7 +236,7 @@ class NutritionsitController extends Controller
 
         $update_nutritionsit  = $this->base_model->where(['id'=>$id])->update($arr_data);
 
-        Session::flash('success', 'Success! Record update successfully.');
+        Session::flash('success',  $this->Update);
         return \Redirect::to('admin/manage_nutritionsit');
         
     }
@@ -286,7 +293,7 @@ class NutritionsitController extends Controller
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
         $this->base_model->where(['id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record deleted successfully.');
+        Session::flash('success',  $this->Delete);
         return \Redirect::back();
     } 
 

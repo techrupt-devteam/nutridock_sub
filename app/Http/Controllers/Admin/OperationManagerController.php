@@ -15,6 +15,7 @@ use Session;
 use Sentinel;
 use Validator;
 use DB;
+use Config;
 class OperationManagerController extends Controller
 {
     public function __construct(USer $OperationManager,Location $Location,City $City,Role $Role,State $State)
@@ -29,9 +30,16 @@ class OperationManagerController extends Controller
         $this->base_city     = $City; 
         $this->base_state    = $State; 
         $this->base_role     = $Role;  
-        $this->title         = "Operation Manager";
-        $this->url_slug      = "operation_manager";
+        $this->title         = "Users";
+        $this->url_slug      = "user";
         $this->folder_path   = "admin/operationmanager/";
+
+        //Message
+        $this->Insert        = Config::get('constants.messages.Insert');
+        $this->Update        = Config::get('constants.messages.Update');
+        $this->Delete        = Config::get('constants.messages.Delete');
+        $this->Error         = Config::get('constants.messages.Error');
+        $this->Is_exists     = Config::get('constants.messages.Is_exists');
     }
     
     //operation_manager folder index view call  function
@@ -44,7 +52,7 @@ class OperationManagerController extends Controller
                      ->join('city','users.city','=','city.id')
                      ->join('locations','users.area','=','locations.id')
                      ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
-                     ->where('users.roles','=',2)
+                     ->where('users.roles','<>',1)
                      ->where('users.is_deleted','<>',1)
                      ->orderBy('id', 'DESC')
                      ->get();
@@ -93,11 +101,11 @@ class OperationManagerController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['name'=>$request->input('operation_manager_name'),'mobile'=>$request->input('operation_manager_mobile')])->count();
+        $is_exist = $this->base_model->where(['email'=>$request->input('operation_manager_email')])->count();
 
         if($is_exist)
         {
-            Session::flash('error', "operation_manager already exist!");
+            Session::flash('error',  $this->Is_exists);
             return \Redirect::back();
         }
 
@@ -151,12 +159,12 @@ class OperationManagerController extends Controller
 
             $this->send_mail($html,$request->input('operation_manager_email'),$subject);
             
-            Session::flash('success', 'Success! Record added successfully.'.uniqid());
-            return \Redirect::to('admin/manage_operation_manager');
+            Session::flash('success',  $this->Insert);
+            return \Redirect::to('admin/manage_user_manager');
         }
         else
         {
-            Session::flash('error', "Error! Oop's something went wrong.");
+            Session::flash('error',  $this->Error);
             return \Redirect::back();
         }
     }
@@ -199,12 +207,11 @@ class OperationManagerController extends Controller
             return $validator->errors()->all();
         }
 
-        $is_exist = $this->base_model->where('id','<>',$id)->where(['name'=>$request->input('operation_manager_name'),'mobile'=>$request->input('operation_manager_mobile')])
+        $is_exist = $this->base_model->where('id','<>',$id)->where(['email'=>$request->input('operation_manager_email')])
                     ->count();
-
         if($is_exist)
         {
-            Session::flash('error', "operation_manager already exist!");
+            Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
         $arr_data             = [];
@@ -226,8 +233,8 @@ class OperationManagerController extends Controller
 
         $update_operation_manager  = $this->base_model->where(['id'=>$id])->update($arr_data);
 
-        Session::flash('success', 'Success! Record update successfully.');
-        return \Redirect::to('admin/manage_operation_manager');
+        Session::flash('success', $this->Update);
+        return \Redirect::to('admin/manage_user_manager');
         
     }
 
@@ -282,7 +289,7 @@ class OperationManagerController extends Controller
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
         $this->base_model->where(['id'=>$id])->update($arr_data);
-        Session::flash('success', 'Success! Record deleted successfully.');
+        Session::flash('success',  $this->Delete);
         return \Redirect::back();
     } 
 

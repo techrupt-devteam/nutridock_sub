@@ -46,8 +46,7 @@ class AssignLocationMenuController extends Controller
                      ->join('state','nutri_mst_assign_location_menu.state_id','=','state.id')
                      ->join('city','nutri_mst_assign_location_menu.city_id','=','city.id')
                      ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
-                     ->join('nutri_mst_menu','nutri_mst_assign_location_menu.menu_id','=','nutri_mst_menu.id')
-                     ->select('nutri_mst_menu.menu_title','state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_assign_location_menu.*')
+                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_assign_location_menu.*')
                      ->where('nutri_mst_assign_location_menu.is_deleted','<>',1)
                      ->orderBy('nutri_mst_assign_location_menu.assign_menu_id', 'DESC')
                      ->get();
@@ -80,31 +79,25 @@ class AssignLocationMenuController extends Controller
     //Assign Menu Store Function
     public function store(Request $request)
     {
-       
+
        $validator = Validator::make($request->all(), [
                 'state_id' => 'required',
                 'city_id' => 'required',
                 'area_id' => 'required',
-                'menu_id' => 'required'
+
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-        $is_exist = $this->base_model->where(['menu_id'=>$request->input('menu_id'),'city_id'=>$request->input('city_id'),'area_id'=>$request->input('area_id')])->count();
-        if($is_exist)
-        {
-            Session::flash('error', $this->Is_exists);
-            return \Redirect::back();
-        }
-      
-        //end number genrate function delete   
+   
+        $menu_id_data = implode(",",$request->input('menu'));
 
         $arr_data              = [];
         $arr_data['state_id']  = $request->input('state_id');
         $arr_data['city_id']   = $request->input('city_id');
         $arr_data['area_id']   = $request->input('area_id');
-        $arr_data['menu_id']   = $request->input('menu_id');
+        $arr_data['menu_id']   = $menu_id_data;
         
         $assign_menu_location  = $this->base_model->create($arr_data);
         if(!empty($assign_menu_location))
@@ -148,7 +141,7 @@ class AssignLocationMenuController extends Controller
                 'state_id' => 'required',
                 'city_id' => 'required',
                 'area_id' => 'required',
-                'menu_id' => 'required'
+              
         ]);
 
         if ($validator->fails()) 
@@ -156,18 +149,14 @@ class AssignLocationMenuController extends Controller
             return $validator->errors()->all();
         }
         
-        $is_exist = $this->base_model->where('assign_menu_id','<>',$id)->where(['menu_id'=>$request->input('menu_id'),'city_id'=>$request->input('city_id'),'area_id'=>$request->input('area_id')])->count();
-        if($is_exist)
-        {
-            Session::flash('error', $this->Is_exists);
-            return \Redirect::back();
-        }
+
+        $menu_id_data = implode(",",$request->input('menu'));
 
         $arr_data                          = [];
         $arr_data['state_id']  = $request->input('state_id');
         $arr_data['city_id']   = $request->input('city_id');
         $arr_data['area_id']   = $request->input('area_id');
-        $arr_data['menu_id']   = $request->input('menu_id');
+        $arr_data['menu_id']   = $menu_id_data;
         $assign_location_menu_update = $this->base_model->where(['assign_menu_id'=>$id])->update($arr_data);
         
         Session::flash('success', $this->Update );
@@ -202,5 +191,68 @@ class AssignLocationMenuController extends Controller
         $this->base_model->where(['assign_menu_id'=>$id])->update($arr_data);
         //return \Redirect::back();
     }
+
+    //view assign menu 
+    public function detail(Request $request)
+    {
+        $id = $request->input('assign_menu_id');
+        //$data           = $this->base_model->where(['assign_menu_id'=>$id])->first();
+      
+         $data     = \DB::table('nutri_mst_assign_location_menu')
+                     ->join('state','nutri_mst_assign_location_menu.state_id','=','state.id')
+                     ->join('city','nutri_mst_assign_location_menu.city_id','=','city.id')
+                     ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
+                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_assign_location_menu.*')
+                     ->where('nutri_mst_assign_location_menu.assign_menu_id','=',$id)
+                     ->first();
+
+        $menu_id    = explode(',',$data->menu_id);
+        $html='<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Location wise assign menu</h4>
+            <hr/>
+            <div class="row">
+              <div class="col-md-4"><h5 class="modal-title"><b>State Name: </b>'.ucfirst($data->state_name).'</h5></div>
+              <div class="col-md-4"><h5 class="modal-title"><b>City Name: </b>'.ucfirst($data->city_name).'</h5></div>
+              <div class="col-md-4"><h5 class="modal-title"><b>Area Name: </b>'.ucfirst($data->area_name).'</h5></div>
+            </div>
+            
+         
+           
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered">
+                <thead style="background-color: #ccb591;">
+                   <tr>
+                      <th>Sr.No</th>
+                      <th>Menu</th>
+                     <th>Menu Image</th>
+                   </tr> 
+                </thead>
+                <tbody>';
+                $i=1;
+                foreach ($menu_id as $keys => $mvalue){
+                    if($mvalue!=0){
+                        $menu_data = $this->base_menu->where(['id'=>$mvalue])->first();
+                        $html .="<tr>";
+                    
+                        $html .="<td>".$i."</td>";
+                        $html .="<td>".$menu_data['menu_title']."</td>";
+                      
+
+                        $html .="<td><img src=".url('/')."/uploads/menu/".$menu_data['image']." width='50px' height='50px'></td>";
+                        $html .="<tr>";
+                    }
+                    $i++;
+                }
+        $html .='</tbody>
+                        </table>';
+
+
+
+         return $html;       
+
+    } 
 
 }

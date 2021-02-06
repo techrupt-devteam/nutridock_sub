@@ -33,7 +33,7 @@
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-12">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
@@ -42,7 +42,7 @@
                       </div>
                     </div>
                   </div> 
-                  <div class="col-md-3">
+                  <!-- <div class="col-md-3">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="role_name">Meal Plan<span style="color:red;" >*</span></label>
@@ -59,8 +59,8 @@
                         <div id="plan_error" style="color:red;"></div>
                       </div>
                     </div>
-                  </div> 
-                  <div class="col-md-3">
+                  </div>  -->
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
@@ -78,7 +78,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
@@ -102,6 +102,7 @@
                           <th width="30%">Duration</th>
                           <th>Meal Type</th>
                           <th>Price</th>
+                          <th>Discounted Price</th>
                           <th class="text-center"><a href="javascript:void(0);" class="btn btn-info addRow" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
                           </th>
                         </tr>
@@ -150,6 +151,15 @@
                                 </div>
                                 <span id="meal_price{{$key+1}}" style="color:red;"></span>
                             </td>
+                            <td>
+                               <div class="input-group">
+                                  <div class="input-group-addon">
+                                    <i class="fa fa-rupee"></i>
+                                  </div>
+                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{$durvalue->discount_price}}">
+                                </div>
+                                <span id="dis_price{{$key+1}}" style="color:red;"></span>
+                            </td>
                              <td style="text-align: center;"  width="10%">
                                <a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(<?php echo $key+1;?>)"><i class="fa fa-trash"></i></a>
                             </td>
@@ -166,8 +176,9 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-                <button type="submit" class="btn btn-primary pull-right">Update</button>
+              
+                <button type="submit" class="btn btn-primary">Update</button>
+                  <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
           </div>
@@ -201,16 +212,15 @@
       });
   }
 
- function addDurationRow()
+function addDurationRow()
   {
       var duration_flag = $('#duration_flag').val();
       duration_flag = parseInt(duration_flag)+parseInt(1); 
       $('#duration_flag').val(duration_flag);
-       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days"> <span id="duration_msg'+duration_flag +'" style="color:red;"></span> <div class="input-group-addon btn-default"> Days</div></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price' + duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days">  <div class="input-group-addon btn-default"> Days</div></div><span id="duration_msg'+duration_flag +'" style="color:red;"></span></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price'+ duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price'+duration_flag+ '" name="discount_price'+duration_flag+'" required="true" data-parsley-errors-container="#dis_price' + duration_flag + '" data-parsley-error-message="Please enter discount price."></div><span id="dis_price'+ duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#duration_body').append(tr);
-        $("#webinar_date"+duration_flag).datepicker({ format: "yyyy-mm-dd",autoclose: true}).val();
-  }
-  function removedurationRow_ajax(div_id)
+     
+  }  function removedurationRow_ajax(div_id)
   {
       var duration_flag = $('#duration_flag').val();
       if(duration_flag!=1)
