@@ -356,6 +356,54 @@ color:#ccc
 	-o-transition:-o-transform .3s ease-in-out, width .3s ease-in-out;
 	transition:transform .3s ease-in-out, width .3s ease-in-out
 }
+#image-preview {
+    max-width: 200px;
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    color: #000;
+    border: 2px dashed #bfbfbf;
+    width: 100%;
+}
+#image-preview label {
+    position: absolute;
+    z-index: 5;
+    opacity: 0.8;
+    cursor: pointer;
+    background-color: #ffffffe6;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    line-height: 50px;
+    text-transform: uppercase;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 40px;
+    padding-left: 17px;
+    padding-top: 3px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #CCC;
+}
+#image-preview input {
+    line-height: 200px;
+    font-size: 80px;
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    opacity: 0.01;
+}
+#blah {
+	width: 100%;
+	height: 100%;
+	min-height: 190px;
+	object-fit: cover;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
 @media (max-width:767px) {
 .main-sidebar {
 	padding-top:100px
