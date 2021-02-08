@@ -308,11 +308,11 @@ class KitchenController extends Controller
         $html='<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">TEST </h4>
+                    <h4 class="modal-title">'.$kitchen->kitchen_name.'</h4>
                 </div>
                 <div class="modal-body">
                   <div class="row">
-                    <div class="col-md-12"><h6><b>Customer Key:</b></h6></div>
+                    <div class="col-md-12"><h6><b>Customer Key:</b>'.$kitchen->customer_key.'</h6></div>
                   </div>
                   <hr/>
                   <div class="row">

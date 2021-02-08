@@ -264,6 +264,16 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
 	Route::post('/kitchen_details',	      'Admin\KitchenController@detail');
 
+	//Assign Nutritionist Routes
+	Route::get('/manage_assign_nutritionist',	      'Admin\AssignNutritionistController@index');
+	Route::get('/add_assign_nutritionist',		      'Admin\AssignNutritionistController@add');
+	Route::post('/store_assign_nutritionist',	 	  'Admin\AssignNutritionistController@store');
+	Route::get('/edit_assign_nutritionist/{id}',	  'Admin\AssignNutritionistController@edit');
+	Route::post('/update_assign_nutritionist/{id}',   'Admin\AssignNutritionistController@update');
+	Route::get('/delete_assign_nutritionist/{id}',    'Admin\AssignNutritionistController@delete');
+	Route::post('/status_assign_nutritionist',	      'Admin\AssignNutritionistController@status');
+	Route::post('/assign_nutritionist_details',	      'Admin\AssignNutritionistController@detail');
+
 
 });
 

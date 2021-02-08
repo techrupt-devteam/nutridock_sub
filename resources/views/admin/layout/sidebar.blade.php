@@ -72,10 +72,37 @@
                   <span class="pull-right-container">
                   </span>
                 </a>
+              </li> 
+            </ul>
+        </li> 
+     
+
+      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
+            <a href="#">
+              <i class="fa fa-television"></i><span>Subscriber</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              
+              <li @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber') class="active" @endif>
+                  <a href="{{url('/admin')}}/manage_subscriber">
+                     <i class="fa fa-users"></i><span>Subscribers</span>
+                  </a>
+              </li>
+              <li @if(Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist') class="active" @endif>
+                  <a href="{{url('/admin')}}/manage_assign_nutritionist">
+                     <i class="fa fa-user-plus"></i><span>Assign Nutritionist</span>
+                  </a>
+              </li>
+              <li @if(Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') class="active" @endif>
+                  <a href="{{url('/admin')}}/manage_calender">
+                     <i class="fa fa-calendar"></i><span>Subscriber Calender</span>
+                  </a>
               </li>
             </ul>
         </li> 
-
        <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>
