@@ -3,7 +3,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
         {{-- <small>Preview</small> --}}
@@ -13,7 +13,7 @@
         <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,7 +22,18 @@
         <div class="col-md-12">
           <!-- general form elements -->
            @include('admin.layout._status_msg')
-          <div class="box box-primary">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_module">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- form start -->
             <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
              
@@ -31,7 +42,7 @@
                 <div class="col-md-12">
 
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Parent Module</label>
                         <select name="parent_id" id="parent_id" class="form-control" onchange="getModuleUrl();">
@@ -44,7 +55,7 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Module Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="module_name" name="module_name" placeholder="Module Name" required="true">
@@ -52,7 +63,7 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Module Url</label>
                         <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL">
@@ -60,7 +71,7 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Module Url Slug</label>
                         <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug">

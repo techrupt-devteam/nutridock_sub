@@ -4,36 +4,31 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
-      </ol>
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
-          <div class="box box-primary">
-           <!--  <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"> {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}</h3>
+                <ol class="breadcrumb">
+                  <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                  <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                  <li class="active">{{ $page_name." ".$title }}</li>
+                </ol>   
+            </div>
             <!-- /.box-header -->
+            <div class="box-body">
             <!-- form start --> 
              @include('admin.layout._status_msg')
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control"  data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter nutritionsit name." id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
@@ -42,7 +37,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_email">Email<span style="color:red;" >*</span></label>
                         <div class="input-group">
@@ -56,7 +51,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">Mobile No<span style="color:red;" >*</span></label>
                          <div class="input-group">
@@ -74,9 +69,10 @@
 
                 </select>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
-                        <label for="nutritionsit_name">State<span style="color:red;" >*</span></label>
+                        <label for="nutritionsit_name" class="label-control">State<span style="color:red;" >*</span></label>
+
                          <select class="form-control select2" name="nutritionsit_state" id="nutritionsit_state" required="true" onchange="getCity()" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state.">
                           <option value="">-Select State-</option>t
                           @foreach($state as $svalue)
@@ -93,7 +89,7 @@
                       </div>
                     </div>
                   </div><div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="nutritionsit_city" id="nutritionsit_city" required="true" onchange="getArea()" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
@@ -105,7 +101,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="nutritionsit_area" id="nutritionsit_area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
@@ -118,40 +114,25 @@
                   </div>
                 </div>
                  <input type="hidden" name="nutritionsit_role" value="1">
-                 <!-- <div class="row">  
-                  <div class="col-md-4">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="nutritionsit_name">Role<span style="color:red;" >*</span></label>
-                        <select class="form-control" name="nutritionsit_role" id="nutritionsit_role" required="true" readonly  data-parsley-errors-container="#role_error" data-parsley-error-message="Please select role.">
-                          <option value="">-Select Role-</option>t
-                          @foreach($role as $rvalue)
-
-                          <option value="{{$rvalue->role_id}}" <?php if($rvalue->role_id==1) echo "selected"; ?>>{{$rvalue->role_name}}</option>t
-                          @endforeach
-                        </select>
-                        <div id="role_error" style="color:red;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="row">
                    <div class="col-md-12">
-                      <div class="box-body"><span><b>Do You want to change nutrionsit password please check checkbox on update password</b></span> <hr/>
-                        <div class="col-md-4">
-                          <div class="form-group" >
-                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="nutritionsit_update">  Update Passsword</label></label>
+                      <div class="alert alert-info">
+                        Do You want to change nutrionsit password please check checkbox on update password
+                      </div>
+                        <div class="">
+                          <div class="form-group" style="max-width: 320px;">
+                              <label><input type="checkbox" id="chkPassword" name="chkPassword">
+                                <label for="nutritionsit_update">&nbsp;  Update Passsword</label></label>
                               <input type="text" class="form-control"  id="nutritionsit_password_new" name="nutritionsit_password_new" placeholder="New Password" style="display: none !important;">
                               <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
                           </div>
                         </div>
-                      </div>
                    </div>  
                 </div>
               <!-- /.box-footer-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
+                <button type="submit" class="btn btn-primary"> Update </button>
+                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default"> Back </a>
                 
               </div>
             </form>

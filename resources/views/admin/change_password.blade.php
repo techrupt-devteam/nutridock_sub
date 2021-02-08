@@ -4,7 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         Change Password
         {{-- <small>Preview</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="#">Setting</a></li>
         <li class="active">Change Password</li>
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,9 +22,14 @@
         <!-- left column -->
         <div class="col-md-6">
           <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
+          <div class="box">
+            <div class="box-header">
               <h3 class="box-title">Change Password</h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="#">Setting</a></li>
+                <li class="active">Change Password</li>
+              </ol>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -48,7 +53,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
           </div>

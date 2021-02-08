@@ -356,6 +356,58 @@ color:#ccc
 	-o-transition:-o-transform .3s ease-in-out, width .3s ease-in-out;
 	transition:transform .3s ease-in-out, width .3s ease-in-out
 }
+#image-preview {
+    max-width: 200px;
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+    color: #000;
+    border: 2px dashed #bfbfbf;
+    width: 100%;
+}
+#image-preview label {
+    position: absolute;
+    z-index: 5;
+    opacity: 0.8;
+    cursor: pointer;
+    background-color: #ffffffe6;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    line-height: 50px;
+    text-transform: uppercase;
+    right: 0;
+    bottom: 0;
+    border-top-left-radius: 40px;
+    padding-left: 17px;
+    padding-top: 3px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #CCC;
+}
+#image-preview input {
+    line-height: 200px;
+    font-size: 80px;
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    opacity: 0.01;
+}
+.swal-footer {
+    text-align: center !important;
+}
+
+#blah {
+	width: 100%;
+	height: 100%;
+	min-height: 190px;
+	object-fit: cover;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
 @media (max-width:767px) {
 .main-sidebar {
 	padding-top:100px
@@ -2126,7 +2178,7 @@ opacity:1
 	border-color:#e08e0b
 }
 .alert-info {
-	border-color:#00acd6
+	border-color:#bce8f1
 }
 .nav>li>a:hover, .nav>li>a:active, .nav>li>a:focus {
 	color:#444;
@@ -3836,7 +3888,10 @@ table.text-center, table.text-center td, table.text-center th {
 .description-block>.description-text {
 	text-transform:uppercase
 }
-.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-green, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black, .bg-red-active, .bg-yellow-active, .bg-aqua-active, .bg-blue-active, .bg-light-blue-active, .bg-green-active, .bg-navy-active, .bg-teal-active, .bg-olive-active, .bg-lime-active, .bg-orange-active, .bg-fuchsia-active, .bg-purple-active, .bg-maroon-active, .bg-black-active, .callout.callout-danger, .callout.callout-warning, .callout.callout-info, .callout.callout-success, .alert-success, .alert-danger, .alert-error, .alert-warning, .alert-info, .label-danger, .label-info, .label-warning, .label-primary, .label-success, .modal-primary .modal-body, .modal-primary .modal-header, .modal-primary .modal-footer, .modal-warning .modal-body, .modal-warning .modal-header, .modal-warning .modal-footer, .modal-info .modal-body, .modal-info .modal-header, .modal-info .modal-footer, .modal-success .modal-body, .modal-success .modal-header, .modal-success .modal-footer, .modal-danger .modal-body, .modal-danger .modal-header, .modal-danger .modal-footer {
+.alert-info{
+	color: #31708f !important;
+}
+.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-green, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black, .bg-red-active, .bg-yellow-active, .bg-aqua-active, .bg-blue-active, .bg-light-blue-active, .bg-green-active, .bg-navy-active, .bg-teal-active, .bg-olive-active, .bg-lime-active, .bg-orange-active, .bg-fuchsia-active, .bg-purple-active, .bg-maroon-active, .bg-black-active, .callout.callout-danger, .callout.callout-warning, .callout.callout-info, .callout.callout-success, .alert-success, .alert-danger, .alert-error, .alert-warning, .label-danger, .label-info, .label-warning, .label-primary, .label-success, .modal-primary .modal-body, .modal-primary .modal-header, .modal-primary .modal-footer, .modal-warning .modal-body, .modal-warning .modal-header, .modal-warning .modal-footer, .modal-info .modal-body, .modal-info .modal-header, .modal-info .modal-footer, .modal-success .modal-body, .modal-success .modal-header, .modal-success .modal-footer, .modal-danger .modal-body, .modal-danger .modal-header, .modal-danger .modal-footer {
 	color:#fff !important
 }
 .bg-gray {
@@ -3856,7 +3911,7 @@ table.text-center, table.text-center td, table.text-center th {
 	background-color:#f39c12 !important
 }
 .bg-aqua, .callout.callout-info, .alert-info, .label-info, .modal-info .modal-body {
-	background-color:#00c0ef !important
+	background-color: #d9edf7;
 }
 .bg-blue {
 	background-color:#0073b7 !important
@@ -3865,7 +3920,7 @@ table.text-center, table.text-center td, table.text-center th {
 	background-color:#3c8dbc !important
 }
 .bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body {
-	background-color:#00a65a !important
+	background-color:#66b31e !important
 }
 .bg-navy {
 	background-color:#001f3f !important

@@ -28,7 +28,7 @@
                 {{-- <small>Preview</small> --}}</h3>
                 <ol class="breadcrumb">
                   <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                  <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
+                  <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
                   <li class="active">{{ $page_name." ".$title }}</li>
                 </ol>
             </div>

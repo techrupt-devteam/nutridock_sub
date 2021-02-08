@@ -4,7 +4,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
        {{--  <small>advanced tables</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="#">Manage {{ $title }}</a></li>
         {{-- <li class="active">{{ $page_name." ".$title }}</li> --}}
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -23,13 +23,17 @@
           @include('admin.layout._status_msg')
           <div class="box">
             <div class="box-header">
-            
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{--  <small>advanced tables</small> --}}
+              </h3>
               <a href="{{url('/admin')}}/add_location" class="btn btn-primary btn-sm" style="float: right;">Add location</a>
             </div>
             
             
             <!-- /.box-header -->
-            <div class="box-body" style="overflow-x:auto;">
+            <div class="box-body">
+              <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -76,6 +80,7 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

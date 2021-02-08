@@ -335,8 +335,12 @@
 	box-shadow:none
 }
 .skin-black .wrapper, .skin-black .main-sidebar, .skin-black .left-side {
-	background-color:#1c2a39
+	/* background-color:#1c2a39 */
+	background-image: url('../../img/bg-img.jpg');
+	background-size: cover;
+	background-position: center top;
 }
+
 .skin-black .user-panel>.info, .skin-black .user-panel>.info>a {
 	color:#fff
 }
@@ -349,7 +353,7 @@
 }
 .skin-black .sidebar-menu>li:hover>a, .skin-black .sidebar-menu>li.active>a, .skin-black .sidebar-menu>li.menu-open>a {
 	color:#fff;
-	background:#76bd34
+	background:#66b31e
 }
 .skin-black .sidebar-menu>li.active>a {
 	border-left-color:#fff

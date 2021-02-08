@@ -10,7 +10,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
+        <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
     </section>
@@ -22,13 +22,24 @@
         <div class="col-md-12">
           <!-- general form elements -->
            @include('admin.layout._status_msg')
-          <div class="box box-primary">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- form start -->
             <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
              
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-12">
+                <div class="">
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
