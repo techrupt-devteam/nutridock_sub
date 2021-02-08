@@ -4,7 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
         {{-- <small>Preview</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,19 +22,25 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
-          <div class="box box-primary">
-           <!--  <div class="box-header with-border">
+          <div class="box">
+            <div class="box-header">
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- /.box-header -->
             <!-- form start --> 
+            <div class="box-body">
              @include('admin.layout._status_msg')
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['sub_plan_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-12">
+                <div class="">
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="sub_name" name="sub_name" placeholder="Subscription Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the subscription name." value="{{$data['sub_name']}}">
@@ -42,26 +48,8 @@
                       </div>
                     </div>
                   </div> 
-                  <!-- <div class="col-md-3">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="role_name">Meal Plan<span style="color:red;" >*</span></label>
-                        <select class="form-control select2" name="plan_id" id="plan_id" required="true" data-parsley-errors-container="#plan_error" data-parsley-error-message="Please select meal plan.">
-                          <option value=" ">-Select Plan-</option>
-                          @foreach($plan as $pvalue)
-                          @php $selected =""; @endphp
-                          @if($data['plan_id'] == $pvalue->plan_id)
-                          @php $selected = "selected"; @endphp  
-                          @endif
-                          <option value="{{$pvalue->plan_id}}" {{$selected}}>{{$pvalue->plan_name}}</option>
-                          @endforeach
-                        </select>
-                        <div id="plan_error" style="color:red;"></div>
-                      </div>
-                    </div>
-                  </div>  -->
-                  <div class="col-md-4">
-                    <div class="box-body">
+                 <div class="col-md-4">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
                          <select class="form-control select2 " name="city" id="city" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_area();">
@@ -79,7 +67,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="area" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
@@ -95,15 +83,15 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <div class="box-body">
+                  <div class="table-responsive">
                     <table class="table table-bordered" id="myTable">
-                      <thead style="background-color: #00cc445c;">
+                      <thead>
                         <tr>
                           <th width="30%">Duration</th>
                           <th>Meal Type</th>
                           <th>Price</th>
                           <th>Discounted Price</th>
-                          <th class="text-center"><a href="javascript:void(0);" class="btn btn-info addRow" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
+                          <th class="text-center"><a href="javascript:void(0);" class="btn btn-primary btn-sm addRow" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
                           </th>
                         </tr>
                       </thead>
@@ -161,7 +149,7 @@
                                 <span id="dis_price{{$key+1}}" style="color:red;"></span>
                             </td>
                              <td style="text-align: center;"  width="10%">
-                               <a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(<?php echo $key+1;?>)"><i class="fa fa-trash"></i></a>
+                               <a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removedurationRow_ajax(<?php echo $key+1;?>)"><i class="fa fa-trash"></i></a>
                             </td>
                           </tr>
 
@@ -181,6 +169,7 @@
                   <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
+          </div>
           </div>
           <!-- /.box -->
         </div>

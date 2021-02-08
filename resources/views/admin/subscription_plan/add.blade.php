@@ -3,18 +3,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
-      </ol>
-    </section>
-
+   
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -22,15 +11,26 @@
         <div class="col-md-12">
           <!-- general form elements -->
            @include('admin.layout._status_msg')
-          <div class="box box-primary">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- form start -->
+            <div class="box-body">
             <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
              
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-12">
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div class="">
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="sub_name" name="sub_name" placeholder="Subscription Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the subscription name.">
@@ -38,22 +38,9 @@
                       </div>
                     </div>
                   </div> 
-                  <!-- <div class="col-md-3">
-                    <div class="box-body">
-                      <div class="form-group">
-                        <label for="role_name">Meal Plan<span style="color:red;" >*</span></label>
-                        <select class="form-control select2" name="plan_id" id="plan_id" required="true" data-parsley-errors-container="#plan_error" data-parsley-error-message="Please select meal plan.">
-                          <option value=" ">-Select Plan-</option>
-                          @foreach($plan as $pvalue)
-                          <option value="{{$pvalue->plan_id}}">{{$pvalue->plan_name}}</option>
-                          @endforeach
-                        </select>
-                        <div id="plan_error" style="color:red;"></div>
-                      </div>
-                    </div>
-                  </div>  -->
+                 
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
                          <select class="form-control select2 " name="city" id="city" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_area();">
@@ -67,7 +54,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="area" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
@@ -78,15 +65,14 @@
                       </div>
                     </div>
                   </div>
-                </div>
               </div> 
 
               <div class="row">
                 <div class="col-md-12">
-                  <div class="box-body">
+                  <div class="table-responsive">
                     <table class="table table-sm table-bordered table-striped table-dark" id="myTable">
                       <thead>
-                        <tr class="text-uppercase text-center" style="background:#ECF0F5">
+                        <tr class="text-uppercase text-center">
                           <th width="30%" >Duration</th>
                           <th>Meal Type</th>
                           <th>Price</th>
@@ -130,7 +116,7 @@
                                 <span id="dis_price1" style="color:red;"></span>
                             </td>
                              <td style="text-align: center;"  width="10%">
-                               <a href="javascript:void(0);" class="btn btn-danger remove p-0 m-0"  onclick="removedurationRow_ajax(1)"><i class="fa fa-trash"></i></a>
+                               <a href="javascript:void(0);" class="btn-sm btn btn-danger remove p-0 m-0"   onclick="removedurationRow_ajax(1)"><i class="fa fa-trash"></i></a>
                             </td>
                           </tr>
                       </tbody>

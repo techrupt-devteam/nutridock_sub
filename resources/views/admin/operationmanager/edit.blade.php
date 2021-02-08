@@ -4,7 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
         {{-- <small>Preview</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,18 +22,26 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements --> @include('admin.layout._status_msg')
-          <div class="box box-primary">
-           <!--  <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard </a></li>
+                <li><a href="{{url('/admin')}}/manage_user_manager"> Manage {{ $title }} </a></li>
+                <li class="active"> {{ $page_name." ".$title }} </li>
+              </ol>
+            </div>
             <!-- /.box-header -->
             <!-- form start --> 
-            
+            <div class="box-body">
               <form action="{{ url('/admin')}}/update_{{$url_slug}}_manager/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
                 <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="operation_manager_name" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter name." name="operation_manager_name" placeholder="Name"  value="{{$data['name']}}"required="true" >
@@ -42,7 +50,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_email">Email<span style="color:red;" >*</span></label>
                         <div class="input-group">
@@ -56,7 +64,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Mobile No<span style="color:red;" >*</span></label>
                          <div class="input-group">
@@ -74,7 +82,7 @@
 
                 </select>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_state" id="operation_manager_state" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state." required="true" onchange="getCity();">
@@ -93,7 +101,7 @@
                       </div>
                     </div>
                   </div><div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_name">City<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_city" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." id="operation_manager_city" required="true" onchange="getArea();">
@@ -105,7 +113,7 @@
                     </div>
                   </div>
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_area">Area<span style="color:red;" >*</span></label>
                          <select class="form-control select2" name="operation_manager_area" id="operation_manager_area"  data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area." required="true">
@@ -119,7 +127,7 @@
                 </div>
                  <div class="row">  
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Role<span style="color:red;" >*</span></label>
                         <select class="form-control" name="operation_manager_role" id="operation_manager_role" data-parsley-errors-container="#role_error" data-parsley-error-message="Please select role." required="true">
@@ -137,10 +145,13 @@
                 </div>
                 <div class="row">
                    <div class="col-md-12">
-                      <div class="box-body"><span><b>Do You want to change nutrionsit password please check checkbox on update password</b></span> <hr/>
-                        <div class="col-md-4">
+                      <div>
+                        <div class="alert alert-info"> 
+                          Do You want to change nutrionsit password please check checkbox on update password 
+                        </div>
+                        <div class="col-md-4" style="padding-left: 0px;">
                           <div class="form-group" >
-                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="operation_manager_update">  Update Passsword</label></label>
+                              <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="operation_manager_update">&nbsp;   Update Passsword</label></label>
                               <input type="text" class="form-control"  id="operation_manager_password_new" name="operation_manager_password_new" placeholder="New Password" style="display: none !important;">
                               <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
                           </div>
@@ -151,9 +162,10 @@
               <!-- /.box-footer-body -->
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
+                <a href="{{url('/admin')}}/manage_user_manager"  class="btn btn-default">Back</a>
               </div>
             </form>
+          </div>
           </div>
           <!-- /.box -->
         </div>

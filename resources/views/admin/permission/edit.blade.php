@@ -4,7 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
         {{-- <small>Preview</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,10 +22,15 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
-          <div class="box box-primary">
-           <!--  <div class="box-header with-border">
+          <div class="box">
+            <div class="box-header">
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- /.box-header -->
             <!-- form start --> 
              @include('admin.layout._status_msg')
@@ -34,7 +39,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="col-md-4">
-                    <div class="box-body">
+                    <div class="">
                       <div class="form-group">
                         <label for="role_name">Select Role<span style="color:red;" >*</span></label>
                          <select name="role_id" id="role_id" class="form-control" required="true">
@@ -50,11 +55,11 @@
                   </div>
                   <div class="col-md-12">
                       <div class="col-md-6">
-                    <div class="box-body">
+                    <div class="table-responsive">
                        <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th>Sr.No</th>
+                            <th style="width: 80px;">Sr.No</th>
                             <th>Module Name</th>
                           </tr>
                         </thead>

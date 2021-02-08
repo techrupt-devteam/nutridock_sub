@@ -4,17 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        {{ $page_name." ".$title }}
-        {{-- <small>Preview</small> --}}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
-        <li class="active">{{ $page_name." ".$title }}</li>
-      </ol>
-    </section>
+   
 
     <!-- Main content -->
     <section class="content">
@@ -22,21 +12,27 @@
         <!-- left column -->
         <div class="col-md-12">
           <!-- general form elements -->
-          <div class="box box-primary">
-           <!--  <div class="box-header with-border">
-              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            </div> -->
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">{{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <!-- /.box-header -->
             <!-- form start --> 
+            <div class="box-body">
              @include('admin.layout._status_msg')
               <form action="{{ url('/admin')}}/update_{{$url_slug}}/{{$data['module_id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
-
-                
-                <div class="col-md-12">
+                <div class="">
                   <div class="col-md-3">
-                  <div class="box-body">
+                  <div>
                     <div class="form-group">
                       <label for="module_name">Module Type</label>
                       <select name="parent_id" id="parent_id" class="form-control"  onchange="getModuleUrl();">
@@ -50,7 +46,7 @@
                   </div>
                  </div>
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="menu_name">Module Name<span style="color:red;" >*</span></label>
                         <input type="text" class="form-control" id="module_name" name="module_name" placeholder="Module Name" value="{{$data['module_name']}}" required="true">
@@ -58,7 +54,7 @@
                     </div>
                   </div>
                   <div class="col-md-3 module_url">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Module Url</label>
                         <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" value="{{$data['module_url']}}">
@@ -66,7 +62,7 @@
                     </div>
                   </div>
                   <div class="col-md-3">
-                    <div class="box-body">
+                    <div>
                       <div class="form-group">
                         <label for="module_name">Module Url Slug</label>
                         <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug" value="{{$data['module_url_slug']}}">
@@ -81,6 +77,7 @@
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
             </form>
+          </div>
           </div>
           <!-- /.box -->
         </div>
