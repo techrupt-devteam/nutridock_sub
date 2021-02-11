@@ -42,13 +42,14 @@ class AssignNutritionistController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = \DB::table('nutri_mst_assign_location_menu')
-                     ->join('state','nutri_mst_assign_location_menu.state_id','=','state.id')
-                     ->join('city','nutri_mst_assign_location_menu.city_id','=','city.id')
-                     ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
-                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_assign_location_menu.*')
-                     ->where('nutri_mst_assign_location_menu.is_deleted','<>',1)
-                     ->orderBy('nutri_mst_assign_location_menu.assign_menu_id', 'DESC')
+        $data     = \DB::table('nutri_mst_subcriber_assign')
+                     ->join('state','nutri_mst_subcriber_assign.state_id','=','state.id')
+                     ->join('city','nutri_mst_subcriber_assign.city_id','=','city.id')
+                     ->join('users','nutri_mst_subcriber_assign.nutritionist_id','=','users.id')
+                  //   ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
+                     ->select('state.name as state_name','city.city_name','nutri_mst_subcriber_assign.*','users.name')
+                     ->where('nutri_mst_subcriber_assign.is_deleted','<>',1)
+                     ->orderBy('nutri_mst_subcriber_assign.subcriber_assign_id', 'DESC')
                      ->get();
 
         if(!empty($data))
@@ -66,10 +67,12 @@ class AssignNutritionistController extends Controller
     //Assign Nutritionist Add Function 
     public function add()
     {
-        $users              = $this->base_users->get();
+        $users              = $this->base_users->where('roles','=',1)->where('is_active','=',1)->where('is_deleted','<>',1)->get();
         $subscriber         = $this->base_users->get();
+        $state               = $this->base_state->get();
         $data['page_name']  = "Add";
         $data['users']      = $users;    
+        $data['state']      = $state;    
         $data['subscriber'] = $subscriber;
         $data['title']      = $this->title;
         $data['url_slug']   = $this->url_slug;
@@ -82,18 +85,25 @@ class AssignNutritionistController extends Controller
 
        $validator = Validator::make($request->all(), [
                 'subscriber_id'   => 'required',
-                'nutritionist_id' => 'required'
+                'nutritionist_id' => 'required',
+                'state_id'        => 'required',
+                'city_id'         => 'required'
             ]);
+
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
    
 
+        $subscriber_data   = implode(",",$request->input('subscriber_id'));
+        $nutritionist_data = implode(",",$request->input('nutritionist_id'));
 
         $arr_data                       = [];
-        $arr_data['subscriber_id']      = $request->input('subscriber_id');
-        $arr_data['nutritionist_id']    = $request->input('nutritionist_id');
+        $arr_data['state_id']           = $request->input('state_id');
+        $arr_data['city_id']            = $request->input('city_id');
+        $arr_data['subscriber_id']      = $subscriber_data;
+        $arr_data['nutritionist_id']    = $nutritionist_data;
         $assign_nutritionist            = $this->base_model->create($arr_data);
         if(!empty($assign_nutritionist))
         {
@@ -118,11 +128,14 @@ class AssignNutritionistController extends Controller
         {
             $arr_data = $data->toArray();
         }   
-        $users                = $this->base_users->get();
+
+        $users                = $this->base_users->where('roles','=',1)->where('is_active','=',1)->where('is_deleted','<>',1)->get();
         $subscriber           = $this->base_users->get();
+        $state                = $this->base_state->get();
         $data['data']         = $arr_data;
         $data['subscriber']   = $subscriber;
         $data['users']        = $users;
+        $data['state']        = $state;
         $data['page_name']    = "Edit";
         $data['url_slug']     = $this->url_slug;
         $data['title']        = $this->title;
@@ -134,7 +147,9 @@ class AssignNutritionistController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'subscriber_id'   => 'required',
-            'nutritionist_id' => 'required'
+            'nutritionist_id' => 'required',
+            'state_id'        => 'required',
+            'city_id'         => 'required'
               
         ]);
 
@@ -143,11 +158,16 @@ class AssignNutritionistController extends Controller
             return $validator->errors()->all();
         }
         
+        $subscriber_data   = implode(",",$request->input('subscriber_id'));
+        $nutritionist_data = implode(",",$request->input('nutritionist_id'));
+
         $arr_data                       = [];
-        $arr_data['subscriber_id']      = $request->input('subscriber_id');
-        $arr_data['nutritionist_id']    = $request->input('nutritionist_id');
-        $assign_nutritionist_update = $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
-        
+        $arr_data['state_id']           = $request->input('state_id');
+        $arr_data['city_id']            = $request->input('city_id');
+        $arr_data['subscriber_id']      = $subscriber_data;
+        $arr_data['nutritionist_id']    = $nutritionist_data;
+        $assign_nutritionist_update   = $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
+
         Session::flash('success', $this->Update );
         return \Redirect::to('admin/manage_assign_nutritionist');        
     }

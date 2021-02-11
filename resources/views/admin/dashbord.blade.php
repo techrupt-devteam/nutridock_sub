@@ -14,7 +14,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard 25
+        Dashboard   Login-city : <?php echo Session::get('login_city_name'); ?>
         <small>Control panel</small>
       </h1>
       <ol class="breadcrumb">

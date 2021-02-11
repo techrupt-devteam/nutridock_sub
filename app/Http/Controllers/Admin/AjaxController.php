@@ -3,21 +3,21 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\Nutritionsit;
+use App\Models\User;
 use App\Models\Location;
 use App\Models\city;
 use App\Models\Role;
 use App\Models\State;
-use Session;
+//use Session;
 use Sentinel;
 use Validator;
 use DB;
 class AjaxController extends Controller
 {
-    public function __construct(Nutritionsit $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
+    public function __construct(User $User,Location $Location,City $City,Role $Role,State $State)
     {
         $data                = [];
-        $this->base_model    = $Nutritionsit; 
+        $this->base_model    = $User; 
         $this->base_location = $Location; 
         $this->base_city     = $City; 
         $this->base_state    = $State; 
@@ -59,6 +59,22 @@ class AjaxController extends Controller
          else  
           $html.="<option value=".$value->id.">".$value->area."</option>";                
         }                 
+        return $html;
+    } 
+
+    public function get_city_list(Request $request)
+    {
+        dd($request);
+        $user_name = $request->email;
+        
+        $user      = $this->base_model->where(['email'=>$request->email]); 
+
+        $get_city  = $this->base_city->get();
+        $html      = "";
+        foreach ($get_city as $key => $value) 
+        {
+            $html.="<option value=".$value->id.">".$value->city_name."</option>";     
+        }
         return $html;
     }
 
