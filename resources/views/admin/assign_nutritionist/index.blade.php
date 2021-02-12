@@ -4,7 +4,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
        {{--  <small>advanced tables</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="#">Manage {{ $title }}</a></li>
         {{-- <li class="active">{{ $page_name." ".$title }}</li> --}}
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,6 +22,17 @@
         <div class="col-xs-12">
           @include('admin.layout._status_msg')
           <div class="box">
+             <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <div class="box-header">
               <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
               <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Nutritionist</a>
@@ -49,14 +60,8 @@
                       <td>{{ucfirst($value->city_name)}}</td>
                     
                       <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->subcriber_assign_id ;?>);">
-                           <i class="fa fa-info-circle"></i> View Details</button>
-                        @if($value->is_active=='1')
-                           @php $checked="checked"; $style="success"; @endphp 
-                        @else
-                           @php $checked=""; $style="danger";@endphp 
-                        @endif
-                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->subcriber_assign_id ; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->subcriber_assign_id ;?>);">View Subscriber</button>
+                       
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
@@ -123,7 +128,7 @@
       var subcriber_assign_id  = subcriber_assign_id ;
       //alert(status);
        $.ajax({
-            url: "{{url('/admin')}}/assign_menu_details",
+            url: "{{url('/admin')}}/assign_users_details",
             type: 'post',
             data: {subcriber_assign_id :subcriber_assign_id },
             success: function (data) 

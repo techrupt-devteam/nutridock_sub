@@ -66,8 +66,8 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback" id="city_select" style="display: none !important;">
-        <select name="city" id="city" class="form-control Select2">
-          <option value="">-Select City-</option>
+        <select name="city" id="city" class="form-control Select2"  required="true">
+          <option value=" ">-Select City-</option>
         </select>
       </div>
       <div class="row">
@@ -117,10 +117,12 @@ function  getcity_dropdown(){
          if(data != "users"){
             $('#city').html(data);
             $('#city_select').show();
-             $('#city').show();
+            $('#city').show();
+            $("#city").attr("required","true");
          }else{
             $('#city').hide();
             $('#city_select').hide();
+            $("#city").removeAttr("required");
          }
     });
 

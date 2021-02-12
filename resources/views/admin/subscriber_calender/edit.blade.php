@@ -4,7 +4,7 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <!-- <section class="content-header">
+    <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
         {{-- <small>Preview</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="{{url('/admin')}}/manage_category">Manage {{ $title }}</a></li>
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
-    </section> -->
+    </section>
 
     <!-- Main content -->
     <section class="content">
@@ -23,17 +23,6 @@
         <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-primary">
-             <div class="box-header">
-              <h3 class="box-title">
-                {{ $page_name." ".$title }}
-                {{-- <small>Preview</small> --}}
-              </h3>
-              <ol class="breadcrumb">
-                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
-                <li class="active">{{ $page_name." ".$title }}</li>
-              </ol>
-            </div>
            <!--  <div class="box-header with-border">
               <h3 class="box-title">{{ $page_name." ".$title }}</h3>
             </div> -->

@@ -79,7 +79,7 @@ class AuthController extends Controller
         
         if(!IS_Null($request->input('city')) && !empty($request->input('city')) && $arr_user->roles=='admin')
         {
-            if($request->input('city')!= 0){
+            if($request->input('city')!= 'all'){
               $get_city   = \DB::table('city')->where('id','=',$request->input('city'))->first();
               $request->session()->put("login_city_name",$get_city->city_name);
               $request->session()->save();
@@ -88,13 +88,40 @@ class AuthController extends Controller
             }
             else
             {
-              $request->session()->put("login_city_name",'All');
-              $request->session()->save();
               $request->session()->put("login_city_id",$request->input('city'));
               $request->session()->save();
             }
 
         }
+        elseif($arr_user->roles!='admin')
+        {
+              $get_city   = \DB::table('city')->where('id','=',$arr_user->city)->first();
+
+
+              $get_assign_Subscriber_id   = \DB::table('nutri_mst_subcriber_assign')
+                                            ->where('nutritionist_id','=',$arr_user->id)
+                                            ->where('is_deleted','<>',1)
+                                            ->select('subscriber_id')->first();
+           
+              if(!empty($get_assign_Subscriber_id) && isset($get_assign_Subscriber_id))
+              {
+
+                $subscribers = explode(',',$get_assign_Subscriber_id->subscriber_id);                              
+                $request->session()->put("assign_subscriber",$subscribers);
+                $request->session()->save(); 
+              }
+
+
+
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$arr_user->city);
+              $request->session()->save();
+                
+        }
+
+
+
 
         //dd($sub_menu);
 
@@ -332,7 +359,7 @@ class AuthController extends Controller
         {
             $get_city   = \DB::table('city')->get();
             $html       = '<option value="">-Select City-</option>';
-            $html      .= '<option value="0">All</option>';
+            $html      .= '<option value="all">All</option>';
             foreach ($get_city as $key => $value) 
             {
                 $html.="<option value=".$value->id.">".$value->city_name."</option>";     

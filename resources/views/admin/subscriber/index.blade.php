@@ -5,7 +5,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
        {{--  <small>advanced tables</small> --}}
@@ -15,7 +15,7 @@
         <li><a href="#">Manage {{ $title }}</a></li>
         {{-- <li class="active">{{ $page_name." ".$title }}</li> --}}
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -23,22 +23,34 @@
         <div class="col-xs-12">
           @include('admin.layout._status_msg')
           <div class="box">
-            <div class="box-header">
-              <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Nutritionist</a>
+             <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <?php // dd($data); ?>  <input type="checkbox" data-toggle="toggle" data-onstyle="success" title="status"  data-offstyle="danger" id="_is_active" data-size="small" data-style="slow" >
+            <div class="table-responsive">
               <table class="table table-bordered" id="example1">
                     <thead>
                        <th>Id</th>
                        <th>Name</th>
                        <th>Email</th>
                        <th>Mobile</th>
+                    <!--    <th>City</th> -->
+                       <th>Start Date</th>
+                       <th>Expire Date</th>
+                       <th>Payment Status</th>
                        <th>Action</th>
                     </thead>        
                </table>
+             </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -80,6 +92,10 @@
                 { "data": "name" },
                 { "data": "email" },
                 { "data": "mobile" },
+           /*     { "data": "city" },*/
+                { "data": "start_date" },
+                { "data": "expire_date" },
+                { "data": "status" },
                 { "data": "action" }
             ]  
 
@@ -105,40 +121,54 @@
         });
     }
 
-   $('.verifybtn').click(function() {
-    $this = $(this);
-    alert($this);
-    if (($this.html()).indexOf('Verified') != -1) btnval = '1';
+   function verified_subscriber(value){
+
+    var id           = value;
+    var status_value = $("#status"+id).val(); 
+    //alert(status_value);
+    if (status_value != 0) btnval = '1';
             else btnval = '0';
-            if(btnval=="0")
+            if(status_value==1)
             {
               var status ="pending"; 
+              var btn_status ="Pending"; 
+              var status_value_update = 0; 
             }
             else
             {
-              var status ="approve";
+              var status ="verified";
+              var btn_status ="Verified"; 
+              var status_value_update = 1;
             }
      swal({
-          title: "Approve Subscriber",
-          text: "Are you sure you want to Verify & Activate this Subscriber?",
+          title: btn_status+" Subscriber",
+          text: "Are you sure you want to "+status+" this subscriber?",
           icon: "warning",
           buttons: [
             'Cancel',
-            'Activate'
+             btn_status
           ],
           dangerMode: true,
         }).then(function(isConfirm) {
           if (isConfirm) 
           {
  
-            $.post( '{{url('/')}}/admin/verify_subscriber', {
+            $.post( "{{url('/admin')}}/verify_subscriber", {
                action: btnval,
-               id: $this.val()
+               id: id,
+               status: status_value_update
             }, function(data) {
               //alert(data);
-              if (data == '0') $this.html('Pending').removeClass('btn-success').addClass('btn-danger');
-              else if (data == '1') $this.html('Verified').removeClass('btn-danger').addClass('btn-success');
-            location.reload();
+              if (data == '0'){ 
+              $('#btn-verify'+id).html('Pending <i class="fa fa-times-circle"></i>').removeClass('btn-success').addClass('btn-danger');  
+              $("#status"+id).val(data);
+               swal("Pending", "Verification Pending", "error");             
+              }
+              else if (data == '1'){ $('#btn-verify'+id).html('Verified <i class="fa fa-check-circle"></i>').removeClass('btn-danger').addClass('btn-success');
+              $("#status"+id).val(data);
+               swal("Verified", "Verification Success", "success");  
+             };
+
             });    
 
           } else {
@@ -146,7 +176,7 @@
              return false;
           }
         });
-   });
+   }
 
 </script> 
 @endsection

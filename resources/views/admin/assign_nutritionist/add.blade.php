@@ -52,14 +52,26 @@
                        <div id="state_error" style="color:red;"></div>
                       </div>
                     </div>
-                  </div><div class="col-md-4">
+                  </div>
+                  <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="city_id">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="city_id" id="city_id" required="true"  data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_nutritionist();">
+                         <select class="form-control select2" name="city_id" id="city_id" required="true"  data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_user_list();">
                           <option value="">-Select City-</option>
                         </select>
                          <div id="city_error" style="color:red;"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="nutritionsit_id">Nutritionist<span style="color:red;" >*</span></label>
+                         <select class="form-control select2" name="nutritionist_id" id="nutritionist_id" required="true"  data-parsley-errors-container="#nutritionsit_error" data-parsley-error-message="Please select Nutritionsit.">
+                          <option value="">-Select Nutritionsit-</option>
+                        </select>
+                         <div id="nutritionsit_error" style="color:red;"></div>
                       </div>
                     </div>
                   </div>
@@ -68,38 +80,17 @@
                       <div class="col-md-6">
                         <div class="box-body">
                            <div class="form-group">
-                           <table id="menu-item"  class="table table-striped table-bordered ">
+                           <table id="menu-item"  class="table">
                               <thead class="btn-default">
-                                <th>Subscriber Name</th>
-                                <th>State</th>
-                                <th>City</th>
-                             </thead>
+                                <tr><th>#</th>
+                                <th>Subscriber Name</th></tr>
+                              </thead>
                               <tbody id="subscriber_body">
-                               <!--  @foreach($subscriber as $key => $svalue)
-                                  <tr>
-                                    <td><input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}"> {{ucfirst($svalue->name)}}</td>
-                                    <td></td>
-                                    <td></td>
-                                  </tr>  
-                                @endforeach -->
-                              </tbody>
-                           </table>
-                         </div>
-                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="box-body">
-                           <div class="form-group">
-                           <table id="item2"  class="table table-striped table-bordered ">
-                              <thead class="btn-default">
-                                <th>Nutritionist Name</th>
-                             </thead>
-                              <tbody id="nutritionist_tbody">
-                              <!--   @foreach($users as $key => $svalue)
-                                  <tr>
-                                    <td><input type="checkbox" name="nutritionist_id[]" class="chk_boxn" id="Subscriber" value="{{$svalue->id}}"> {{ucfirst($svalue->name)}}</td>
-                                  </tr>  
-                                @endforeach -->
+                                 <tr>
+                                   <td></td>
+
+                                   <td></td>
+                                 </tr>
                               </tbody>
                            </table>
                          </div>
@@ -158,21 +149,19 @@
       });
     }
 
-   function  get_nutritionist();(){
-     
-      var state_id = $("#state_id").val();
-      var city_id = $("#city_id").val();
+   function  get_user_list()
+   {
+      var city_id  = $("#city_id").val();
       $.ajax({
         type: "POST",
-        url: "{{url('/admin')}}/get_list",
+        url: "{{url('/admin')}}/get_user_list",
         data: {
           city  :  city_id,
-          state :  state_id
         }
       }).done(function(data) {
-        
-           $("#subscriber_body").html(data);
-           $("#nutritionist_tbody").html(data);
+           var data1=data.split(',');
+           $("#subscriber_body").html(data1[1]);
+           $("#nutritionist_id").html(data1[0]);
       });
   }
 
@@ -181,16 +170,13 @@
   });
  
   //mewnu
-  $('#menu-item').dataTable( {
-   "scrollY": "200px",
-  "scrollCollapse": true,
-  "paging": false
-  } );  
 
-  $('#item2').dataTable( {
-   "scrollY": "200px",
-  "scrollCollapse": true,
-  "paging": false
+
+  $('#menu-item').dataTable( {
+    "scrollY": "200px",
+    "scrollCollapse": true,
+    "paging": false,
+    "searching": false
   } );
 
 </script>

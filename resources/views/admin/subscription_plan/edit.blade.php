@@ -163,8 +163,15 @@
                 </div>
               </div>
               <!-- /.box-body -->
+               <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                       <label for="name">Short Description</label>
+                       <textarea name="plan_description" id="plan_description">{{$data['plan_description']}}</textarea>
+                    </div>
+                </div>
+              </div> 
               <div class="box-footer">
-              
                 <button type="submit" class="btn btn-primary">Update</button>
                   <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
@@ -179,13 +186,14 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <!-- /.content-wrapper --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+
   <script type="text/javascript"> 
   //load area drop down script 
-
-
-
+  CKEDITOR.replace('plan_description');
   function get_area()
   {
    

@@ -354,7 +354,7 @@ label {
                         <div class="form-group label-floating w-100">
                           <label class="control-label">Gender <span class="text-danger">*</span></label>
                           <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" >
-                            <option selected="selected" disabled="disabled" value="">Select</option>
+                            <option value=" ">Select</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                             <option value="Other">Other</option>
@@ -447,9 +447,10 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
+                    <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                    </button> -->
+                    <a href="#step-3" class="btn btn-success pb-1 pt-1 nextBtn pull-right"> Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
                   </div>
               </div>
               <!-- @END: Personal Health Details tab -->
@@ -766,7 +767,7 @@ allNextBtn.click(function(){
     var curStep = $(this).closest(".setup-content"),
         curStepBtn = curStep.attr("id"),
         nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-        curInputs = curStep.find("input[type='text'],input[type='url'],input[type='email'],input[type='checkbox']"),
+        curInputs = curStep.find("input[type='text'],input[type='url'],input[type='email'],input[type='checkbox'],input[type='select']"),
         isValid = true;
        
 

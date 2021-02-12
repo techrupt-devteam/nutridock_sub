@@ -73,7 +73,8 @@ class SubscriptionController extends Controller
                 'sub_name' => 'required',
                 //'plan_id' => 'required',
                 'city' => 'required',
-                'area' => 'required'
+                'area' => 'required',
+                'plan_description' => 'required'
             ]);
 
         if ($validator->fails()) 
@@ -94,6 +95,7 @@ class SubscriptionController extends Controller
       //  $arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
         $arr_data['area']        = $request->input('area');
+        $arr_data['plan_description'] = $request->input('plan_description');
         $plan = $this->base_model->create($arr_data);
       
         if(!empty($plan))
@@ -165,11 +167,13 @@ class SubscriptionController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         $validator = Validator::make($request->all(), [
-                'sub_name' => 'required',
+                'sub_name'         => 'required',
                 //'plan_id' => 'required',
-                'city' => 'required',
-                'area' => 'required'
+                'city'             => 'required',
+                'plan_description' => 'required',
+                'area'             => 'required'
             ]);
         if ($validator->fails()) 
         {
@@ -178,13 +182,12 @@ class SubscriptionController extends Controller
        
         $arr_data               = [];
         
-        $arr_data['sub_name']    = $request->input('sub_name');
-        //$arr_data['plan_id']     = $request->input('plan_id');
-        $arr_data['city']        = $request->input('city');
-        $arr_data['area']        = $request->input('area');
-
+        $arr_data['sub_name']         = $request->input('sub_name');
+        //$arr_data['plan_id']        = $request->input('plan_id');
+        $arr_data['city']             = $request->input('city');
+        $arr_data['area']             = $request->input('area');
+        $arr_data['plan_description'] = $request->input('plan_description');
         $module_update = $this->base_model->where(['plan_id'=>$id])->update($arr_data);
-        
         $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete();
 
          $failed = 0;  
