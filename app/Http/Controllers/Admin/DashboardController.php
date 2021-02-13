@@ -42,9 +42,27 @@ class DashboardController extends Controller
    // Dashboard
    public function dashbord(Request $request)
    {
-        $user = \Sentinel::check();
-        $login_user_details  = Session::get('user');
         $data = [];
+        $user = \Sentinel::check();
+        $login_user_details      = Session::get('user');
+
+        //users count
+        $nutritionist_count      = $this->base_users->where('roles','=',1)->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+        $opermanager_count       = $this->base_users->where('roles','=',2)->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+
+        //subscriber count   
+        $total_subscriber_count  = $this->base_users->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+        $new_subscriber_count    = $this->base_users->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+        $expire_subscriber_count = $this->base_users->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+
+        $data['nutritionist_count']      = $nutritionist_count;
+        $data['opermanager_count']       = $opermanager_count;
+        $data['total_subscriber_count']  = $total_subscriber_count;
+        $data['new_subscriber_count']    = $new_subscriber_count;
+        $data['expire_subscriber_count'] = $expire_subscriber_count;
+
+        dd($data);
+
         return view('admin/dashbord',$data);
    }
 
