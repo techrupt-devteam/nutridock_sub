@@ -42,50 +42,95 @@ class AuthController extends Controller
         
         //get_role_permission  
         if($arr_user->roles!='admin'){
-        $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
-        //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
-        if(!empty($get_permission_data))
-        {
-            $permission_arr = explode(",",$get_permission_data[0]->permission_access);
-        }
-        //get module list type  wise 
-        //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
-        
-         $get_module_data = \DB::table('module')->get()->toarray();
-         $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
+            $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
+            //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
+            if(!empty($get_permission_data))
+            {
+                $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+            }
+            //get module list type  wise 
+            //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+            
+             $get_module_data = \DB::table('module')->get()->toarray();
+             $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
 
-         $parent_menu = [];
-         $sub_menu = [];
-         foreach ($get_parent_menu as $key1 => $pmvalue) 
-         {
-             
-                $parent_menu[$key1][] = $pmvalue->module_name;
-                $parent_menu[$key1][] = $pmvalue->module_url;
-                $parent_menu[$key1][] = $pmvalue->module_id;
-                $parent_menu[$key1][] = $pmvalue->module_url_slug;
-                
-                $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
-                if(count($get_child_menu)>0)
-                {   
-                    foreach ($get_child_menu as $key2 => $cmvalue) {
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
+             $parent_menu = [];
+             $sub_menu = [];
+             foreach ($get_parent_menu as $key1 => $pmvalue) 
+             {
+                 
+                    $parent_menu[$key1][] = $pmvalue->module_name;
+                    $parent_menu[$key1][] = $pmvalue->module_url;
+                    $parent_menu[$key1][] = $pmvalue->module_id;
+                    $parent_menu[$key1][] = $pmvalue->module_url_slug;
+                    
+                    $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
+                    if(count($get_child_menu)>0)
+                    {   
+                        foreach ($get_child_menu as $key2 => $cmvalue) {
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
+                        }
                     }
-                }
+            }
+        }
+        
+        if(!IS_Null($request->input('city')) && !empty($request->input('city')) && $arr_user->roles=='admin')
+        {
+            if($request->input('city')!= 'all'){
+              $get_city   = \DB::table('city')->where('id','=',$request->input('city'))->first();
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+            }
+            else
+            {
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+            }
+
+        }
+        elseif($arr_user->roles!='admin')
+        {
+              $get_city   = \DB::table('city')->where('id','=',$arr_user->city)->first();
+
+
+              $get_assign_Subscriber_id   = \DB::table('nutri_mst_subcriber_assign')
+                                            ->where('nutritionist_id','=',$arr_user->id)
+                                            ->where('is_deleted','<>',1)
+                                            ->select('subscriber_id')->first();
+           
+              if(!empty($get_assign_Subscriber_id) && isset($get_assign_Subscriber_id))
+              {
+
+                $subscribers = explode(',',$get_assign_Subscriber_id->subscriber_id);                              
+                $request->session()->put("assign_subscriber",$subscribers);
+                $request->session()->save(); 
+              }
+
+
+
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$arr_user->city);
+              $request->session()->save();
+                
         }
 
 
 
-//dd($sub_menu);
+
+        //dd($sub_menu);
 
         //get module type
-       //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
-        }
+        //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
+       
         
         //dd($arr_user);
-       /* if ($request->input('remember')=='on')
+        /* if ($request->input('remember')=='on')
         {
             setcookie("adminemail",$request->email,time()+ 3600);
             setcookie("adminpassword",$request->password,time()+ 3600);
@@ -98,8 +143,7 @@ class AuthController extends Controller
             setcookie("adminremember",'',time()+ 3600);
         }
         */
- 
-    //dd(Session::getId());
+        //dd(Session::getId());
         $user = \Sentinel::authenticate($credentials);
 
         if (!empty($user))
@@ -128,7 +172,7 @@ class AuthController extends Controller
                 
                 $request->session()->put("sub_menu",$sub_menu);
                 $request->session()->save();
-
+               
                 /* $request->session()->put("module_type",$get_module_type);
                 $request->session()->save();*/
 
@@ -301,5 +345,31 @@ class AuthController extends Controller
             $request->session()->save();  */
             Session::flush();
         return redirect('admin/login');
+    }
+
+
+    public function get_city_list(Request $request)
+    {
+      
+        $user_name = $request->email;
+        
+        $user      =  \DB::table('users')->where(['email'=>$request->email])->get()->first(); 
+      
+        if($user->roles =='admin')
+        {
+            $get_city   = \DB::table('city')->get();
+            $html       = '<option value="">-Select City-</option>';
+            $html      .= '<option value="all">All</option>';
+            foreach ($get_city as $key => $value) 
+            {
+                $html.="<option value=".$value->id.">".$value->city_name."</option>";     
+            }
+        }else
+        {
+          $html = "users";     
+        }
+        
+        return $html;
+    
     }
 }

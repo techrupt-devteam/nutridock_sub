@@ -77,7 +77,7 @@
         </li> 
      
 
-      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
+      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_subscriber_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
             <a href="#">
               <i class="fa fa-television"></i><span>Subscriber</span>
               <span class="pull-right-container">
@@ -96,8 +96,8 @@
                      <i class="fa fa-user-plus"></i><span>Assign Nutritionist</span>
                   </a>
               </li>
-              <li @if(Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') class="active" @endif>
-                  <a href="{{url('/admin')}}/manage_calender">
+              <li @if(Request::segment(2)=='manage_subscriber_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') class="active" @endif>
+                  <a href="{{url('/admin')}}/manage_subscriber_calender">
                      <i class="fa fa-calendar"></i><span>Subscriber Calender</span>
                   </a>
               </li>

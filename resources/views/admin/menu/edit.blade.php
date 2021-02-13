@@ -100,7 +100,7 @@
                       <i class="fa fa-camera" aria-hidden="true"></i>
                     </label>
                     <img id="blah" src="{{ url('/')}}/uploads/menu/{{$data['image']}}"/>
-                    <input type="file" class="user_image-file" id="menu_image" name="menu_image" placeholder="Select menu image" required="true" data-parsley-errors-container="#image_error" accept="image/x-png,image/gif,image/jpeg,image/png" data-parsley-error-message="Please upload image.">
+                    <input type="file" class="user_image-file" id="menu_image" name="menu_image" placeholder="Select menu image"  data-parsley-errors-container="#image_error" accept="image/x-png,image/gif,image/jpeg,image/png" data-parsley-error-message="Please upload image.">
                   </div>
                     <input type="hidden" name="old_img" value="{{$data['image']}}">
                         <div id="image_error" style="color:red;"></div>
@@ -126,7 +126,7 @@
                       <div class="form-group">
                         <label for="name">Calories<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                        <div class="input-group-addon btn-default"><img id="blah" src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
+                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
                         <input type="text" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{$data['calories']}}"></div>
                        <div id="calories_error" style="color:red;"></div>
                       </div>
@@ -135,7 +135,7 @@
                       <div class="form-group">
                         <label for="name">Proteins<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                          <div class="input-group-addon btn-default"> <img id="blah" src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/>
+                          <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins."  value="{{$data['proteins']}}">
                         </div>
@@ -146,7 +146,7 @@
                       <div class="form-group">
                         <label for="name">Carbohydrates<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                          <div class="input-group-addon btn-default"><img id="blah" src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/>
+                          <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates."   value="{{$data['carbohydrates']}}">
                         </div>
@@ -157,7 +157,7 @@
                       <div class="form-group">
                         <label for="name">Fats<span style="color:red;" >*</span></label>
                          <div class="input-group">
-                          <div class="input-group-addon btn-default"><img id="blah" src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
+                          <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats."  value="{{$data['fats']}}">
                         </div>

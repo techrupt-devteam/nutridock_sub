@@ -13,6 +13,7 @@ class SubscriptionPlan extends Model
 		"city",
 		"area",
 		"plan_id",
+        "plan_description",
 		"is_active",
 		"is_deleted"
 	];

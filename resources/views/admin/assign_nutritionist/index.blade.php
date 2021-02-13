@@ -4,7 +4,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <!-- <section class="content-header">
       <h1>
         {{ $page_name." ".$title }}
        {{--  <small>advanced tables</small> --}}
@@ -14,7 +14,7 @@
         <li><a href="#">Manage {{ $title }}</a></li>
         {{-- <li class="active">{{ $page_name." ".$title }}</li> --}}
       </ol>
-    </section>
+    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -22,9 +22,20 @@
         <div class="col-xs-12">
           @include('admin.layout._status_msg')
           <div class="box">
+             <div class="box-header">
+              <h3 class="box-title">
+                {{ $page_name." ".$title }}
+                {{-- <small>Preview</small> --}}
+              </h3>
+              <ol class="breadcrumb">
+                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
+                <li class="active">{{ $page_name." ".$title }}</li>
+              </ol>
+            </div>
             <div class="box-header">
               <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Location Menu</a>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Nutritionist</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -32,9 +43,10 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
+                  <th>Nutritionist Name</th> 
                   <th>state</th>
                   <th>City</th>
-                  <th>Area</th>
+               
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -43,22 +55,17 @@
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
+                      <td>{{ucfirst($value->name)}}</td>
                       <td>{{ucfirst($value->state_name)}}</td>
                       <td>{{ucfirst($value->city_name)}}</td>
-                      <td>{{ucfirst($value->area_name)}}</td>
+                    
                       <td>
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->assign_menu_id;?>);">
-                           <i class="fa fa-info-circle"></i> View Menu</button>
-                        @if($value->is_active=='1')
-                           @php $checked="checked"; $style="success"; @endphp 
-                        @else
-                           @php $checked=""; $style="danger";@endphp 
-                        @endif
-                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->assign_menu_id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->assign_menu_id)}}" class="btn btn-sm btn-primary" title="Edit">
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->subcriber_assign_id ;?>);">View Subscriber</button>
+                       
+                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->assign_menu_id)}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
                         </a>
                       </td>
@@ -116,14 +123,14 @@
         });
      }
 
-    function viewDetails(assign_menu_id) 
+    function viewDetails(subcriber_assign_id ) 
     { 
-      var assign_menu_id = assign_menu_id;
+      var subcriber_assign_id  = subcriber_assign_id ;
       //alert(status);
        $.ajax({
-            url: "{{url('/admin')}}/assign_menu_details",
+            url: "{{url('/admin')}}/assign_users_details",
             type: 'post',
-            data: {assign_menu_id:assign_menu_id},
+            data: {subcriber_assign_id :subcriber_assign_id },
             success: function (data) 
             {
               $('#content').html(data);
