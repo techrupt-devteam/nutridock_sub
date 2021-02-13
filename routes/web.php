@@ -113,7 +113,10 @@ Route::post('/admin/getarea',		 			'Admin\BookingController@getarea');
 Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
 /*********************************@RAJ FRONT_ROUTES @****************************************/
-Route::get('/sign-up',		 	 'Front\SignUpController@index');
+Route::get('/sign-up',		 	 			'Front\SignUpController@index');
+Route::post('/store_basic_details', 	 	'Front\SignUpController@storeBasicDetails');
+Route::post('/get_plan_details', 	 		'Front\SignUpController@getPlanDetails');
+Route::post('/subscribe-info', 	 			'Front\SignUpController@getSubscribePlan');
 
 
 /**********************************************************************************************/
