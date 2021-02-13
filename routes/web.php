@@ -123,7 +123,7 @@ Route::get('/sign-up',		 	 'Front\SignUpController@index');
 /*******************************************@BHUSHUAN ADMIN_ROUTES @***************************************************/
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
-	Route::get('/dashbord',		 	 'Admin\AuthController@dashbord');
+	Route::get('/dashbord',		 	 'Admin\DashboardController@dashbord');
 
 	//user table 
 	

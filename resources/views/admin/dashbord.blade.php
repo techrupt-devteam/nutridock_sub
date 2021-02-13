@@ -25,13 +25,74 @@
     <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
-      @if(empty($session_permissions) && $session_user->roles!='admin')
-      <div class="col-md-12">
-          <div class="alert alert-danger" role="alert">
-            <strong>Sorry!</strong>  Admin not approve your access permission please contact with us.
+
+        @if(empty($session_permissions) && $session_user->roles!='admin')
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+              <strong>Sorry!</strong>  Admin not approve your access permission please contact with us.
+            </div>
+        </div>
+        @elseif($session_user->roles=='admin')
+        <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box btn-info">
+                <div class="inner">
+                  <h3>150</h3>
+                  <p>Total Subscriber</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box btn-danger">
+                <div class="inner">
+                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <p>Expire Subscription</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-times"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h3>44</h3>
+                  <p>Nutrionist</p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-users"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h3>65</h3>
+                  <p>Operation Manager</p>
+                </div>
+                <div class="icon">
+                 <i class="fa fa-users"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
           </div>
-      </div>
-      @endif
+        @endif
       </div>
     </section>
     <!-- /.content -->
