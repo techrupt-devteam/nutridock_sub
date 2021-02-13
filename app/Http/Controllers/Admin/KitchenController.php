@@ -32,8 +32,6 @@ class KitchenController extends Controller
         $this->base_menu_model = $MenuModel; 
         $this->base_role       = $Role; 
         $this->base_subscription_plan = $SubscriptionPlan; 
-
-
         $this->title           = "Cloude Kitchen";
         $this->url_slug        = "kitchen";
         $this->folder_path     = "admin/Kitchen/";

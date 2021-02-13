@@ -69,6 +69,7 @@
     margin-left: auto;
     border-radius: 0px;
   }
+ 
   </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">

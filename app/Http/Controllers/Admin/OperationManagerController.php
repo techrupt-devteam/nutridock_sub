@@ -101,7 +101,7 @@ class OperationManagerController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['email'=>$request->input('operation_manager_email')])->count();
+        $is_exist = $this->base_model->where(['email'=>$request->input('operation_manager_email')])->where('is_deleted','<>',1)->count();
 
         if($is_exist)
         {
@@ -207,8 +207,7 @@ class OperationManagerController extends Controller
             return $validator->errors()->all();
         }
 
-        $is_exist = $this->base_model->where('id','<>',$id)->where(['email'=>$request->input('operation_manager_email')])
-                    ->count();
+        $is_exist = $this->base_model->where('id','<>',$id)->where(['email'=>$request->input('operation_manager_email')])->where('is_deleted','<>',1)->count();
         if($is_exist)
         {
             Session::flash('error', $this->Is_exists);
