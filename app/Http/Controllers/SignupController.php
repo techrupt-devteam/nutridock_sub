@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,11 +18,6 @@ use App\Models\SubscribeNowPlan;
 use App\Models\FoodAvoid;
 use App\Models\MealType;
 use App\Models\SubscribeNow;
-use App\Models\SubscriptionPlan;
-use App\Models\SubscriberMaster;
-use App\Models\SubscriberDetails;
-use App\Models\SubscriptionPlanDetails;
-
 
 use Session;
 use Sentinel;
@@ -32,7 +27,7 @@ use URL;
 use Mail;
 use Razorpay\Api\Api;
 
-class SignUpController extends Controller
+class SubscribeController extends Controller
 {
     function __construct()
     {
@@ -50,10 +45,6 @@ class SignUpController extends Controller
             $recent_data = $recent_value->toArray();
         }
         $data['recent_data']  = $recent_data;
-
-         /* Start: get data for subscription plan */
-         Arr::set($data, 'getSubscriptionPlan', SubscriptionPlan::getData());
-         /* End: get data for subscription plan */ 
 
         /* Start: get data for physical_activity */
         Arr::set($data, 'getPhysicalActivityData', PhysicalActivity::getData());
@@ -75,43 +66,11 @@ class SignUpController extends Controller
         Arr::set($data, 'getSubscribeNowData', SubscribeNow::getData());
         /* End: get data for Subscribe Now details */
         
-        return view('sign_up')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
+        return view('subscribe')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
     }  
 
 
-    public function storeBasicDetails(Request $request) { 
+     
 
-        $subscriber =   SubscriberMaster::firstOrNew(
-                            ['email' =>  request('email')],
-                            ['mobile' => request('mobile')]
-                        );
-
-        if($subscriber->save()) {
-
-            $subscriberDetails =   SubscriberDetails::firstOrNew(
-                ['subscriber_id' =>  $subscriber->id],
-                ['subscriber_name' =>  request('name')]
-            );
-            $subscriberDetails->save();
-            return 'true';
-        } else {
-            return 'false';
-        }
-       
-    }
-
-    /* FUNCTION: Get Plan Details */
-    public function getPlanDetails(Request $request) {
-        $getPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
-        return $getPlanDetails;       
-    }
-
-    /* FUNCTION: Get Plan Details */
-    public function getSubscribePlan(Request $request) {
-        $getPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
-        return $getPlanDetails;       
-    }
-
-    
 }
 ?>

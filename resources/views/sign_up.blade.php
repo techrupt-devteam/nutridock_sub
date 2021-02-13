@@ -132,7 +132,7 @@ label {
         border-right-color: rgb(190, 192, 193);
         border-bottom-color: rgb(190, 192, 193);
         border-left-color: rgb(190, 192, 193);
-    border-radius: 50px;
+   border-radius: 10px;
     cursor: pointer;
 }
 .checkbox label, .radio label, label {
@@ -186,28 +186,28 @@ label {
     font-size: 12px;
 }
 
-    .mt10px{
-        margin-top: 10px;
-    }
-    .mt20px{
-        margin-top: 20px;
-    }
-  
-    p{
-        line-height: 25px;
-    }
-    .wizard-navigation .active {
-    text-align: center;
-    padding: 12px 11px;
-    font-size: 12px;
-    text-transform: capitalize;
-    -webkit-font-smoothing: subpixel-antialiased;
-    background-color: #67d251;
-    border-radius: 4px;
-    color: #FFFFFF !important;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
+.mt10px{
+    margin-top: 10px;
+}
+.mt20px{
+    margin-top: 20px;
+}
+
+p{
+    line-height: 25px;
+}
+.wizard-navigation .active {
+  text-align: center;
+  padding: 12px 11px;
+  font-size: 12px;
+  text-transform: capitalize;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background-color: #67d251;
+  border-radius: 4px;
+  color: #FFFFFF !important;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
 }
 .bl-0{
   border-left:0px !important
@@ -231,6 +231,13 @@ label {
   list-style:none;
   padding:0px;
 }   
+
+.active1{
+  color: #fcd40a;
+}
+.active2{
+background-color:blue
+}
 </style>
 
 @section('content')
@@ -284,9 +291,9 @@ label {
               </div>
               </div>
           </div>
-          <form role="form" class="w-100" data-parsley-validate="parsley">
+          <form role="form" id="sign-up" class="w-100" data-parsley-validate="parsley">
               <!-- @START: Personal Details tab -->
-              <div class="row setup-content" id="step-1">
+              <div class="row setup-content step-1" id="step-1">
                   <div class="col-sm-12">
                     <h4 class="info-text"> Let's start with the basic details.</h4>
                   </div>
@@ -297,9 +304,13 @@ label {
                           <div class="form-group label-floating w-100">
                             <label class="control-label">Full Name <span class="text-danger">*</span></label>
                             <div class="input-group mb-3 ">
-                              <div class="input-group-prepend"> <span class="input-group-text"><i class="fa fa-user-circle" aria-hidden="true"></i></span> </div>
-                              <input type="text" name="full_name" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Full Name"
-                              name="first_name" Choose placeholder="First Name" required="true" data-parsley-errors-container="#firstname-errors">
+                              <div class="input-group-prepend"> 
+                                <span class="input-group-text">
+                                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                </span> 
+                              </div>
+                              <input type="text" name="full_name" class="form-control" id="full_name" aria-describedby="basic-addon3" placeholder="Full Name"
+                              name="first_name" Choose placeholder="First Name" required="true" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
                             <div id="firstname-errors"></div>
                              </div>
@@ -310,7 +321,7 @@ label {
                           <label class="control-label">Email <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3" ><i class="fa fa-envelope" aria-hidden="true"></i></span> </div>
-                            <input type="email" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors">
+                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" data-parsley-group="step-1">
                           </div>
                           <div id="email-errors"></div>
                         </div>
@@ -320,22 +331,22 @@ label {
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10">
+                            <input type="text" class="form-control" id="mobile" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1">
                           </div>
                           <div id="mobile-errors"></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="wizgard-footer">                  
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" > Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                  <div class="wizgard-footer"> 
+                   <span class="nextBtn btn btn-info pull-right" data-current-block="1" data-next-block="2">Next >
+                   </span> 
                   </div>
               </div>
               <!-- @END: Personal Details tab -->
 
               <!-- @START: Personal Health Details tab -->
-              <div class="row setup-content" id="step-2">
+              <div class="row setup-content step-2" id="step-2">
                 <div class="col-sm-12">
                   <h4 class="info-text"> Let us know more about your Health </h4>
                 </div>
@@ -346,15 +357,15 @@ label {
                        <div class="col-5">
                           <div class="form-group label-floating">
                             <label class="control-label">Age <span class="text-danger">*</span></label>
-                            <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" >
+                            <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
                             <div id="age-errors"></div>
                           </div>
                        </div>
                        <div class="col-7">
                         <div class="form-group label-floating w-100">
                           <label class="control-label">Gender <span class="text-danger">*</span></label>
-                          <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" >
-                            <option value=" ">Select</option>
+                          <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" data-parsley-group="step-2">
+                            <option value="">Select</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                             <option value="Other">Other</option>
@@ -369,7 +380,7 @@ label {
                        <div class="col-5">
                         <div class="form-group label-floating">
                           <label class="control-label">Weight <span class="text-danger">*</span></label>
-                          <input name="weight" type="text" class="form-control" placeholder="Kgs" required="required" data-parsley-errors-container="#weight-errors" data-parsley-error-message="Weight required">  
+                          <input name="weight" type="text" class="form-control" placeholder="Kgs" required="required" data-parsley-errors-container="#weight-errors" data-parsley-error-message="Weight required" data-parsley-group="step-2">  
                           <div id="weight-errors"></div>                        
                         </div>
                        </div>
@@ -378,10 +389,10 @@ label {
                         <div  class="form-group label-floating">
                           <div class="row">
                             <div class="col-6 pr-1">
-                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required"><div id="height-in-feet-errors"></div>   
+                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required"><div id="height-in-feet-errors" data-parsley-group="step-2"></div>   
                             </div>
                             <div class="col-6 pl-1">
-                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required">
+                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required" data-parsley-group="step-2">
                               <div id="height-in-inches-errors"></div> 
                             </div>
                           </div>
@@ -394,11 +405,11 @@ label {
                    <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                       <label class="control-label">Physical Activity <span class="text-danger">*</span></label>
-                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required">
-                          <option selected="selected" disabled="disabled" value="" >Select an option</option>
+                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2">
+                          <option selected="selected" disabled="disabled" value=" " >Select an option</option>
                            @foreach($data['getPhysicalActivityData'] as $getPhysicalActivity)
                           <option value="{{ $getPhysicalActivity['physical_activity_id'] }}">
-                            {{ $getPhysicalActivity['physical_activity'] }}
+                            {{ $getPhysicalActivity['physical_activity'] }} 
                           </option>
                            @endforeach   
                         </select>
@@ -408,7 +419,7 @@ label {
                    <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="control-label">Avoid / Dislike Food <span class="text-danger">*</span></label>
-                        <select id="avoid_food_id" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required">
+                        <select id="avoid_food_id" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required" data-parsley-group="step-2">
                           <option value="None">None</option>
                           @foreach($data['getFoodAvoidData'] as $getFoodAvoidData)
                           <option value="{{ $getFoodAvoidData['food_avoid_id'] }}"> {{ $getFoodAvoidData['food_avoid_name'] }} </option>
@@ -447,29 +458,35 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
-                      Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button> -->
-                    <a href="#step-3" class="btn btn-success pb-1 pt-1 nextBtn pull-right"> Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <span class="nextBtn btn btn-info pull-right" data-current-block="2" data-next-block="3">Next ></span> 
+                  
                   </div>
               </div>
               <!-- @END: Personal Health Details tab -->
 
               <!-- @START: Plan details tab -->
-              <div class="row setup-content" id="step-3">
+              <div class="row setup-content step-3" id="step-3">
                 <div class="col-sm-12">
                   <h4 class="info-text"> <span class="text-success font-weight-bold">Choose </span>Plan</h4>
                 </div>
-                <div class="col-sm-12">
-                  
+                  @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlan)
+                  <div class="col-sm-6 radio-toolbar">
+                    <input type="radio" id="radio{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}"> 
+                    <label for="radio{{ $getSubscriptionPlan['sub_name'] }}"> 
+                    {{ $getSubscriptionPlan['sub_name'] }} 
+                    </label>
+                    </div>
+                  @endforeach
+                <div class="col-sm-12 mb-3">                  
+                  <div class="row">                    
+                  </div>
                 </div>
                 <div class="col-sm-12 mb-3">                  
-                  <div class="row">
-                    
+                  <div class="row">                    
                   <div class="col-sm-6 col-md-4">
                     <div class="form-group label-floating">
                       <label class="control-label">Start Date <span class="text-danger">*</span></label>
-                      <input name="start_date" id="start_date" type="text" class="form-control" required="required"  data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" >
+                      <input name="start_date" id="start_date" type="text" class="form-control" required="required"  data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" data-parsley-group="step-3">
                       <div id="start-date-errors"></div>
                     </div>
                     <!-- <div class="form-group label-floating">
@@ -515,15 +532,20 @@ label {
                 <div class="wizgard-footer">
                   <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                   </button>
-                  <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
-                      Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                  <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next ></span> 
+                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit"  data-current-block="3" data-next-block="4">
+                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </button> -->
+                  <!-- <a href="#step-3" class="btn btn-success pb-1 pt-1 nextBtn pull-righ
+                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
+                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </button> -->
                 </div>
               </div>
               <!-- @END: Plan details tab -->
 
               <!-- @START: Address details tab -->
-              <div class="row setup-content" id="step-4">
+              <div class="row setup-content step-4" id="step-4">
                 <div class="col-sm-12">
                   <h4 class="info-text"> 
                     <span class="text-success font-weight-bold">Address</span>  Details
@@ -534,7 +556,7 @@ label {
                       <div class="col-md-8">
                         <div class="form-group">
                           <label class="control-label">Address <span style="color: red;">*</span></label>
-                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="3" required="required" style="height: 134px;"></textarea>
+                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="3" required="required" style="height: 134px;"  data-parsley-group="step-4"></textarea>
                           <span id="err_address1" class="text-danger"></span>
                         </div>  
                       </div>
@@ -543,7 +565,7 @@ label {
                           <div class="col-md-12 col-sm-6">
                             <div class="form-group">
                               <label class="control-label">Pincode <span style="color: red;">*</span></label>
-                              <input type="text" placeholder="Pincode" name="pincode1" id="pincode1" class="form-control" required="required" minlength="6" maxlength="6">
+                              <input type="text" placeholder="Pincode" name="pincode1" id="pincode1" class="form-control" required="required" minlength="6" maxlength="6"  data-parsley-group="step-4">
                               <span id="err_pincode1" class="text-danger"></span>
                             </div>
                           </div>
@@ -608,9 +630,10 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
+                    <span class="nextBtn btn btn-info pull-right" data-current-block="4" data-next-block="5">Next ></span> 
+                    <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                    </button> -->
                   </div>
               </div>
               <!-- @END: Address details tab -->
@@ -741,6 +764,11 @@ label {
 
 <script>
 $(document).ready(function () {
+/************* Pop Over tool tip *************/
+$('[data-toggle="popover"]').popover();
+
+
+/************* @START: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
 var navListItems = $('div.setup-panel div a'),
     allWells = $('.setup-content'),
     allNextBtn = $('.nextBtn');
@@ -763,44 +791,70 @@ navListItems.click(function (e) {
 });
 
 allNextBtn.click(function(){
- 
-    var curStep = $(this).closest(".setup-content"),
-        curStepBtn = curStep.attr("id"),
-        nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-        curInputs = curStep.find("input[type='text'],input[type='url'],input[type='email'],input[type='checkbox'],input[type='select']"),
-        isValid = true;
-       
-
-        console.log(curInputs);
-
-   // alert(JSON.stringify(curInputs))
-
-    $(".form-group").removeClass("has-error");
-    for(var i=0; i<curInputs.length; i++){
-      //alert(isValid);
-        if (!curInputs[i].validity.valid){
-         
-            isValid = false;
-           // $(curInputs[i]).closest(".form-group").addClass("has-error");
-            if ($(curInputs[i]).parsley().validate() !== true) isValid = false;
-        }
-    }
+  var curStep = $(this).closest(".setup-content"),
+    curStepBtn = curStep.attr("id"),
+    nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a");
     
-    if (isValid)
+  var current = $(this).data('currentBlock'),
+      next = $(this).data('nextBlock');
+
+  if (next > current) {
+    if(true === $('#sign-up').parsley().validate('step-' + current)) {
+      if(current == 1) {
+        $.ajax({
+            type: "POST",
+            url:  "{{ URL::to('/') }}/store_basic_details",
+            data: {
+                name    : $("#full_name").val(),
+                email   : $("#email").val(),
+                mobile  : $("#mobile").val()
+              },
+            success: function (data) {
+              if(data){
+                nextStepWizard.removeAttr('disabled').trigger('click');
+              }
+            },
+            error: function (data) {
+              return false;
+            },
+        });  
+      } else {
+        // validation is ok. goto next step.
         nextStepWizard.removeAttr('disabled').trigger('click');
+      }
+    }      
+  } 
 });
+
 
 /* script for previous button click */
 allPrevBtn.click(function(){
 var curStep = $(this).closest(".setup-content"),
     curStepBtn = curStep.attr("id"),
-    prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a").trigger('click');
+    prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a").trigger('click'); 
 });
 
-
-
+// dont remove this code
 $('div.setup-panel div a.btn-primary').trigger('click');
 });
+/************* @END: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
+
+/************* @START: CODE FOR GET PLAN DETAILS *************/
+$('input[type="radio"][name="radioSubscriptionPlan"]').click(function(){  
+      $.ajax({  
+          url:"{{ URL::to('/') }}/get_plan_details",  
+          method:"POST",  
+          data:{plan_id:$(this).val()},  
+          success:function(data){  
+                $('#getPlanDetails').html(data);  
+          }  
+      });  
+});  
+
+/************* @END: CODE FOR GET PLAN DETAILS *************/
+
+
+
 
 $(document).ready(function() {
   var x = new SlimSelect({
