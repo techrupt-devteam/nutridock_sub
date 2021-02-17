@@ -22,6 +22,7 @@ use App\Models\SubscriptionPlan;
 use App\Models\SubscriberMaster;
 use App\Models\SubscriberDetails;
 use App\Models\SubscriptionPlanDetails;
+use App\Models\DeliveryLocation;
 
 
 use Session;
@@ -101,16 +102,25 @@ class SignUpController extends Controller
     }
 
     /* FUNCTION: Get Plan Details */
-    public function getPlanDetails(Request $request) {
-        $getPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
-        return $getPlanDetails;       
+    public function getSubscriptionPlanDetails(Request $request) {
+        $getSubscriptionPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
+        return $getSubscriptionPlanDetails;       
     }
 
-    /* FUNCTION: Get Plan Details */
-    public function getSubscribePlan(Request $request) {
-        $getPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
-        return $getPlanDetails;       
+  
+
+     /* FUNCTION: Get Plan Details */
+     public function getCheckValidPin(Request $request) {
+        $valid = DeliveryLocation::where('delivery_pincode', $request['pincode'])->exists();
+        $delivery_pincode = ($valid) ? $request['pincode'] : '';
+        Session::put('delivery_pincode', $delivery_pincode);
+
+        return $delivery_pincode;
+            
     }
+
+
+    
 
     
 }
