@@ -63,7 +63,7 @@
     <!-- /.content -->
   </div>
   <div class="modal fade" id="modal-details" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div id="content">
           
@@ -106,19 +106,19 @@
 
   
 
-    function viewDetails(subcriber_assign_id ) 
+    function viewDetails(id) 
     { 
-      var subcriber_assign_id  = subcriber_assign_id ;
-      //alert(status);
-       $.ajax({
-            url: "{{url('/admin')}}/assign_menu_details",
-            type: 'post',
-            data: {subcriber_assign_id :subcriber_assign_id },
-            success: function (data) 
-            {
-              $('#content').html(data);
-            }
-        });
+      var id  = id ;
+       //alert(id);
+      $.ajax({
+          url: "{{url('/admin')}}/subscriber_details",
+          type: 'post',
+          data: {sid :id },
+          success: function (data) 
+          {
+            $('#content').html(data);
+          }
+      });
     }
 
    function verified_subscriber(value){

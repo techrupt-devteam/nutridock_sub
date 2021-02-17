@@ -237,10 +237,16 @@ class SubscriberController extends Controller
                     $status="Pending <i class='fa fa-times-circle'></i>"; $style="danger";}     
 
                    
-                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")><i class='fa fa-info-circle'></i> View Details</button>
+                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")'><i class='fa fa-info-circle'></i></button>
                      <input type='hidden' id='status".$value->id."' value=".$value->is_approve.">";
                   if($login_user_details->roles!=1){
                        $nestedData['action'] .="<button type='button' value=".$value->id." id='btn-verify".$value->id."' class='btn btn-sm btn-".$style."' onclick='verified_subscriber(".$value->id.")'>".$status."</button>";
+                    }
+
+                     if($login_user_details->roles==1){
+                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="Add Program">
+                          <i class="fa fa-plus"></i>
+                        </a>';
                     }
 
                 $data[] = $nestedData;
@@ -270,86 +276,142 @@ class SubscriberController extends Controller
         
     }
 
-
-  
-
-   
-
-    public function detail(Request $request)
+    // Subscriber Details 
+    public function subscriber_details(Request $request)
     {
-        $plan_id = $request->input('plan_id');
-
-        $plan_details     = \DB::table('nutri_dtl_subscriber')
-                           
-                            ->join('city','nutri_mst_subscription_plan.city','=','city.id')
-                            ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
-                            ->where('nutri_mst_subscription_plan.sub_plan_id','=',$plan_id)
-                            ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
-                            ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->first();
-        //$plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
-
-
-        $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$plan_id])->orderBy('duration_id', 'ASC')->get();
-        $html='<div class="modal-header">
+        $id = $request->input('sid');
+        $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                    ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
+                                    ->join('nutri_dtl_subscription_duration','nutri_dtl_subscriber.duration_id','=','nutri_dtl_subscription_duration.duration_id')
+                                    ->join('physical_activity','nutri_dtl_subscriber.physical_activity_id','=','physical_activity.physical_activity_id')
+                                    ->where('nutri_dtl_subscriber.is_deleted','<>',1)  
+                                    ->where('nutri_dtl_subscriber.id','=',$id)
+                                    ->select('physical_activity.physical_activity','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_dtl_subscription_duration.duration','nutri_mst_subscriber.mobile','nutri_mst_subscriber.email')
+                                    ->first();
+                                   // dd($get_subscriber_details);
+        //getmeal type 
+        $get_meal_type = \DB::table('meal_type')
+                          ->whereIn('meal_type_id',explode(",",$get_subscriber_details->meal_type_id))
+                          ->select('meal_type_name')
+                          ->get();
+        $get_food_avoid = \DB::table('food_avoid')
+                          ->whereIn('food_avoid_id',explode(",",$get_subscriber_details->avoid_or_dislike_food_id))
+                          ->select('food_avoid_name')
+                          ->get();
+                                    
+        $value = $get_subscriber_details;
+        $html='<div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><b>Subscription Plan :</b> '.ucfirst($plan_details->sub_name).' </h4>
-                <hr/>
+                 <div class="col-md-12"><h4 class="modal-title"><b>Subscriber Name:</b> '.$value->subscriber_name.'</h4></div>
+               </div>
+              <div class="modal-body" style="
+    border: 5px double;
+    margin: 21px;
+">
+               <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-4"><h5 class="modal-title"><b>Subscription Plan: </b>'.$value->sub_name.'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Start Date: </b>'.date('d-m-Y',strtotime($value->start_date)).'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>End Date: </b>'.date('d-m-Y',strtotime($value->expiry_date)).'</h5></div>
+                  </div>
+                </div><hr/ style="border-top: 1px solid #9e9e9e;">
                 <div class="row">
-              
-                  <div class="col-md-4"><h5 class="modal-title"><b>City: </b>'.ucfirst($plan_details->city_name).'</h5></div>
-                  <div class="col-md-4"><h5 class="modal-title"></h5></div>
-                  <div class="col-md-4"><h5 class="modal-title"><b>Area: </b>'.ucfirst($plan_details->area_name).'</h5></div>
-                   
+                  <div class="col-md-12">
+                      <div class="col-md-4"><h5 class="modal-title"><b>Subscription Duration: </b>'.$value->duration.' Days </h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Meal Type: </b></h5><br/>
+                      <p>';
+                      foreach ($get_meal_type as $mvalue) {
+                        $html .="<span class='btn-sm btn-warning'>".$mvalue->meal_type_name."</span>&nbsp;&nbsp;";  
+                      }
+                       $html  .='</p></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Payment Status: </b>'.$value->payment_status.'</h5></div>
+                  </div>
+                </div><hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-4"><h5 class="modal-title"><b>Mobile: </b>'.$value->mobile.'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Email: </b>'.$value->email.'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Age: </b>'.$value->subscriber_age.'</h5></div>
+                  </div>
                 </div>
-                
-             
-               
-              </div>
-              <div class="modal-body">
-                <table class="table table-bordered">
-                    <thead style="background-color: #ccb591;">
-                       <tr>
-                         <th>Sr.No</th>
-                         <th>Duration</th>
-                         <th>Meal Plan</th>
-                         <th>Price</th>
-                         <th>Discount Price</th>
-                       </tr> 
-                    </thead>
-                    <tbody>';
-         $i=1;           
-        foreach ($subscription_duration as $value) 
-        {   
-            $type ="";
-            $price = "";
-            if(!empty($value->price_per_meal))
-            {
-                $type = "Per Meal";
-                $price =  $value->price_per_meal;
-            }                  
-            if(!empty($value->price_per_pack))
-            {
-                $type = "Per Pack"; 
-                $price = $value->price_per_pack;
-            }
-                                               
-            $html.= '<tr>
-                        <td>'.$i.' </td>
-                        <td>'.$value->duration.' Days</td>
-                        <td>'.$type.'</td>
-                        <td> <i class="fa fa-rupee"></i> '.number_format($price,2).'</td>  
-                        <td> <i class="fa fa-rupee"></i> '.number_format($value->discount_price,2).'</td>  
-                    </tr>';               
-        $i++;
-        }     
+                <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-4"><h5 class="modal-title"><b>Gender: </b>'.$value->subscriber_gender.'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Weight: </b>'.$value->subscriber_weight.'</h5></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Height: </b>'.$value->subscriber_height_in_feet.".".$value->subscriber_height_in_inches.'</h5></div>
+                  </div>
+                </div> <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-4"><h5 class="modal-title"><b>Physical Activity: </b> </h5><br/><p> '.$value->physical_activity.'</p></div>
+                      <div class="col-md-4"><h5 class="modal-title"><b>Avoid / Dislike Food: </b> </h5></br><p>';
+                      foreach ($get_food_avoid as $advalue) {
+                        $html .="<span class='btn-sm btn-danger'>".$advalue->food_avoid_name."</span>&nbsp;&nbsp;";  
+                      }
+                       $html  .='</p>
 
-        $html.='</tbody>
-                </table>
+                      </div>
+                   </div>
+                </div> <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-6"><h5 class="modal-title"><b>Other Food: </b></h5><br/><p>'.$value->other_food.'</p></div>
+                   </div>
+                </div> <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-12"><h5 class="modal-title"><b>Any lifestyle disease:</b></h5><br/><p>'.$value->lifestyle_disease.'</p></div>
+                   </div>
+                </div> <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="col-md-12"><h5 class="modal-title"><b>Any food preparation instructions:</b></h5><br/><p>'.$value->food_precautions.'</p></div>
+                   </div>
                 </div>
-            <div class="modal-footer">
+                 <hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-4"><h5 class="modal-title"><b>Address: </b></h5><br/><p>'.$value->address1.'</p> </div>
+                    <div class="col-md-4"><h5 class="modal-title"><b>Pincode: </b></h5><br/><p>'.$value->pincode1.'</p> </div>
+                    <div class="col-md-4"><h5 class="modal-title"><b>Meal Type: </b></h5><br/><p>';
+                    $get_meal_type2 = \DB::table('meal_type')
+                                     ->whereIn('meal_type_id',explode(",",$value->address1_deliver_mealtype))
+                                     ->select('meal_type_name')
+                                     ->get();
+                     foreach ($get_meal_type2 as $m2value) {
+                        $html .="<span class='btn-sm btn-warning'>".$m2value->meal_type_name."</span>&nbsp;&nbsp;";  
+                      }                 
+                    $html .='</p> </div>
+                  </div>  
+                </div><hr/ style="border-top: 1px solid #9e9e9e;">
+                <div class="row"> 
+                    <div class="col-md-12">
+                        <div class="col-md-4"><h5 class="modal-title"><b>Address: </b></h5><br/><p>'.$value->address2.'</p></div>
+                        <div class="col-md-4"><h5 class="modal-title"><b>Pincode: </b></h5><br/><p>'.$value->pincode2.'</p></div>
+                        <div class="col-md-4"><h5 class="modal-title"><b>Meal Type: </b></h5><br/><p>';
+                        $get_meal_type3 = \DB::table('meal_type')
+                                         ->whereIn('meal_type_id',explode(",",$value->address2_deliver_mealtype))
+                                         ->select('meal_type_name')
+                                         ->get();
+
+                        foreach ($get_meal_type3 as $m3value) {
+                             $html .="<span class='btn-sm btn-warning'>".$m3value->meal_type_name."</span>&nbsp;&nbsp;";  
+                        } 
+                        $html .='</p></div>
+                    </div>
+                </div>
+              ';
+       
+
+        $html.='</div>
+                <div class="modal-footer">
               
-            </div>';
+                </div>';
               return $html;
     } 
 

@@ -95,6 +95,20 @@
                         </div>
                     </div>
                   </div>
+                  <div class="col-md-12">
+                      <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                          <label for="name" class="label-control">Meal Type<span style="color:red;" >*</span></label>
+                          <select class="form-control select2 new-arrow-set" name="menu_type[]"   data-parsley-errors-container="#menu_type_error" data-parsley-error-message="Please select the menu." required="true" multiple="multiple">
+                            <option>-Select Meal Type-</option>
+                            @foreach($menu_type as $tvalue)
+                            <option value="{{$tvalue->meal_type_id}}">{{$tvalue->meal_type_name}}</option>
+                            @endforeach
+                          </select>
+                          <div id="menu_type_error" style="color:red;"></div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
@@ -168,8 +182,8 @@
                     <table class="table" id="myTable">
                       <thead>
                         <tr>
-                          <th style="padding-top:0px;padding-bottom: 0px;">Mutiple File Upload</th>
-                          <th style="padding-top:0px;padding-bottom: 0px" >
+                           <th style="padding-top:0px;padding-bottom: 0px;">Mutiple File Upload</th>
+                           <th style="padding-top:0px;padding-bottom: 0px">
                           </th>
                         </tr>
                       </thead>

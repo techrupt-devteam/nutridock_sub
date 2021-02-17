@@ -249,6 +249,17 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::post('/update_menu/{id}',	'Admin\MenuController@update');
 	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
 
+
+	 //Assign Menu To subscription Plan Routes
+	 Route::get('/manage_assign_sub_plan_menu', 		'Admin\AssignSubscriptionPlanMenuController@index');
+	 Route::get('/add_assign_sub_plan_menu',	 		'Admin\AssignSubscriptionPlanMenuController@add');
+	 Route::post('/store_assign_sub_plan_menu', 		'Admin\AssignSubscriptionPlanMenuController@store');
+ 	 Route::get('/edit_assign_sub_plan_menu/{id}',		'Admin\AssignSubscriptionPlanMenuController@edit');
+ 	 Route::post('/update_assign_sub_plan_menu/{id}',	'Admin\AssignSubscriptionPlanMenuController@update');
+	 Route::get('/delete_assign_sub_plan_menu/{id}', 	'Admin\AssignSubscriptionPlanMenuController@delete');
+
+
+
 	// Assign location wise menu Routes  
 	Route::get('/manage_assign_location_menu', 		 'Admin\AssignLocationMenuController@index');
 	Route::get('/add_assign_location_menu',	 		 'Admin\AssignLocationMenuController@add');
@@ -290,14 +301,18 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     Route::post('/update_subscriber/{id}',	'Admin\SubscriberController@update');
 	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
     Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');
+    Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
+    
+    //Meal Program Subscriber 
+    Route::get('/add_subscriber_meal_program/{id}','Admin\SubscriberMealProgramController@add');
 
     //Subscriber Calender
-    Route::get('/manage_subscriber_calender',	  	    'Admin\SubscriberCalenderController@index');
-	/*Route::post('/getSubscriberData',	  	'Admin\SubscriberController@getSubscriberData');
-	Route::get('/add_subscriber',		  	'Admin\SubscriberController@add');
-    Route::post('/store_subscriber',	  	'Admin\SubscriberController@store');
-	Route::get('/edit_subscriber/{id}',	  	'Admin\SubscriberController@edit');
-    Route::post('/update_subscriber/{id}',	'Admin\SubscriberController@update');
+    Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
+	/*Route::post('/getSubscriberData',	  	  'Admin\SubscriberController@getSubscriberData');
+	Route::get('/add_subscriber',		  	  'Admin\SubscriberController@add');
+    Route::post('/store_subscriber',	  	  'Admin\SubscriberController@store');
+	Route::get('/edit_subscriber/{id}',	  	  'Admin\SubscriberController@edit');
+    Route::post('/update_subscriber/{id}',	 'Admin\SubscriberController@update');
 	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
     Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');*/
 
