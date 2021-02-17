@@ -29,7 +29,7 @@
              
               {!! csrf_field() !!}
               <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
@@ -39,7 +39,7 @@
                     </div>
                   </div> 
                  
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
@@ -53,7 +53,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
@@ -65,6 +65,19 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3 col-lg-3">
+                  <div class="">
+                    <label for="name">Icon Image <span style="color:red;" >*</span></label>
+                    <div class="input-group">
+                          <div class="input-group-addon btn-default">
+                            <i class="fa fa-image"></i>
+                          </div>
+                            <input type="file" class="form-control"  id="icon_image" name="icon_image" required="true" data-parsley-errors-container="#img_msg" data-parsley-error-message="Please upload icon image">
+                           
+                      </div>
+                       <span id="img_msg" style="color:red;"></span>
+                  </div>
+                </div>
               </div> 
 
               <div class="row">
@@ -188,7 +201,19 @@
       }
   }
 
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 
+   $("#icon_image").change(function() {
+   readURL(this);
+  });
 
 
 </script>

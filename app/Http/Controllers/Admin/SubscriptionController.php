@@ -7,6 +7,9 @@ use App\Models\SubscriptionPlan;
 use App\Models\Location;
 use App\Models\city;
 use App\Models\Plan;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Input;
+use Image;
 use Session;
 use Sentinel;
 use Validator;
@@ -90,16 +93,41 @@ class SubscriptionController extends Controller
             return \Redirect::back();
         }*/
 
+        $icon_img              = Input::file('icon_image');
+        //random number genrate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
+
         $arr_data                = [];
         $arr_data['sub_name']    = $request->input('sub_name');
-      //  $arr_data['plan_id']     = $request->input('plan_id');
+        //$arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
         $arr_data['area']        = $request->input('area');
         $arr_data['plan_description'] = $request->input('plan_description');
+        $arr_data['icon_image'] = $randomString."".$icon_img->getClientOriginalName();
         $plan = $this->base_model->create($arr_data);
       
         if(!empty($plan))
         {
+
+            //upload icon 
+                $destinationPath = 'uploads/subscription_icon/';
+                $destinationPathThumb = $destinationPath . 'thumb/';
+                $filename_icon = $icon_img->getClientOriginalName();
+                $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+
+                //thumbnail create icon
+                $icon_thumb = Image::make($original_icon->getRealPath())
+                ->resize(100, 100)
+                ->save($destinationPathThumb . $randomString."".$filename_icon);
+            //
+
+
 
             $failed = 0;  
             $duration_flag = $request->input('duration_flag');
@@ -167,7 +195,7 @@ class SubscriptionController extends Controller
 
     public function update(Request $request, $id)
     {
-        
+       // dd($request->plan_description);
         $validator = Validator::make($request->all(), [
                 'sub_name'         => 'required',
                 //'plan_id' => 'required',
@@ -179,15 +207,59 @@ class SubscriptionController extends Controller
         {
             return $validator->errors()->all();
         }
-       
-        $arr_data               = [];
         
+
+        $icon_img              = Input::file('icon_image');
+        //random number generate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+
+
+        $arr_data               = [];
         $arr_data['sub_name']         = $request->input('sub_name');
         //$arr_data['plan_id']        = $request->input('plan_id');
         $arr_data['city']             = $request->input('city');
         $arr_data['area']             = $request->input('area');
         $arr_data['plan_description'] = $request->input('plan_description');
-        $module_update = $this->base_model->where(['plan_id'=>$id])->update($arr_data);
+        
+        if(isset($_FILES['icon_image']["name"]) && !empty($_FILES['icon_image']["name"]))
+        { 
+            $arr_data['icon_image'] = $randomString."".$icon_img->getClientOriginalName();
+        }
+        else
+        {
+            $arr_data['icon_image'] = $request->input('old_icon_image');
+        }
+
+
+
+        $module_update = $this->base_model->where(['sub_plan_id'=>$id])->update($arr_data);
+
+
+        $destinationPath = 'uploads/subscription_icon/';
+        $destinationPathThumb = $destinationPath . 'thumb/';
+
+        if(isset($_FILES['icon_image']["name"]) && !empty($_FILES['icon_image']["name"]))
+        {
+          
+            $filename_icon = $icon_img->getClientOriginalName();
+            $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+                
+            //thumbnail create icon
+            $icon_thumb = Image::make($original_icon->getRealPath())
+            ->resize(255, 250)
+            ->save($destinationPathThumb . $randomString."".$filename_icon);
+            
+            unlink($destinationPath."".$request->input('old_icon_image'));
+            unlink($destinationPathThumb."".$request->input('old_icon_image'));
+
+        }
+
         $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete();
 
          $failed = 0;  
