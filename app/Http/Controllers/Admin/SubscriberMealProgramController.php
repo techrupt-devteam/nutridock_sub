@@ -63,7 +63,7 @@ class SubscriberMealProgramController extends Controller
         //dd($get_assign_menu_data->menu_id);
         
         //load assign menu data
-        $get_menu_data = \DB::table('nutri_mst_menu')
+        /*$get_menu_data = \DB::table('nutri_mst_menu')
                           ->whereIn('id',explode(",",$get_assign_menu_data->menu_id))
                           ->select('id','menu_title','menu_type')
                           ->get();
@@ -75,7 +75,7 @@ class SubscriberMealProgramController extends Controller
            
 
         }                 
-exit;
+exit;*/
 
         $data['page_name']     = "Add";
         $data['subscriber']    = $get_subscriber_details;

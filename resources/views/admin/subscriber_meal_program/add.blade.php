@@ -173,7 +173,7 @@
                                 <tr>
                                    <th class="bg-default text-center">Day</th>
                                    <th class="bg-default text-center">Date</th>
-                              <!--      <th class="bg-default">Subscription Plan</th> -->
+                                   <th class="bg-default">Subscription Plan</th>
                                    @foreach($meal_type as $mtvalue)
                                     <th class="bg-default text-center">{{ucfirst($mtvalue->meal_type_name)}}</th>
                                    @endforeach
@@ -193,14 +193,14 @@
                                       <input type="textbox" name="day_date{{$i+1}}" class="form-control" id="day_date{{$i+1}}" 
                                       value="{{$date}}" readonly>
                                    </td>
-                                  <!--  <td>
+                                    <td>
                                      <select name="sub_plan_id{{$i+1}}" class="form-control" id="sub_plan_id{{$i+1}}">
                                        <option value="">-select Subscription plan-</option>
                                        <option value="0">All</option>
                                        <option value="{{$subscriber->sub_plan_id}}">{{$subscriber->sub_name}}</option>
                                      </select>
-                                     500
-                                   </td> -->
+                                  
+                                   </td>
                                     @foreach($meal_type as $mtvalue)
                                      <td>
                                       <select name="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}" class="form-control" id="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}" data-parsley-errors-container="#{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}_error" data-parsley-error-message="Please select {{lcfirst($mtvalue->meal_type_name)}}." required="true">

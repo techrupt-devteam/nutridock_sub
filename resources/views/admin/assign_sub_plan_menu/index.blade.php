@@ -24,7 +24,7 @@
           <div class="box">
             <div class="box-header">
               <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Location Menu</a>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Menu</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

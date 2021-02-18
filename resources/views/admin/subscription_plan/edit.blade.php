@@ -148,8 +148,8 @@
                                   @if(!empty($durvalue->price_per_pack))
                                   @php $price = $durvalue->price_per_pack; @endphp
                                   @endif
-                                  <input type="text" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" value="
-                                  {{$price}}" data-parsley-error-message="Please enter price.">
+                                  <input type="text" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" 
+                                  value="{{number_format($price,2)}}" data-parsley-error-message="Please enter price.">
                                 </div>
                                 <span id="meal_price{{$key+1}}" style="color:red;"></span>
                             </td>
@@ -158,7 +158,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-rupee"></i>
                                   </div>
-                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{$durvalue->discount_price}}">
+                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{number_format($durvalue->discount_price,2)}}">
                                 </div>
                                 <span id="dis_price{{$key+1}}" style="color:red;"></span>
                             </td>
