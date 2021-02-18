@@ -103,7 +103,8 @@ class SignUpController extends Controller
 
     /* FUNCTION: Get Plan Details */
     public function getSubscriptionPlanDetails(Request $request) {
-        $getSubscriptionPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])->get();
+        $getSubscriptionPlanDetails = SubscriptionPlanDetails::where('sub_plan_id', $request['plan_id'])
+                                      ->orderBy('duration', 'ASC')->get();
         return $getSubscriptionPlanDetails;       
     }
 
