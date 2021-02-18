@@ -262,8 +262,11 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::get('/edit_assign_sub_plan_menu/{id}',		'Admin\AssignSubscriptionPlanMenuController@edit');
  	 Route::post('/update_assign_sub_plan_menu/{id}',	'Admin\AssignSubscriptionPlanMenuController@update');
 	 Route::get('/delete_assign_sub_plan_menu/{id}', 	'Admin\AssignSubscriptionPlanMenuController@delete');
-	 Route::post('/getdays',	         			      'Admin\AssignSubscriptionPlanMenuController@get_days');
+	 Route::post('/getdays',	         			    'Admin\AssignSubscriptionPlanMenuController@get_days');
  	 Route::post('/default_menu_add',	         		'Admin\AssignSubscriptionPlanMenuController@default_menu_add');
+ 	 Route::post('/default_menu_edit',	         		'Admin\AssignSubscriptionPlanMenuController@default_menu_edit');
+ 	 Route::post('/store_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@store_meal_plan');
+ 	 Route::post('/update_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@update_meal_plan');
 
 
 
