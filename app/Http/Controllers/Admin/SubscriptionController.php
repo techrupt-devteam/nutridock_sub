@@ -77,7 +77,7 @@ class SubscriptionController extends Controller
                 //'plan_id' => 'required',
                 'city' => 'required',
                 'area' => 'required',
-                'plan_description' => 'required'
+          
             ]);
 
         if ($validator->fails()) 
@@ -196,7 +196,6 @@ class SubscriptionController extends Controller
                 'sub_name'         => 'required',
                 //'plan_id' => 'required',
                 'city'             => 'required',
-                'plan_description' => 'required',
                 'area'             => 'required'
             ]);
         if ($validator->fails()) 
