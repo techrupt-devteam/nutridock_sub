@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,15 +11,12 @@
 */
 
 /* @START: Front End Routes */
-
-
 Route::get('/clear', function() {
 	Artisan::call('cache:clear');
 	Artisan::call('config:clear');
 	Artisan::call('config:cache');
 	Artisan::call('view:clear');
  	return "Cleared!";
- 
  });
  
 Route::get('/test', function () {
@@ -121,10 +117,6 @@ Route::post('/get_plan_details', 	 		'Front\SignUpController@getSubscriptionPlan
 Route::post('/subscribe-info', 	 			'Front\SignUpController@getSubscribePlan');
 Route::post('/check_valid_pin', 	 		'Front\SignUpController@getCheckValidPin');
 
-
-
-
-
 /**********************************************************************************************/
 
 
@@ -134,7 +126,6 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/dashbord',		 	 'Admin\DashboardController@dashbord');
 
 	//user table 
-	
 	/*Route::get('/manage_users',		 'Admin\UserController@index');
 	Route::get('/add_user',		 	 'Admin\UserController@add');
 	Route::post('/store_user',		 'Admin\UserController@store');
@@ -142,7 +133,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_user/{id}', 'Admin\UserController@update');
 	Route::get('/delete_user/{id}',	 'Admin\UserController@delete');
 	Route::post('/getArea',	 		 'Admin\UserController@getArea');*/
-
+	
 	//Module Master Routes
 	
 	Route::get('/manage_module',		 'Admin\ModuleController@index');
@@ -268,8 +259,6 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::post('/store_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@store_meal_plan');
  	 Route::post('/update_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@update_meal_plan');
 
-
-
 	// Assign location wise menu Routes  
 	Route::get('/manage_assign_location_menu', 		 'Admin\AssignLocationMenuController@index');
 	Route::get('/add_assign_location_menu',	 		 'Admin\AssignLocationMenuController@add');
@@ -314,10 +303,14 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
     
     //Meal Program Subscriber 
-    Route::get('/add_subscriber_meal_program/{id}','Admin\SubscriberMealProgramController@add');
+    Route::get('/add_subscriber_meal_program/{id}',		'Admin\SubscriberMealProgramController@add');
+    Route::post('/store_subscriber_health_details',		'Admin\SubscriberMealProgramController@store');
+    Route::post('/edit_subscriber_default_menu',		'Admin\SubscriberMealProgramController@menu_edit');
+    Route::post('/get_menu_dropdown',					'Admin\SubscriberMealProgramController@get_menu');
 
     //Subscriber Calender
     Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
+	
 	/*Route::post('/getSubscriberData',	  	  'Admin\SubscriberController@getSubscriberData');
 	Route::get('/add_subscriber',		  	  'Admin\SubscriberController@add');
     Route::post('/store_subscriber',	  	  'Admin\SubscriberController@store');

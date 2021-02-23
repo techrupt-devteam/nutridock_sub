@@ -27,9 +27,10 @@
               <h3 class="box-title">
                <!--  {{ $page_name." ".$title }}
                 {{-- <small>Preview</small> --}} -->
-                <b>Subscriber Name: </b> {{ucfirst($subscriber->subscriber_name)}}
+                <b>Subscriber Name: </b> {{ucfirst($subscriber->subscriber_name)}} 
+
               </h3>
-              <ol class="breadcrumb">
+             <ol class="breadcrumb">
                 <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                 <li><a href="{{url('/admin')}}/manage_subscriber">Manage Subscriber</a></li>
                 <li class="active">{{ $page_name." ".$title }}</li>
@@ -37,9 +38,34 @@
             </div>
           <div class="box box-primary">
             <!-- form start -->
-            <form action="{{ url('/admin')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
+
+            @if($default_menu_not_Assign == "No")
+            <div class="row">
+                <div class="col-md-12"> 
+                    <div class="box-body">
+                        <div class="alert alert-danger alert-dismissible">
+                           <!--  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+                            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                            Default meal program is not assign please contact operation manager.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @else
+            <form action="{{ url('/admin')}}/store_subscriber_health_details" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
-                <div class="row">  
+
+             
+                <div class="row"> 
+                  <div class="col-md-12">
+                        <div class="box-body">
+                           <div class="form-group">
+                           <label for="">Subscription Plan: </label> {{$subscriber->sub_name}} 
+                          </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">  
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
@@ -48,7 +74,9 @@
                             <div class="input-group-addon btn-default">
                               BMI
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter BMI" id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi.">
+                            <input type="text" class="form-control" placeholder="Enter BMI" id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi." value="{{ isset($health_details) ? ($health_details->bmi) : ('') }}">
+                            <input type="hidden" name="subscriber_id" value="{{$subscriber_id}}">
+                            <input type="hidden" name="nutritionist_id" value="{{$nutritionist_id}}">
                           </div>
                           <div id="bmi_error" style="color:red;"></div>
                       </div>
@@ -62,7 +90,7 @@
                           <div class="input-group-addon btn-default">
                             BRM
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr.">
+                          <input type="text" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('') }}">
                         </div>
                         <div id="bmr_error" style="color:red;"></div>
                       </div>
@@ -76,7 +104,7 @@
                           <div class="input-group-addon btn-default">
                             <i class="fa fa-balance-scale"></i>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight.">
+                          <input type="text" class="form-control" placeholder="Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight." value="{{ isset($health_details) ? ($health_details->current_wt) : ('') }}">
                         </div>
                         <div id="weight_error" style="color:red;"></div>
                       </div>
@@ -92,7 +120,7 @@
                           <div class="input-group-addon btn-default">
                             <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Body Fats" id="fat" name="fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats.">
+                          <input type="text" class="form-control" placeholder="Enter Body Fats" id="body_fat" name="body_fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats." value="{{ isset($health_details) ? ($health_details->body_fat) : ('') }}">
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                     </div>
@@ -104,7 +132,7 @@
                       <label for="">Req.Calories<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
+                        <input type="text" class="form-control" placeholder="Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('') }}"></div>
                        <div id="calories_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -112,122 +140,151 @@
               </div>
               <hr/>
               <div class="row">  
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="">Protine<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein."></div>
+                        <input type="text" class="form-control" placeholder="Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('') }}"></div>
                        <div id="protein_error" style="color:red;"></div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="">fat<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat."></div>
+                        <input type="text" class="form-control" placeholder="Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat." value="{{ isset($health_details) ? ($health_details->fat) : ('') }}"></div>
                        <div id="fts_error" style="color:red;"></div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="">Fiber<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><i class="fa fab fa-pagelines"></i></div>
-                        <input type="text" class="form-control" placeholder="Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber."></div>
+                        <input type="text" class="form-control" placeholder="Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber." value="{{ isset($health_details) ? ($health_details->fiber) : ('') }}"></div>
                        <div id="Fiber_error" style="color:red;"></div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="">Carbohydrates<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates."></div>
+                        <input type="text" class="form-control" placeholder="Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('') }}"></div>
                        <div id="carbs_error" style="color:red;"></div>
                     </div>
                   </div>
                 </div>
               </div>
               <hr/>
-
               <div class="row">
-                <div class="col-md-12"> 
+                <div class="col-md-4">
                   <div class="box-body">
-                      <div class="table-responsive">
-                         
-                         <table class="table">
-                             <thead class="bg-info">
-                                <tr>
-                                  <th colspan="3"> Start Date :<?php echo date('d-m-Y',strtotime($subscriber->start_date));?></th> 
-                                  <th  colspan="3"> End Date  :<?php echo date('d-m-Y',strtotime($subscriber->expiry_date));?></th>
-                                </tr>
-                                <tr>
-                                   <th class="bg-default text-center">Day</th>
-                                   <th class="bg-default text-center">Date</th>
-                                   <th class="bg-default">Subscription Plan</th>
-                                   @foreach($meal_type as $mtvalue)
-                                    <th class="bg-default text-center">{{ucfirst($mtvalue->meal_type_name)}}</th>
-                                   @endforeach
-                                   <th class="bg-default text-center">Total Calories</th>
-                                </tr>
-                             </thead>
-                             <tbody>
-                                @for($i=0;$i<$program_days;$i++)
-                                <?php 
-                                if($i >= 1){$days ="+".$i." day";
-                                 $date = date('d-m-Y', strtotime($days,strtotime($subscriber->start_date))); 
-                                }else{ $date = date('d-m-Y', strtotime($subscriber->start_date));}
-                                ?>
-                                <tr>
-                                  <td>{{$i+1}} Day</td>
-                                   <td>
-                                      <input type="textbox" name="day_date{{$i+1}}" class="form-control" id="day_date{{$i+1}}" 
-                                      value="{{$date}}" readonly>
-                                   </td>
-                                    <td>
-                                     <select name="sub_plan_id{{$i+1}}" class="form-control" id="sub_plan_id{{$i+1}}">
-                                       <option value="">-select Subscription plan-</option>
-                                       <option value="0">All</option>
-                                       <option value="{{$subscriber->sub_plan_id}}">{{$subscriber->sub_name}}</option>
-                                     </select>
-                                  
-                                   </td>
-                                    @foreach($meal_type as $mtvalue)
-                                     <td>
-                                      <select name="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}" class="form-control" id="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}" data-parsley-errors-container="#{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}_error" data-parsley-error-message="Please select {{lcfirst($mtvalue->meal_type_name)}}." required="true">
-                                        <option value=" ">-Select {{ucfirst($mtvalue->meal_type_name)}}-</option>
-                                      </select>
-                                       <div id="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}_error" style="color:red;"></div>
-                                       <div id="{{lcfirst($mtvalue->meal_type_name)}}{{$i+1}}_details"></div>
-                                     </td>
-                                    @endforeach
-                                    <td>
-                                      <input type="textbox" name="total_cal_Sum{{$i+1}}" class="form-control" id="total_cal_Sum{{$i+1}}" 
-                                      readonly>
-                                    </td>
-                                </tr> 
-                                @endfor <input type="text" name="row_cnt" value="{{$i}}">
-                             </tbody>
-                         </table>
-                      </div>
-                    </div>
-                </div>
-              </div>
-                
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                 <a href="{{url('/admin')}}/manage_subscriber"  class="btn btn-default">Back</a>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{url('/admin')}}/manage_subscriber"  class="btn btn-default">Back</a>
+                  </div>
+                </div> 
               </div>
             </form>
+              <hr/>
+              <div class="row">
+                 <div class="col-md-12">
+                  <div class="box-body table-responsive">
+                  
+                    <table id="menu-item" class="table table-bordered table-striped" style="border: 1px solid #607d8b !important;">
+                      <tbody>
+                         @php 
+                         $i=0; 
+                         $j=0; 
+                         $calories=[];
+                         $proteins=[];
+                         $carbohydrates=[];
+                         $fats=[];
+                         $total=0;
+                         @endphp
+                         @foreach($get_default_menu as $key => $gdmvalue)
+                       
+                          @if($i!=$gdmvalue->day)
+                          <tr style="background-color:#cacaca!important;">
+                              <td><strong>Day {{$gdmvalue->day}}</strong></td>
+                              <td width="20%"><strong>Menu Name</strong></td>
+                              <td width="10%"><strong>Calories</strong></td>
+                              <td width="10%"><strong>Proteins</strong></td>
+                              <td width="10%"><strong>Carbohydrates</strong></td>
+                              <td width="10%"><strong>Fats</strong></td>
+                              <td width="10%"><strong>Total</strong></td> 
+                              <td class="text-center"><strong>Action</strong></td> 
+                          </tr>
+                            @php 
+                              $i=$gdmvalue->day;
+                            @endphp
+
+                          @endif
+
+                          <tr>
+                             <td><strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong></td>
+                             <td><strong>{{$gdmvalue->menu_title}}</strong></td>
+                           
+                              <td>
+                                   <strong>{{$gdmvalue->calories}}</strong> 
+                                 @php 
+                                 $calories[]=$gdmvalue->calories; 
+                                 $total += $gdmvalue->calories;
+                                 @endphp
+                              </td>
+                              <td>
+                                  <strong>{{$gdmvalue->proteins}}</strong>
+                                 @php 
+                                 $proteins[]=$gdmvalue->proteins;
+                                 $total += $gdmvalue->proteins; @endphp
+                              </td>
+                              <td>
+                                  <strong>{{$gdmvalue->carbohydrates}}</strong>
+                                 @php $carbohydrates[]=$gdmvalue->carbohydrates;
+                                 $total += $gdmvalue->carbohydrates; 
+                                 @endphp
+                              </td>
+                              <td>
+                                  <strong>{{$gdmvalue->fats}}</strong>
+                                 @php $fats[]=$gdmvalue->fats;
+                                      $total +=$gdmvalue->fats 
+                                 @endphp
+                              </td>
+                               
+                             <td>
+                             <strong>{{$total}}</strong>
+                             <?php $total =0;?>
+                             </td>
+                             <td class="text-center"> 
+                                <a href="javascript:void(0);" class="btn btn-success btn-sm" data-toggle='modal' data-target='#modal-details' title="Edit" onclick="viewDetails(<?php echo $gdmvalue->program_id;?>)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                              </td>  
+                          </tr>
+                         @endforeach 
+                      </tbody>
+                    </table>
+                 
+                 </div>
+              </div>
+              </div>
+            <!--   <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                 <a href="{{url('/admin')}}/manage_subscriber"  class="btn btn-default">Back</a>
+              </div> -->
+
+           @endif
+
+
           </div>
         </div>
           <!-- /.box -->
@@ -239,10 +296,39 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+<div class="modal fade" id="modal-details" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div id="content">
+          
+        </div>
+      </div>
+    </div>
+  </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
 <style type="text/css">
   .bg-default{
     background-color: #d0c4c4 !important;
   }
 </style>
+<script type="text/javascript">
+  function viewDetails(program_id) 
+    { 
+
+       var program_id = program_id;
+     
+       $.ajax({
+            url: "{{url('/admin')}}/edit_subscriber_default_menu",
+            type: 'post',
+            data: { program_id:program_id },
+            success: function (data) 
+            {
+              $('#content').html(data);
+            }
+        });
+    }
+</script>
 @endsection

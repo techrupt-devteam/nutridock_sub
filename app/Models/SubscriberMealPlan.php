@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubscriberMealPlan extends Model 
 {
-    protected $table = 'nutri_mst_subscriber_meal_program';
+    protected $table = 'nutri_subscriber_meal_program';
     protected $fillable = [
     						'subcriber_id',
 							'nutritionist_id',

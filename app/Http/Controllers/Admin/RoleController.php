@@ -119,7 +119,7 @@ class RoleController extends Controller
             return \Redirect::back();
         }
         $arr_data               = [];
-        $arr_data['role_name']   = $request->input('role_name');
+        $arr_data['role_name']  = $request->input('role_name');
         $module_update = $this->base_model->where(['role_id'=>$id])->update($arr_data);
         Session::flash('success',  $this->Update);
         return \Redirect::to('admin/manage_role');

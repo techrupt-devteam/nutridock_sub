@@ -48,7 +48,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="operation_manager_name">State<span style="color:red;" >*</span></label>
-                        <select class="form-control select2"   data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state." name="state_id" id="state_id" required="true" onchange="getCity();">
+                        <select class="form-control select2"   data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state." name="state_id" id="state_id" required="true" onchange="getCity();" disabled="">
                           <option value="">-Select State-</option>
                           @foreach($state as $svalue)
                           <option value="{{$svalue->id}}" @if($svalue->id == $data['state_id']) selected @endif>{{$svalue->name}}</option>
@@ -61,7 +61,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="city_id">City<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="city_id" id="city_id" required="true"  data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_user_list();">
+                         <select class="form-control select2" name="city_id" id="city_id" required="true"  data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="get_user_list();" disabled="">
                           <option value="">-Select City-</option>
                         </select>
                          <div id="city_error" style="color:red;"></div>
@@ -72,7 +72,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_id">Nutritionist<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionist_id" id="nutritionist_id" required="true"  data-parsley-errors-container="#nutritionsit_error" data-parsley-error-message="Please select Nutritionsit." >
+                         <select class="form-control select2" name="nutritionist_id" id="nutritionist_id" required="true"  data-parsley-errors-container="#nutritionsit_error" data-parsley-error-message="Please select Nutritionsit." disabled="">
                           <option value="">-Select Nutritionsit-</option>
                             @foreach($users as $key => $uvalue)
                              <option value="{{$uvalue->id}}" <?php if($data['nutritionist_id']==$uvalue->id){ echo "selected"; }?>>{{ucfirst($uvalue->name)}}</option>
@@ -96,7 +96,10 @@
                                 <?php $subscriber_id = explode(",",$data['subscriber_id']); ?> 
                                 @foreach($subscriber as $key => $svalue)
                                   <tr>
-                                    <td><input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?>></td><td> {{ucfirst($svalue->subscriber_name)}}</td>
+                                       <td>
+                                           <input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?> <?php echo (in_array($svalue->id, $assign_subcriber) ? 'disabled' : '')?> >
+                                       </td>
+                                     <td>{{ucfirst($svalue->subscriber_name)}}</td>
                                   </tr>  
                                 @endforeach
                               </tbody>

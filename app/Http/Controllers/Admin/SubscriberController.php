@@ -245,7 +245,7 @@ class SubscriberController extends Controller
 
                      if($login_user_details->roles==1){
                        $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="Add Program">
-                          <i class="fa fa-plus"></i>
+                           Create Program
                         </a>';
                     }
 
