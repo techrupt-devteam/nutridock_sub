@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-//use PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $data                = [];
+        $this->email         = "bhushantechrupt@gmail.com";
+        $this->Host          = "smtp.gmail.com";
+        $this->Port          = 587;
+        $this->Password      = "bhushan@9912";
+      
+    }
+
+
     public function login()
     {
         return view('admin/login');
@@ -42,50 +54,101 @@ class AuthController extends Controller
         
         //get_role_permission  
         if($arr_user->roles!='admin'){
-        $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
-        //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
-        if(!empty($get_permission_data))
-        {
-            $permission_arr = explode(",",$get_permission_data[0]->permission_access);
-        }
-        //get module list type  wise 
-        //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
-        
-         $get_module_data = \DB::table('module')->get()->toarray();
-         $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
+            $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
+            //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
+            if(!empty($get_permission_data))
+            {
+                $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+            }
+            //get module list type  wise 
+            //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+            
+             $get_module_data = \DB::table('module')->get()->toarray();
+             $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
 
-         $parent_menu = [];
-         $sub_menu = [];
-         foreach ($get_parent_menu as $key1 => $pmvalue) 
-         {
-             
-                $parent_menu[$key1][] = $pmvalue->module_name;
-                $parent_menu[$key1][] = $pmvalue->module_url;
-                $parent_menu[$key1][] = $pmvalue->module_id;
-                $parent_menu[$key1][] = $pmvalue->module_url_slug;
-                
-                $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
-                if(count($get_child_menu)>0)
-                {   
-                    foreach ($get_child_menu as $key2 => $cmvalue) {
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
-                      $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
+             $parent_menu = [];
+             $sub_menu = [];
+             foreach ($get_parent_menu as $key1 => $pmvalue) 
+             {
+                 
+                    $parent_menu[$key1][] = $pmvalue->module_name;
+                    $parent_menu[$key1][] = $pmvalue->module_url;
+                    $parent_menu[$key1][] = $pmvalue->module_id;
+                    $parent_menu[$key1][] = $pmvalue->module_url_slug;
+                    
+                    $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
+                    if(count($get_child_menu)>0)
+                    {   
+                        foreach ($get_child_menu as $key2 => $cmvalue) {
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
+                        }
                     }
-                }
+            }
+        }
+        
+        if(!IS_Null($request->input('city')) && !empty($request->input('city')) && $arr_user->roles=='admin')
+        {
+            if($request->input('city')!= 'all'){
+              $get_city   = \DB::table('city')->where('id','=',$request->input('city'))->first();
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+              
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
+            }
+            else
+            {
+
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+            }
+
+        }
+        elseif($arr_user->roles!='admin')
+        {
+              $get_city   = \DB::table('city')->where('id','=',$arr_user->city)->first();
+
+
+              $get_assign_Subscriber_id   = \DB::table('nutri_mst_subcriber_assign')
+                                            ->where('nutritionist_id','=',$arr_user->id)
+                                            ->where('is_deleted','<>',1)
+                                            ->select('subscriber_id')->first();
+           
+              if(!empty($get_assign_Subscriber_id) && isset($get_assign_Subscriber_id))
+              {
+
+                $subscribers = explode(',',$get_assign_Subscriber_id->subscriber_id);                              
+                $request->session()->put("assign_subscriber",$subscribers);
+                $request->session()->save(); 
+              }
+
+
+
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$arr_user->city);
+              $request->session()->save();
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
+                
         }
 
 
 
-//dd($sub_menu);
+
+        //dd($sub_menu);
 
         //get module type
-       //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
-        }
+        //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
+       
         
         //dd($arr_user);
-       /* if ($request->input('remember')=='on')
+        /* if ($request->input('remember')=='on')
         {
             setcookie("adminemail",$request->email,time()+ 3600);
             setcookie("adminpassword",$request->password,time()+ 3600);
@@ -98,8 +161,7 @@ class AuthController extends Controller
             setcookie("adminremember",'',time()+ 3600);
         }
         */
- 
-    //dd(Session::getId());
+        //dd(Session::getId());
         $user = \Sentinel::authenticate($credentials);
 
         if (!empty($user))
@@ -128,7 +190,7 @@ class AuthController extends Controller
                 
                 $request->session()->put("sub_menu",$sub_menu);
                 $request->session()->save();
-
+               
                 /* $request->session()->put("module_type",$get_module_type);
                 $request->session()->save();*/
 
@@ -184,68 +246,104 @@ class AuthController extends Controller
     {
         if(!empty($request->input('email')))
         {
-            $user = \DB::table('users')->where(['mobile_no'=>$request->input('email')])->count();
+            $user = \DB::table('users')->where(['email'=>$request->input('email')])->count();
             if($user)
             {
-                $characters = '0123456789';
-                $randstring = '';
-                for ($i = 0; $i < 8; $i++) {
-                    $randstring.= $characters[rand(0, strlen($characters))];
-                }
                 
-                \DB::table('users')->where(['mobile_no'=>$request->input('email')])->update(['password'=>bcrypt($randstring)]);
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+                $charactersLength = strlen($characters);
+                $randstring = '';   
+                for ($i = 0; $i < 18; $i++) {
+                $randstring .= $characters[rand(0, $charactersLength - 1)];
+                }
+        
+
+
+
+                //dd($randstring);
+                \DB::table('users')->where(['email'=>$request->input('email')])->update(['password'=>bcrypt($randstring)]);
                 $mobile_no = $request->input('email');
-            $msg='You system generated password is '.$randstring.'. ';
-            if(strlen($mobile_no)>10)
-            {
+                $msg='You system generated password is '.$randstring.'.';
+                
+                /*if(strlen($mobile_no)>10)
+                {
                 $keycount=strlen($mobile_no)-10;
                 $mobile_no = substr($mobile_no,$keycount);
-            }
-           
-                 $url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
-            $ch = curl_init();
-            curl_setopt( $ch,CURLOPT_URL, $url);
-            curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-            $result = curl_exec($ch );
+                }*/
 
-            curl_close( $ch );
+                /*$url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
+                $ch = curl_init();
+                curl_setopt( $ch,CURLOPT_URL, $url);
+                curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+                curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+                $result = curl_exec($ch );
+                curl_close( $ch );*/
+
                /* $mail = new PHPMailer(true); 
                 try {
                     $mail->isSMTP(); 
                     $mail->CharSet    = "utf-8"; 
                     $mail->SMTPAuth   = true;  
-                    $mail->SMTPSecure = env('SMTPSECURE');
-                    $mail->Host       = env('HOST');
-                    $mail->Port       = env('PORT');
-                    $mail->Username   = env('USERNAME');
-                    $mail->Password   = env('PASSWORD');
-                    $mail->setFrom(env('SETFROMEMAIL'), "Kores India");
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Host       = $this->Host;
+                    $mail->Port       = $this->Port;
+                    $mail->Username   = $this->email;
+                    $mail->Password   = $this->Password;
                     $mail->Subject = "Forget Password";
                     $mail->MsgHTML("Your system generated password is ".$randstring.".");
-                    $mail->addAddress($request->input('email'), "Admin");
-                    //$mail->send();
+                    $mail->addAddress($request->input('email'), "Nutridock-Admin");
+                    $mail->send();
 
                 } 
                 catch (phpmailerException $e) 
                 {
-                    dd($e);
+                    //dd($e);
                     Session::flash('error', $e);
                 } 
                 catch (Exception $e) 
                 {
-                    dd($e);
+                    //dd($e);
                     Session::flash('error', $e);
-                }*/
-                Session::flash('success', 'Success! Please check your Mobile Number for temporary password. Please login again.');
-                return redirect('admin/login');
+                }
+                Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
+                return redirect('admin/login');*/
+
+                $mail = new PHPMailer(true); 
+                try 
+                {
+                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;     
+                    $mail->isSMTP(); 
+                    $mail->CharSet    = "utf-8";
+                    $mail->SMTPAuth   = true;
+                    $mail->SMTPSecure = "tls";
+                    $mail->Host       = $this->Host;
+                    $mail->Port       = $this->Port;
+                    $mail->Username   = $this->email;
+                    $mail->Password   = $this->Password;
+                    $mail->IsHTML(true); 
+                    $mail->Subject    = "Forget Password";
+                    $mail->setFrom($this->email,'Nutridock-Admin'); //sender
+                    $mail->MsgHTML("Your system generated password is <b>".$randstring."</b>.");
+                    $mail->addAddress($request->input('email')); // reciviwer
+                    $mail->send();
+                    Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
+                    return redirect('admin/login');
+
+                } 
+                catch (Exception $e) 
+                {
+                    Session::flash('error', 'Internal Server Issue.'.$e);
+                    return \Redirect::back();
+                } 
             }
             else
             {
-                Session::flash('error', 'Error! Please enter valid Mobile No..');
+                Session::flash('error', 'Error! Please enter valid email.');
                 return \Redirect::back();
             }
+
+
         }
     }
 
@@ -301,5 +399,31 @@ class AuthController extends Controller
             $request->session()->save();  */
             Session::flush();
         return redirect('admin/login');
+    }
+
+
+    public function get_city_list(Request $request)
+    {
+      
+        $user_name = $request->email;
+        
+        $user      =  \DB::table('users')->where(['email'=>$request->email])->get()->first(); 
+      
+        if($user->roles =='admin')
+        {
+            $get_city   = \DB::table('city')->get();
+            $html       = '<option value="">-Select City-</option>';
+            $html      .= '<option value="all">All</option>';
+            foreach ($get_city as $key => $value) 
+            {
+                $html.="<option value=".$value->id.">".$value->city_name."</option>";     
+            }
+        }else
+        {
+          $html = "users";     
+        }
+        
+        return $html;
+    
     }
 }

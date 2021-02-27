@@ -7,6 +7,9 @@ use App\Models\SubscriptionPlan;
 use App\Models\Location;
 use App\Models\city;
 use App\Models\Plan;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Input;
+use Image;
 use Session;
 use Sentinel;
 use Validator;
@@ -73,7 +76,8 @@ class SubscriptionController extends Controller
                 'sub_name' => 'required',
                 //'plan_id' => 'required',
                 'city' => 'required',
-                'area' => 'required'
+                'area' => 'required',
+          
             ]);
 
         if ($validator->fails()) 
@@ -89,16 +93,39 @@ class SubscriptionController extends Controller
             return \Redirect::back();
         }*/
 
+        $icon_img              = Input::file('icon_image');
+        //random number genrate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
+
         $arr_data                = [];
         $arr_data['sub_name']    = $request->input('sub_name');
-      //  $arr_data['plan_id']     = $request->input('plan_id');
+        //$arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
         $arr_data['area']        = $request->input('area');
+        $arr_data['plan_description'] = $request->input('plan_description');
+        $arr_data['icon_image'] = $randomString."".$icon_img->getClientOriginalName();
         $plan = $this->base_model->create($arr_data);
       
         if(!empty($plan))
         {
 
+            //upload icon 
+                $destinationPath = 'uploads/subscription_icon/';
+                $destinationPathThumb = $destinationPath . 'thumb/';
+                $filename_icon = $icon_img->getClientOriginalName();
+                $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+
+                //thumbnail create icon
+                $icon_thumb = Image::make($original_icon->getRealPath())
+                ->resize(100, 100)
+                ->save($destinationPathThumb . $randomString."".$filename_icon);
+            //
             $failed = 0;  
             $duration_flag = $request->input('duration_flag');
             for($d=1; $d <= $duration_flag; $d++) 
@@ -152,7 +179,6 @@ class SubscriptionController extends Controller
         {
             $arr_data = $data->toArray();
         }   
-       
         $data['data']      = $arr_data;
         $data['city']      =  $city;
         $data['plan']      =  $plan;
@@ -165,26 +191,65 @@ class SubscriptionController extends Controller
 
     public function update(Request $request, $id)
     {
+        // dd($request->plan_description);
         $validator = Validator::make($request->all(), [
-                'sub_name' => 'required',
+                'sub_name'         => 'required',
                 //'plan_id' => 'required',
-                'city' => 'required',
-                'area' => 'required'
+                'city'             => 'required',
+                'area'             => 'required'
             ]);
         if ($validator->fails()) 
         {
             return $validator->errors()->all();
         }
-       
-        $arr_data               = [];
         
-        $arr_data['sub_name']    = $request->input('sub_name');
-        //$arr_data['plan_id']     = $request->input('plan_id');
-        $arr_data['city']        = $request->input('city');
-        $arr_data['area']        = $request->input('area');
 
-        $module_update = $this->base_model->where(['plan_id'=>$id])->update($arr_data);
+        $icon_img              = Input::file('icon_image');
+        //random number generate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $arr_data               = [];
+        $arr_data['sub_name']         = $request->input('sub_name');
+        //$arr_data['plan_id']        = $request->input('plan_id');
+        $arr_data['city']             = $request->input('city');
+        $arr_data['area']             = $request->input('area');
+        $arr_data['plan_description'] = $request->input('plan_description');
         
+        if(isset($_FILES['icon_image']["name"]) && !empty($_FILES['icon_image']["name"]))
+        { 
+            $arr_data['icon_image'] = $randomString."".$icon_img->getClientOriginalName();
+        }
+        else
+        {
+            $arr_data['icon_image'] = $request->input('old_icon_image');
+        }
+
+        $module_update = $this->base_model->where(['sub_plan_id'=>$id])->update($arr_data);
+
+        $destinationPath = 'uploads/subscription_icon/';
+        $destinationPathThumb = $destinationPath . 'thumb/';
+
+        if(isset($_FILES['icon_image']["name"]) && !empty($_FILES['icon_image']["name"]))
+        {
+          
+            $filename_icon = $icon_img->getClientOriginalName();
+            $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+                
+            //thumbnail create icon
+            $icon_thumb = Image::make($original_icon->getRealPath())
+            ->resize(255, 250)
+            ->save($destinationPathThumb . $randomString."".$filename_icon);
+            
+            unlink($destinationPath."".$request->input('old_icon_image'));
+            unlink($destinationPathThumb."".$request->input('old_icon_image'));
+
+        }
+
         $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete();
 
          $failed = 0;  
@@ -240,8 +305,6 @@ class SubscriptionController extends Controller
                             ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
                             ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->first();
         //$plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
-
-
         $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$plan_id])->orderBy('duration_id', 'ASC')->get();
         $html='<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -77,7 +77,7 @@
         </li> 
      
 
-      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
+      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_subscriber_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
             <a href="#">
               <i class="fa fa-television"></i><span>Subscriber</span>
               <span class="pull-right-container">
@@ -96,14 +96,14 @@
                      <i class="fa fa-user-plus"></i><span>Assign Nutritionist</span>
                   </a>
               </li>
-              <li @if(Request::segment(2)=='manage_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') class="active" @endif>
-                  <a href="{{url('/admin')}}/manage_calender">
+              <li @if(Request::segment(2)=='manage_subscriber_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') class="active" @endif>
+                  <a href="{{url('/admin')}}/manage_subscriber_calender">
                      <i class="fa fa-calendar"></i><span>Subscriber Calender</span>
                   </a>
               </li>
             </ul>
         </li> 
-       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') active @endif ">
+       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen'||Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>
               <span class="pull-right-container">
@@ -135,6 +135,13 @@
               <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
                 <a href="{{url('/admin')}}/manage_kitchen">
                   <i class="fa fa-circle-o"></i> <span>Cloude Kitchens</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+              <li @if(Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') class="active"@endif>
+                <a href="{{url('/admin')}}/manage_assign_sub_plan_menu">
+                  <i class="fa fa-circle-o"></i> <span>Assign Menu Subscription Plan</span>
                   <span class="pull-right-container">
                   </span>
                 </a>
@@ -230,6 +237,11 @@
         </li>
     @else
 <!--------------------Dynamic Menu with permission---------------------->
+      <li @if(Request::segment(2)=='dashbord') class="active" @endif>
+        <a href="{{url('/admin')}}/dashbord">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+        </a>
+      </li>
         @foreach($session_parent_menu as $parent_value)
           @if(!empty($parent_value[1]))
             @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions))
@@ -257,7 +269,7 @@
                   @foreach($sub_value as $sub_menu)
 
                     @if(isset($session_permissions) && in_array($sub_menu[0],$session_permissions) && !empty($session_permissions))
-                    <li @if(Request::segment(2)=='manage_'.$sub_menu[3] || Request::segment(2)=='add_'.$sub_menu[3] || Request::segment(2)=='edit_'.$sub_menu[3]) class="active" @endif>
+                    <li @if(Request::segment(2)=='manage_'.$sub_menu[3] || Request::segment(2)=='add_'.$sub_menu[3] || Request::segment(2)=='edit_'.$sub_menu[3] || Request::segment(2)=='add_subscriber_meal_program') class="active" @endif>
                       <a href="{{url('/admin')}}/{{$sub_menu[2]}}">
                          <i class="fa fa-television"></i> <span>{{$sub_menu[1]}}</span>
                         <span class="pull-right-container">

@@ -39,7 +39,7 @@
               {!! csrf_field() !!}
               <div class="row">
                 <div class="">
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                   </div> 
-                 <div class="col-md-4">
+                 <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
@@ -66,7 +66,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
@@ -78,6 +78,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3"> <div class="form-group">
+                     <label for="nutritionsit_area">Icon Image<span style="color:red;" >*</span></label>   
+                     
+                    <div  class="input-group"> 
+                      <input type="file" class="form-control"  id="icon_image" name="icon_image" >
+                      <div class="input-group-addon">
+                      <a data-fancybox="gallery" href="{{ url('/')}}/uploads/subscription_icon/{{$data['icon_image']}}"><i class="fa fa-eye"></i></a>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+
+
+                   <input type="hidden" name="old_icon_image" value="{{$data['icon_image']}}">
                 </div>
               </div> 
 
@@ -134,8 +148,8 @@
                                   @if(!empty($durvalue->price_per_pack))
                                   @php $price = $durvalue->price_per_pack; @endphp
                                   @endif
-                                  <input type="text" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" value="
-                                  {{$price}}" data-parsley-error-message="Please enter price.">
+                                  <input type="text" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" 
+                                  value="{{number_format($price,2)}}" data-parsley-error-message="Please enter price.">
                                 </div>
                                 <span id="meal_price{{$key+1}}" style="color:red;"></span>
                             </td>
@@ -144,7 +158,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-rupee"></i>
                                   </div>
-                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{$durvalue->discount_price}}">
+                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{number_format($durvalue->discount_price,2)}}">
                                 </div>
                                 <span id="dis_price{{$key+1}}" style="color:red;"></span>
                             </td>
@@ -163,8 +177,15 @@
                 </div>
               </div>
               <!-- /.box-body -->
+               <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                       <label for="name">Short Description</label>
+                       <textarea name="plan_description" id="plan_description">{{$data['plan_description']}}</textarea>
+                    </div>
+                </div>
+              </div> 
               <div class="box-footer">
-              
                 <button type="submit" class="btn btn-primary">Update</button>
                   <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
@@ -179,13 +200,16 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <!-- /.content-wrapper --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+  <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" />
+
+
   <script type="text/javascript"> 
   //load area drop down script 
-
-
-
+  CKEDITOR.replace('plan_description');
   function get_area()
   {
    

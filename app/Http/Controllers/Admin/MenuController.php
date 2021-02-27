@@ -7,6 +7,7 @@ use App\Models\MenuModel;
 use App\Models\MenuCategoryModel;
 use App\Models\IngredientsModel;
 use App\Models\SpecificationModel;
+use App\Models\MealType;
 use Config;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
@@ -18,13 +19,14 @@ use DB;
 
 class MenuController extends Controller
 {
-    public function __construct(MenuModel $MenuModel,MenuCategoryModel $MenuCategoryModel,IngredientsModel $IngredientsModel,SpecificationModel $SpecificationModel)
+    public function __construct(MealType $MealType,MenuModel $MenuModel,MenuCategoryModel $MenuCategoryModel,IngredientsModel $IngredientsModel,SpecificationModel $SpecificationModel)
     {
         $data                            = [];
         $this->base_model                = $MenuModel; 
+        $this->base_meal_type            = $MealType; 
         $this->base_menucatgorymodel     = $MenuCategoryModel; 
         $this->base_specificationmodel   = $SpecificationModel; 
-        $this->base_ingredientsmodel   = $IngredientsModel; 
+        $this->base_ingredientsmodel     = $IngredientsModel; 
         $this->title                     = "Menu";
         $this->url_slug                  = "menu";
         $this->upload_image_base_path    = base_path().'/uploads/images/';
@@ -65,10 +67,11 @@ class MenuController extends Controller
     // Menu  Add Function 
     public function add()
     {
-        
+        $menu_type         = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
         $category          = $this->base_menucatgorymodel->orderby('id','DESC')->get();
         $specification     = $this->base_specificationmodel->orderby('id','DESC')->get();
         $data['page_name'] = "Add";
+        $data['menu_type'] = $menu_type;
         $data['category']  = $category;
         $data['specification'] = $specification;
         $data['title']     = $this->title;
@@ -81,17 +84,18 @@ class MenuController extends Controller
     {
        
        $validator = Validator::make($request->all(), [
-                'category_id'      => 'required',
-                'menu_title'         => 'required',
-                'menu_image'         => 'required',
-                'specification_id'=> 'required',
-                'menu_description'   => 'required',
-                'ingredients_desc'   => 'required',
-                'calories'           => 'required',
-                'proteins'           => 'required',
-                'fats'               => 'required',
-                'carbohydrates'      => 'required',
-                'what_makes_dish_special'  => 'required',
+                'category_id'             =>'required',
+                'menu_title'              =>'required',
+                'menu_type'               =>'required',
+                'menu_image'              =>'required',
+                'specification_id'        =>'required',
+                'menu_description'        =>'required',
+                'ingredients_desc'        =>'required',
+                'calories'                =>'required',
+                'proteins'                =>'required',
+                'fats'                    =>'required',
+                'carbohydrates'           =>'required',
+                'what_makes_dish_special' =>'required'
             ]);
         if ($validator->fails()) 
         {
@@ -115,13 +119,15 @@ class MenuController extends Controller
         }
         
         //end number genrate function delete   
-        
+        //dd($request->input('menu_type'));
+
         $arr_data                              = [];
         $arr_data['menu_category_id']          = $request->input('category_id');
         $arr_data['menu_title']                = $request->input('menu_title');
         $arr_data['menu_description']          = $request->input('menu_description');
         $arr_data['what_makes_dish_special']   = $request->input('what_makes_dish_special');
         $arr_data['specification_id']          = implode(",",$request->input('specification_id'));
+        $arr_data['menu_type']                 = implode(",",$request->input('menu_type'));
         $arr_data['ingredients']               = $request->input('ingredients_desc');
         $arr_data['image']                     = $request->input('menu_title')."".$randomString."".$menu_img->getClientOriginalName();
         $arr_data['calories']                  = $request->input('calories');
@@ -258,11 +264,13 @@ class MenuController extends Controller
         {
             $arr_data = $data->toArray();
         }   
+        $menu_type          = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
         $category          = $this->base_menucatgorymodel->orderby('id','DESC')->get();
         $specification     = $this->base_specificationmodel->orderby('id','DESC')->get();
         $ingrediants       = $this->base_ingredientsmodel->where(['menu_id'=>$id])->orderby('id','DESC')->get()->toArray();
         $menu_images       = \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->get()->toArray();
 
+        $data['menu_type']      = $menu_type;
         $data['category']      = $category;
         $data['specification'] = $specification;
         $data['ingrediants']   = $ingrediants;
@@ -282,7 +290,7 @@ class MenuController extends Controller
         $validator = Validator::make($request->all(), [
                 'category_id'      => 'required',
                 'menu_title'         => 'required',
-                
+                'menu_type'         => 'required',
                 'specification_id'=> 'required',
                 'menu_description'   => 'required',
                 'ingredients_desc'   => 'required',
@@ -326,6 +334,7 @@ class MenuController extends Controller
         $arr_data['menu_description']          = $request->input('menu_description');
         $arr_data['what_makes_dish_special']   = $request->input('what_makes_dish_special');
         $arr_data['specification_id']          = $specification_data;
+        $arr_data['menu_type']                 = implode(",",$request->input('menu_type'));
         $arr_data['ingredients']               = $request->input('ingredients_desc');
 
        if(isset($_FILES['menu_image']["name"]) && !empty($_FILES['menu_image']["name"]))

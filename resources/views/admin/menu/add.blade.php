@@ -48,18 +48,19 @@
               <div class="row">
                 <div class="col-md-8 col-lg-9">
                   <div class="row">
+                    <div class="col-md-12">
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="name">Category Name<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" id="category_id" name="category_id"required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please select category.">
+                         <select class="form-control " id="category_id" name="category_id"required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please select category.">
                           <option value="">-Select Category-</option>
                           @foreach($category as $cvalue)
                           <option value="{{$cvalue->id}}">{{$cvalue->name}}</option>
                           @endforeach
                          </select>
-                          <div id="#name_error" style="color:red;"></div>
-                      </div>
-                    </div>
+                        
+                      </div> <div id="#name_error" style="color:red;"></div>
+                    </div> 
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="name">Title<span style="color:red;" >*</span></label>
@@ -69,7 +70,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
-                        <label for="name">Specification<span style="color:red;" >*</span></label>
+                        <label for="name" class="label-control">Specification<span style="color:red;" >*</span></label>
                         <select class="form-control select2 new-arrow-set" id="specification_id" name="specification_id[]" placeholder="Specification Name"  data-parsley-errors-container="#specificationdrp_error" data-parsley-error-message="Please select the specification name." required="true" multiple="multiple">
                           <option>-Select Specification-</option>
                           @foreach($specification as $svalue)
@@ -79,19 +80,36 @@
                         <div id="specificationdrp_error" style="color:red;"></div>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                  </div>
+                   <div class="col-md-12">
+                    <div class="col-sm-6 col-md-6">
                        <div class="form-group">
                           <label for="name">Short Description <span style="color:red;" >*</span></label>
                           <textarea class="form-control" name="menu_description" id="menu_description" data-parsley-errors-container="#name_error"  data-parsley-error-message="Please enter the short description." required="true" rows="3" style="resize: none;"> </textarea>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6 col-md-6">
                         <div class="form-group">
                           <label for="name">Ingredients<span style="color:red;" >*</span></label>
                           <textarea class="form-control" name="ingredients_desc" id="ingredients_desc" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the ingredients." required="true" rows="3" style="resize: none;"> </textarea>
                         </div>
                     </div>
                   </div>
+                  <div class="col-md-12">
+                      <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                          <label for="name" class="label-control">Meal Type<span style="color:red;" >*</span></label>
+                          <select class="form-control select2 new-arrow-set" name="menu_type[]"   data-parsley-errors-container="#menu_type_error" data-parsley-error-message="Please select the menu." required="true" multiple="multiple">
+                            <option>-Select Meal Type-</option>
+                            @foreach($menu_type as $tvalue)
+                            <option value="{{$tvalue->meal_type_id}}">{{$tvalue->meal_type_name}}</option>
+                            @endforeach
+                          </select>
+                          <div id="menu_type_error" style="color:red;"></div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
                 <div class="col-md-4 col-lg-3">
                   <div class="">
@@ -112,7 +130,7 @@
                       <div class="form-group">
                         <label for="name">Calories<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                        <div class="input-group-addon btn-default"><img id="blah" src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
+                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
                         <input type="text" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
                        <div id="calories_error" style="color:red;"></div>
                       </div>
@@ -121,7 +139,7 @@
                       <div class="form-group">
                         <label for="name">Proteins<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                          <div class="input-group-addon btn-default"> <img id="blah" src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/>
+                          <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins.">
                         </div>
@@ -132,7 +150,7 @@
                       <div class="form-group">
                         <label for="name">Carbohydrates<span style="color:red;" >*</span></label>
                         <div class="input-group">
-                          <div class="input-group-addon btn-default"><img id="blah" src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/>
+                          <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates." >
                         </div>
@@ -144,7 +162,7 @@
                         <label for="name">Fats<span style="color:red;" >*</span></label>
                          <div class="input-group">
                           <div class="input-group-addon btn-default">
-                            <img id="blah" src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
+                            <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
                           <input type="text" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats.">
                         </div>
@@ -164,8 +182,8 @@
                     <table class="table" id="myTable">
                       <thead>
                         <tr>
-                          <th style="padding-top:0px;padding-bottom: 0px;">Mutiple File Upload</th>
-                          <th style="padding-top:0px;padding-bottom: 0px" >
+                           <th style="padding-top:0px;padding-bottom: 0px;">Mutiple File Upload</th>
+                           <th style="padding-top:0px;padding-bottom: 0px">
                           </th>
                         </tr>
                       </thead>

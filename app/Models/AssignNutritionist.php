@@ -9,6 +9,8 @@ class  AssignNutritionist extends Model
     protected $fillable    = [
 		"subscriber_id",
 		"nutritionist_id",
+		"state_id",
+		"city_id",
 		"is_active",
 		"is_deleted"
 	];

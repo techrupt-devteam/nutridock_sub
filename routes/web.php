@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,15 +11,12 @@
 */
 
 /* @START: Front End Routes */
-
-
 Route::get('/clear', function() {
 	Artisan::call('cache:clear');
 	Artisan::call('config:clear');
 	Artisan::call('config:cache');
 	Artisan::call('view:clear');
  	return "Cleared!";
- 
  });
  
 Route::get('/test', function () {
@@ -86,6 +82,7 @@ Route::get('/test', function () {
  Route::any('postFormDetails', 'SubscribeController@postFormDetails')->name('postFormDetails');
  Route::any('getMealTypeDataAjax', 'SubscribeController@getMealTypeDataAjax')->name('getMealTypeDataAjax');
  Route::get('subscription-payment/{any}', 'SubscribeController@subscription_payment1')->name('subscription_payment');
+ Route::post('get_city_list',	 			'Admin\AuthController@get_city_list');
 
 /* @END: Front End Routes */
 
@@ -113,8 +110,12 @@ Route::post('/admin/getarea',		 			'Admin\BookingController@getarea');
 Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
 /*********************************@RAJ FRONT_ROUTES @****************************************/
-Route::get('/sign-up',		 	 'Front\SignUpController@index');
-
+//sign up routes
+Route::get('/sign-up',		 	 			'Front\SignUpController@index');
+Route::post('/store_basic_details', 	 	'Front\SignUpController@storeBasicDetails');
+Route::post('/get_plan_details', 	 		'Front\SignUpController@getSubscriptionPlanDetails');
+Route::post('/subscribe-info', 	 			'Front\SignUpController@getSubscribePlan');
+Route::post('/check_valid_pin', 	 		'Front\SignUpController@getCheckValidPin');
 
 /**********************************************************************************************/
 
@@ -122,10 +123,9 @@ Route::get('/sign-up',		 	 'Front\SignUpController@index');
 /*******************************************@BHUSHUAN ADMIN_ROUTES @***************************************************/
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
-	Route::get('/dashbord',		 	 'Admin\AuthController@dashbord');
+	Route::get('/dashbord',		 	 'Admin\DashboardController@dashbord');
 
 	//user table 
-	
 	/*Route::get('/manage_users',		 'Admin\UserController@index');
 	Route::get('/add_user',		 	 'Admin\UserController@add');
 	Route::post('/store_user',		 'Admin\UserController@store');
@@ -133,7 +133,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_user/{id}', 'Admin\UserController@update');
 	Route::get('/delete_user/{id}',	 'Admin\UserController@delete');
 	Route::post('/getArea',	 		 'Admin\UserController@getArea');*/
-
+	
 	//Module Master Routes
 	
 	Route::get('/manage_module',		 'Admin\ModuleController@index');
@@ -178,6 +178,8 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	
 	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
 	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+	Route::post('/getSubscriber',	 	 'Admin\AjaxController@getSubscriber');
+
 
 	//plan master routes
 	
@@ -244,6 +246,20 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::post('/update_menu/{id}',	'Admin\MenuController@update');
 	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
 
+
+	 //Assign Menu To subscription Plan Routes
+	 Route::get('/manage_assign_sub_plan_menu', 		'Admin\AssignSubscriptionPlanMenuController@index');
+	 Route::get('/add_assign_sub_plan_menu',	 		'Admin\AssignSubscriptionPlanMenuController@add');
+	 Route::post('/store_assign_sub_plan_menu', 		'Admin\AssignSubscriptionPlanMenuController@store');
+ 	 Route::get('/edit_assign_sub_plan_menu/{id}',		'Admin\AssignSubscriptionPlanMenuController@edit');
+ 	 Route::post('/update_assign_sub_plan_menu/{id}',	'Admin\AssignSubscriptionPlanMenuController@update');
+	 Route::get('/delete_assign_sub_plan_menu/{id}', 	'Admin\AssignSubscriptionPlanMenuController@delete');
+	 Route::post('/getdays',	         			    'Admin\AssignSubscriptionPlanMenuController@get_days');
+ 	 Route::post('/default_menu_add',	         		'Admin\AssignSubscriptionPlanMenuController@default_menu_add');
+ 	 Route::post('/default_menu_edit',	         		'Admin\AssignSubscriptionPlanMenuController@default_menu_edit');
+ 	 Route::post('/store_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@store_meal_plan');
+ 	 Route::post('/update_meal_plan',	         		'Admin\AssignSubscriptionPlanMenuController@update_meal_plan');
+
 	// Assign location wise menu Routes  
 	Route::get('/manage_assign_location_menu', 		 'Admin\AssignLocationMenuController@index');
 	Route::get('/add_assign_location_menu',	 		 'Admin\AssignLocationMenuController@add');
@@ -273,6 +289,39 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/delete_assign_nutritionist/{id}',    'Admin\AssignNutritionistController@delete');
 	Route::post('/status_assign_nutritionist',	      'Admin\AssignNutritionistController@status');
 	Route::post('/assign_nutritionist_details',	      'Admin\AssignNutritionistController@detail');
+	Route::post('/get_user_list',	                  'Admin\AssignNutritionistController@get_user_list');
+	Route::post('/assign_users_details',	          'Admin\AssignNutritionistController@assign_users_details');
+	
+	//subscriber Routes 
+	Route::get('/manage_subscriber',	  	'Admin\SubscriberController@index');
+	Route::post('/getSubscriberData',	  	'Admin\SubscriberController@getSubscriberData');
+	Route::get('/add_subscriber',		  	'Admin\SubscriberController@add');
+    Route::post('/store_subscriber',	  	'Admin\SubscriberController@store');
+	Route::get('/edit_subscriber/{id}',	  	'Admin\SubscriberController@edit');
+    Route::post('/update_subscriber/{id}',	'Admin\SubscriberController@update');
+	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
+    Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');
+    Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
+    
+    //Meal Program Subscriber 
+    Route::get('/add_subscriber_meal_program/{id}',   'Admin\SubscriberMealProgramController@add');
+    Route::post('/store_subscriber_health_details',	  'Admin\SubscriberMealProgramController@store');
+    Route::post('/edit_subscriber_default_menu',	  'Admin\SubscriberMealProgramController@menu_edit');
+    Route::post('/get_menu_dropdown',				  'Admin\SubscriberMealProgramController@get_menu');
+    Route::post('/get_menu_macros',					  'Admin\SubscriberMealProgramController@get_menu_macros');
+    Route::post('/store_change_menu',				  'Admin\SubscriberMealProgramController@store_change_menu');
+   
+    //Subscriber Calender
+    Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
+	Route::post('/getMealDetails',					  'Admin\SubscriberCalenderController@getMealDetails');
+
+	/*Route::post('/getSubscriberData',	  	  'Admin\SubscriberController@getSubscriberData');
+	Route::get('/add_subscriber',		  	  'Admin\SubscriberController@add');
+    Route::post('/store_subscriber',	  	  'Admin\SubscriberController@store');
+	Route::get('/edit_subscriber/{id}',	  	  'Admin\SubscriberController@edit');
+    Route::post('/update_subscriber/{id}',	 'Admin\SubscriberController@update');
+	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
+    Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');*/
 
 
 });

@@ -132,7 +132,7 @@ label {
         border-right-color: rgb(190, 192, 193);
         border-bottom-color: rgb(190, 192, 193);
         border-left-color: rgb(190, 192, 193);
-    border-radius: 50px;
+   border-radius: 10px;
     cursor: pointer;
 }
 .checkbox label, .radio label, label {
@@ -186,28 +186,28 @@ label {
     font-size: 12px;
 }
 
-    .mt10px{
-        margin-top: 10px;
-    }
-    .mt20px{
-        margin-top: 20px;
-    }
-  
-    p{
-        line-height: 25px;
-    }
-    .wizard-navigation .active {
-    text-align: center;
-    padding: 12px 11px;
-    font-size: 12px;
-    text-transform: capitalize;
-    -webkit-font-smoothing: subpixel-antialiased;
-    background-color: #67d251;
-    border-radius: 4px;
-    color: #FFFFFF !important;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
+.mt10px{
+    margin-top: 10px;
+}
+.mt20px{
+    margin-top: 20px;
+}
+
+p{
+    line-height: 25px;
+}
+.wizard-navigation .active {
+  text-align: center;
+  padding: 12px 11px;
+  font-size: 12px;
+  text-transform: capitalize;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background-color: #67d251;
+  border-radius: 4px;
+  color: #FFFFFF !important;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
 }
 .bl-0{
   border-left:0px !important
@@ -231,12 +231,19 @@ label {
   list-style:none;
   padding:0px;
 }   
+
+.active1{
+  color: #fcd40a;
+}
+.active2{
+background-color:blue
+}
 </style>
 
 @section('content')
 
 <!-- For Datepickr 
-<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">-->
+<link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
 <script type="text/javascript" src="{{url('')}}/public/front/dist/date-time-picker.min.js"></script>
 <section class="mt-5 pb-0 pt-5">
   <div class="">
@@ -284,8 +291,9 @@ label {
               </div>
               </div>
           </div>
-          <form role="form" class="w-100" data-parsley-validate="parsley">
-              <div class="row setup-content" id="step-1">
+          <form role="form" id="sign-up" class="w-100" data-parsley-validate="parsley">
+              <!-- @START: Personal Details tab -->
+              <div class="row setup-content step-1" id="step-1">
                   <div class="col-sm-12">
                     <h4 class="info-text"> Let's start with the basic details.</h4>
                   </div>
@@ -296,9 +304,13 @@ label {
                           <div class="form-group label-floating w-100">
                             <label class="control-label">Full Name <span class="text-danger">*</span></label>
                             <div class="input-group mb-3 ">
-                              <div class="input-group-prepend"> <span class="input-group-text"><i class="fa fa-user-circle" aria-hidden="true"></i></span> </div>
-                              <input type="text" name="full_name" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Full Name"
-                              name="first_name" Choose placeholder="First Name" required="true" data-parsley-errors-container="#firstname-errors">
+                              <div class="input-group-prepend"> 
+                                <span class="input-group-text">
+                                  <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                </span> 
+                              </div>
+                              <input type="text" name="full_name" class="form-control" id="full_name" aria-describedby="basic-addon3" placeholder="Full Name"
+                              name="first_name" Choose placeholder="First Name" required="true" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
                             <div id="firstname-errors"></div>
                              </div>
@@ -309,7 +321,7 @@ label {
                           <label class="control-label">Email <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3" ><i class="fa fa-envelope" aria-hidden="true"></i></span> </div>
-                            <input type="email" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors">
+                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" data-parsley-group="step-1">
                           </div>
                           <div id="email-errors"></div>
                         </div>
@@ -319,19 +331,22 @@ label {
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10">
+                            <input type="text" class="form-control" id="mobile" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1">
                           </div>
                           <div id="mobile-errors"></div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="wizgard-footer">                  
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" > Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                  <div class="wizgard-footer"> 
+                   <span class="nextBtn btn btn-info pull-right" data-current-block="1" data-next-block="2">Next >
+                   </span> 
                   </div>
               </div>
-              <div class="row setup-content" id="step-2">
+              <!-- @END: Personal Details tab -->
+
+              <!-- @START: Personal Health Details tab -->
+              <div class="row setup-content step-2" id="step-2">
                 <div class="col-sm-12">
                   <h4 class="info-text"> Let us know more about your Health </h4>
                 </div>
@@ -342,15 +357,15 @@ label {
                        <div class="col-5">
                           <div class="form-group label-floating">
                             <label class="control-label">Age <span class="text-danger">*</span></label>
-                            <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" >
+                            <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
                             <div id="age-errors"></div>
                           </div>
                        </div>
                        <div class="col-7">
                         <div class="form-group label-floating w-100">
                           <label class="control-label">Gender <span class="text-danger">*</span></label>
-                          <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" >
-                            <option selected="selected" disabled="disabled" value="">Select</option>
+                          <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" data-parsley-group="step-2">
+                            <option value="">Select</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                             <option value="Other">Other</option>
@@ -365,7 +380,7 @@ label {
                        <div class="col-5">
                         <div class="form-group label-floating">
                           <label class="control-label">Weight <span class="text-danger">*</span></label>
-                          <input name="weight" type="text" class="form-control" placeholder="Kgs" required="required" data-parsley-errors-container="#weight-errors" data-parsley-error-message="Weight required">  
+                          <input name="weight" type="text" class="form-control" placeholder="Kgs" required="required" data-parsley-errors-container="#weight-errors" data-parsley-error-message="Weight required" data-parsley-group="step-2">  
                           <div id="weight-errors"></div>                        
                         </div>
                        </div>
@@ -374,10 +389,10 @@ label {
                         <div  class="form-group label-floating">
                           <div class="row">
                             <div class="col-6 pr-1">
-                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required"><div id="height-in-feet-errors"></div>   
+                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required"><div id="height-in-feet-errors" data-parsley-group="step-2"></div>   
                             </div>
                             <div class="col-6 pl-1">
-                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required">
+                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required" data-parsley-group="step-2">
                               <div id="height-in-inches-errors"></div> 
                             </div>
                           </div>
@@ -390,11 +405,11 @@ label {
                    <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                       <label class="control-label">Physical Activity <span class="text-danger">*</span></label>
-                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required"  data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required">
-                          <option selected="selected" disabled="disabled" value="" >Select an option</option>
+                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2">
+                          <option selected="selected" disabled="disabled" value=" " >Select an option</option>
                            @foreach($data['getPhysicalActivityData'] as $getPhysicalActivity)
                           <option value="{{ $getPhysicalActivity['physical_activity_id'] }}">
-                            {{ $getPhysicalActivity['physical_activity'] }}
+                            {{ $getPhysicalActivity['physical_activity'] }} 
                           </option>
                            @endforeach   
                         </select>
@@ -404,11 +419,11 @@ label {
                    <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label class="control-label">Avoid / Dislike Food <span class="text-danger">*</span></label>
-                        <select id="demo" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required">
+                        <select id="avoid_food_id" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required" data-parsley-group="step-2">
                           <option value="None">None</option>
-                              @foreach($data['getFoodAvoidData'] as $getFoodAvoidData)
+                          @foreach($data['getFoodAvoidData'] as $getFoodAvoidData)
                           <option value="{{ $getFoodAvoidData['food_avoid_id'] }}"> {{ $getFoodAvoidData['food_avoid_name'] }} </option>
-                              @endforeach  
+                          @endforeach  
                           <option value="Other">Other</option>
                         </select>
                         <div id="avoid-or-dislike-errors"></div> 
@@ -443,70 +458,72 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit" >
-                      Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                    <span class="nextBtn btn btn-info pull-right" data-current-block="2" data-next-block="3">Next ></span> 
+                  
                   </div>
               </div>
-              <div class="row setup-content" id="step-3">
+              <!-- @END: Personal Health Details tab -->
+
+              <!-- @START: Plan details tab -->
+              <div class="row setup-content step-3" id="step-3">
                 <div class="col-sm-12">
                   <h4 class="info-text"> <span class="text-success font-weight-bold">Choose </span>Plan</h4>
                 </div>
-                  <div class="col-sm-12">
-                   
-                  </div>
-                  <div class="col-sm-12 mb-3">                  
-                   <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                      <div class="form-group label-floating">
-                        <label class="control-label">Start Date<span class="text-danger">*</span></label>
-                        <input type="text" class="mt10px input form-control" id="start_date" value="<?php echo date('Y-m-d', strtotime('+ 2 day')) ?>">
-                      </div>
-                    </div> 
-                    <div class="col-sm-6 col-md-8">
-                      <div class="form-group label-floating">
-                        <label class="control-label">No. of days <span style="color: red;"> *</span></label>
-                        <div id="meals" class="radio-toolbar">
-                          @foreach($data['getSubscribeNowPlan']['duration'] as $key => $duration_dtl)
-                          <input type="radio" onclick="calculatePrice();" id="rad_{{ $duration_dtl['subscribe_now_duration'] }}" name="radNoOfDays" data-id="{{ $duration_dtl['subscribe_now_duration'] }}" value="{{ $duration_dtl['subscribe_now_plan_duration_id'] }}" 
-                              <?php echo ($key == 0) ? 'checked' : '' ?> class="subscribe_now_plan_duration_id" required="required">
-                          <label for="rad_{{ $duration_dtl['subscribe_now_duration'] }}">{{ $duration_dtl['subscribe_now_duration'] }}</label>
-                          @endforeach </div>
-                      </div>
+                  @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlan)
+                  <div class="col-sm-6 radio-toolbar">
+                    <input type="radio" id="radio{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}"> 
+                    <label for="radio{{ $getSubscriptionPlan['sub_name'] }}"> 
+                    {{ $getSubscriptionPlan['sub_name'] }} 
+                    </label>
                     </div>
-                    <div class="col-sm-12 mb-1">
-                      <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
-                      <div id="meals">
-                        <div class="chk-toolbar"> @foreach($data['getMealTypeData'] as $getMealTypeData)
-                          <input type="checkbox" id="radio{{ $getMealTypeData['meal_type_name'] }}" name="radioFruit[]" data-value="radioFruitValue" data-no="1" class="meal_type_id" value="{{ $getMealTypeData['meal_type_id'] }}" dataname="{{ $getMealTypeData['meal_type_name'] }}" onclick="calculatePrice();" required="required">
-                          <label for="radio{{ $getMealTypeData['meal_type_name'] }}">{{ $getMealTypeData['meal_type_name'] }}</label>
-                          @endforeach </div>
+                  @endforeach
+                <div class="col-sm-12 mb-3">     
+                    <div class="form-group label-floating">
+                      <label class="control-label">No of Days: <span class="text-danger">*</span></label>             
+                      <div class="row" id="getPlanDetails"> 
+                        
                       </div>
-                      <input type="hidden" name="" id="checkout_meal_type_name_value">
+                  </div>
+                </div>
+                <div class="col-sm-12 mb-3">                  
+                  <div class="row">                    
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group label-floating">
+                      <label class="control-label">Start Date <span class="text-danger">*</span></label>
+                      <input name="start_date" id="start_date" type="text" class="form-control" required="required"  data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" data-parsley-group="step-3">
+                      <div id="start-date-errors"></div>
+                    </div>                   
+                  </div> 
+                 
+                  <div class="col-sm-12 mb-1">
+                    <div class="">
+                      <label class="control-label">Price</label>
+                      <div style="border:dotted" class="p-2">
+                        <div class="offer-price"> <del> <span style="display: block;" id="close_value"></span> </del> </div>
+                        <span class="og"  id="rs_html"> Rs.</span> <span class="og" id="final_value" ></span> | <span class="og" id="final_value_details"></span> </div>
+                      
                     </div>
-                    <div class="col-sm-12 mb-1">
-                      <div class="">
-                        <label class="control-label">Price</label>
-                        <div style="border:dotted" class="p-2">
-                          <div class="offer-price"> <del> <span style="display: block;" id="close_value"></span> </del> </div>
-                          <span class="og"  id="rs_html"> Rs.</span> <span class="og" id="final_value" ></span> | <span class="og" id="final_value_details"></span> </div>
-                        <input type="hidden" name="price" id="price">
-                        <input type="hidden" id="total" name="total">
-                        <input type="hidden" id="discount_value" name="discount">
-                      </div>
-                    </div>                    
-                   </div> 
-                   <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span> 
-                  </div>
-                  <div class="wizgard-footer">
-                    <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
-                    </button>
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
-                      Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                  </div>                    
+                  </div> 
+                  <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span> 
+                </div>
+                <div class="wizgard-footer">
+                  <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
+                  </button>
+                  <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next ></span> 
+                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit"  data-current-block="3" data-next-block="4">
+                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </button> -->
+                  <!-- <a href="#step-3" class="btn btn-success pb-1 pt-1 nextBtn pull-righ
+                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
+                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </button> -->
+                </div>
               </div>
-              <div class="row setup-content" id="step-4">
+              <!-- @END: Plan details tab -->
+
+              <!-- @START: Address details tab -->
+              <div class="row setup-content step-4" id="step-4">
                 <div class="col-sm-12">
                   <h4 class="info-text"> 
                     <span class="text-success font-weight-bold">Address</span>  Details
@@ -517,7 +534,7 @@ label {
                       <div class="col-md-8">
                         <div class="form-group">
                           <label class="control-label">Address <span style="color: red;">*</span></label>
-                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="3" required="required" style="height: 134px;"></textarea>
+                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="3" required="required" style="height: 134px;"  data-parsley-group="step-4"></textarea>
                           <span id="err_address1" class="text-danger"></span>
                         </div>  
                       </div>
@@ -526,7 +543,7 @@ label {
                           <div class="col-md-12 col-sm-6">
                             <div class="form-group">
                               <label class="control-label">Pincode <span style="color: red;">*</span></label>
-                              <input type="text" placeholder="Pincode" name="pincode1" id="pincode1" class="form-control" required="required" minlength="6" maxlength="6">
+                              <input type="text" placeholder="Pincode" name="pincode1" id="pincode1" class="form-control" required="required" minlength="6" maxlength="6"  data-parsley-group="step-4">
                               <span id="err_pincode1" class="text-danger"></span>
                             </div>
                           </div>
@@ -591,122 +608,127 @@ label {
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
+                    <span class="nextBtn btn btn-info pull-right" data-current-block="4" data-next-block="5">Next ></span> 
+                    <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
+                    </button> -->
                   </div>
               </div>
-                
-                <div class="row setup-content" id="step-5">
-                  <div class="col-sm-12 mb-3">
-                    <!-- Invoice -->                      
-                     <div class="row invoice row-printable">
-                      <div class="col-md-12"> 
-                        <!-- col-lg-12 start here -->
-                        <div class="panel panel-default plain" id="dash_0"> 
-                          <!-- Start .panel -->
-                          <div class="panel-body p30">
-                            <div class="row ml-2 mr-2">
-                              <div class="col-lg-6"> 
-                                <!-- <div class="invoice-logo"><img width="100" src="https://nutridock.com/public/front/img/logo.png" alt="Invoice logo"></div> --> 
+              <!-- @END: Address details tab -->
+              
+              <!-- @START: Checkout tab -->
+              <div class="row setup-content" id="step-5">
+                <div class="col-sm-12 mb-3">
+                  <!-- Invoice -->                      
+                    <div class="row invoice row-printable">
+                    <div class="col-md-12"> 
+                      <!-- col-lg-12 start here -->
+                      <div class="panel panel-default plain" id="dash_0"> 
+                        <!-- Start .panel -->
+                        <div class="panel-body p30">
+                          <div class="row ml-2 mr-2">
+                            <div class="col-lg-6"> 
+                              <!-- <div class="invoice-logo"><img width="100" src="https://nutridock.com/public/front/img/logo.png" alt="Invoice logo"></div> --> 
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="invoice-from ">
+                                <ul class="list-unstyled text-right mb-0">
+                                  <li>Nutridock, Store B-17,MIDC Ambad</li>
+                                  <li>Nashik,Maharashtra 422010</li>
+                                  <li>GST EU826113958<br>
+                                  </li>
+                                </ul>
                               </div>
-                              <div class="col-lg-6">
-                                <div class="invoice-from ">
-                                  <ul class="list-unstyled text-right mb-0">
-                                    <li>Nutridock, Store B-17,MIDC Ambad</li>
-                                    <li>Nashik,Maharashtra 422010</li>
-                                    <li>GST EU826113958<br>
-                                    </li>
-                                  </ul>
-                                </div>
+                            </div>
+                            <div class="col-lg-12 text-right text-danger" ><small>Note : Please check & confirm your plan details</small></div>
+                            <div class="col-lg-12 border-top pt-3 mt-2">
+                                <div style="text-align: center; display: none;" id="all_details" >
+                                    <span id="err_all_details" style="color: red;"> </span>
+                                  </div>
+                              
+                              <div class="invoice-to mt-3 mb-3">
+                                <table>
+                                  <tr>
+                                    <td>Name</td>
+                                    <td class="text-center" style="width:35px"> : </td>
+                                    <td style="min-width: 76%;"><span id="checkout_name"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td> Mobile No.</td>
+                                    <td class="text-center" style="width:35px"> : </td>
+                                    <td>+91 <span id="checkout_phone_no"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Email</td>
+                                    <td class="text-center" style="width:35px"> : </td>
+                                    <td><span id="checkout_email"></span></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Address-1 </td>
+                                    <td class="text-center" style="width:35px"> : </td>
+                                    <td><span id="checkout_address1"></span> <span id="openbrk1" style="display: none;">(</span><span id="checkout_address1_meal"></span><span id="openbrk2" style="display: none;">)</span></td>
+                                    <!-- X-46, MIDC,Ambad, Nashik, 4221021 --> 
+                                  </tr>
+                                  <tr id="checkout_address2_div" style="display: none;">
+                                    <td>Address-2</td>
+                                    <td class="text-center" style="width:35px"> : </td>
+                                    <td><span id="checkout_address2"></span> (<span id="checkout_address2_meal"></span><span id="checkout_address1_meal"></span>)</td>
+                                    <!-- Hari om appartment,Nasik road, 4221021 --> 
+                                  </tr>
+                                </table>
                               </div>
-                              <div class="col-lg-12 text-right text-danger" ><small>Note : Please check & confirm your plan details</small></div>
-                              <div class="col-lg-12 border-top pt-3 mt-2">
-                                  <div style="text-align: center; display: none;" id="all_details" >
-                                      <span id="err_all_details" style="color: red;"> </span>
-                                    </div>
-                                
-                                <div class="invoice-to mt-3 mb-3">
-                                  <table>
-                                    <tr>
-                                      <td>Name</td>
-                                      <td class="text-center" style="width:35px"> : </td>
-                                      <td style="min-width: 76%;"><span id="checkout_name"></span></td>
-                                    </tr>
-                                    <tr>
-                                      <td> Mobile No.</td>
-                                      <td class="text-center" style="width:35px"> : </td>
-                                      <td>+91 <span id="checkout_phone_no"></span></td>
-                                    </tr>
-                                    <tr>
-                                      <td>Email</td>
-                                      <td class="text-center" style="width:35px"> : </td>
-                                      <td><span id="checkout_email"></span></td>
-                                    </tr>
-                                    <tr>
-                                      <td>Address-1 </td>
-                                      <td class="text-center" style="width:35px"> : </td>
-                                      <td><span id="checkout_address1"></span> <span id="openbrk1" style="display: none;">(</span><span id="checkout_address1_meal"></span><span id="openbrk2" style="display: none;">)</span></td>
-                                      <!-- X-46, MIDC,Ambad, Nashik, 4221021 --> 
-                                    </tr>
-                                    <tr id="checkout_address2_div" style="display: none;">
-                                      <td>Address-2</td>
-                                      <td class="text-center" style="width:35px"> : </td>
-                                      <td><span id="checkout_address2"></span> (<span id="checkout_address2_meal"></span><span id="checkout_address1_meal"></span>)</td>
-                                      <!-- Hari om appartment,Nasik road, 4221021 --> 
-                                    </tr>
+                              <div class="invoice-items mt-3">
+                                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th class=" br-0">No. of days</th>
+                                        <th class="per70 br-0">Meal Plan</th>
+                                        <th class="per5 text-right bl-0 br-0">Meal Type</th>
+                                        <th class="per25 text-right bl-0">Total</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td class="br-0"><span id="checkout_no_of_days"></span> Days</td>
+                                        <td class="text-left br-0 bl-0">Classic</td>
+                                        <td class="text-right br-0 bl-0"><span id="checkout_meal_type_name" ></span></td>
+                                        <td class="text-right bl-0"><span id="checkout_price"></span>/-</td>
+                                      </tr>                                       
+                                    </tbody>
+                                                                        
+                                      <tr>
+                                        <th colspan="3" class="text-right br-0" style="border-bottom: 0px;">GST</th>
+                                        <th class="text-right bl-0" style="border-bottom: 0px;">5% </th>
+                                      </tr>
+                                      <tr>
+                                        <th colspan="3" class="text-right br-0" style="border-top: 0px;">Total</th>
+                                        <th class="text-right bl-0" style="border-top: 0px;"><span id="checkout_final_gst_value"></span> </th>
+                                      </tr>
+                                    </tfoot>
                                   </table>
                                 </div>
-                                <div class="invoice-items mt-3">
-                                  <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
-                                    <table class="table table-bordered">
-                                      <thead>
-                                        <tr>
-                                          <th class=" br-0">No. of days</th>
-                                          <th class="per70 br-0">Meal Plan</th>
-                                          <th class="per5 text-right bl-0 br-0">Meal Type</th>
-                                          <th class="per25 text-right bl-0">Total</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr>
-                                          <td class="br-0"><span id="checkout_no_of_days"></span> Days</td>
-                                          <td class="text-left br-0 bl-0">Classic</td>
-                                          <td class="text-right br-0 bl-0"><span id="checkout_meal_type_name" ></span></td>
-                                          <td class="text-right bl-0"><span id="checkout_price"></span>/-</td>
-                                        </tr>                                       
-                                      </tbody>
-                                                                          
-                                        <tr>
-                                          <th colspan="3" class="text-right br-0" style="border-bottom: 0px;">GST</th>
-                                          <th class="text-right bl-0" style="border-bottom: 0px;">5% </th>
-                                        </tr>
-                                        <tr>
-                                          <th colspan="3" class="text-right br-0" style="border-top: 0px;">Total</th>
-                                          <th class="text-right bl-0" style="border-top: 0px;"><span id="checkout_final_gst_value"></span> </th>
-                                        </tr>
-                                      </tfoot>
-                                    </table>
-                                  </div>
-                                </div>
                               </div>
-                              <!-- col-lg-12 end here --> 
                             </div>
-                            <!-- End .row --> 
+                            <!-- col-lg-12 end here --> 
                           </div>
+                          <!-- End .row --> 
                         </div>
-                        <!-- End .panel --> 
                       </div>
-                      <!-- col-lg-12 end here --> 
+                      <!-- End .panel --> 
                     </div>
-                    <!-- Invoice --> 
+                    <!-- col-lg-12 end here --> 
                   </div>
-                  <div class="wizgard-footer">
-                    <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button">
-                      <i class="fa fa-hand-o-right" aria-hidden="true"></i> &nbsp;  Finish 
-                    </button>
-                  </div>
+                  <!-- Invoice --> 
                 </div>
+                <div class="wizgard-footer">
+                  <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button">
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i> &nbsp;  Finish 
+                  </button>
+                </div>
+              </div>
+              <!-- @END: Checkout tab -->
+
             </form>
           </div>
         </div>
@@ -720,6 +742,11 @@ label {
 
 <script>
 $(document).ready(function () {
+/************* Pop Over tool tip *************/
+$('[data-toggle="popover"]').popover();
+
+
+/************* @START: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
 var navListItems = $('div.setup-panel div a'),
     allWells = $('.setup-content'),
     allNextBtn = $('.nextBtn');
@@ -742,52 +769,88 @@ navListItems.click(function (e) {
 });
 
 allNextBtn.click(function(){
-    var curStep = $(this).closest(".setup-content"),
-        curStepBtn = curStep.attr("id"),
-        nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
-        curInputs = curStep.find("input[type='text'],input[type='url'],input[type='email']"),
-        isValid = true;
-
-    $(".form-group").removeClass("has-error");
-    for(var i=0; i<curInputs.length; i++){
-        if (!curInputs[i].validity.valid){
-            isValid = false;
-           // $(curInputs[i]).closest(".form-group").addClass("has-error");
-            if ($(curInputs[i]).parsley().validate() !== true) isValid = false;
-        }
-    }
+  var curStep = $(this).closest(".setup-content"),
+    curStepBtn = curStep.attr("id"),
+    nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a");
     
-    if (isValid)
+  var current = $(this).data('currentBlock'),
+      next = $(this).data('nextBlock');
+
+  if (next > current) {
+    if(true === $('#sign-up').parsley().validate('step-' + current)) {
+      if(current == 1) {
+        $.ajax({
+            type: "POST",
+            url:  "{{ URL::to('/') }}/store_basic_details",
+            data: {
+                name    : $("#full_name").val(),
+                email   : $("#email").val(),
+                mobile  : $("#mobile").val()
+              },
+            success: function (data) {
+              if(data){
+                nextStepWizard.removeAttr('disabled').trigger('click');
+              }
+            },
+            error: function (data) {
+              return false;
+            },
+        });  
+      } else {
+        // validation is ok. goto next step.
         nextStepWizard.removeAttr('disabled').trigger('click');
+      }
+    }      
+  } 
 });
+
 
 /* script for previous button click */
 allPrevBtn.click(function(){
 var curStep = $(this).closest(".setup-content"),
     curStepBtn = curStep.attr("id"),
-    prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a").trigger('click');
+    prevStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().prev().children("a").trigger('click'); 
 });
 
-
-
+// dont remove this code
 $('div.setup-panel div a.btn-primary').trigger('click');
 });
+/************* @END: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
+
+/************* @START: CODE FOR GET PLAN DETAILS *************/
+$('input[type="radio"][name="radioSubscriptionPlan"]').click(function(){ 
+  var plan_details_html = ''; 
+      $.ajax({  
+          url:"{{ URL::to('/') }}/get_plan_details",  
+          method:"POST",  
+          data:{plan_id:$(this).val()},  
+          success:function(data){  
+                $.each(data, function(i, val) {
+                  plan_details_html += '<div class="col-sm-2 chk-toolbar"><input type="checkbox" id="radio'+val.duration+'" name="radioSubscriptionPlan" value="'+val.duration+'"> <label for="radio'+val.duration+'">'+val.duration+'</label></div></div>';                                   
+                });
+                    
+                $("#getPlanDetails").append().html(plan_details_html); 
+               
+          } 
+      });  
+});  
+/************* @END: CODE FOR GET PLAN DETAILS *************/
 
 $(document).ready(function() {
   var x = new SlimSelect({
-    select: '#demo'
+    select: '#avoid_food_id'
   });
 
   var mySessionId = '<?php echo Session::getId(); ?>';
   //console.log(mySessionId);
 
-  var x = new SlimSelect({
-    select: '#mealtype1'
-  });
+  // var x = new SlimSelect({
+  //   select: '#mealtype1'
+  // });
 
-  var x = new SlimSelect({
-    select: '#mealtype2'
-  });
+  // var x = new SlimSelect({
+  //   select: '#mealtype2'
+  // });
 });
 </script>
 @endsection 

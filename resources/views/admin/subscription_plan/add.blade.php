@@ -29,7 +29,7 @@
              
               {!! csrf_field() !!}
               <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
@@ -39,7 +39,7 @@
                     </div>
                   </div> 
                  
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_name">City<span style="color:red;" >*</span></label>
@@ -53,7 +53,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
@@ -65,6 +65,19 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3 col-lg-3">
+                  <div class="">
+                    <label for="name">Icon Image <span style="color:red;" >*</span></label>
+                    <div class="input-group">
+                          <div class="input-group-addon btn-default">
+                            <i class="fa fa-image"></i>
+                          </div>
+                            <input type="file" class="form-control"  id="icon_image" name="icon_image" required="true" data-parsley-errors-container="#img_msg" data-parsley-error-message="Please upload icon image">
+                           
+                      </div>
+                       <span id="img_msg" style="color:red;"></span>
+                  </div>
+                </div>
               </div> 
 
               <div class="row">
@@ -73,8 +86,8 @@
                     <table class="table table-sm table-bordered table-striped table-dark" id="myTable">
                       <thead>
                         <tr class="text-uppercase text-center">
-                          <th width="30%" >Duration</th>
-                          <th>Meal Type</th>
+                          <th width="25%" >Duration</th>
+                          <th width="25%">Meal Type</th>
                           <th>Price</th>
                           <th>Discounted Price</th>
                           <th class="text-center"><a href="javascript:void(0);" class="btn btn-sm btn-primary btn-create addRow p-0 m-0" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
@@ -91,7 +104,7 @@
                                   </div></div>
                                 <span id="duration_msg1" style="color:red;"></span>
                             </td>
-                            <td>
+                            <td width="20%">
                                  <input type="radio" id="price_type1" name="price_type1" required="true" value="meal" data-parsley-errors-container="#meal_type1" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b>
                                  <input type="radio" id="price_type1" name="price_type1" required="true" value="pack" data-parsley-errors-container="#meal_type1" data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b>
                                  <span id="meal_type1" style="color:red;"></span>
@@ -124,6 +137,14 @@
                   </div>                  
                 </div>
               </div>
+              <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                       <label for="name">Short Description</label>
+                       <textarea name="plan_description" id="plan_description"></textarea>
+                    </div>
+                </div>
+              </div> 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                  <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
@@ -140,10 +161,10 @@
   </div>
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
   <script type="text/javascript"> 
   //load area drop down script 
-
-
+   CKEDITOR.replace('plan_description');
 
   function get_area()
   {
@@ -180,7 +201,19 @@
       }
   }
 
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 
+   $("#icon_image").change(function() {
+   readURL(this);
+  });
 
 
 </script>

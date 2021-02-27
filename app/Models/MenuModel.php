@@ -9,13 +9,18 @@ class MenuModel extends Model
 
     protected $fillable = [
                             'menu_title',
+                            'menu_type',
                             'menu_category_id',
     	                    'menu_description',
     	                    'what_makes_dish_special',
                             'image',
                             'specification_id',
                             'multiple_image',
-                            'ingredients'
+                            'ingredients',
+                            'calories',
+                            'proteins',
+                            'fats',
+                            'carbohydrates'
                         ];
 }
 	
