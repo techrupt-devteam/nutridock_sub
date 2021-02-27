@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-//use PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
 
@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $data                = [];
+        $this->email         = "bhushantechrupt@gmail.com";
+        $this->Host          = "smtp.gmail.com";
+        $this->Port          = 587;
+        $this->Password      = "bhushan@9912";
+      
+    }
+
+
     public function login()
     {
         return view('admin/login');
@@ -85,9 +97,13 @@ class AuthController extends Controller
               $request->session()->save();
               $request->session()->put("login_city_id",$request->input('city'));
               $request->session()->save();
+              
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
             }
             else
             {
+
               $request->session()->put("login_city_id",$request->input('city'));
               $request->session()->save();
             }
@@ -117,6 +133,8 @@ class AuthController extends Controller
               $request->session()->save();
               $request->session()->put("login_city_id",$arr_user->city);
               $request->session()->save();
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
                 
         }
 
@@ -228,68 +246,104 @@ class AuthController extends Controller
     {
         if(!empty($request->input('email')))
         {
-            $user = \DB::table('users')->where(['mobile_no'=>$request->input('email')])->count();
+            $user = \DB::table('users')->where(['email'=>$request->input('email')])->count();
             if($user)
             {
-                $characters = '0123456789';
-                $randstring = '';
-                for ($i = 0; $i < 8; $i++) {
-                    $randstring.= $characters[rand(0, strlen($characters))];
-                }
                 
-                \DB::table('users')->where(['mobile_no'=>$request->input('email')])->update(['password'=>bcrypt($randstring)]);
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+                $charactersLength = strlen($characters);
+                $randstring = '';   
+                for ($i = 0; $i < 18; $i++) {
+                $randstring .= $characters[rand(0, $charactersLength - 1)];
+                }
+        
+
+
+
+                //dd($randstring);
+                \DB::table('users')->where(['email'=>$request->input('email')])->update(['password'=>bcrypt($randstring)]);
                 $mobile_no = $request->input('email');
-            $msg='You system generated password is '.$randstring.'. ';
-            if(strlen($mobile_no)>10)
-            {
+                $msg='You system generated password is '.$randstring.'.';
+                
+                /*if(strlen($mobile_no)>10)
+                {
                 $keycount=strlen($mobile_no)-10;
                 $mobile_no = substr($mobile_no,$keycount);
-            }
-           
-                 $url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
-            $ch = curl_init();
-            curl_setopt( $ch,CURLOPT_URL, $url);
-            curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-            curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-            curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-            $result = curl_exec($ch );
+                }*/
 
-            curl_close( $ch );
+                /*$url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
+                $ch = curl_init();
+                curl_setopt( $ch,CURLOPT_URL, $url);
+                curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+                curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+                curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+                $result = curl_exec($ch );
+                curl_close( $ch );*/
+
                /* $mail = new PHPMailer(true); 
                 try {
                     $mail->isSMTP(); 
                     $mail->CharSet    = "utf-8"; 
                     $mail->SMTPAuth   = true;  
-                    $mail->SMTPSecure = env('SMTPSECURE');
-                    $mail->Host       = env('HOST');
-                    $mail->Port       = env('PORT');
-                    $mail->Username   = env('USERNAME');
-                    $mail->Password   = env('PASSWORD');
-                    $mail->setFrom(env('SETFROMEMAIL'), "Kores India");
+                    $mail->SMTPSecure = 'tls';
+                    $mail->Host       = $this->Host;
+                    $mail->Port       = $this->Port;
+                    $mail->Username   = $this->email;
+                    $mail->Password   = $this->Password;
                     $mail->Subject = "Forget Password";
                     $mail->MsgHTML("Your system generated password is ".$randstring.".");
-                    $mail->addAddress($request->input('email'), "Admin");
-                    //$mail->send();
+                    $mail->addAddress($request->input('email'), "Nutridock-Admin");
+                    $mail->send();
 
                 } 
                 catch (phpmailerException $e) 
                 {
-                    dd($e);
+                    //dd($e);
                     Session::flash('error', $e);
                 } 
                 catch (Exception $e) 
                 {
-                    dd($e);
+                    //dd($e);
                     Session::flash('error', $e);
-                }*/
-                Session::flash('success', 'Success! Please check your Mobile Number for temporary password. Please login again.');
-                return redirect('admin/login');
+                }
+                Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
+                return redirect('admin/login');*/
+
+                $mail = new PHPMailer(true); 
+                try 
+                {
+                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;     
+                    $mail->isSMTP(); 
+                    $mail->CharSet    = "utf-8";
+                    $mail->SMTPAuth   = true;
+                    $mail->SMTPSecure = "tls";
+                    $mail->Host       = $this->Host;
+                    $mail->Port       = $this->Port;
+                    $mail->Username   = $this->email;
+                    $mail->Password   = $this->Password;
+                    $mail->IsHTML(true); 
+                    $mail->Subject    = "Forget Password";
+                    $mail->setFrom($this->email,'Nutridock-Admin'); //sender
+                    $mail->MsgHTML("Your system generated password is <b>".$randstring."</b>.");
+                    $mail->addAddress($request->input('email')); // reciviwer
+                    $mail->send();
+                    Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
+                    return redirect('admin/login');
+
+                } 
+                catch (Exception $e) 
+                {
+                    Session::flash('error', 'Internal Server Issue.'.$e);
+                    return \Redirect::back();
+                } 
             }
             else
             {
-                Session::flash('error', 'Error! Please enter valid Mobile No..');
+                Session::flash('error', 'Error! Please enter valid email.');
                 return \Redirect::back();
             }
+
+
         }
     }
 

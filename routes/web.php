@@ -178,6 +178,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	
 	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
 	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+	Route::post('/getSubscriber',	 	 'Admin\AjaxController@getSubscriber');
 
 
 	//plan master routes
@@ -303,14 +304,17 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
     
     //Meal Program Subscriber 
-    Route::get('/add_subscriber_meal_program/{id}',		'Admin\SubscriberMealProgramController@add');
-    Route::post('/store_subscriber_health_details',		'Admin\SubscriberMealProgramController@store');
-    Route::post('/edit_subscriber_default_menu',		'Admin\SubscriberMealProgramController@menu_edit');
-    Route::post('/get_menu_dropdown',					'Admin\SubscriberMealProgramController@get_menu');
-
+    Route::get('/add_subscriber_meal_program/{id}',   'Admin\SubscriberMealProgramController@add');
+    Route::post('/store_subscriber_health_details',	  'Admin\SubscriberMealProgramController@store');
+    Route::post('/edit_subscriber_default_menu',	  'Admin\SubscriberMealProgramController@menu_edit');
+    Route::post('/get_menu_dropdown',				  'Admin\SubscriberMealProgramController@get_menu');
+    Route::post('/get_menu_macros',					  'Admin\SubscriberMealProgramController@get_menu_macros');
+    Route::post('/store_change_menu',				  'Admin\SubscriberMealProgramController@store_change_menu');
+   
     //Subscriber Calender
     Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
-	
+	Route::post('/getMealDetails',					  'Admin\SubscriberCalenderController@getMealDetails');
+
 	/*Route::post('/getSubscriberData',	  	  'Admin\SubscriberController@getSubscriberData');
 	Route::get('/add_subscriber',		  	  'Admin\SubscriberController@add');
     Route::post('/store_subscriber',	  	  'Admin\SubscriberController@store');

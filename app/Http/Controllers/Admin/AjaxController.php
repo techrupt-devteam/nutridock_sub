@@ -8,20 +8,22 @@ use App\Models\Location;
 use App\Models\city;
 use App\Models\Role;
 use App\Models\State;
+use App\Models\SubscriberDetails;
 //use Session;
 use Sentinel;
 use Validator;
 use DB;
 class AjaxController extends Controller
 {
-    public function __construct(User $User,Location $Location,City $City,Role $Role,State $State)
+    public function __construct(User $User,Location $Location,City $City,Role $Role,State $State,SubscriberDetails $SubscriberDetails)
     {
-        $data                = [];
-        $this->base_model    = $User; 
-        $this->base_location = $Location; 
-        $this->base_city     = $City; 
-        $this->base_state    = $State; 
-        $this->base_role     = $Role;  
+        $data                              = [];
+        $this->base_model                  = $User; 
+        $this->base_location               = $Location; 
+        $this->base_city                   = $City; 
+        $this->base_subscriber_details     = $SubscriberDetails; 
+        $this->base_state                  = $State; 
+        $this->base_role                   = $Role;  
     }
 
     public function getCity(Request $request)
@@ -78,5 +80,33 @@ class AjaxController extends Controller
         return $html;
     }
 
+    public function getSubscriber(Request $request)
+    {
+        $state_id = $request->state;
+        $city_id  = $request->city;
+
+        $get_subscriber = $this->base_subscriber_details->where(['state'=>$state_id,'city'=>$city_id,'is_approve'=>'1'])->get();
+
+        $html = "";
+        $html = "<option value=''>-Select-</option>";
+        foreach ($get_subscriber as $key => $value) 
+        {
+             $date     = strtotime(date("Y-m-d"));
+             $exp_date = strtotime($value->expiry_date);
+             if($date > $exp_date)
+             {
+
+               $status = "expired";  
+             }
+             else
+             {
+               $status = "ongoing";  
+             }
+
+             $html.="<option value=".$value->id." class=".$status.">".$value->subscriber_name." (".$status.")</option>";     
+        }                
+        
+        return $html;
+    }
 
 }

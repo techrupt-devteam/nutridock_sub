@@ -6,15 +6,19 @@
         </button>-->
       </div>
       <div class="modal-body">
-              <?php// dd($program_data); ?>
+             
            @include('admin.layout._status_msg')
             <form action="{{ url('/admin')}}/store_change_menu" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
+               
               <div class="row">
+                <input type="hidden" name="old_menu_id" id ="old_menu_id" value="{{$program_data->menu_id}}">
+                <input type="hidden" name="program_id" id ="old_menu_id" value="{{$program_data->program_id}}">
+                <input type="hidden" name="subscriber_id" id ="subscriber_id" value="{{$program_data->subcriber_id}}">
                   <div class="col-md-6">
                       <div class="form-group">
                         <label class="d-block">Menu Catgory<span style="color:red;" >*</span></label>
-                         <select name="menu_category" id="menu_category" class="form-control" required="true" data-parsley-errors-container="#category_error" data-parsley-error-message="Please select category.">
+                         <select name="menu_category" id="menu_category" class="form-control" required="true" data-parsley-errors-container="#category_error" data-parsley-error-message="Please select category." onchange="get_menu();">
                            <option value="">-Select Category-</option>
                            @foreach($menu_category as $menu_cat_value)
                            <option value="{{$menu_cat_value->id}}" {{ ($program_data->menu_category_id == $menu_cat_value->id) ? 'selected' : ('') }}>{{$menu_cat_value->name}}</option>
@@ -26,17 +30,20 @@
                   <div class="col-md-6">
                     <div class="form-group"> 
                       <?php 
-                             $data       = explode(",",$program_data->specification_id); 
+                             $data  = explode(",",$program_data->specification_id); 
                       ?>
                       <label  class="d-block">Menu Specification<span style="color:red;">*</span></label>
-                       <select name="menu_specifiation" id="menu_specifiation" class="form-control" required="true" data-parsley-errors-container="#menu_specifiation_error" data-parsley-error-message="Please select specification." multiple="multiple">
+                       <select name="menu_specifiation" id="menu_specifiation" class="form-control" required="true" data-parsley-errors-container="#menu_specifiation_error" data-parsley-error-message="Please select specification." multiple="multiple" onchange="get_menu();">
                          <option value="">-Select Menu Specification-</option>
                          @foreach($menu_specification as $specification_value)
                          <?php
-                            $selected   = "";
+                           
                             if(in_array($specification_value['id'],$data))
                             {
                               $selected = "selected"; 
+                            }else
+                            {
+                              $selected = " ";
                             }
                          ?>
 
@@ -53,7 +60,9 @@
                        <select name="meal_type" id="meal_type" class="form-control" required="true" data-parsley-errors-container="#meal_type_error" data-parsley-error-message="Please meal type." onchange="get_menu();">
                          <option value="">-Select Meal Type-</option>
                          @foreach($meal_type as $meal_type_value)
-                         <option value="{{$meal_type_value->meal_type_id}}" {{ ($program_data->mealtype == $meal_type_value->meal_type_id)?"selected":''}}>{{$meal_type_value->meal_type_name}}</option>
+                           @if($program_data->mealtype == $meal_type_value->meal_type_id)
+                            <option value="{{$meal_type_value->meal_type_id}}" selected="">{{$meal_type_value->meal_type_name}}</option>
+                            @endif
                          @endforeach
                        </select> 
                        <div id="meal_type_error" style="color:red;"></div>
@@ -62,13 +71,22 @@
                 <div class="col-md-6">               
                     <div class="form-group">
                       <label class="d-block">Menu<span style="color:red;" >*</span></label>
-                       <select name="menu_id" id="menu_id" class="form-control" required="true" data-parsley-errors-container="#menu_error" data-parsley-error-message="Please select category.">
+                       <select name="menu_id" id="menu_id" class="form-control" required="true" data-parsley-errors-container="#menu_error" data-parsley-error-message="Please select category." onchange="get_menu_macros();">
                          <option value="">-Select Category-</option>
                         </select>  
                        <div id="menu_error" style="color:red;"></div>
                     </div>
                 </div>
 
+              </div>
+              <div class="row dtlrow" style="display: none !important;">
+              
+                 <div class="col-md-12">
+                     
+                     <table class="table table-bordered" id="det_table">
+                      
+                     </table>
+                 </div>
               </div>
               <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -105,10 +123,15 @@ $('#meal_type').select2();
             }
         });
     }
+
+    get_menu();
+    get_menu_macros1();
+
   function get_menu()
   {
       var meal_type             = $('#meal_type').val();
       var menu_Category         = $('#menu_category').val();
+      var old_menu_id            = $('#old_menu_id').val();
       var selected_specifiation = [];
 
       $('#menu_specifiation :selected').each(function(){
@@ -118,11 +141,41 @@ $('#meal_type').select2();
       $.ajax({
           url: "{{url('/admin')}}/get_menu_dropdown",
           type: 'post',
-          data: { meal_type:meal_type,menu_Category:menu_Category,specification_array:selected_specifiation},
+          data: { meal_type:meal_type,menu_Category:menu_Category,specification_array:selected_specifiation,old_menu_id:old_menu_id},
           success: function (data) 
           {
-            alert(data);
+           // alert(data);
             $('#menu_id').html(data);
+          }
+       });
+  }
+
+  function get_menu_macros()
+  {
+      var menu_id =  $('#menu_id').val();
+      $.ajax({
+          url: "{{url('/admin')}}/get_menu_macros",
+          type: 'post',
+          data: { menu_id:menu_id},
+          success: function (data) 
+          {
+            $('#det_table').html(data);
+            $('.dtlrow').show();
+          }
+       });
+  }
+
+  function get_menu_macros1()
+  {
+      var menu_id =  $('#old_menu_id').val();
+      $.ajax({
+          url: "{{url('/admin')}}/get_menu_macros",
+          type: 'post',
+          data: { menu_id:menu_id},
+          success: function (data) 
+          {
+            $('#det_table').html(data);
+            $('.dtlrow').show();
           }
        });
   }

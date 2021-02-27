@@ -237,6 +237,11 @@
         </li>
     @else
 <!--------------------Dynamic Menu with permission---------------------->
+      <li @if(Request::segment(2)=='dashbord') class="active" @endif>
+        <a href="{{url('/admin')}}/dashbord">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+        </a>
+      </li>
         @foreach($session_parent_menu as $parent_value)
           @if(!empty($parent_value[1]))
             @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions))

@@ -102,7 +102,7 @@ class NutritionsitController extends Controller
             return $validator->errors()->all();
         }
       
-        $is_exist = $this->base_model->where(['email'=>$request->input('nutritionsit_email')])->count();
+        $is_exist = $this->base_model->where(['email'=>$request->input('nutritionsit_email')])->where('is_deleted','<>',1)->count();
 
         if($is_exist)
         {
@@ -209,9 +209,13 @@ class NutritionsitController extends Controller
             return $validator->errors()->all();
         }
 
-        $is_exist = $this->base_model->where('id','<>',$id)->where(['name'=>$request->input('nutritionsit_name'),'mobile'=>$request->input('nutritionsit_mobile')])
+        $is_exist = $this->base_model->where('id','<>',$id)
+                   //->where('name','=',$request->input('nutritionsit_name'))
+                   // ->where('mobile','=',$request->input('nutritionsit_mobile'))
+                    ->where('email','=',$request->input('nutritionsit_email'))
+                    ->where('is_deleted','<>',1)
                     ->count();
-
+                 
         if($is_exist)
         {
             Session::flash('error', $this->Is_exists);

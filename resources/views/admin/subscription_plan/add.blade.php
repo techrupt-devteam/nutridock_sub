@@ -86,8 +86,8 @@
                     <table class="table table-sm table-bordered table-striped table-dark" id="myTable">
                       <thead>
                         <tr class="text-uppercase text-center">
-                          <th width="30%" >Duration</th>
-                          <th>Meal Type</th>
+                          <th width="25%" >Duration</th>
+                          <th width="25%">Meal Type</th>
                           <th>Price</th>
                           <th>Discounted Price</th>
                           <th class="text-center"><a href="javascript:void(0);" class="btn btn-sm btn-primary btn-create addRow p-0 m-0" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
@@ -104,7 +104,7 @@
                                   </div></div>
                                 <span id="duration_msg1" style="color:red;"></span>
                             </td>
-                            <td>
+                            <td width="20%">
                                  <input type="radio" id="price_type1" name="price_type1" required="true" value="meal" data-parsley-errors-container="#meal_type1" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b>
                                  <input type="radio" id="price_type1" name="price_type1" required="true" value="pack" data-parsley-errors-container="#meal_type1" data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b>
                                  <span id="meal_type1" style="color:red;"></span>

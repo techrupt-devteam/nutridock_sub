@@ -37,6 +37,7 @@ class SubscriberDetails extends Model
                             'address2_deliver_mealtype',  
                             'state',  
                             'city',  
+                            'is_approve',
                             'session_id',  
                             'transaction_id',  
                             'subscription_id',  

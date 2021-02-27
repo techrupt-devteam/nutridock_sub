@@ -225,25 +225,111 @@ class SubscriberMealProgramController extends Controller
 
     public function get_menu(Request $request)
     {
-        $meal_type          = [];
+       
         $menu_category      = $request->menu_Category;
         $specification      = $request->specification_array;
-        $menu_specification = [];
+        $menu_specification = array();
         
-        foreach ($specification as $key => $value) {
+        foreach ($specification as $key => $value)
+        {
            if(!empty($value))
            {
              $menu_specification[] = $value;
            }
         }
-        $meal_type[] = $request->meal_type;  
+
+       
       
-        $menu_data =  $this->base_menu->whereIn('specification_id', $menu_specification)->get(); 
-       
-        dd($menu_data); 
-       
+        $menu_data =  $this->base_menu->where('menu_category_id','=',$menu_category)->get(); 
+      
+        $html                       = "";
+        $specification_array        = [];
+        $menu_type                  = [];
+        $meal_type_array            = [];
+        $specification_array_f      = [];
+        $html.="<option value=''>-Select Menu-</option>";
+        foreach ($menu_data as $key => $menu_value) {
+         $menu_type[$key]= explode(',',$menu_value['menu_type']); 
+         
+         //create meal_type array 
+         foreach ( $menu_type[$key] as $key2 => $mtyvalue) {
+            if(!in_array($mtyvalue,$meal_type_array)){
+              $meal_type_array [] = $mtyvalue;
+            }   
+         } 
+ 
+          $specification_array [$key]  = explode(',',$menu_value['specification_id']); 
+          foreach ($specification_array[$key] as $key3 => $spavalue) {
+            if(!in_array($spavalue,$specification_array_f)){
+                $specification_array_f [] = $spavalue;
+            }
+          }
+
+          $result =  array_intersect($menu_specification,$specification_array_f);
+     
+          if(count($result)>0 && in_array($request->meal_type,$meal_type_array) && $menu_value->menu_category_id==$menu_category){
+             
+             if($request->old_menu_id == $menu_value['id'])
+             {
+                $html.="<option value=".$menu_value['id']." selected>".ucfirst($menu_value['menu_title'])."</option>"; 
+             }
+             else
+             {
+                $html.="<option value=".$menu_value['id']." >".ucfirst($menu_value['menu_title'])."</option>"; 
+             }
+
+          }
+        }
+
+        return $html;
+    }
+
+    public function get_menu_macros(Request $request)
+    {
+         $menu_id   = $request->menu_id;
+         $menu_data =  $this->base_menu->where('id','=',$menu_id)->select('calories','proteins','carbohydrates','fats')->first();
+         $data      = [];
+         $data[]      = $menu_data->calories;
+         $data[]      = $menu_data->proteins;
+         $data[]      = $menu_data->carbohydrates;
+         $data[]      = $menu_data->fats;
+         $html        ="<thead>
+                            <tr style='background-color:#cacaca!important;'>
+                              <td class='text-center'><strong>Calories</strong></td>
+                              <td class='text-center'><strong>Proteins</strong></td>
+                              <td class='text-center'><strong>Carbohydrates</strong></td>
+                              <td class='text-center'><strong>Fats</strong></td>
+                              <td class='text-center'><strong>Total</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                             <td class='text-center'>".$menu_data->calories."</td>
+                             <td class='text-center'>".$menu_data->proteins."</td>
+                             <td class='text-center'>".$menu_data->carbohydrates."</td>
+                             <td class='text-center'>".$menu_data->fats."</td>
+                             <td class='text-center'>".array_sum($data)."</td>
+                            </tr>
+                        </tbody>"; 
+        return $html; 
 
     }
+
+    public function store_change_menu(Request $request)
+    {
+         
+        $id                   = $request->input('program_id');
+        $arr_data['mealtype'] = $request->input('meal_type');
+        $arr_data['menu_id']  = $request->input('menu_id');
+        $menu_update          = $this->base_model->where(['program_id'=>$id])->update($arr_data);
+
+        Session::flash('success', $this->Insert);
+        return \Redirect::to('admin/add_subscriber_meal_program/'.base64_encode($request->input('subscriber_id')));
+
+
+
+    }
+
 
 
 }

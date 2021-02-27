@@ -65,10 +65,11 @@
         <input type="password" name="password" class="form-control" placeholder="Password" {{-- value="{{$_COOKIE["adminpassword"] or ''}}"  --}}{{-- data-parsley-minlength="6" --}} required="true" style="height: 40px;">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-      <div class="form-group has-feedback" id="city_select" style="display: none !important;">
-        <select name="city" id="city" class="form-control Select2"  required="true">
+      <div class="form-group has-feedback " id="city_select" style="display: none !important;">
+        <select name="city" id="city" class="form-control select2"  required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
           <option value=" ">-Select City-</option>
         </select>
+          <div id="city_error" style="color:red;"></div>
       </div>
       <div class="row">
         <div class="col-xs-12 text-center">
@@ -93,9 +94,11 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/plugins/iCheck/icheck.min.js"></script>
 <!-- parsaly -->
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/parsley.js"></script>
-
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 
 <script>
+   $('.select2').select2();
   $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
@@ -131,5 +134,10 @@ function  getcity_dropdown(){
 
 
 </script>
+<style type="text/css">
+  .select2{
+   width: 100% !important;
+  }
+</style>
 </body>
 </html>
