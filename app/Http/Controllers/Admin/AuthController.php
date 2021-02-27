@@ -44,8 +44,13 @@ class AuthController extends Controller
             return $validator->errors()->all();
         }
 
-
-        $arr_user = \DB::table('users')->where('email',$request->input('email'))->first();
+        $arr_user = \DB::table('users')->where('email',$request->input('email'))->where('is_deleted','<>',1)->first();
+        
+        if($arr_user->is_active == 0 & $arr_user->roles!='admin')
+        {
+            Session::flash('error', 'You account has been deactivated please contact Admin!');
+            return \Redirect::back();
+        }
 
         $credentials = [
             'email'    => $request->input('email'),
@@ -139,28 +144,6 @@ class AuthController extends Controller
         }
 
 
-
-
-        //dd($sub_menu);
-
-        //get module type
-        //  $get_module_type = \DB::table('module_type')->where(['type_id'=>$arr_user->type_id])->select('type_name')->first();
-       
-        
-        //dd($arr_user);
-        /* if ($request->input('remember')=='on')
-        {
-            setcookie("adminemail",$request->email,time()+ 3600);
-            setcookie("adminpassword",$request->password,time()+ 3600);
-            setcookie("adminremember",$request->remember,time()+ 3600);
-        }
-        else
-        {
-            setcookie("adminemail",'',time()+ 3600);
-            setcookie("adminpassword",'',time()+ 3600);
-            setcookie("adminremember",'',time()+ 3600);
-        }
-        */
         //dd(Session::getId());
         $user = \Sentinel::authenticate($credentials);
 

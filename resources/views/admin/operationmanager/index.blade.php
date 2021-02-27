@@ -34,7 +34,8 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Name</th>
+                <!--   <th>profile Pic</th>
+ -->                  <th>Name</th>
                   <th>Eamil</th>
                   <th>Mobile</th>
                   <th>state</th>
@@ -49,6 +50,12 @@
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
+          <!--             <td> <div class="pull-left image">@if(!IS_NULL($value->profile_image))
+
+           <img src="{{ url('/')}}/uploads/user_pic//thumb/{{$value->profile_image}}" class="img-circle" alt="User Image">
+           @else
+          <img src="{{url('/admin_css_js')}}/css_and_js/admin/dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+          @endif </div></td> -->
                       <td>{{ucfirst($value->name)}}</td>
                       <td>{{$value->email}}</td>
                       <td>{{$value->mobile}}</td>

@@ -28,7 +28,7 @@
              
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
@@ -37,7 +37,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_email">Email<span style="color:red;" >*</span></label>
@@ -51,7 +51,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">Mobile No<span style="color:red;" >*</span></label>
@@ -65,6 +65,19 @@
                       </div>
                     </div>
                   </div>
+                   <div class="col-md-3 col-lg-3">
+                  <div class="">
+                    <label for="name">Profile Pic </label>
+                    <div class="input-group">
+                          <div class="input-group-addon btn-default">
+                            <i class="fa fa-user"></i>
+                          </div>
+                            <input type="file" class="form-control"  id="profile_image" name="profile_image"data-parsley-errors-container="#img_msg" >
+                           
+                      </div>
+                       <span id="img_msg" style="color:red;"></span>
+                  </div>
+                </div>
                 </div>
                 <div class="row">  
 
@@ -123,7 +136,8 @@
                       </div>
                     </div>
                   </div>
-                </div>   
+                </div>
+                   
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>

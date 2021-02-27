@@ -8,9 +8,12 @@ use App\Models\Location;
 use App\Models\city;
 use App\Models\Role;
 use App\Models\State;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Input;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Image;
 use Session;
 use Sentinel;
 use Validator;
@@ -110,26 +113,61 @@ class NutritionsitController extends Controller
             return \Redirect::back();
         }
 
-        $password             = uniqid();
-        $arr_data                          = [];
-        $arr_data['name']     = $request->input('nutritionsit_name');
-        $arr_data['email']    = $request->input('nutritionsit_email');
-        $arr_data['mobile']   = $request->input('nutritionsit_mobile');
-        $arr_data['city']     = $request->input('nutritionsit_city');
-        $arr_data['state']    = $request->input('nutritionsit_state');
-        $arr_data['area']     = $request->input('nutritionsit_area');
-        $arr_data['roles']    = $request->input('nutritionsit_role');
-        $arr_data['password'] = bcrypt($password);
+        //file upload
+        $icon_img         = Input::file('profile_image');
+        $characters       = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString     = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
 
-        $store_nutritionsit = $this->base_model->create($arr_data);
+
+        $password               = uniqid();
+        $arr_data                          = [];
+        $arr_data['name']       = $request->input('nutritionsit_name');
+        $arr_data['email']      = $request->input('nutritionsit_email');
+        $arr_data['mobile']     = $request->input('nutritionsit_mobile');
+        $arr_data['city']       = $request->input('nutritionsit_city');
+        $arr_data['state']      = $request->input('nutritionsit_state');
+        $arr_data['area']       = $request->input('nutritionsit_area');
+        $arr_data['roles']      = $request->input('nutritionsit_role');
+        if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+        {
+          $arr_data['profile_image'] = $randomString."".$icon_img->getClientOriginalName();
+        }
+        $arr_data['password']   = bcrypt($password);
+
+        $store_nutritionsit     = $this->base_model->create($arr_data);
       
         if(!empty($store_nutritionsit))
         {
-            $arr_dat = []; 
-            $arr_dat['user_id'] = $store_nutritionsit->id; 
+
+           if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+           {
+            //upload profile pic 
+            $destinationPath = 'uploads/user_pic/';
+            $destinationPathThumb = $destinationPath.'thumb/';
+            $filename_icon = $icon_img->getClientOriginalName();
+            $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+
+            //thumbnail create icon
+            $icon_thumb = Image::make($original_icon->getRealPath())
+            ->resize(160, 160)
+            ->save($destinationPathThumb . $randomString."".$filename_icon);
+           }
+            //end thub nail
+
+
+
+
+
+            $arr_dat                 = []; 
+            $arr_dat['user_id']      = $store_nutritionsit->id; 
             $arr_dat['completed_at'] = 1; 
-            $arr_dat['completed'] = 1;   
-            $activations = \DB::table('activations')->insert($arr_dat);
+            $arr_dat['completed']    = 1;   
+            $activations             = \DB::table('activations')->insert($arr_dat);
             //send mail function 
             $html = '<tr>
             <td style="padding: 20px 25px 10px 25px;background-color: #d8ffcf;">
@@ -221,6 +259,22 @@ class NutritionsitController extends Controller
             Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
+
+        $icon_img              = Input::file('profile_image');
+        //random number generate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $destinationPath = 'uploads/user_pic/';
+        $destinationPathThumb = $destinationPath . 'thumb/';
+       
+
+
+
         $arr_data             = [];
         $arr_data['name']     = $request->input('nutritionsit_name');
         $arr_data['email']    = $request->input('nutritionsit_email');
@@ -229,6 +283,29 @@ class NutritionsitController extends Controller
         $arr_data['state']    = $request->input('nutritionsit_state');
         $arr_data['area']     = $request->input('nutritionsit_area');
         $arr_data['roles']    = $request->input('nutritionsit_role');
+
+        if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+        { 
+            $arr_data['profile_image'] = $randomString."".$icon_img->getClientOriginalName();
+            $filename_icon = $icon_img->getClientOriginalName();
+            $original_icon = $icon_img->move($destinationPath, $randomString."".$filename_icon);
+                
+            //thumbnail create icon
+            $icon_thumb = Image::make($original_icon->getRealPath())
+            ->resize(160, 160)
+            ->save($destinationPathThumb . $randomString."".$filename_icon);
+           if(!empty($request->input('old_profile_image'))){
+            unlink($destinationPath."".$request->input('old_profile_image'));
+            unlink($destinationPathThumb."".$request->input('old_profile_image'));}
+        }
+        else
+        { if(!empty($request->input('old_profile_image'))){
+            $arr_data['profile_image'] = $request->input('old_profile_image');}
+        }
+
+
+    
+
 
         if(!empty($request->input('nutritionsit_password_new'))){
             $arr_data['password'] = bcrypt($request->input('nutritionsit_password_new'));
