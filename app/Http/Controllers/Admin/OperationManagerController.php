@@ -11,6 +11,9 @@ use App\Models\State;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Input;
+use Image;
 use Session;
 use Sentinel;
 use Validator;
@@ -109,6 +112,17 @@ class OperationManagerController extends Controller
             return \Redirect::back();
         }
 
+
+         //file upload
+        $icon_img         = Input::file('profile_image');
+        $characters       = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString     = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+
         $password             = uniqid();
         $arr_data                          = [];
         $arr_data['name']     = $request->input('operation_manager_name');
@@ -117,6 +131,10 @@ class OperationManagerController extends Controller
         $arr_data['city']     = $request->input('operation_manager_city');
         $arr_data['state']    = $request->input('operation_manager_state');
         $arr_data['area']     = $request->input('operation_manager_area');
+        if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+        {
+          $arr_data['profile_image'] = $randomString."_".$icon_img->getClientOriginalName();
+        }
         $arr_data['roles']    = $request->input('operation_manager_role');
         $arr_data['password'] = bcrypt($password);
 
@@ -124,6 +142,22 @@ class OperationManagerController extends Controller
       
         if(!empty($store_operation_manager))
         {
+
+            if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+            {
+                //upload profile pic 
+                $destinationPath = 'uploads/user_pic/';
+                $destinationPathThumb = $destinationPath.'thumb/';
+                $filename_icon = $icon_img->getClientOriginalName();
+                $original_icon = $icon_img->move($destinationPath, $randomString."_".$filename_icon);
+
+                //thumbnail create icon
+                $icon_thumb = Image::make($original_icon->getRealPath())
+                ->resize(160, 160)
+                ->save($destinationPathThumb . $randomString."_".$filename_icon);
+            }
+
+
             $arr_dat = []; 
             $arr_dat['user_id'] = $store_operation_manager->id; 
             $arr_dat['completed_at'] = 1; 
@@ -213,6 +247,21 @@ class OperationManagerController extends Controller
             Session::flash('error', $this->Is_exists);
             return \Redirect::back();
         }
+
+          $icon_img              = Input::file('profile_image');
+        //random number generate 
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';   
+        for ($i = 0; $i < 18; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $destinationPath = 'uploads/user_pic/';
+        $destinationPathThumb = $destinationPath . 'thumb/';
+
+
+
         $arr_data             = [];
         $arr_data['name']     = $request->input('operation_manager_name');
         $arr_data['email']    = $request->input('operation_manager_email');
@@ -221,6 +270,27 @@ class OperationManagerController extends Controller
         $arr_data['state']    = $request->input('operation_manager_state');
         $arr_data['area']     = $request->input('operation_manager_area');
         $arr_data['roles']    = $request->input('operation_manager_role');
+
+
+        if(isset($_FILES['profile_image']["name"]) && !empty($_FILES['profile_image']["name"]))
+        { 
+            $arr_data['profile_image'] = $randomString."_".$icon_img->getClientOriginalName();
+            $filename_icon = $icon_img->getClientOriginalName();
+            $original_icon = $icon_img->move($destinationPath, $randomString."_".$filename_icon);
+                
+            //thumbnail create icon
+            $icon_thumb = Image::make($original_icon->getRealPath())
+            ->resize(160, 160)
+            ->save($destinationPathThumb . $randomString."_".$filename_icon);
+           if(!empty($request->input('old_profile_image'))){
+            unlink($destinationPath."".$request->input('old_profile_image'));
+            unlink($destinationPathThumb."".$request->input('old_profile_image'));}
+        }
+        else
+        { if(!empty($request->input('old_profile_image'))){
+            $arr_data['profile_image'] = $request->input('old_profile_image');}
+        }
+
 
         if(!empty($request->input('operation_manager_password_new'))){
             $arr_data['password'] = bcrypt($request->input('operation_manager_password_new'));

@@ -18,11 +18,16 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
+          @if(!IS_NULL($session_user->profile_image))
+
+           <img src="{{ url('/')}}/uploads/user_pic//thumb/{{$session_user->profile_image}}" class="img-circle" alt="User Image">
+           @else
           <img src="{{url('/admin_css_js')}}/css_and_js/admin/dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+          @endif
         </div>
         <div class="pull-left info">
           <p></p>
-          <h4><a href="#">{{$session_user->name}}</a></h4>
+          <h4>{{ucfirst($session_user->name)}}</h4>
          <!--  <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
         </div>
       </div>

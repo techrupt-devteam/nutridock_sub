@@ -40,7 +40,7 @@
               <form action="{{ url('/admin')}}/update_{{$url_slug}}_manager/{{$data['id']}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
               {!! csrf_field() !!}
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3 col-lg-3">
                     <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
@@ -49,7 +49,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div>
                       <div class="form-group">
                         <label for="operation_manager_email">Email<span style="color:red;" >*</span></label>
@@ -63,7 +63,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3 col-lg-3">
                     <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Mobile No<span style="color:red;" >*</span></label>
@@ -77,6 +77,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3 col-lg-3">
+                  <div class="">
+                    <label for="name">Profile Pic</label>
+                    <div class="input-group">
+                          <div class="input-group-addon btn-default">
+                             <a data-fancybox="gallery" href="{{ url('/')}}/uploads/user_pic/{{$data['profile_image']}}"><i class="fa fa-eye"></i></a>
+                          </div>
+                            <input type="file" class="form-control"  id="profile_image" name="profile_image">
+                      
+                       <input type="hidden" name="old_profile_image" value="{{$data['profile_image']}}">     
+                      </div>
+                      <span id="img_msg" style="color:red;"></span>
+                  </div>
+                </div>
                 </div>
                 <div class="row">  
 
@@ -177,6 +191,8 @@
   </div>
   <!-- /.content-wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" />
   <script type="text/javascript">
     $(document).ready(function() {
        get_City(); 
