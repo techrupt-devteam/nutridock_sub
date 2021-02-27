@@ -24,7 +24,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
-      <div class="row">
+      <div class="">
 
         @if(empty($session_permissions) && $session_user->roles!='admin')
         <div class="col-md-12">
@@ -39,21 +39,21 @@
               <div class="row">
                 <div class="col-md-4">
               <!-- small box -->
-              <div class="small-box btn-info">
+              <div class="small-box bg-success-gradient">
                 <div class="inner">
                   <h3>@if(!empty($data['total_subscriber_count'])){{$data['total_subscriber_count']}}@else 0 @endif</h3>
                   <p>Total Subscriber</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-bag"></i>
+                  <i class="fa fa-cutlery"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- <a href="#" class="small-box-footer">Total Subscriber </a> -->
               </div>
             </div>
             <!-- ./col -->
             <div class="col-md-4">
               <!-- small box -->
-              <div class="small-box btn-danger">
+              <div class="small-box bg-gradient-custom-orange">
                 <div class="inner">
                  <h3>@if(!empty($data['new_subscriber_count'])){{$data['new_subscriber_count']}}@else 0 @endif</h3>
                   <p>New Subscription</p>
@@ -61,14 +61,14 @@
                 <div class="icon">
                   <i class="fa fa-user-plus"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
               </div>
             </div>
             <!-- ./col --> 
             <!-- ./col -->
             <div class="col-md-4">
               <!-- small box -->
-              <div class="small-box btn-danger">
+              <div class="small-box bg-gradient-custom-indigo">
                 <div class="inner">
                  <h3>@if(!empty($data['expire_subscriber_count'])){{$data['expire_subscriber_count']}}@else 0 @endif</h3>
                   <p>Expire Subscription</p>
@@ -76,7 +76,7 @@
                 <div class="icon">
                   <i class="fa fa-user-times"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
               </div>
             </div>
               </div>
@@ -94,7 +94,7 @@
                 <div class="icon">
                   <i class="fa fa-users"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
               </div>
             </div>
             <!-- ./col -->
@@ -108,7 +108,7 @@
                 <div class="icon">
                  <i class="fa fa-file"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
               </div>
             </div>
             <!-- ./col -->
@@ -116,9 +116,9 @@
         </div>
         </div>
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <div class="box box-info ">
-              <div class="box-header with-border" style="background-color: #cbd8bf !important;">
+              <div class="box-header with-border" style="background-color: #ddd !important;">
                 <h3 class="box-title">Nutridock Kitchen list for all location</h3>
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><b><i class="fa fa-plus"></i></b>
@@ -136,7 +136,7 @@
                           <th>State</th>
                           <th>City</th>
                           <th>Area</th>
-                          <th>View</th>
+                          <th style="width: 90px;">View</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -146,7 +146,7 @@
                         <td>{{$value->state_name}}</td>
                         <td>{{$value->city_name}}</td>
                         <td>{{$value->area_name}}</td>
-                        <td><button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->kitchen_id;?>);"><i class="fa fa-info-circle"></i> Kitchen Details</button>
+                        <td><button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->kitchen_id;?>);"><i class="fa fa-info-circle"></i> Kitchen Details</button>
                         </td>
                       </tr>
                       @endforeach
@@ -163,6 +163,27 @@
               <!-- /.box-footer -->
             </div>
           </div>  
+
+          <div class="col-md-6">
+            <div class="box box-info ">
+              <div class="box-header with-border" style="background-color: #ddd !important;">
+                <h3 class="box-title">Pic Chart</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><b><i class="fa fa-plus"></i></b>
+                  </button>
+                  <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="chart">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
         @endif
       </div>
@@ -177,14 +198,65 @@
     </div>
   </div>
 </div>
+
   <!-- /.content-wrapper -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{url('')}}/admin_css_js/css_and_js/admin/chart.js/Chart.js"></script>
+<script src="{{url('')}}/admin_css_js/css_and_js/admin/chart.js/Chart.min.js"></script>
+<script>
+  $(function () {
+    //-------------
+    //- BAR CHART -
+    //-------------
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    barChartData.datasets[0] = temp1
+    barChartData.datasets[1] = temp0
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    var barChart = new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+
+    //---------------------
+    //- STACKED BAR CHART -
+    //---------------------
+    var stackedBarChartCanvas = $('#stackedBarChart').get(0).getContext('2d')
+    var stackedBarChartData = $.extend(true, {}, barChartData)
+
+    var stackedBarChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      scales: {
+        xAxes: [{
+          stacked: true,
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      }
+    }
+
+    var stackedBarChart = new Chart(stackedBarChartCanvas, {
+      type: 'bar',
+      data: stackedBarChartData,
+      options: stackedBarChartOptions
+    })
+  })
+</script>
+
 <script type="text/javascript">
-
-
     function viewDetails(kitchen_id) 
     { 
-
       var kit_id = kitchen_id;
       //alert(status);
        $.ajax({
@@ -198,4 +270,5 @@
         });
     }
  </script> 
+ 
 @endsection
