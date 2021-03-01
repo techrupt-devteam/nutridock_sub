@@ -219,9 +219,28 @@ class SubscriberController extends Controller
                 $nestedData['email']    = $value->email;
                 $nestedData['mobile']   = $value->mobile;
                 $nestedData['city']     = $value->city_name;
-                $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
-                $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date));
-                
+               
+                //$class_r ="";
+
+                $current_date = date('Y-m-d');
+                $expire_date  =  date('Y-m-d',strtotime($value->expiry_date));
+                if( $current_date > $expire_date ){
+                    $disabled = "disabled"; 
+                    $class_r  = "expire_row"; 
+                    $title    = 'Subscriber Expire';
+                    $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
+                    $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date)) ." <b style='color:red'>(Susbcription expire)</b>" ;
+
+                }else
+                {
+                    $disabled = ""; 
+                    $class_r  = 'noexp';
+                    $title    = "Add Program";
+                    $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
+                    $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date))." <b style='color:green'>(Currently active)</b>";
+                }
+
+
                 if($value->payment_status == "Paid"){
                     $payment_status  = '<b style="color:green">'.ucfirst($value->payment_status).'</b>';
                 }else{
@@ -244,12 +263,16 @@ class SubscriberController extends Controller
                     }
 
                      if($login_user_details->roles==1){
-                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="Add Program">
+                       
+
+                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="'.$title.'" '.$disabled.'>
                            Create Program
                         </a>';
+                       
                     }
-
+                $nestedData['class_r'] = $class_r;
                 $data[] = $nestedData;
+               // dd($data);
                 $cnt++;
 
             }

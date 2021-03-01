@@ -12,7 +12,8 @@
           </div>
         </div>
       </div>
-   <?php } else {?>
+   <?php } else { ?>
+
    <div class="col-md-12">
       <div class="box box-primary">
           <div class="box-body no-padding">
@@ -57,18 +58,21 @@
             y    = date.getFullYear()   
        */
         $('#calendar').fullCalendar({
+
+         
           header    : {
             left    : 'prev,next',
             center  : 'title',
             right   : 'month'
           },
+
           buttonText: {
             today   : 'today',
             month   : 'month',
-            },
-       
+          },
+        
           events    : [ 
-          
+
           <?php for($i=1;$i<=$data['days'];$i++) {
              if(isset($data['calender_data'][$i]) && !empty($data['calender_data'][$i])){
                $count=count($data['calender_data'][$i]);
@@ -90,7 +94,6 @@
             },
             
           <?php
-
               }
              }
             }

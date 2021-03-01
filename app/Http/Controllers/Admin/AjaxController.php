@@ -103,7 +103,7 @@ class AjaxController extends Controller
                $status = "ongoing";  
              }
 
-             $html.="<option value=".$value->id." class=".$status.">".$value->subscriber_name." (".$status.")</option>";     
+             $html.="<option value=".$value->id.">".$value->subscriber_name." (".$status.")</option>";     
         }                
         
         return $html;
