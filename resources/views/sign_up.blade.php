@@ -238,6 +238,22 @@ p{
 .active2{
 background-color:blue
 }
+
+.radio-toolbar img {
+    height: 35px;
+    float: left;
+    margin-right: 10px;
+}
+
+.mrp {
+    text-decoration: line-through;
+    color: #ff0000bf;
+}
+
+.og {
+    color: #05a504;
+    font-weight: bold;
+}
 </style>
 
 @section('content')
@@ -422,7 +438,8 @@ background-color:blue
                         <select id="avoid_food_id" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required" data-parsley-group="step-2">
                           <option value="None">None</option>
                           @foreach($data['getFoodAvoidData'] as $getFoodAvoidData)
-                          <option value="{{ $getFoodAvoidData['food_avoid_id'] }}"> {{ $getFoodAvoidData['food_avoid_name'] }} </option>
+                          <option value="{{ $getFoodAvoidData['food_avoid_id'] }}"> 
+                            {{ $getFoodAvoidData['food_avoid_name'] }} </option>
                           @endforeach  
                           <option value="Other">Other</option>
                         </select>
@@ -467,57 +484,89 @@ background-color:blue
               <!-- @START: Plan details tab -->
               <div class="row setup-content step-3" id="step-3">
                 <div class="col-sm-12">
-                  <h4 class="info-text"> <span class="text-success font-weight-bold">Choose </span>Plan</h4>
+                  <h4 class="info-text"> <span class="text-success font-weight-bold">Plan </span>Details</h4>
                 </div>
-                  @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlan)
-                  <div class="col-sm-6 radio-toolbar">
-                    <input type="radio" id="radio{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}"> 
-                    <label for="radio{{ $getSubscriptionPlan['sub_name'] }}"> 
-                    {{ $getSubscriptionPlan['sub_name'] }} 
-                    </label>
-                    </div>
-                  @endforeach
                 <div class="col-sm-12 mb-3">     
                     <div class="form-group label-floating">
-                      <label class="control-label">No of Days: <span class="text-danger">*</span></label>             
-                      <div class="row" id="getPlanDetails"> 
-                        
-                      </div>
-                  </div>
+                    
+                    <label class="control-label">Select Subscription Plan <span class="text-danger">*</span></label>       
+                    @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlanKey => $getSubscriptionPlan)                        
+                      <div class="col-sm-12 radio-toolbar">                  
+                        <input type="radio" id="radio{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}" onchange="getPlanPrice();" required="" data-parsley-errors-container="#sub-plan-errors" data-parsley-error-message="Please select subscription plan" data-parsley-group="step-3" {{($getSubscriptionPlanKey == 0) ? 'checked' : '' }} > 
+                        <label for="radio{{ $getSubscriptionPlan['sub_name'] }}"> 
+                        <img src="{{url('')}}/uploads/subscription_icon/thumb/{{ $getSubscriptionPlan['icon_image'] }}" height="35">
+                        {{ $getSubscriptionPlan['sub_name'] }} 
+                        </label>                        
+                        </div>
+                    @endforeach
+                    <div id="sub-plan-errors"></div>
+                 </div>
                 </div>
-                <div class="col-sm-12 mb-3">                  
-                  <div class="row">                    
-                  <div class="col-sm-6 col-md-4">
-                    <div class="form-group label-floating">
-                      <label class="control-label">Start Date <span class="text-danger">*</span></label>
-                      <input name="start_date" id="start_date" type="text" class="form-control" required="required"  data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" data-parsley-group="step-3">
-                      <div id="start-date-errors"></div>
-                    </div>                   
-                  </div> 
-                 
-                  <div class="col-sm-12 mb-1">
-                    <div class="">
-                      <label class="control-label">Price</label>
-                      <div style="border:dotted" class="p-2">
-                        <div class="offer-price"> <del> <span style="display: block;" id="close_value"></span> </del> </div>
-                        <span class="og"  id="rs_html"> Rs.</span> <span class="og" id="final_value" ></span> | <span class="og" id="final_value_details"></span> </div>
-                      
+                
+                <div class="col-sm-12 mb-3" id="plandetails" style="display: none;">
+                  <div class="row">
+                    <div class="col-sm-6 mb-3">
+                      <div class="form-group label-floating">
+                        <label class="control-label">No of Days <span class="text-danger">*</span></label>
+                        <div class="col-sm-12 radio-toolbar">
+                          <div class="row" id="getPlanDetails"> </div>
+                          <div id="duration-errors"></div>
+                        </div>
+                      </div>
                     </div>
-                  </div>                    
-                  </div> 
-                  <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span> 
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group label-floating">
+                        <label class="control-label">Start Date <span class="text-danger">*</span></label>
+                        <div class="input-group date" data-provide="datepicker">
+                          <div class="input-group-prepend"> <span class="input-group-text">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span> </div>
+                          <input name="start_date" id="start_date" type="text" class="form-control datepicker" required="required" data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" data-parsley-group="step-3" autocomplete="off">
+                        </div>
+                        <div id="start-date-errors"></div>
+                      </div>                      
+                    </div>
+                    <div class="col-sm-12 mb-1">
+                      <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
+                      <div id="meals">
+                        <div class="chk-toolbar"> 
+                          @foreach($data['getMealTypeData'] as $getMealTypeDataKey => $getMealTypeData)
+                            <input 
+                            type="checkbox" 
+                            id="radio{{ $getMealTypeData['meal_type_name'] }}" 
+                            name="radioMealType" 
+                            class="meal_type_id" 
+                            value="{{ $getMealTypeData['meal_type_id'] }}" 
+                            required="required" 
+                            data-parsley-errors-container="#meal-type-errors" 
+                            data-parsley-error-message="Please select Type of meals" 
+                            data-parsley-group="step-3" 
+                            onchange="getPlanPrice();"
+                            {{($getMealTypeDataKey == 0) ? "checked" : "" }} >
+                            <label for="radio{{ $getMealTypeData['meal_type_name'] }}">
+                              {{ $getMealTypeData['meal_type_name'] }}
+                            </label> 
+                          @endforeach 
+                          <div id="meal-type-errors"></div>
+                        </div>
+                      </div>
+                      <input type="hidden" name="" id="checkout_meal_type_name_value"> </div>
+                   
+                    <div class="col-sm-12 mb-1">
+                      <div class="">
+                        <label class="control-label">Price</label>
+                        <div style="border:dotted" class="p-2">
+                          <div class="price"></div>
+                        </div>
+                      </div>
+                    </div> <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span>
+                  </div>
                 </div>
                 <div class="wizgard-footer">
                   <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                   </button>
                   <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next ></span> 
-                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="submit"  data-current-block="3" data-next-block="4">
-                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                  </button> -->
-                  <!-- <a href="#step-3" class="btn btn-success pb-1 pt-1 nextBtn pull-righ
-                  <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
-                    Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
-                  </button> -->
+                 
                 </div>
               </div>
               <!-- @END: Plan details tab -->
@@ -642,10 +691,9 @@ background-color:blue
                             </div>
                             <div class="col-lg-12 text-right text-danger" ><small>Note : Please check & confirm your plan details</small></div>
                             <div class="col-lg-12 border-top pt-3 mt-2">
-                                <div style="text-align: center; display: none;" id="all_details" >
-                                    <span id="err_all_details" style="color: red;"> </span>
-                                  </div>
-                              
+                              <div style="text-align: center; display: none;" id="all_details" >
+                                  <span id="err_all_details" style="color: red;"> </span>
+                              </div>                            
                               <div class="invoice-to mt-3 mb-3">
                                 <table>
                                   <tr>
@@ -695,8 +743,7 @@ background-color:blue
                                         <td class="text-right br-0 bl-0"><span id="checkout_meal_type_name" ></span></td>
                                         <td class="text-right bl-0"><span id="checkout_price"></span>/-</td>
                                       </tr>                                       
-                                    </tbody>
-                                                                        
+                                    </tbody>                                                                        
                                       <tr>
                                         <th colspan="3" class="text-right br-0" style="border-bottom: 0px;">GST</th>
                                         <th class="text-right bl-0" style="border-bottom: 0px;">5% </th>
@@ -742,6 +789,11 @@ background-color:blue
 
 <script>
 $(document).ready(function () {
+
+//  $('#start_date').datepicker();
+getPlan($('input[type="radio"][name="radioSubscriptionPlan"]:checked').val());
+getPlanPrice();
+
 /************* Pop Over tool tip *************/
 $('[data-toggle="popover"]').popover();
 
@@ -814,27 +866,58 @@ var curStep = $(this).closest(".setup-content"),
 
 // dont remove this code
 $('div.setup-panel div a.btn-primary').trigger('click');
-});
 /************* @END: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
 
+}); // end $(document)
+
+
 /************* @START: CODE FOR GET PLAN DETAILS *************/
-$('input[type="radio"][name="radioSubscriptionPlan"]').click(function(){ 
-  var plan_details_html = ''; 
-      $.ajax({  
-          url:"{{ URL::to('/') }}/get_plan_details",  
-          method:"POST",  
-          data:{plan_id:$(this).val()},  
-          success:function(data){  
-                $.each(data, function(i, val) {
-                  plan_details_html += '<div class="col-sm-2 chk-toolbar"><input type="checkbox" id="radio'+val.duration+'" name="radioSubscriptionPlan" value="'+val.duration+'"> <label for="radio'+val.duration+'">'+val.duration+'</label></div></div>';                                   
-                });
-                    
-                $("#getPlanDetails").append().html(plan_details_html); 
-               
-          } 
-      });  
-});  
+function getPlan(radioSubscriptionPlanVal)
+{ 
+    var plan_details_html = ''; 
+    if(radioSubscriptionPlanVal) {
+          $.ajax({  
+              url:"{{ URL::to('/') }}/get_plan_details",  
+              method:"POST",  
+              data:{plan_id:radioSubscriptionPlanVal},  
+              success:function(data){  
+                    $.each(data, function(i, val) {
+                    if(i == 0) {
+                      var checked_duration = "checked";
+                    } else {
+                      var checked_duration = "";
+                    }
+
+                      plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="radio'+val.duration+'" name="radioDuration" value="'+val.duration+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="radio'+val.duration+'">'+val.duration+'</label></div>';                                   
+                    });
+                        
+                    $("#getPlanDetails").append().html(plan_details_html); 
+                    $("#plandetails").show(); 
+              } 
+          });  
+
+    } else {
+      $('input[type="radio"][name="radioSubscriptionPlan"]').click(function(){ 
+     
+          $.ajax({  
+              url:"{{ URL::to('/') }}/get_plan_details",  
+              method:"POST",  
+              data:{plan_id:$(this).val()},  
+              success:function(data){  
+                    $.each(data, function(i, val) {
+                      plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="radio'+val.duration+'" name="radioDuration" value="'+val.duration+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="radio'+val.duration+'">'+val.duration+'</label></div>';                                   
+                    });
+                        
+                    $("#getPlanDetails").append().html(plan_details_html); 
+                    $("#plandetails").show(); 
+              } 
+          });  
+      }); 
+    }
+    
+} 
 /************* @END: CODE FOR GET PLAN DETAILS *************/
+
 
 $(document).ready(function() {
   var x = new SlimSelect({
@@ -852,5 +935,45 @@ $(document).ready(function() {
   //   select: '#mealtype2'
   // });
 });
+
+
+/************* @START: CODE FOR GET PLAN PRICE  *************/
+function getPlanPrice()
+{
+ 
+  var subscription_plan_id = $('input[type="radio"][name="radioSubscriptionPlan"]:checked').val();
+  var duration_id = $('input[type="radio"][name="radioDuration"]:checked').val();
+
+  var selectedMealType = new Array();
+  $("#meals input[type=checkbox]:checked").each(function () {
+    selectedMealType.push(this.value);
+  });
+
+  
+  if((subscription_plan_id != '') && (duration_id != ''))
+  {
+    $.ajax({
+        type: "POST",
+        url:  "{{ URL::to('/') }}/get_subscription_plan_price",
+        data: {
+          subscription_plan_id  : subscription_plan_id,
+          duration_id   : duration_id,
+          selectedMealTypeLength : selectedMealType.length,
+          selectedMealType : selectedMealType
+          },
+        success: function (data) {
+          if(data) {            
+            $(".price").html('<span class="mrp">Rs. '+data['totalPrice']+' for '+data['duration']+' days | Rs. '+data['price_per_meal']+' per meal </span><br /><span class="og">Rs. '+data['salePrice']+' for '+data['duration']+' days | Rs. '+data['discount_price']+' per meal </span>');
+           
+          }
+        },
+        error: function (data) {
+          return false;
+        },
+    });  
+  }
+}
+
+/************* @END: CODE FOR GET PLAN PRICE  *************/
 </script>
 @endsection 

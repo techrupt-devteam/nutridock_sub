@@ -116,13 +116,45 @@ class SignUpController extends Controller
         $delivery_pincode = ($valid) ? $request['pincode'] : '';
         Session::put('delivery_pincode', $delivery_pincode);
 
-        return $delivery_pincode;
-            
+        return $delivery_pincode;            
     }
 
 
-    
+    public function getSubPlanPrice(Request $request)
+    {
+        $getPriceDtl = SubscriptionPlanDetails::where('sub_plan_id', $request['subscription_plan_id'])
+                        ->where('duration', $request['duration_id'])->first();  
+                        
+        Arr::set($data, 'duration', $getPriceDtl['duration']);
+        Arr::set($data, 'price_per_meal', $getPriceDtl['price_per_meal']);
+        Arr::set($data, 'discount_price', $getPriceDtl['discount_price']);        
+        Arr::set($data, 'selected_meal_type_length', $request['selectedMealTypeLength']);
+        Arr::set($data, 'selected_meal_type', $request['selectedMealType']);
 
-    
+        if($getPriceDtl['discount_price']){
+            $salePrice = $getPriceDtl['discount_price'] * $getPriceDtl['duration'] * $request['selectedMealTypeLength'];
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = $getPriceDtl['price_per_meal'] * $getPriceDtl['duration'] * $request['selectedMealTypeLength']; 
+            Arr::set($data, 'totalPrice', $totalPrice);
+
+        } else if($getPriceDtl['price_per_meal']) {
+            $salePrice = $getPriceDtl['price_per_meal'] * $getPriceDtl['duration'] * $request['selectedMealTypeLength']; 
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = "";
+            Arr::set($data, 'totalPrice', $totalPrice);
+
+        } else if($getPriceDtl['price_per_pack']) {
+            $salePrice = $getPriceDtl['price_per_pack'];
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = "";
+            Arr::set($data, 'totalPrice', $totalPrice);
+        }
+
+        return $data;
+                                            
+    }
 }
 ?>

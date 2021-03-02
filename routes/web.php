@@ -115,12 +115,12 @@ Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
 /*********************************@RAJ FRONT_ROUTES @****************************************/
 //sign up routes
-Route::get('/sign-up',		 	 			'Front\SignUpController@index');
-Route::post('/store_basic_details', 	 	'Front\SignUpController@storeBasicDetails');
-Route::post('/get_plan_details', 	 		'Front\SignUpController@getSubscriptionPlanDetails');
-Route::post('/subscribe-info', 	 			'Front\SignUpController@getSubscribePlan');
-Route::post('/check_valid_pin', 	 		'Front\SignUpController@getCheckValidPin');
-
+Route::get('/sign-up',		 	 				'Front\SignUpController@index');
+Route::post('/store_basic_details', 	 		'Front\SignUpController@storeBasicDetails');
+Route::post('/get_plan_details', 	 			'Front\SignUpController@getSubscriptionPlanDetails');
+Route::post('/subscribe-info', 	 				'Front\SignUpController@getSubscribePlan');
+Route::post('/check_valid_pin', 	 			'Front\SignUpController@getCheckValidPin');
+Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanPrice');
 
 
 
