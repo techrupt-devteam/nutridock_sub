@@ -314,7 +314,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
    
     //Subscriber Calender
     Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
-	Route::post('/getMealDetails',					  'Admin\SubscriberCalenderController@getMealDetails');
+	Route::post('/getMealDetails',			  'Admin\SubscriberCalenderController@getMealDetails');
 
 	/*Route::post('/getSubscriberData',	  	  'Admin\SubscriberController@getSubscriberData');
 	Route::get('/add_subscriber',		  	  'Admin\SubscriberController@add');
@@ -323,7 +323,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     Route::post('/update_subscriber/{id}',	 'Admin\SubscriberController@update');
 	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
     Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');*/
-
+    Route::get('/traits', 'Admin\DashboardController@traits');
 
 });
 

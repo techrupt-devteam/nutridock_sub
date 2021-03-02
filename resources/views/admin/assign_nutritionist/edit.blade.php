@@ -89,6 +89,7 @@
                            <div class="form-group">
                            <table id="menu-item"  class="table ">
                               <thead class="btn-default">
+                                 <tr><td colspan="3">  <div id="name_error" style="color:red;"></div></td></tr>  
                                    <tr><th>#</th>
                                    <th>Subscriber Name</th></tr>
                              </thead>
@@ -97,7 +98,7 @@
                                 @foreach($subscriber as $key => $svalue)
                                   <tr>
                                        <td>
-                                           <input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?> <?php echo (in_array($svalue->id, $assign_subcriber) ? 'disabled' : '')?> >
+                                           <input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?> <?php echo (in_array($svalue->id, $assign_subcriber) ? 'disabled' : '')?> required data-parsley-errors-container='#name_error' data-parsley-error-message='Please select at least one subscriber' >
                                        </td>
                                      <td>{{ucfirst($svalue->subscriber_name)}}</td>
                                   </tr>  
