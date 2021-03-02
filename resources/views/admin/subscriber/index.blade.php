@@ -163,6 +163,22 @@
       });
     }
 
+     function viewDetailspdf(id) 
+    { 
+      var id  = id ;
+       //alert(id);
+      $.ajax({
+          url: "{{url('/admin')}}/subscriber_pdf",
+          type: 'get',
+          data: {sid :id },
+          success: function (data) 
+          {
+            //alert(data);
+           // $('#content').html(data);
+          }
+      });
+    }
+
    function verified_subscriber(value){
 
     var id           = value;
