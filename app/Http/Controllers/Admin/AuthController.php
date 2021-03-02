@@ -48,7 +48,7 @@ class AuthController extends Controller
         
         if($arr_user->is_active == 0 & $arr_user->roles!='admin')
         {
-            Session::flash('error', 'You account has been deactivated please contact Admin!');
+            Session::flash('error', '!! You account has been deactivated please contact Nutridock Admin !!');
             return \Redirect::back();
         }
 

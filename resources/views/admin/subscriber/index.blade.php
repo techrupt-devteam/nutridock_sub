@@ -23,6 +23,7 @@
         <div class="col-xs-12">
           @include('admin.layout._status_msg')
           <div class="box">
+
              <div class="box-header">
               <h3 class="box-title">
                 {{ $page_name." ".$title }}
@@ -33,7 +34,21 @@
                 <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
                 <li class="active">{{ $page_name." ".$title }}</li>
               </ol>
+
             </div>
+            <div class="row"> <div class="box-body">
+                <div class="col-md-12">
+                    <div class="alert alert-info alert-dismissible">
+                      <h4><i class="fa fa-sticky-note"></i> Note!</h4>
+                      <ul>
+                      <li><strong >Expire subscriber show this background color :- <b class="expire_row">Content </b> </strong></i></li>
+                       <br/>
+                      <li><strong >Ongoing Subscriber show this background color:- <b class="noexp">Content </b> </strong></li>
+                    </ul>
+                    </div>
+                </div></div>
+            </div>
+
             <!-- /.box-header -->
             <div class="box-body">
             <div class="table-responsive">
@@ -48,7 +63,18 @@
                        <th>Expire Date</th>
                        <th>Payment Status</th>
                        <th>Action</th>
-                    </thead>        
+                    </thead>  
+                    <tfoot>
+                       <th>Id</th>
+                       <th>Name</th>
+                       <th>Email</th>
+                       <th>Mobile</th>
+                    <!--    <th>City</th> -->
+                       <th>Start Date</th>
+                       <th>Expire Date</th>
+                       <th>Payment Status</th>
+                       <th>Action</th>
+                    </tfoot>        
                </table>
              </div>
             </div>
@@ -75,7 +101,14 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
- 
+ <style type="text/css">
+   .expire_row{
+     background-color: #e80f0f4a !important;  
+   } 
+   .noexp{
+     background-color: #38ff5142 !important;  
+   }
+ </style>
 <script type="text/javascript">
   $(document).ready(function () {
         $('#example1').DataTable({
@@ -87,17 +120,26 @@
                      "type": "POST",
                      "data":{ _token: "{{csrf_token()}}"}
                    },
+            
             "columns": [
-                { "data": "id" },
-                { "data": "name" },
-                { "data": "email" },
-                { "data": "mobile" },
-           /*     { "data": "city" },*/
-                { "data": "start_date" },
-                { "data": "expire_date" },
-                { "data": "status" },
-                { "data": "action" }
-            ]  
+                { data: "id", },
+                { data: "name",},
+                { data: "email",},
+                { data: "mobile",},       
+                { data: "start_date",},
+                { data: "expire_date",},
+                { data: "status"},
+                { data: "action"}
+            ],
+            rowCallback: function (row, data) {
+              if (data.class_r=="expire_row") {
+                $(row).addClass('expire_row');
+              }else{
+                $(row).addClass('noexp');
+              }
+            }
+
+
 
         });
     });
@@ -117,6 +159,22 @@
           success: function (data) 
           {
             $('#content').html(data);
+          }
+      });
+    }
+
+     function viewDetailspdf(id) 
+    { 
+      var id  = id ;
+       //alert(id);
+      $.ajax({
+          url: "{{url('/admin')}}/subscriber_pdf",
+          type: 'get',
+          data: {sid :id },
+          success: function (data) 
+          {
+            //alert(data);
+           // $('#content').html(data);
           }
       });
     }

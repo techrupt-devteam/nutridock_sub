@@ -302,6 +302,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
     Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');
     Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
+    Route::get('/subscriber_pdf/{id}',	  	    'Admin\SubscriberController@subscriber_pdf');
     
     //Meal Program Subscriber 
     Route::get('/add_subscriber_meal_program/{id}',   'Admin\SubscriberMealProgramController@add');
