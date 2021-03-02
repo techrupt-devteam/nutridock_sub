@@ -17,11 +17,11 @@ use Sentinel;
 use Validator;
 use DB;
 use Config;
-use App\Traits\StoreImageTrait;
+
 
 class DashboardController extends Controller
 {
-    use StoreImageTrait;
+   
 
     public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberDetails $SubscriberDetails,Kitchen $Kitchen)
     {
@@ -93,12 +93,6 @@ class DashboardController extends Controller
         return view('admin/dashbord')->with(['data' => $data]);
    }
 
-   public  function traits(Request $request)
-   {
-        $output = $this->verifyAndStoreImage(); 
-        dd($output);
-        return $output;
-   }
 
 
 
