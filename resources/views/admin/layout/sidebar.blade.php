@@ -26,7 +26,6 @@
           @endif
         </div>
         <div class="pull-left info">
-          <p></p>
           <h4>{{ucfirst($session_user->name)}}</h4>
          <!--  <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
         </div>
