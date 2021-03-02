@@ -17,10 +17,11 @@ use Sentinel;
 use Validator;
 use DB;
 use Config;
+use App\Traits\StoreImageTrait;
 
 class DashboardController extends Controller
 {
-   
+    use StoreImageTrait;
 
     public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberDetails $SubscriberDetails,Kitchen $Kitchen)
     {
@@ -60,13 +61,26 @@ class DashboardController extends Controller
 
         //nutridock kitechn all location 
         $kitchen     = \DB::table('nutri_mst_kitchen')
-                     ->join('state','nutri_mst_kitchen.state_id','=','state.id')
-                     ->join('city','nutri_mst_kitchen.city_id','=','city.id')
-                     ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
-                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
-                     ->where('nutri_mst_kitchen.is_deleted','<>',1)
-                     ->orderBy('kitchen_id', 'DESC')
-                     ->get();
+                         ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                         ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                         ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                         ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
+                         ->where('nutri_mst_kitchen.is_deleted','<>',1)
+                         ->orderBy('kitchen_id', 'DESC')
+                         ->get();
+
+        $sub_array = [];   
+        $month     = array(1,2,3,4,5,6,7,8,9,10,11,12);
+        foreach ($month as $mvalue) {
+           $sub_month = \DB::table('nutri_mst_kitchen')
+                          ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                          ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                          ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                          ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
+                          ->where('nutri_mst_kitchen.is_deleted','<>',1)
+                          ->orderBy('kitchen_id', 'DESC')
+                          ->get();
+        }
 
 
         $data['nutritionist_count']      = $nutritionist_count;
@@ -75,12 +89,16 @@ class DashboardController extends Controller
         $data['total_subscriber_count']  = $total_subscriber_count;
         $data['new_subscriber_count']    = $new_subscriber_count;
         $data['expire_subscriber_count'] = $expire_subscriber_count;
-        
+
         return view('admin/dashbord')->with(['data' => $data]);
-   
    }
 
-
+   public  function traits(Request $request)
+   {
+        $output = $this->verifyAndStoreImage(); 
+        dd($output);
+        return $output;
+   }
 
 
 

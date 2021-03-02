@@ -120,7 +120,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="area_id">Address<span style="color:red;" >*</span></label>
-                  <textarea name="address" class="form-control" id="address" rows="4" required data-parsley-errors-container="#address_error" data-parsley-error-message="Please enter address."> </textarea>
+                  <textarea name="address" class="form-control" id="address" rows="4" required data-parsley-errors-container="#address_error" data-parsley-error-message="Please select at least one"> </textarea>
                   <div id="address_error" style="color:red;"></div>
                 </div>
               </div>
@@ -136,8 +136,10 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="area_id">Assign User To Kitchen </label>
+                      
                       <table id="user-item"  class="table table-striped table-bordered ">
                         <thead class="btn-default">
+                        <tr><td colspan="4">  <div id="checkbox_error" style="color:red;"></div></td></tr>  
                         <th width="5%"></th>
                           <th>Menu Name</th>
                           <th>Role</th>
@@ -147,7 +149,8 @@
                         
                         @foreach($users as $key => $uvalue)
                         <tr>
-                          <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}"></td>
+                          <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one kitchen user"></td>
+                            
                           <td>{{ucfirst($uvalue->name)}}</td>
                           <td>{{ucfirst($uvalue->role_name)}}</td>
                           <td><strong>State:</strong>{{ucfirst($uvalue->state_name)}}, <strong>city:</strong>{{ucfirst($uvalue->city_name)}} , <strong>Area:</strong> {{ucfirst($uvalue->area_name)}} </td>
@@ -161,8 +164,10 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="area_id">Assign Subscription Plan</label>
+                  
                       <table id="sub-item"  class="table table-striped table-bordered ">
                         <thead class="btn-default">
+                        <tr><td colspan="3">  <div id="plan_error" style="color:red;"></div></td></tr>  
                         <th width="5%"></th>
                           <th>Subscription Plan</th>
                             </thead>
@@ -170,7 +175,8 @@
                         
                         @foreach($subscriptionplan as $key => $svalue)
                         <tr>
-                          <td><input type="checkbox" name="subscription_plan[]" class="checkbox_allmenu" id="subscription_plan" value="{{$svalue->sub_plan_id}}"></td>
+                          <td><input type="checkbox" name="subscription_plan[]" class="checkbox_allmenu" id="subscription_plan" value="{{$svalue->sub_plan_id}}" required data-parsley-errors-container="#plan_error" data-parsley-error-message="Please select at least one subscription plan">
+                             </td>
                           <td>{{$svalue->sub_name}}</td>
                         </tr>
                         @endforeach
@@ -191,8 +197,10 @@
                 </div>
                 <div class="box-body">
                   <div class="form-group">
+                    
                     <table id="menu-item"  class="table table-striped table-bordered ">
                       <thead class="btn-default">
+                      <tr><td colspan="3">  <div id="menu_error" style="color:red;"></div></td></tr>  
                       <th width="5%"></th>
                         <th>Menu Name</th>
                           </thead>
@@ -200,7 +208,9 @@
                       
                       @foreach($menu as $key => $mvalue)
                       <tr>
-                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="{{$mvalue->id}}"></td>
+                        <td><input type="checkbox" name="menu[]" class="checkbox_allmenu" id="menu" value="{{$mvalue->id}}" required data-parsley-errors-container="#menu_error" data-parsley-error-message="Please select at least one menu">
+                     
+                        </td>
                         <td>{{$mvalue->menu_title}}</td>
                       </tr>
                       @endforeach

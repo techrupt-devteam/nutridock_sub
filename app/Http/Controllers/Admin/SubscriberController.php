@@ -273,8 +273,8 @@ class SubscriberController extends Controller
                         </a>';
                        
                     }
-                    $nestedData['action'] .='<a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-primary btn-sm"  title="'.$title.'" >
-                          pdf
+                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="'.$title.'" >
+                        Pdf
                         </a>';
                 $nestedData['class_r'] = $class_r;
                 $data[] = $nestedData;

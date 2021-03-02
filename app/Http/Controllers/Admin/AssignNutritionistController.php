@@ -258,7 +258,7 @@ class AssignNutritionistController extends Controller
         {
             if(!in_array($svalue->id,$assign_subscriber_array)){
             $Subscriber_html .=  "<tr>";
-            $Subscriber_html .= "<td><input type='checkbox' name='subscriber_id[]' value='".$svalue->id."'></td>";
+            $Subscriber_html .= "<td><input type='checkbox' name='subscriber_id[]' value='".$svalue->id."' required data-parsley-errors-container='#name_error' data-parsley-error-message='Please select at least one subscriber'></td>";
             $Subscriber_html .= "<td>".$svalue->subscriber_name."</td></tr>";} 
         }
 
