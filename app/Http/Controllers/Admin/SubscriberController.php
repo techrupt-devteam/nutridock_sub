@@ -470,26 +470,36 @@ class SubscriberController extends Controller
                           ->select('food_avoid_name')
                           ->get();
                                     
-            
+           $get_meal_type2 = \DB::table('meal_type')
+                                     ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address1_deliver_mealtype))
+                                     ->select('meal_type_name')
+                                     ->get();  
 
 
-
+            $get_meal_type3 = \DB::table('meal_type')
+                                         ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address2_deliver_mealtype))
+                                         ->select('meal_type_name')
+                                         ->get();
         
          
            $data =[] ;
            $data['get_subscriber_details'] = $get_subscriber_details;
            $data['get_meal_type'] = $get_meal_type;
            $data['get_food_avoid'] = $get_food_avoid;
+           $data['get_meal_type2'] = $get_meal_type2;
+           $data['get_meal_type3'] = $get_meal_type3;
 
             if(!is_dir('uploads/pdf/sub_'.$id)) {
                mkdir('uploads/pdf/sub_'.$id);
             }
 
-            $pdf = PDF::loadView('admin/subscriber/detailspdf',  ['data' => $data] );
-            //pdf->SetProtection(['copy', 'print'], '', 'pass');
+            
+
+            $pdf = PDF::loadView('admin/subscriber/detailspdf',  ['data' => $data]);
+            $pdf->SetProtection(['copy', 'print'], '', 'pass');
             //// $pdf->save('uploads/pdf/sub_'.$id.'/sub_'.$id.'details.pdf');
             $pdf->stream('sub_'.$id.'details.pdf');
-
+     
            
         
          
