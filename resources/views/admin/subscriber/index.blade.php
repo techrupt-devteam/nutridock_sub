@@ -103,10 +103,10 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
  <style type="text/css">
    .expire_row{
-     background-color: #e80f0f4a !important;  
+     background-color: #e80f0f1c !important;  
    } 
    .noexp{
-     background-color: #38ff5142 !important;  
+     background-color: #38ff514a !important;  
    }
  </style>
 <script type="text/javascript">
@@ -154,6 +154,21 @@
        //alert(id);
       $.ajax({
           url: "{{url('/admin')}}/subscriber_details",
+          type: 'post',
+          data: {sid :id },
+          success: function (data) 
+          {
+            $('#content').html(data);
+          }
+      });
+    } 
+   
+    function viewMealProgramDetails(id) 
+    { 
+      var id  = id ;
+       //alert(id);
+      $.ajax({
+          url: "{{url('/admin')}}/view_subscriber_meal_program",
           type: 'post',
           data: {sid :id },
           success: function (data) 

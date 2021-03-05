@@ -121,6 +121,7 @@
                       <img id="blah" src="{{ url('/')}}/uploads/default-img.jpg"/>
                       <input type="file" class="user_image-file" id="menu_image" name="menu_image" placeholder="Select menu image" required="true" data-parsley-errors-container="#image_error" accept="image/x-png,image/gif,image/jpeg,image/png" data-parsley-error-message="Please upload image.">
                     </div>
+                    <div id="image_error" style="color:red;"></div>
                   </div>
                 </div>
               </div>

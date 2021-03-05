@@ -105,29 +105,48 @@
 
     function change_Status(id,plan_id) 
     {  
-
+      
       swal({
         title: "Subscription Plan status",
         text: "Are You sure to change plan status",
         icon: "warning",
-      
-        dangerMode: true,
+          buttons: [
+            'Cancel',
+            'Yes, change it!'
+          ],
+         
         }).then(function(isConfirm) {
-        if (isConfirm) { 
-        var status = $("#"+id+"_is_active").prop('checked');
-        var plan_ids = plan_id;
-        //alert(status);
-         $.ajax({
-              url: "{{url('/admin')}}/status_subscription_plan",
-              type: 'post',
-              data: {status:status,plan_ids:plan_id},
-              success: function (data) 
-              {
-                swal("Success", "Subscription plan status successfully changed !", "success");
-              }
-          });
-        }
-      });
+          if (isConfirm) 
+          { 
+            
+            var status = $("#"+id+"_is_active").prop('checked');
+            var plan_ids = plan_id;
+            //alert(status);
+             $.ajax({
+                  url: "{{url('/admin')}}/status_subscription_plan",
+                  type: 'post',
+                  data: {status:status,plan_ids:plan_id},
+                  success: function (data) 
+                  {
+                    swal("Success", "Subscription plan status successfully changed !", "success");
+                  }
+              });
+                
+          } else {
+               
+            var className = $("#"+id+"_is_active").closest('div').prop('className');
+           
+            if(className == "toggle btn btn-sm slow btn-danger off"){
+               $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-success btn-sm slow');
+            }else{
+              $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-sm slow btn-danger off');
+            }
+          }
+        });
+
+
      }
 
     function viewDetails(plan_id) 

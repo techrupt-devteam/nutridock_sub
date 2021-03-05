@@ -95,7 +95,7 @@
     function change_Status(id,plan_id) 
     {  
 
-        swal({
+        /*swal({
           title: "Nutritionsit status",
           text:  "Are You sure to change status",
           icon:  "warning",
@@ -114,6 +114,45 @@
                   swal("Success", "Nutritionsit status successfully changed !", "success");
                 }
             });
+          }
+        });*/
+         swal({
+          title: "Nutritionsit status",
+          text:  "Are You sure to change status",
+          icon:  "warning",
+          buttons: [
+            'Cancel',
+            'Yes, change it!'
+          ],
+         
+        }).then(function(isConfirm) {
+          if (isConfirm) 
+          { 
+            
+            var status = $("#"+id+"_is_active").prop('checked');
+            var plan_ids = plan_id;
+            //alert(status);
+            $.ajax({
+                url: "{{url('/admin')}}/status_nutritionsit",
+                type: 'post',
+                data: {status:status,plan_ids:plan_id},
+                success: function (data) 
+                {
+                  swal("Success", "Nutritionsit status successfully changed !", "success");
+                }
+            });
+
+          } else {
+               
+            var className = $("#"+id+"_is_active").closest('div').prop('className');
+           
+            if(className == "toggle btn btn-sm slow btn-danger off"){
+               $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-success btn-sm slow');
+            }else{
+              $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-sm slow btn-danger off');
+            }
           }
         });
      }
