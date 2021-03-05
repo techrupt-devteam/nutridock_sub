@@ -94,28 +94,6 @@
 <script type="text/javascript">
     function change_Status(id,plan_id) 
     {  
-
-        /*swal({
-          title: "Nutritionsit status",
-          text:  "Are You sure to change status",
-          icon:  "warning",
-          dangerMode: true,
-          }).then(function(isConfirm) {
-          if (isConfirm) { 
-          var status = $("#"+id+"_is_active").prop('checked');
-          var plan_ids = plan_id;
-          //alert(status);
-           $.ajax({
-                url: "{{url('/admin')}}/status_nutritionsit",
-                type: 'post',
-                data: {status:status,plan_ids:plan_id},
-                success: function (data) 
-                {
-                  swal("Success", "Nutritionsit status successfully changed !", "success");
-                }
-            });
-          }
-        });*/
          swal({
           title: "Nutritionsit status",
           text:  "Are You sure to change status",
