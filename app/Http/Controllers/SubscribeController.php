@@ -110,9 +110,7 @@ class SubscribeController extends Controller
 
         $subacribe_now_value     = \DB::table('subscribe_now')->where('phone_no',$arr_data['phone_no'])->where('name',$arr_data['name'])->where('email',$arr_data['email'])->get();
 
-        $subacribe_now_data_exit = $subacribe_now_value->toArray();
-
-        
+        $subacribe_now_data_exit = $subacribe_now_value->toArray();        
 
         if($subacribe_now_data_exit){
             foreach($subacribe_now_data_exit as $row){
@@ -129,7 +127,7 @@ class SubscribeController extends Controller
 
             if($payment_status != 'Paid'){
                 $personal_data_status = SubscribeNow::create($arr_data);
-            }else{
+            } else {
                 $todays_date = date_create();//'2021-01-05'
                 $start_date_value = date_create($start_date);//'2020-12-30'
                 $diff = date_diff($start_date_value,$todays_date);
@@ -143,13 +141,11 @@ class SubscribeController extends Controller
                     echo json_encode($data);
                 }
             }
-        }else{
+        } else {
             $personal_data_status = SubscribeNow::create($arr_data);
             $data['message'] = "success";
             echo json_encode($data);
         }
-
-
     }
 
 

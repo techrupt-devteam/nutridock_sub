@@ -261,6 +261,7 @@ background-color:blue
 <!-- For Datepickr 
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
 <script type="text/javascript" src="{{url('')}}/public/front/dist/date-time-picker.min.js"></script>
+<script type="text/javascript" src="{{url('')}}/public/front/js/settings.js"></script>
 <section class="mt-5 pb-0 pt-5">
   <div class="">
     <div class="image-container set-full-height pb-5" 
@@ -307,7 +308,8 @@ background-color:blue
               </div>
               </div>
           </div>
-          <form role="form" id="sign-up" class="w-100" data-parsley-validate="parsley">
+          <form action="{{url('/')}}/checkout" method="POST" role="form" id="sign-up" class="w-100" >
+          {!! csrf_field() !!}
               <!-- @START: Personal Details tab -->
               <div class="row setup-content step-1" id="step-1">
                   <div class="col-sm-12">
@@ -326,7 +328,7 @@ background-color:blue
                                 </span> 
                               </div>
                               <input type="text" name="full_name" class="form-control" id="full_name" aria-describedby="basic-addon3" placeholder="Full Name"
-                              name="first_name" Choose placeholder="First Name" required="true" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
+                              name="first_name" Choose placeholder="First Name" required="required" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
                             <div id="firstname-errors"></div>
                              </div>
@@ -422,7 +424,7 @@ background-color:blue
                     <div class="form-group">
                       <label class="control-label">Physical Activity <span class="text-danger">*</span></label>
                         <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2">
-                          <option selected="selected" disabled="disabled" value=" " >Select an option</option>
+                          <option selected="selected" value=" " >Select an option</option>
                            @foreach($data['getPhysicalActivityData'] as $getPhysicalActivity)
                           <option value="{{ $getPhysicalActivity['physical_activity_id'] }}">
                             {{ $getPhysicalActivity['physical_activity'] }} 
@@ -492,8 +494,8 @@ background-color:blue
                     <label class="control-label">Select Subscription Plan <span class="text-danger">*</span></label>       
                     @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlanKey => $getSubscriptionPlan)                        
                       <div class="col-sm-12 radio-toolbar">                  
-                        <input type="radio" id="radio{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}" onchange="getPlanPrice();" required="" data-parsley-errors-container="#sub-plan-errors" data-parsley-error-message="Please select subscription plan" data-parsley-group="step-3" {{($getSubscriptionPlanKey == 0) ? 'checked' : '' }} > 
-                        <label for="radio{{ $getSubscriptionPlan['sub_name'] }}"> 
+                        <input type="radio" id="{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}" onchange="getPlan(this.value);" required="" data-parsley-errors-container="#sub-plan-errors" data-parsley-error-message="Please select subscription plan" data-parsley-group="step-3" {{($getSubscriptionPlanKey == 0) ? 'checked' : '' }} > 
+                        <label for="{{ $getSubscriptionPlan['sub_name'] }}"> 
                         <img src="{{url('')}}/uploads/subscription_icon/thumb/{{ $getSubscriptionPlan['icon_image'] }}" height="35">
                         {{ $getSubscriptionPlan['sub_name'] }} 
                         </label>                        
@@ -517,12 +519,15 @@ background-color:blue
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group label-floating">
                         <label class="control-label">Start Date <span class="text-danger">*</span></label>
-                        <div class="input-group date" data-provide="datepicker">
-                          <div class="input-group-prepend"> <span class="input-group-text">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                        </span> </div>
-                          <input name="start_date" id="start_date" type="text" class="form-control datepicker" required="required" data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" maxlength="3" data-parsley-group="step-3" autocomplete="off">
+                        <div class="input-group date" >
+                          <div class="input-group-prepend"> 
+                            <span class="input-group-text">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span> 
+                          </div>
+                          <input type="text" data-provide="datepicker" class="form-control" name="start_date" id="start_date" required="required" data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" data-parsley-group="step-3" autocomplete="off" value="<?php echo date("Y-m-d", strtotime("+ 2 day")) ?>">
                         </div>
+                      
                         <div id="start-date-errors"></div>
                       </div>                      
                     </div>
@@ -533,7 +538,7 @@ background-color:blue
                           @foreach($data['getMealTypeData'] as $getMealTypeDataKey => $getMealTypeData)
                             <input 
                             type="checkbox" 
-                            id="radio{{ $getMealTypeData['meal_type_name'] }}" 
+                            id="{{ $getMealTypeData['meal_type_name'] }}" 
                             name="radioMealType" 
                             class="meal_type_id" 
                             value="{{ $getMealTypeData['meal_type_id'] }}" 
@@ -543,14 +548,16 @@ background-color:blue
                             data-parsley-group="step-3" 
                             onchange="getPlanPrice();"
                             {{($getMealTypeDataKey == 0) ? "checked" : "" }} >
-                            <label for="radio{{ $getMealTypeData['meal_type_name'] }}">
+                            <label for="{{ $getMealTypeData['meal_type_name'] }}">
                               {{ $getMealTypeData['meal_type_name'] }}
                             </label> 
                           @endforeach 
                           <div id="meal-type-errors"></div>
+                          <input type="hidden" id="meal_type" name="meal_type" />
                         </div>
                       </div>
-                      <input type="hidden" name="" id="checkout_meal_type_name_value"> </div>
+                      
+                      </div>
                    
                     <div class="col-sm-12 mb-1">
                       <div class="">
@@ -565,7 +572,8 @@ background-color:blue
                 <div class="wizgard-footer">
                   <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                   </button>
-                  <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next ></span> 
+                  <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next >
+                  </span> 
                  
                 </div>
               </div>
@@ -657,7 +665,8 @@ background-color:blue
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <span class="nextBtn btn btn-info pull-right" data-current-block="4" data-next-block="5">Next ></span> 
+                    <button type="button" class="nextBtn btn btn-info pull-right" data-current-block="4" data-next-block="5" onclick="getData();" >
+                    Next ></button> 
                     <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button> -->
@@ -710,47 +719,48 @@ background-color:blue
                                     <td>Email</td>
                                     <td class="text-center" style="width:35px"> : </td>
                                     <td><span id="checkout_email"></span></td>
-                                  </tr>
-                                  <tr>
-                                    <td>Address-1 </td>
-                                    <td class="text-center" style="width:35px"> : </td>
-                                    <td><span id="checkout_address1"></span> <span id="openbrk1" style="display: none;">(</span><span id="checkout_address1_meal"></span><span id="openbrk2" style="display: none;">)</span></td>
-                                    <!-- X-46, MIDC,Ambad, Nashik, 4221021 --> 
-                                  </tr>
-                                  <tr id="checkout_address2_div" style="display: none;">
-                                    <td>Address-2</td>
-                                    <td class="text-center" style="width:35px"> : </td>
-                                    <td><span id="checkout_address2"></span> (<span id="checkout_address2_meal"></span><span id="checkout_address1_meal"></span>)</td>
-                                    <!-- Hari om appartment,Nasik road, 4221021 --> 
-                                  </tr>
-                                </table>
+                                  </tr> 
+                                  </table>
                               </div>
                               <div class="invoice-items mt-3">
                                 <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
-                                  <table class="table table-bordered">
+                                  <table class="table table-condensed table-hover">
                                     <thead>
                                       <tr>
                                         <th class=" br-0">No. of days</th>
                                         <th class="per70 br-0">Meal Plan</th>
-                                        <th class="per5 text-right bl-0 br-0">Meal Type</th>
-                                        <th class="per25 text-right bl-0">Total</th>
+                                        <th class="per5 text-center bl-0 br-0">Meal Type</th>
+                                        <th class="per25 text-center bl-0">Total</th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                       <tr>
-                                        <td class="br-0"><span id="checkout_no_of_days"></span> Days</td>
-                                        <td class="text-left br-0 bl-0">Classic</td>
-                                        <td class="text-right br-0 bl-0"><span id="checkout_meal_type_name" ></span></td>
-                                        <td class="text-right bl-0"><span id="checkout_price"></span>/-</td>
+                                        <td class="br-0">
+                                        <input type="hidden" id="no_of_days" name="no_of_days" />
+                                        <span id="checkout_no_of_days"></span> Days</td>
+                                        <td class="text-left br-0 bl-0">
+                                          <span id="checkout_meal_name" ></span>
+                                        </td>
+                                        <td class="text-right br-0 bl-0">
+                                          <span id="checkout_meal_type_name"></span>
+                                          
+                                        </td>
+                                        <td class="text-right bl-0">
+                                          <span id="checkout_sale_price"></span>
+                                        </td>
                                       </tr>                                       
-                                    </tbody>                                                                        
+                                   </tbody>                                                                        
                                       <tr>
-                                        <th colspan="3" class="text-right br-0" style="border-bottom: 0px;">GST</th>
-                                        <th class="text-right bl-0" style="border-bottom: 0px;">5% </th>
+                                        <th colspan="3" class="text-right br-0" style="border-bottom: 0px;">
+                                        GST 5%</th>
+                                        <th class="text-right bl-0" style="border-bottom: 0px;">
+                                        <span id="checkout_gst_price"></span> 
+                                        <input type="hidden" id="gst_price" name="gst_price" /> 
+                                        </th>
                                       </tr>
                                       <tr>
-                                        <th colspan="3" class="text-right br-0" style="border-top: 0px;">Total</th>
-                                        <th class="text-right bl-0" style="border-top: 0px;"><span id="checkout_final_gst_value"></span> </th>
+                                        <th colspan="3" class="text-right br-0" style="border-top: 0px; background-color:#ccc">Total</th>
+                                        <th class="text-right bl-0" style="border-top: 0px;background-color:#ccc"><span id="checkout_total_amount"></span> </th>
                                       </tr>
                                     </tfoot>
                                   </table>
@@ -768,14 +778,13 @@ background-color:blue
                   </div>
                   <!-- Invoice --> 
                 </div>
-                <div class="wizgard-footer">
-                  <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button">
+                <div class="wizgard-footer">               
+                  <button class="btn btn-success pb-1 pt-1 pull-right" type="submit" id="btnSubmit">
                     <i class="fa fa-hand-o-right" aria-hidden="true"></i> &nbsp;  Finish 
                   </button>
                 </div>
               </div>
               <!-- @END: Checkout tab -->
-
             </form>
           </div>
         </div>
@@ -786,17 +795,72 @@ background-color:blue
 </section>
 <script type="text/javascript" src="{{url('')}}/public/js/form-wizard.js"></script>
 <script type="text/javascript" src="{{url('')}}/public/front/js/bootstrap-datepicker.min.js"></script>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 $(document).ready(function () {
+$('#start_date').datepicker({ 
+  format:'yyyy-mm-dd', 
+  startDate: new Date($("#start_date").val()),
+});
 
-//  $('#start_date').datepicker();
+$("#btnSubmit").click(function(){
+  $.ajax({
+      url: '{{ URL::to('/') }}/checkout',
+      type: 'post',
+      dataType: 'json',
+      data: $('form#sign-up').serialize(),
+      success: function(data) {       
+        if(data) {
+          paySuccess(data['total_amount'],data['subscriber_id']);
+        }
+      }
+  }); 
+});
+
+
+function paySuccess(total_amount,subscriber_id)
+{
+  var totalAmount = total_amount;
+  var order_id  = subscriber_id;
+  var options = {          
+  "key": "rzp_test_qFqkHvt9YysTYc",
+  "amount": (totalAmount*100), // 2000 paise = INR 20
+  "name": "Nutridock",
+  "description": "Payment",
+  "status": "captured",
+  "image": "https://nutridock.com/public/front/img/logo.png",
+  "handler": function (response){
+      $.ajax({
+        url: '{{ URL::to('/') }}/pay-success',
+        type: 'post',
+        dataType: 'json',
+        data: {
+        razorpay_payment_id: response.razorpay_payment_id , 
+        totalAmount : totalAmount ,order_id : order_id,
+        }, 
+        success: function (msg) {
+          alert(msg);
+           // window.location.href = SITEURL + 'thank-you';
+        }
+      });    
+  },
+"prefill": {
+      "contact": '9975649868',
+      "email":   'developer@techrupt.in',
+  },
+  "theme": {
+      "color": "#528FF0"
+  }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+e.preventDefault();
+}
+
 getPlan($('input[type="radio"][name="radioSubscriptionPlan"]:checked').val());
-getPlanPrice();
 
 /************* Pop Over tool tip *************/
 $('[data-toggle="popover"]').popover();
-
 
 /************* @START: CODE FOR CHECK VALIDATION ON GOTO NEXT TAB *************/
 var navListItems = $('div.setup-panel div a'),
@@ -872,30 +936,30 @@ $('div.setup-panel div a.btn-primary').trigger('click');
 
 
 /************* @START: CODE FOR GET PLAN DETAILS *************/
-function getPlan(radioSubscriptionPlanVal)
-{ 
+function getPlan(radioSubscriptionPlanVal) {
     var plan_details_html = ''; 
     if(radioSubscriptionPlanVal) {
           $.ajax({  
               url:"{{ URL::to('/') }}/get_plan_details",  
               method:"POST",  
               data:{plan_id:radioSubscriptionPlanVal},  
-              success:function(data){  
-                    $.each(data, function(i, val) {
-                    if(i == 0) {
-                      var checked_duration = "checked";
-                    } else {
-                      var checked_duration = "";
-                    }
+              success:function(data){              
+                  $.each(data, function(i, val) {
+                  if(i == 0) {
+                    var checked_duration = "checked";
+                  } else {
+                    var checked_duration = "";
+                  }
 
-                      plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="radio'+val.duration+'" name="radioDuration" value="'+val.duration+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="radio'+val.duration+'">'+val.duration+'</label></div>';                                   
-                    });
-                        
-                    $("#getPlanDetails").append().html(plan_details_html); 
-                    $("#plandetails").show(); 
+                    plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="'+val.duration+'" name="radioDuration" value="'+val.duration_id+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="'+val.duration+'">'+val.duration+'</label></div>';      
+                                                
+                  });                  
+                  
+                  $("#getPlanDetails").append().html(plan_details_html); 
+                  $("#plandetails").show(); 
+                  getPlanPrice();
               } 
-          });  
-
+          });
     } else {
       $('input[type="radio"][name="radioSubscriptionPlan"]').click(function(){ 
      
@@ -904,12 +968,13 @@ function getPlan(radioSubscriptionPlanVal)
               method:"POST",  
               data:{plan_id:$(this).val()},  
               success:function(data){  
-                    $.each(data, function(i, val) {
-                      plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="radio'+val.duration+'" name="radioDuration" value="'+val.duration+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="radio'+val.duration+'">'+val.duration+'</label></div>';                                   
-                    });
-                        
-                    $("#getPlanDetails").append().html(plan_details_html); 
-                    $("#plandetails").show(); 
+                $.each(data, function(i, val) {
+                  plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="'+val.duration+'" name="radioDuration" value="'+val.duration_id+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="'+val.duration+'">'+val.duration+'</label></div>';                                   
+                });
+                    
+                $("#getPlanDetails").append().html(plan_details_html); 
+                $("#plandetails").show(); 
+                getPlanPrice();
               } 
           });  
       }); 
@@ -936,22 +1001,21 @@ $(document).ready(function() {
   // });
 });
 
-
 /************* @START: CODE FOR GET PLAN PRICE  *************/
 function getPlanPrice()
-{
- 
+{   
   var subscription_plan_id = $('input[type="radio"][name="radioSubscriptionPlan"]:checked').val();
-  var duration_id = $('input[type="radio"][name="radioDuration"]:checked').val();
-
+  var duration_id = $('input[type="radio"][name="radioDuration"]:checked').val(); 
+ 
   var selectedMealType = new Array();
   $("#meals input[type=checkbox]:checked").each(function () {
     selectedMealType.push(this.value);
-  });
 
-  
-  if((subscription_plan_id != '') && (duration_id != ''))
-  {
+  });
+  $("#meal_type").val(selectedMealType); 
+  //alert(subscription_plan_id+" meal type: "+selectedMealType+" duration: "+duration_id);
+  if((subscription_plan_id != '') && (duration_id != 'undefined') && (selectedMealType != '')) {
+   
     $.ajax({
         type: "POST",
         url:  "{{ URL::to('/') }}/get_subscription_plan_price",
@@ -963,8 +1027,7 @@ function getPlanPrice()
           },
         success: function (data) {
           if(data) {            
-            $(".price").html('<span class="mrp">Rs. '+data['totalPrice']+' for '+data['duration']+' days | Rs. '+data['price_per_meal']+' per meal </span><br /><span class="og">Rs. '+data['salePrice']+' for '+data['duration']+' days | Rs. '+data['discount_price']+' per meal </span>');
-           
+            $(".price").html('<input type="hidden" id="mrp" name="mrp" value="'+data['totalPrice']+'" /><input type="hidden" id="price_per_meal" name="price_per_meal" value="'+data['price_per_meal']+'" /><input type="hidden" id="salePrice" name="salePrice" value="'+data['salePrice']+'" /><input type="hidden" id="discount_price" name="discount_price" value="'+data['discount_price']+'" /><span class="mrp">Rs. '+data['totalPrice']+' for '+data['duration']+' days | Rs. '+data['price_per_meal']+' per meal </span><br /><span class="og">Rs. '+data['salePrice']+' for '+data['duration']+' days | Rs. '+data['discount_price']+' per meal </span>');           
           }
         },
         error: function (data) {
@@ -974,6 +1037,34 @@ function getPlanPrice()
   }
 }
 
+function getData() {  
+  var selectedMealTypeName = new Array();
+  var selectedMealTypeVal = new Array();
+  var total_price;
+
+  $("#checkout_name").html($("input[name='full_name']").val());
+  $("#checkout_phone_no").html($("input[name='mobile']").val());
+  $("#checkout_email").html($("input[name='email']").val());
+  $("#checkout_meal_name").html($('input[name=radioSubscriptionPlan]:checked').attr('id'));
+  $("#checkout_no_of_days").html($('input[name=radioDuration]:checked').attr('id'));
+  $("#no_of_days").val($('input[name=radioDuration]:checked').attr('id')); 
+ 
+  $($('input[name=radioMealType]:checked')).each(function (i, val) { 
+    alert(this.value);
+    selectedMealTypeName += (selectedMealTypeName.length > 0 ? ', ' : '') + this.id;
+    //selectedMealTypeVal += (selectedMealTypeVal.length > 0 ? ', ' : '') + this.val();
+  }); 
+ 
+  $("#checkout_meal_type_name").html(selectedMealTypeName); 
+
+  
+  $("#checkout_sale_price").html(formatCurrency($("input[name='salePrice']").val()));
+  $("#checkout_gst_price").html(formatCurrency(calculateGST($("input[name='salePrice']").val())));
+  $("#gst_price").val(calculateGST($("input[name='salePrice']").val()));
+ 
+  total_price = parseFloat($("input[name='salePrice']").val()) + parseFloat($("input[name='gst_price']").val());
+  $("#checkout_total_amount").html(formatCurrency(total_price)); 
+}
 /************* @END: CODE FOR GET PLAN PRICE  *************/
 </script>
 @endsection 

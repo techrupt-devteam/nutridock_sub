@@ -121,6 +121,8 @@ Route::post('/get_plan_details', 	 			'Front\SignUpController@getSubscriptionPla
 Route::post('/subscribe-info', 	 				'Front\SignUpController@getSubscribePlan');
 Route::post('/check_valid_pin', 	 			'Front\SignUpController@getCheckValidPin');
 Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanPrice');
+Route::post('/checkout', 						'Front\SignUpController@checkout');
+Route::post('/pay-success', 					'Front\SignUpController@paySuccess');
 
 
 

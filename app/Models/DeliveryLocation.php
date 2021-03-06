@@ -14,4 +14,8 @@ class DeliveryLocation extends Model
 		"delivery_city_id"
 	];
 
+
+  
+
+
 }
