@@ -28,7 +28,7 @@ class SubscriptionPlan extends Model
                     ->first();
          
 
-        $data = SubscriptionPlan::select('sub_plan_id','sub_name','city','area')
+        $data = SubscriptionPlan::select('sub_plan_id','sub_name','city','area','icon_image')
                 ->where('is_active', '1')    
                 ->where('is_deleted', '0')      
                 ->where('city', $getCity['delivery_city_id'])                               

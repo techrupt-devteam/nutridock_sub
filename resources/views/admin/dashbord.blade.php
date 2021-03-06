@@ -321,6 +321,7 @@
 var canvas = document.getElementById('barChart');
 var data = {
     labels: ["January", "February", "March", "April", "May", "June", "July" ,"August","September","October","November","December"],
+   
     datasets: [
         {
             label: "Active Subscriber",
@@ -329,7 +330,8 @@ var data = {
             borderWidth: 2,
             hoverBackgroundColor: "#aa7af8",
             hoverBorderColor: "#8845f5",
-            data: [65, 59, 30, 81, 56, 55, 40,80,100,200,80,30],
+            //data: [65, 59, 30, 81, 56, 55, 40,80,100,200,80,30],
+            data: [<?php echo implode(',',$data['sub_array'])?>],
         },
         {
             label: "Expire Subscriber",
@@ -338,17 +340,22 @@ var data = {
             borderWidth: 2,
             hoverBackgroundColor: "#f1957e",
             hoverBorderColor: "#b94629",
-            data: [25, 39, 10, 65, 45, 35, 20,60,50,60,70,10],
+            //data: [25, 39, 10, 65, 45, 35, 20,60,50,60,70,10],
+            data: [<?php echo implode(',',$data['exp_array'])?>],
         }
     ]
 };
 var option = {
 animation: {
         duration:5000
-}
+},
+x: {
+            gridLines: {
+                offsetGridLines: true
+            }
+        }
 
 };
-
 
 var myBarChart = Chart.Bar(canvas,{
   data:data,
@@ -433,20 +440,20 @@ var myBarChart = Chart.Bar(canvas,{
 
 
 /**************************************************************************/
-    function viewDetails(kitchen_id) 
-    { 
-      var kit_id = kitchen_id;
-      //alert(status);
-       $.ajax({
-            url: "{{url('/admin')}}/kitchen_details",
-            type: 'post',
-            data: {kitchen_id:kit_id},
-            success: function (data) 
-            {
-              $('#content').html(data);
-            }
-        });
-    }
+  function viewDetails(kitchen_id) 
+  { 
+    var kit_id = kitchen_id;
+    //alert(status);
+    $.ajax({
+      url: "{{url('/admin')}}/kitchen_details",
+      type: 'post',
+      data: {kitchen_id:kit_id},
+      success: function (data) 
+      {
+        $('#content').html(data);
+      }
+    });
+  }
  </script> 
  
 @endsection

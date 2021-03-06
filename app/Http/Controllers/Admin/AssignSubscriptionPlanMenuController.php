@@ -53,7 +53,7 @@ class AssignSubscriptionPlanMenuController extends Controller
                         ->join('nutri_mst_subscription_plan','nutri_mst_assign_subscription_plan_menu.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
                         ->select('nutri_mst_subscription_plan.sub_name','nutri_mst_assign_subscription_plan_menu.*')
                         ->get();
-      //  dd($data);
+        // dd($data);
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -71,7 +71,7 @@ class AssignSubscriptionPlanMenuController extends Controller
         $get_assign_sub_plan_id   = $this->base_model->select('sub_plan_id')->get();
         
         $sub_plan_id_arr = [];
-        
+
         foreach($get_assign_sub_plan_id  as $sub_plan_value ){
           $sub_plan_id_arr[] = $sub_plan_value->sub_plan_id;
         }
@@ -99,10 +99,18 @@ class AssignSubscriptionPlanMenuController extends Controller
         $subscription_plan              = $this->base_subscription_plan->where('is_active','=','1')->where('is_deleted','<>','1')->get();
         $subscription_plan_dtl          = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->orderBy('duration','ASC')->get();
         $default_meal                   = $this->base_default_meal->where('sub_plan_id','=',$data->sub_plan_id)->groupBy('duration_id')->get();
+        $get_inactive_days              = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->where('is_active','=','0')->select('duration')->orderBy('duration','ASC')->get()->toArray();
+        
+        $get_inactive_days_array = [];
+        foreach ($get_inactive_days as $key => $value) {
+          $get_inactive_days_array[] = $value['duration'];
+        }
+       
         $data['data']                   = $arr_data;
         $data['subscription_plan']      = $subscription_plan;
         $data['subscription_plan_dtl']  = $subscription_plan_dtl;
         $data['default_meal']           = $default_meal;
+        $data['get_inactive_days']      = $get_inactive_days_array;
         $data['page_name']              = "Edit";
         $data['url_slug']               = $this->url_slug;
         $data['title']                  = $this->title;
@@ -130,11 +138,12 @@ class AssignSubscriptionPlanMenuController extends Controller
         }   
     } 
 
+
     //get subscription plan Days 
     public function get_days(Request $request)
     {
        $id   = $request->plan_id; 
-       $get_days = $this->base_subscription_plan_dtl->where(['sub_plan_id'=>$id])->orderBy('duration','ASC')->get();
+       $get_days = $this->base_subscription_plan_dtl->where(['sub_plan_id'=>$id])->where('is_active','=','1')->orderBy('duration','ASC')->get();
 
        $html ="<div class='form-group'><label>Add Default Menu<span style='color:red;' >*</span></label><table class='table table-bordered'>
                  <thead>
@@ -155,8 +164,8 @@ class AssignSubscriptionPlanMenuController extends Controller
        }        
        $html .="</tbody></table></div>";
        return $html;
-
     }
+
 
     //load day wise menu  add entry 
     public function default_menu_add(Request $request)
@@ -231,7 +240,6 @@ class AssignSubscriptionPlanMenuController extends Controller
                 </form>";   
             return $html;    
     } 
-
 
     //load day wise menu  add entry 
     public function default_menu_edit(Request $request)
@@ -326,6 +334,7 @@ class AssignSubscriptionPlanMenuController extends Controller
             return $html;    
     }
 
+
     //store deafult menu 
     public function store_meal_plan(Request $request)
     {   
@@ -372,6 +381,8 @@ class AssignSubscriptionPlanMenuController extends Controller
         }
         return \Redirect::to('admin/manage_assign_sub_plan_menu');
     } 
+
+
 
     public function update_meal_plan(Request $request)
     {   
@@ -421,8 +432,5 @@ class AssignSubscriptionPlanMenuController extends Controller
         }
         return \Redirect::to('admin/manage_assign_sub_plan_menu');
     } 
-
-
-
 
 }

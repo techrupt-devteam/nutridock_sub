@@ -27,6 +27,15 @@
               {!! csrf_field() !!}
              
                 <div class="row">  
+
+                  <div class="col-md-12">
+                      <div class="box-body">
+                        <div class="alert alert-info alert-dismissible">
+                          <h4><i class="fa fa-sticky-note"></i> Note!</h4>
+                          <strong>Note: Red background row indicates, days currently inactive status for record .</strong>
+                        </div>
+                     </div>
+                  </div> 
                   <div class="col-md-4">
                     <div class="box-body">
                       <div class="form-group">
@@ -53,8 +62,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+<?php// dd($get_inactive_days);?>
                               @foreach($subscription_plan_dtl as $sdvalue)
-                             <tr>
+                               
+                               @php $style="" @endphp
+                               @if(in_array($sdvalue->duration,$get_inactive_days))
+                               @php $style ="#bf000052"; @endphp
+                               @endif
+                             <tr style="background-color: {{$style}}">
                               <td>{{$sdvalue->duration}} Days</td>
                            
                               <td class='text-center'>
@@ -80,7 +95,8 @@
                     </div>
                   </div>
                 </div>
-                </div>  
+                </div> 
+                
               <div class="box-footer">
                
                  <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>

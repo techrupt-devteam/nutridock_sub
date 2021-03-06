@@ -57,7 +57,7 @@ class PermissionController extends Controller
     public function add()
     {
       //$type = $this->moduletype->get();
-      $module = $this->module->get();
+      $module = $this->module->orderby('module_id','ASC')->get();
       $role = $this->role->get();
       $data['page_name'] = "Add";
       $data['module']      = $module;
@@ -165,7 +165,7 @@ class PermissionController extends Controller
             $arr_data = $data->toArray();
         }
 
-        $module   = $this->module->get();
+        $module   = $this->module->orderby('module_id','ASC')->get();
         $role     = $this->role->get();        
         $data['module']    = $module;
         $data['role']      = $role;

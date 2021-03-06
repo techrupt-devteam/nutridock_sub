@@ -11,6 +11,8 @@ class SubscriptionPlanDetails extends Model
     protected $fillable = [
 		"duration",
 		"price_per_meal",
+		"price_per_pack",
+		"discount_price",
 		"sub_plan_id"
 	];
 

@@ -217,7 +217,8 @@ class SubscriberController extends Controller
                 //$show =  route('values.show',$value->id);
                 //$edit =  route('values.edit',$value->id);
 
-                $nestedData['id']       = $value->id;
+                //$nestedData['id']       = $value->id;
+                $nestedData['id']       = $cnt;
                 $nestedData['name']     = $value->subscriber_name;
                 $nestedData['email']    = $value->email;
                 $nestedData['mobile']   = $value->mobile;
@@ -230,7 +231,7 @@ class SubscriberController extends Controller
                 if( $current_date > $expire_date ){
                     $disabled = "disabled"; 
                     $class_r  = "expire_row"; 
-                    $title    = 'Subscriber Expire';
+                    $title    = 'Add meal Program';
                     $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
                     $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date)) ." <b style='color:red'>(Susbcription expire)</b>" ;
 
@@ -238,13 +239,13 @@ class SubscriberController extends Controller
                 {
                     $disabled = ""; 
                     $class_r  = 'noexp';
-                    $title    = "Add Program";
+                    $title    = "Add meal Program";
                     $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
                     $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date))." <b style='color:green'>(Currently active)</b>";
                 }
 
 
-                if($value->payment_status == "Paid"){
+                if($value->payment_status == "captured"){
                     $payment_status  = '<b style="color:green">'.ucfirst($value->payment_status).'</b>';
                 }else{
                     $payment_status  = '<b style="color:red">'.ucfirst($value->payment_status).'</b>';
@@ -259,7 +260,7 @@ class SubscriberController extends Controller
                     $status="Pending <i class='fa fa-times-circle'></i>"; $style="danger";}     
 
                    
-                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")'><i class='fa fa-info-circle'></i></button>
+                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")' title='subscriber details'><i class='fa fa-info-circle'></i></button>
                      <input type='hidden' id='status".$value->id."' value=".$value->is_approve.">";
                   if($login_user_details->roles!=1){
                        $nestedData['action'] .="<button type='button' value=".$value->id." id='btn-verify".$value->id."' class='btn btn-sm btn-".$style."' onclick='verified_subscriber(".$value->id.")'>".$status."</button>";
@@ -267,14 +268,17 @@ class SubscriberController extends Controller
 
                      if($login_user_details->roles==1){
                        
-
-                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="'.$title.'" '.$disabled.'>
-                           Create Program
+                      if($disabled==""){
+                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="'.$title.'">
+                          <i class="glyphicon glyphicon-plus"></i>
                         </a>';
+                       }else{
+                        $nestedData['action'] .="<button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewMealProgramDetails(".$value->id.")' title='Subscriber meal program details' ><i class='glyphicon glyphicon-copy'></i></button>";
+                       } 
                        
                     }
-                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="'.$title.'" >
-                        Pdf
+                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
+                        <i class="glyphicon glyphicon-open-file"></i>
                         </a>';
                 $nestedData['class_r'] = $class_r;
                 $data[] = $nestedData;
@@ -515,4 +519,5 @@ class SubscriberController extends Controller
         $module_update           =  \DB::table('nutri_dtl_subscriber')->where(['id'=>$id])->update($arr_data);
         return $request->status;
     }
+
 }

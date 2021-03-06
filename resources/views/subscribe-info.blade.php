@@ -53,8 +53,7 @@
                   </div>         
                   <div class="row ml-4 pl-4">
                      <div class="col-md-12">
-                        <span id="zip-errors" style="color: red; font-size: 14px;" ></span>
-                        
+                        <span id="zip-errors" style="color: red; font-size: 14px;" ></span>                        
                      </div>
                   </div>
                </div>
@@ -457,10 +456,6 @@
    </div>
 </main>
 <script type="text/javascript">
-$(document).ready(function() {
-  
-});
-
 /* check deleivery location*/
 function chkValidPin()
 {
@@ -472,11 +467,10 @@ function chkValidPin()
           data: {
           pincode : $("#pincode").val(),
           },
-        success: function (data) {
-          if(data){
+        success: function (data) {          
+          if(data != ''){ 
             location.href = "{{ URL::to('/') }}/sign-up";
-          }
-          else {
+          } else {
             $("#errValidZip").html('Sorry we are not delivering at '+ $("#pincode").val());
             return false;
           }

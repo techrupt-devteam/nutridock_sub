@@ -152,7 +152,7 @@
                     <div class="tab-pane ui-tabs-panel" id="captain">
                       <h4 class="info-text">Let us know more about your Health </h4>
                       <div class="row">
-                      <div class="col-sm-4 col-lg-3">
+                        <div class="col-sm-4 col-lg-3">
                            <div class="form-group label-floating">
                             <label class="control-label">Age <span style="color: red;">*</span></label>
                             <input name="age" type="text" class="form-control" placeholder="Age" required="required">
@@ -168,7 +168,7 @@
                               <option value="Male">Male</option> 
                               <option value="Other">Other</option>
                               </select>
-                             </div>
+                            </div>
                         </div>
                         <div class="col-sm-4 col-lg-3">
                            <div class="form-group label-floating">
@@ -223,11 +223,8 @@
                             <label class="control-label">Any food preparation instructions?</label>
                             <textarea class="form-control" rows="2" name="food_precautions" id="food_precautions" placeholder="Any Food Precautions"></textarea>
                           </div>
-                        </div> 
-
-
-                      </div>
-                      
+                        </div>
+                      </div>                      
                     </div>
 
                     <!-- Choose Plane -->
@@ -238,46 +235,30 @@
                       <div class="row">                        
                         <div class="col-sm-6 col-lg-5 mb-1">
                           <label class="control-label">Start Date<span style="color: red;">*</span></label>
-                          <!--<div class="span5" id="startdate-container">
-                            <div class="input-group date">
-                              <div class="input-group-prepend" style="height: 45px;">
-                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                              </div>
-                            <input type="text" class="form-control" placeholder="Start Date" id="start_date" style="border-top-left-radius: 0;border-bottom-left-radius: 0;" autocomplete="off">
-                            <span class="input-group-addon"></span>
-                          </div>
-                        </div>-->
-                        
-                        <!--<input style="max-width: 100%;" class="form-control" name="Date" type="date" value="" data-parsley-type="Date" required data-parsley-required-message="Please Select Date" placeholder="DD/MM/Year" data-parsley-type-message="Enter Valid Date" id="datepicker_today" data-parsley-mindate="<?php echo date('d-m-Y');?>">-->
-                        
-                        <input type="text" class="mt10px input form-control" id="start_date" value="<?php echo date("Y-m-d", strtotime("+ 2 day")) ?>">
-                        
+                          <input type="text" class="mt10px input form-control" id="start_date" value="<?php echo date("Y-m-d", strtotime("+ 2 day")) ?>">                        
+                      </div>                        
+                      <div class="col-sm-6 mb-1">
+                          <label class="control-label">No. of days <span style="color: red;"> *</span></label>
+                          <div id="meals" class="radio-toolbar">
+                            @foreach($data['getSubscribeNowPlan']['duration'] as $key => $duration_dtl)
+                            <input type="radio" onclick="calculatePrice();" id="rad_{{ $duration_dtl['subscribe_now_duration'] }}" name="radNoOfDays" data-id="{{ $duration_dtl['subscribe_now_duration'] }}" value="{{ $duration_dtl['subscribe_now_plan_duration_id'] }}" 
+                            <?php echo ($key == 0) ? 'checked' : '' ?> class="subscribe_now_plan_duration_id" required="required">
+                            <label for="rad_{{ $duration_dtl['subscribe_now_duration'] }}">{{ $duration_dtl['subscribe_now_duration'] }}</label>
+                            @endforeach   
+                          </div>                         
                       </div>
-
-                        
-                        <div class="col-sm-6 mb-1">
-                           <label class="control-label">No. of days <span style="color: red;"> *</span></label>
-                           <div id="meals" class="radio-toolbar">
-                              @foreach($data['getSubscribeNowPlan']['duration'] as $key => $duration_dtl)
-                              <input type="radio" onclick="calculatePrice();" id="rad_{{ $duration_dtl['subscribe_now_duration'] }}" name="radNoOfDays" data-id="{{ $duration_dtl['subscribe_now_duration'] }}" value="{{ $duration_dtl['subscribe_now_plan_duration_id'] }}" 
-                              <?php echo ($key == 0) ? 'checked' : '' ?> class="subscribe_now_plan_duration_id" required="required">
-                              <label for="rad_{{ $duration_dtl['subscribe_now_duration'] }}">{{ $duration_dtl['subscribe_now_duration'] }}</label>
-                              @endforeach   
-                           </div>                         
-                        </div>
-
-                        <div class="col-sm-12 mb-1">
-                          <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
-                          <div id="meals">                            
-                            <div class="chk-toolbar">
-                              @foreach($data['getMealTypeData'] as $getMealTypeData)
-                            <input type="checkbox" id="radio{{ $getMealTypeData['meal_type_name'] }}" name="radioFruit[]" data-value="radioFruitValue" data-no="1" class="meal_type_id" value="{{ $getMealTypeData['meal_type_id'] }}" dataname="{{ $getMealTypeData['meal_type_name'] }}" onclick="calculatePrice();" required="required">
-                                <label for="radio{{ $getMealTypeData['meal_type_name'] }}">{{ $getMealTypeData['meal_type_name'] }}</label>
-                              @endforeach
-                              </div>   
-                           </div>
-                           <input type="hidden" name="" id="checkout_meal_type_name_value">  
-                        </div>
+                      <div class="col-sm-12 mb-1">
+                        <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
+                        <div id="meals">                            
+                          <div class="chk-toolbar">
+                            @foreach($data['getMealTypeData'] as $getMealTypeData)
+                          <input type="checkbox" id="radio{{ $getMealTypeData['meal_type_name'] }}" name="radioFruit[]" data-value="radioFruitValue" data-no="1" class="meal_type_id" value="{{ $getMealTypeData['meal_type_id'] }}" dataname="{{ $getMealTypeData['meal_type_name'] }}" onclick="calculatePrice();" required="required">
+                              <label for="radio{{ $getMealTypeData['meal_type_name'] }}">{{ $getMealTypeData['meal_type_name'] }}</label>
+                            @endforeach
+                            </div>   
+                          </div>
+                          <input type="hidden" name="" id="checkout_meal_type_name_value">  
+                      </div>
                       <div class="col-sm-12 mb-1">
                            <div class="">
                               <label class="control-label">Price</label> 
@@ -289,13 +270,10 @@
                                 <span class="og"  id="rs_html"> Rs.</span> 
                                 <span class="og" id="final_value" ></span>  |
                                 <span class="og" id="final_value_details"></span>
-                              </div>
-                                
+                              </div>                                
                                  <input type="hidden" name="price" id="price"> 
                               </div>
-                        </div>
-                        
-                        
+                        </div> 
                       </div>
                       <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span> 
                       

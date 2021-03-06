@@ -107,7 +107,7 @@
               </li>
             </ul>
         </li> 
-       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen'||Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') active @endif ">
+       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'|| Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen'||Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>
               <span class="pull-right-container">
@@ -262,7 +262,7 @@
           <li class="treeview <?php foreach($active_menu as $acvalue){?>@if(Request::segment(2)=='manage_'.$acvalue || Request::segment(2)=='add_'.$acvalue || Request::segment(2)=='edit_'.$acvalue) active @endif<?php }?>">
               @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions) )
                 <a href="#">
-                  <i class="fa fa-television"></i> <span>{{$parent_value[0]}}</span>
+                  <i class="fa fa-folder"></i> <span>{{$parent_value[0]}}</span>
                   <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                   </span>
@@ -275,7 +275,7 @@
                     @if(isset($session_permissions) && in_array($sub_menu[0],$session_permissions) && !empty($session_permissions))
                     <li @if(Request::segment(2)=='manage_'.$sub_menu[3] || Request::segment(2)=='add_'.$sub_menu[3] || Request::segment(2)=='edit_'.$sub_menu[3] || Request::segment(2)=='add_subscriber_meal_program') class="active" @endif>
                       <a href="{{url('/admin')}}/{{$sub_menu[2]}}">
-                         <i class="fa fa-television"></i> <span>{{$sub_menu[1]}}</span>
+                         <i class="fa fa-circle-o"></i> <span>{{$sub_menu[1]}}</span>
                         <span class="pull-right-container">
                         </span>
                       </a> 

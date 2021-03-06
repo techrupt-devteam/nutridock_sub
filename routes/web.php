@@ -111,11 +111,17 @@ Route::post('/admin/getpincode',		 		'Admin\BookingController@getpincode');
 
 /*********************************@RAJ FRONT_ROUTES @****************************************/
 //sign up routes
-Route::get('/sign-up',		 	 			'Front\SignUpController@index');
-Route::post('/store_basic_details', 	 	'Front\SignUpController@storeBasicDetails');
-Route::post('/get_plan_details', 	 		'Front\SignUpController@getSubscriptionPlanDetails');
-Route::post('/subscribe-info', 	 			'Front\SignUpController@getSubscribePlan');
-Route::post('/check_valid_pin', 	 		'Front\SignUpController@getCheckValidPin');
+Route::get('/sign-up',		 	 				'Front\SignUpController@index');
+Route::post('/store_basic_details', 	 		'Front\SignUpController@storeBasicDetails');
+Route::post('/get_plan_details', 	 			'Front\SignUpController@getSubscriptionPlanDetails');
+Route::post('/subscribe-info', 	 				'Front\SignUpController@getSubscribePlan');
+Route::post('/check_valid_pin', 	 			'Front\SignUpController@getCheckValidPin');
+Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanPrice');
+Route::post('/checkout', 						'Front\SignUpController@checkout');
+Route::post('/pay-success', 					'Front\SignUpController@paySuccess');
+
+
+
 
 /**********************************************************************************************/
 
@@ -200,6 +206,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	 Route::post('/update_subscription_plan/{id}', 'Admin\SubscriptionController@update');
 	 Route::get('/delete_subscription_plan/{id}',  'Admin\SubscriptionController@delete');
 	 Route::post('/status_subscription_plan',	   'Admin\SubscriptionController@status');
+	 Route::post('/status_duration_plan',	       'Admin\SubscriptionController@status_duration');
 	 Route::post('/subscription_plan_details',	   'Admin\SubscriptionController@detail');
 	
 	//user manager  routes
@@ -306,6 +313,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     
     //Meal Program Subscriber 
     Route::get('/add_subscriber_meal_program/{id}',   'Admin\SubscriberMealProgramController@add');
+    Route::post('/view_subscriber_meal_program',  'Admin\SubscriberMealProgramController@view_details');
     Route::post('/store_subscriber_health_details',	  'Admin\SubscriberMealProgramController@store');
     Route::post('/edit_subscriber_default_menu',	  'Admin\SubscriberMealProgramController@menu_edit');
     Route::post('/get_menu_dropdown',				  'Admin\SubscriberMealProgramController@get_menu');

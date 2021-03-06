@@ -75,6 +75,8 @@ class SubscriberCalenderController extends Controller
         $now   = Carbon::parse($subscriber_details->expiry_date);
         $days  = $date->diffInDays($now);
         $days1 = $days + 1;
+
+        //dd($days1);
         $cnt   = '';
         $calender_data = []; 
         

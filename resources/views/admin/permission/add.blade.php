@@ -60,6 +60,7 @@
                     <div class="table-responsive">
                        <table class="table table-striped">
                         <thead>
+                           <tr><td colspan="4">  <div id="checkbox_error" style="color:red;"></div></td></tr>  
                           <tr>
                             <th style="width: 80px;">Sr.No</th>
                             <th>Module Name</th>
@@ -69,15 +70,19 @@
                         @foreach($module as $mvalue)
                           <tr>
                             @if($mvalue->parent_id==0)
+                             
                              <td><b>{{$i}}</b></td>
-                             <td><input type="checkbox" class="form-check-input {{$mvalue->module_id}}checkboxall" name="permission_access[]"  value="{{$mvalue->module_id}}" onclick="all_click(<?php echo $mvalue->module_id;?>);"> <strong>{{ucfirst($mvalue->module_name)}}</strong> </td> 
+                             <td><input type="checkbox" class="form-check-input {{$mvalue->module_id}}checkboxall" name="permission_access[]"  value="{{$mvalue->module_id}}" onclick="all_click(<?php echo $mvalue->module_id;?>);" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module"> <strong>{{ucfirst($mvalue->module_name)}}</strong></td> 
+
                             @else
+
                              <td></td>
-                             <td style="padding-left: 25px !important;"> <input type="checkbox" class="form-check-input  @if($mvalue->parent_id!=0) {{$mvalue->parent_id}}checkbox @endif"  name="permission_access[]"  onclick="allrm_click(<?php echo $mvalue->parent_id;?>)" value="{{$mvalue->module_id}}"> {{$mvalue->module_name}}</td> 
+                             <td style="padding-left: 25px !important;"> <input type="checkbox" class="form-check-input    @if($mvalue->parent_id!=0) {{$mvalue->parent_id}}checkbox @endif"  name="permission_access[]"  required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module" onclick="allrm_click(<?php echo $mvalue->parent_id;?>)" value="{{$mvalue->module_id}}">
+                              {{$mvalue->module_name}}
+                             </td> 
                             @endif 
-                          </tr>  @if($mvalue->parent_id==0)
-                           @php $i++; @endphp
-                             @endif 
+                          </tr>  
+                           @if($mvalue->parent_id==0) @php $i++; @endphp  @endif 
                         @endforeach
                         </table>
                      </div>
