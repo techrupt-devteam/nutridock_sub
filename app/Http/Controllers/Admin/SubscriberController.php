@@ -245,7 +245,7 @@ class SubscriberController extends Controller
                 }
 
 
-                if($value->payment_status == "Paid"){
+                if($value->payment_status == "captured"){
                     $payment_status  = '<b style="color:green">'.ucfirst($value->payment_status).'</b>';
                 }else{
                     $payment_status  = '<b style="color:red">'.ucfirst($value->payment_status).'</b>';
@@ -519,4 +519,5 @@ class SubscriberController extends Controller
         $module_update           =  \DB::table('nutri_dtl_subscriber')->where(['id'=>$id])->update($arr_data);
         return $request->status;
     }
+
 }
