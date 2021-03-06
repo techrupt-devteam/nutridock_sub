@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubscriberHealthDetails extends Model 
 {
-    protected $table = 'nutri_mst_subscriber_health_details';
+    protected $table = 'nutri_subscriber_health_details';
     protected $fillable = [ 
     						'subcriber_id',
 							'nutritionist_id',

@@ -11,6 +11,9 @@ use Sentinel;
 use Validator;
 use DB;
 use Config;
+use PDF;
+use Illuminate\Contracts\View\View;
+
 class SubscriberController extends Controller
 {
     public function __construct(State $State,City $City)
@@ -214,15 +217,35 @@ class SubscriberController extends Controller
                 //$show =  route('values.show',$value->id);
                 //$edit =  route('values.edit',$value->id);
 
-                $nestedData['id']       = $value->id;
+                //$nestedData['id']       = $value->id;
+                $nestedData['id']       = $cnt;
                 $nestedData['name']     = $value->subscriber_name;
                 $nestedData['email']    = $value->email;
                 $nestedData['mobile']   = $value->mobile;
                 $nestedData['city']     = $value->city_name;
-                $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
-                $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date));
-                
-                if($value->payment_status == "Paid"){
+               
+                //$class_r ="";
+
+                $current_date = date('Y-m-d');
+                $expire_date  =  date('Y-m-d',strtotime($value->expiry_date));
+                if( $current_date > $expire_date ){
+                    $disabled = "disabled"; 
+                    $class_r  = "expire_row"; 
+                    $title    = 'Add meal Program';
+                    $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
+                    $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date)) ." <b style='color:red'>(Susbcription expire)</b>" ;
+
+                }else
+                {
+                    $disabled = ""; 
+                    $class_r  = 'noexp';
+                    $title    = "Add meal Program";
+                    $nestedData['start_date']   = date('d-m-Y',strtotime($value->start_date));
+                    $nestedData['expire_date']  = date('d-m-Y',strtotime($value->expiry_date))." <b style='color:green'>(Currently active)</b>";
+                }
+
+
+                if($value->payment_status == "captured"){
                     $payment_status  = '<b style="color:green">'.ucfirst($value->payment_status).'</b>';
                 }else{
                     $payment_status  = '<b style="color:red">'.ucfirst($value->payment_status).'</b>';
@@ -237,19 +260,29 @@ class SubscriberController extends Controller
                     $status="Pending <i class='fa fa-times-circle'></i>"; $style="danger";}     
 
                    
-                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")'><i class='fa fa-info-circle'></i></button>
+                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")' title='subscriber details'><i class='fa fa-info-circle'></i></button>
                      <input type='hidden' id='status".$value->id."' value=".$value->is_approve.">";
                   if($login_user_details->roles!=1){
                        $nestedData['action'] .="<button type='button' value=".$value->id." id='btn-verify".$value->id."' class='btn btn-sm btn-".$style."' onclick='verified_subscriber(".$value->id.")'>".$status."</button>";
                     }
 
                      if($login_user_details->roles==1){
-                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="Add Program">
-                          <i class="fa fa-plus"></i>
+                       
+                      if($disabled==""){
+                       $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="'.$title.'">
+                          <i class="glyphicon glyphicon-plus"></i>
                         </a>';
+                       }else{
+                        $nestedData['action'] .="<button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewMealProgramDetails(".$value->id.")' title='Subscriber meal program details' ><i class='glyphicon glyphicon-copy'></i></button>";
+                       } 
+                       
                     }
-
+                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
+                        <i class="glyphicon glyphicon-open-file"></i>
+                        </a>';
+                $nestedData['class_r'] = $class_r;
                 $data[] = $nestedData;
+               // dd($data);
                 $cnt++;
 
             }
@@ -416,16 +449,75 @@ class SubscriberController extends Controller
     } 
 
    
+    public function subscriber_pdf(Request $request,$id)
+    {
+        $id = $id;
+        $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                    ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
+                                    ->join('nutri_dtl_subscription_duration','nutri_dtl_subscriber.duration_id','=','nutri_dtl_subscription_duration.duration_id')
+                                    ->join('physical_activity','nutri_dtl_subscriber.physical_activity_id','=','physical_activity.physical_activity_id')
+                                    ->where('nutri_dtl_subscriber.is_deleted','<>',1)  
+                                    ->where('nutri_dtl_subscriber.id','=',$id)
+                                    ->select('physical_activity.physical_activity','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_dtl_subscription_duration.duration','nutri_mst_subscriber.mobile','nutri_mst_subscriber.email')
+                                    ->first();
+                                  //  dd($get_subscriber_details);
+        //getmeal type 
+        $get_meal_type = \DB::table('meal_type')
+                          ->whereIn('meal_type_id',explode(",",$get_subscriber_details->meal_type_id))
+                          ->select('meal_type_name')
+                          ->get();
+        $get_food_avoid = \DB::table('food_avoid')
+                          ->whereIn('food_avoid_id',explode(",",$get_subscriber_details->avoid_or_dislike_food_id))
+                          ->select('food_avoid_name')
+                          ->get();
+                                    
+           $get_meal_type2 = \DB::table('meal_type')
+                                     ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address1_deliver_mealtype))
+                                     ->select('meal_type_name')
+                                     ->get();  
+
+
+            $get_meal_type3 = \DB::table('meal_type')
+                                         ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address2_deliver_mealtype))
+                                         ->select('meal_type_name')
+                                         ->get();
+        
+         
+           $data =[] ;
+           $data['get_subscriber_details'] = $get_subscriber_details;
+           $data['get_meal_type'] = $get_meal_type;
+           $data['get_food_avoid'] = $get_food_avoid;
+           $data['get_meal_type2'] = $get_meal_type2;
+           $data['get_meal_type3'] = $get_meal_type3;
+
+            if(!is_dir('uploads/pdf/sub_'.$id)) {
+               mkdir('uploads/pdf/sub_'.$id);
+            }
+
+            
+
+            $pdf = PDF::loadView('admin/subscriber/detailspdf',  ['data' => $data]);
+            $pdf->SetProtection(['copy', 'print'], '', 'pass');
+            //// $pdf->save('uploads/pdf/sub_'.$id.'/sub_'.$id.'details.pdf');
+            $pdf->stream('sub_'.$id.'details.pdf');
+     
+           
+        
+         
+    }
 
     public function verify_subscriber(Request $request)
     {
 
-        $id     = $request->id;
-        $status = $request->status;
-        
+        $id                      = $request->id;
+        $status                  = $request->status;
         $arr_data                = [];
         $arr_data['is_approve']  = $request->status;
         $module_update           =  \DB::table('nutri_dtl_subscriber')->where(['id'=>$id])->update($arr_data);
         return $request->status;
     }
+
 }

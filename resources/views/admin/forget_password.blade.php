@@ -40,18 +40,25 @@
     list-style: none;
       padding-left: 5px;
   }
+  .hold-transition.login-page {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
   </style>
 </head>
-<body class="hold-transition login-page" style="background-image: url(http://ba.kores.in/kores-sniper/img/section-03-bg-img.jpg)">
+<!-- style="background-image: url(http://ba.kores.in/kores-sniper/img/section-03-bg-img.jpg)" -->
+
+<body class="hold-transition background-img login-page" >
 <div class="login-box">
   <div class="login-logo">
      {{-- <img src="{{ url('/admin_css_js')}}/css_and_js/logo.png"> --}}
-     Admin
+     Forget Password
     <a href="{{ url('/admin_css_js')}}"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Forget Password</p>
+    <!-- <p class="login-box-msg">Forget Password</p> -->
     @if(Session::has('error'))
       <div class="alert alert-danger">
         {{ Session::get('error') }}
@@ -66,7 +73,7 @@
     <form action="{{ url('/admin')}}/forget_password_process" method="post" data-parsley-validate="parsley">
        {!! csrf_field() !!}
       <div class="form-group has-feedback">
-        <input type="text" name="email" class="form-control" placeholder="Mobile No." {{-- data-parsley-type="email"  --}}required="true">
+        <input type="text" name="email" class="form-control" placeholder="Please enter email" {{-- data-parsley-type="email"  --}}required="true">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
     <!--   <div class="form-group has-feedback">
@@ -74,15 +81,16 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div> -->
       <div class="row">
-        <div class="col-xs-8">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-primary btn-flat" style="width: 100%;"> Submit </button>
+        </div>
+        <div class="col-xs-12 text-center">
           <div class="checkbox icheck">
-            <a href="{{url('/admin')}}/login">Login</a><br>
+            <a href="{{url('/admin')}}/login"> Go Back</a><br>
           </div>
         </div>
         <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Submit</button>
-        </div>
+       
         <!-- /.col -->
       </div>
     </form>

@@ -82,6 +82,7 @@
                            <div class="form-group">
                            <table id="menu-item"  class="table">
                               <thead class="btn-default">
+                                <tr><td colspan="3">  <div id="name_error" style="color:red;"></div></td></tr>  
                                 <tr><th>#</th>
                                 <th>Subscriber Name</th></tr>
                               </thead>

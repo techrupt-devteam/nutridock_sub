@@ -120,6 +120,23 @@ class AssignNutritionistController extends Controller
         $id= base64_decode($id);
         $arr_data = [];
         $data     = $this->base_model->where(['subcriber_assign_id'=>$id])->first();
+
+        //other assign subscriber data for same city
+        $other_asssign_sub_data     = $this->base_model->where('nutritionist_id','<>',$data->nutritionist_id)->select('subscriber_id')->get();
+        $assign_subscriber_array = [];
+        foreach ($other_asssign_sub_data as $key => $asvalue) {
+            
+             $subscriber_id  = explode(",", $asvalue['subscriber_id']);
+             foreach ($subscriber_id as $subvalue) {
+               $assign_subscriber_array[] = $subvalue;
+             }
+
+        }
+
+
+       // dd($assign_subscriber_array);    
+
+
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -134,6 +151,7 @@ class AssignNutritionistController extends Controller
         $data['subscriber']   = $subscriber;
         $data['users']        = $users;
         $data['state']        = $state;
+ $data['assign_subcriber']    = $assign_subscriber_array;
         $data['page_name']    = "Edit";
         $data['url_slug']     = $this->url_slug;
         $data['title']        = $this->title;
@@ -145,10 +163,10 @@ class AssignNutritionistController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'subscriber_id'   => 'required',
-            'nutritionist_id' => 'required',
+            'subscriber_id'   => 'required'
+            /*'nutritionist_id' => 'required',
             'state_id'        => 'required',
-            'city_id'         => 'required'
+            'city_id'         => 'required'*/
               
         ]);
 
@@ -161,10 +179,10 @@ class AssignNutritionistController extends Controller
        // $nutritionist_data = implode(",",$request->input('nutritionist_id'));
 
         $arr_data                       = [];
-        $arr_data['state_id']           = $request->input('state_id');
-        $arr_data['city_id']            = $request->input('city_id');
+        //$arr_data['state_id']           = $request->input('state_id');
+       // $arr_data['city_id']            = $request->input('city_id');
         $arr_data['subscriber_id']      = $subscriber_data;
-        $arr_data['nutritionist_id']    = $request->input('nutritionist_id');
+        //$arr_data['nutritionist_id']    = $request->input('nutritionist_id');
         $assign_nutritionist_update   = $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
 
         Session::flash('success', $this->Update );
@@ -213,10 +231,15 @@ class AssignNutritionistController extends Controller
         $assign_nutritionist_array = [];
 
         foreach ($assign_users as $key => $asvalue) {
-            $assign_subscriber_array[]   = $asvalue['subscriber_id'];
-          $assign_nutritionist_array[] = $asvalue['nutritionist_id'];
+           // $assign_subscriber_array[]   = $asvalue['subscriber_id'];
+              $subscriber_id  = explode(",", $asvalue['subscriber_id']);
+              foreach ($subscriber_id as $subvalue) {
+                 $assign_subscriber_array[]   = $subvalue;
+              }
+               
+          $assign_nutritionist_array[]   = $asvalue['nutritionist_id'];
         } 
-       
+      // dd($assign_subscriber_array);
         // end
         $users  = $this->base_users->where('roles','=',1)->where('is_active','=',1)->where('city','=',$city)->where('is_deleted','<>',1)->get();
 
@@ -235,7 +258,7 @@ class AssignNutritionistController extends Controller
         {
             if(!in_array($svalue->id,$assign_subscriber_array)){
             $Subscriber_html .=  "<tr>";
-            $Subscriber_html .= "<td><input type='checkbox' name='subscriber_id[]' value='".$svalue->id."'></td>";
+            $Subscriber_html .= "<td><input type='checkbox' name='subscriber_id[]' value='".$svalue->id."' required data-parsley-errors-container='#name_error' data-parsley-error-message='Please select at least one subscriber'></td>";
             $Subscriber_html .= "<td>".$svalue->subscriber_name."</td></tr>";} 
         }
 

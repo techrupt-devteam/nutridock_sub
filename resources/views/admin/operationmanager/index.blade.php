@@ -34,7 +34,8 @@
                 <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Name</th>
+                <!--   <th>profile Pic</th>
+ -->                  <th>Name</th>
                   <th>Eamil</th>
                   <th>Mobile</th>
                   <th>state</th>
@@ -49,6 +50,12 @@
                   @foreach($data as $key=>$value)
                     <tr>
                       <td>{{$key+1}}</td>
+          <!--             <td> <div class="pull-left image">@if(!IS_NULL($value->profile_image))
+
+           <img src="{{ url('/')}}/uploads/user_pic//thumb/{{$value->profile_image}}" class="img-circle" alt="User Image">
+           @else
+          <img src="{{url('/admin_css_js')}}/css_and_js/admin/dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+          @endif </div></td> -->
                       <td>{{ucfirst($value->name)}}</td>
                       <td>{{$value->email}}</td>
                       <td>{{$value->mobile}}</td>
@@ -94,18 +101,22 @@
 <script type="text/javascript">
     function change_Status(id,plan_id) 
     {  
-
         swal({
           title: "User status",
           text:  "Are You sure to change status",
           icon:  "warning",
-          dangerMode: true,
-          }).then(function(isConfirm) {
-          if (isConfirm) { 
-          var status = $("#"+id+"_is_active").prop('checked');
-          var plan_ids = plan_id;
-          //alert(status);
-           $.ajax({
+          buttons: [
+            'Cancel',
+            'Yes, change it!'
+          ],
+         
+        }).then(function(isConfirm) {
+          if (isConfirm) 
+          { 
+            var status = $("#"+id+"_is_active").prop('checked');
+            var plan_ids = plan_id;
+            //alert(status);
+            $.ajax({
                 url: "{{url('/admin')}}/status_user_manager",
                 type: 'post',
                 data: {status:status,plan_ids:plan_id},
@@ -114,6 +125,19 @@
                   swal("Success", "User status successfully changed !", "success");
                 }
             });
+            
+                
+          } else {
+               
+            var className = $("#"+id+"_is_active").closest('div').prop('className');
+           
+            if(className == "toggle btn btn-sm slow btn-danger off"){
+               $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-success btn-sm slow');
+            }else{
+              $("#"+id+"_is_active").closest('div').removeClass(className);
+               $("#"+id+"_is_active").closest('div').addClass('toggle btn btn-sm slow btn-danger off');
+            }
           }
         });
      }

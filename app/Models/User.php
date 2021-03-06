@@ -16,6 +16,7 @@ class User extends Model
 		"state",
 		"city",
 		"area",
+		"profile_image",
 		"remember_token",
 		"last_login",
 		"roles",

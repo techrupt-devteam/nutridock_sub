@@ -1,106 +1,109 @@
 @extends('admin.layout.master')
+<?php 
+  $login_city_id       = Session::get('login_city_id'); 
+  $login_city_state    = Session::get('login_city_state'); 
+?>
 @section('content')
-  <!-- Content Wrapper. Contains page content -->
+
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <!-- Main content -->
-    <?php /* ?><section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          @include('admin.layout._status_msg')
-          <div class="box">
-             <div class="box-header">
-              <h3 class="box-title">
-                {{ $page_name." ".$title }}
-                {{-- <small>Preview</small> --}}
-              </h3>
-              <ol class="breadcrumb">
-                <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
-                <li class="active">{{ $page_name." ".$title }}</li>
-              </ol>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-             <div id="calendar"></div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-    </section><?php */?>
-    <!-- /.content -->
     <section class="content">
       <div class="row">
-        <div class="col-md-3">
-          <div class="box box-solid">
-            <div class="box-header with-border">
-              <h4 class="box-title">Draggable Events</h4>
-            </div>
-            <div class="box-body">
-              <!-- the events -->
-              <div id="external-events">
-                <div class="external-event bg-green">Lunch</div>
-                <div class="external-event bg-yellow">Go home</div>
-                <div class="external-event bg-aqua">Do homework</div>
-                <div class="external-event bg-light-blue">Work on UI design</div>
-                <div class="external-event bg-red">Sleep tight</div>
-                <div class="checkbox">
-                  <label for="drop-remove">
-                    <input type="checkbox" id="drop-remove">
-                    remove after drop
-                  </label>
-                </div>
+        
+       
+         <!--  <div class="box-body">
+             <div class="col-md-12">
+              <div class="alert alert-info alert-dismissible">
+                <h4><i class="fa fa-sticky-note"></i> Note!</h4>
+                <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>
               </div>
-            </div>
-            <!-- /.box-body -->
           </div>
+        </div>
+       -->
+
+        <div class="col-md-12">
+          
           <!-- /. box -->
           <div class="box box-solid">
-            <div class="box-header with-border">
-              <h3 class="box-title">Create Event</h3>
+            <div class="box-header with-border" style="background-color: #66b31e4d;">
+              <h3 class="box-title">View Subscriber Meal Plan</h3>
             </div>
             <div class="box-body">
-              <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                <ul class="fc-color-picker" id="color-chooser">
-                  <li><a class="text-aqua" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-blue" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-light-blue" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-teal" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-yellow" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-orange" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-green" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-lime" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-red" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-purple" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-fuchsia" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-muted" href="#"><i class="fa fa-square"></i></a></li>
-                  <li><a class="text-navy" href="#"><i class="fa fa-square"></i></a></li>
-                </ul>
-              </div>
-              <!-- /btn-group -->
-              <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-info alert-dismissible">
+                      <h4><i class="fa fa-sticky-note"></i> Note!</h4>
+                      <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="state_id">State<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" name="state_id" id="state_id" required="true" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state." onchange="getCity();">
+                        <option value="">-Select State-</option>
+                        @foreach($state as $svalue)
 
+                          <?php if(isset($login_city_state) && !empty($login_city_state) && $login_city_state == $svalue->id){
+                            $selected ="selected";
+                          }else{
+                            $selected ="";
+                          }?>
+
+                        <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
+                        @endforeach
+                      </select>
+                      <div id="state_error" style="color:red;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="state_id">City<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" name="city_id" id="city_id" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select City." onchange="getSubscriber();" disabled="">
+                        <option value="">-Select City-</option>
+                       
+                      </select>
+                      <div id="city_error" style="color:red;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="state_id">Subscriber<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" name="subscriber_id" id="subscriber_id" required="true" data-parsley-errors-container="#subscriber_error" data-parsley-error-message="Please select Subscriber." onchange="getCalender();" disabled="">
+                        <option value="">-Select State-</option>
+                       
+                      </select>
+                      <div id="subscriber_error" style="color:red;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    
+                  </div>
+              <!-- <div class="input-group">
+                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
                 <div class="input-group-btn">
                   <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
                 </div>
-                <!-- /btn-group -->
-              </div>
-              <!-- /input-group -->
+              </div> -->
             </div>
           </div>
         </div>
-        <!-- /.col -->
-        <div class="col-md-9">
+       <!--------------Calender Data Load Div------------->
+        <div class="row" id="old_calender">
+          <div class="col-md-12">
+          
           <div class="box box-primary">
             <div class="box-body no-padding">
               <!-- THE CALENDAR -->
-              <div id="calendar"></div>
+              <div id="calendar_old"></div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -108,194 +111,160 @@
         </div>
         <!-- /.col -->
       </div>
+       <div class="row" id="new_calender">
+       </div>
+      </div>
+        
       <!-- /.row -->
     </section>
   </div>
-  <div class="modal fade" id="modal-details" data-backdrop="static">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div id="content">
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- /.content-wrapper -->
- 
-@endsection
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<!-- <link rel="stylesheet" href="{{url('/admin_css_js')}}/css_and_js/admin/fullcalendar/dist/fullcalendar.min.css">
-<link rel="stylesheet" href="{{url('/admin_css_js')}}/css_and_js/admin/fullcalendar/dist/fullcalendar.print.min.css" media="print">
- -->
-
-<!-- <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery/dist/jquery.min.js"></script> 
+<script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery/dist/jquery.min.js"></script>
 <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery-ui/jquery-ui.min.js"></script>
-<script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="{{url('/admin_css_js')}}/css_and_js/admin/fastclick/lib/fastclick.js"></script>
-<script src="{{url('/admin_css_js')}}/css_and_js/admin/dist/js/adminlte.min.js"></script>
-<script src="{{url('/admin_css_js')}}/css_and_js/admin/dist/js/demo.js"></script>
-<script src="{{url('/admin_css_js')}}/css_and_js/admin/moment/moment.js"></script> 
-<script src="{{url('/admin_css_js')}}/css_and_js/admin//fullcalendar/dist/fullcalendar.min.js"></script>
-<link rel="stylesheet" href="{{url('/admin_css_js')}}/css_and_js/admin/fullcalendar/dist/fullcalendar.min.css">
-<link rel="stylesheet" href="{{url('/admin_css_js')}}/css_and_js/admin/fullcalendar/dist/fullcalendar.print.min.css" media="print"> -->
-<script type="text/javascript">
-  $(function () {
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 
-    /* initialize the external events
-     -----------------------------------------------------------------*/
-    function init_events(ele) {
-      ele.each(function () {
+<script>
 
-        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-        // it doesn't need to have a start or end
-        var eventObject = {
-          title: $.trim($(this).text()) // use the element's text as the event title
+<?php  if(isset($login_city_state) && !empty($login_city_state)) {?>
+ getCity();
+
+ getSubscriber1();
+ function  getSubscriber1(){
+   //   alert("test");
+      $.ajax({
+        type: "POST",
+        url: "{{url('/admin')}}/getSubscriber",
+        data: {
+          state: <?php echo $login_city_state?>,
+          city : <?php echo $login_city_id?>
         }
+      }).done(function(data) {
+           $("#subscriber_id").html(data);
+           $('#subscriber_id').removeAttr("disabled");
+          
+      });
+    }  
 
-        // store the Event Object in the DOM element so we can get to it later
-        $(this).data('eventObject', eventObject)
+    $("#state_id").attr("disabled", true);
 
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-          zIndex        : 1070,
-          revert        : true, // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
+<?php }?>
+
+//City  load 
+  function  getCity(){
+      var state_id = $("#state_id").val();
+      $.ajax({
+        type: "POST",
+        url: "{{url('/admin')}}/getCity",
+        data: {
+          state: state_id
+        }
+      }).done(function(data) {
+           $("#city_id").html(data);
+           $('#city_id').removeAttr("disabled")
+           <?php  if(isset($login_city_state) && !empty($login_city_state)) {?>
+           $('#city_id').val(<?php echo $login_city_id; ?>);
+               $("#city_id").attr("disabled", true);
+         <?php } ?>
+      });
+    } 
+  
+  //Subscriber load
+  function  getSubscriber(){
+      var city_id = $("#city_id").val();
+      var state_id = $("#state_id").val();
+      $.ajax({
+        type: "POST",
+        url: "{{url('/admin')}}/getSubscriber",
+        data: {
+          state: state_id,
+          city : city_id
+        }
+      }).done(function(data) {
+           $("#subscriber_id").html(data);
+           $('#subscriber_id').removeAttr("disabled")
+      });
+    }  
+ //
+  function getCalender(){
+    var subscriber_id =$('#subscriber_id').val();
+    $.ajax({
+      type: "POST",
+      url: "{{url('/admin')}}/getMealDetails",
+      data: {
+        subscriber_id: subscriber_id
+      }
+    }).done(function(data) {
+ 
+    $('#old_calender').hide();
+    $('#new_calender').html(data);
+  });
+}  
+
+
+
+   $(function () {
+   
+      jq223 = jQuery.noConflict(false);
+       
+        function init_events(ele) {
+          ele.each(function () {
+            var eventObject = {
+              title: $.trim($(this).text())
+            }
+
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject)
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+              zIndex        : 1070,
+              revert        : true, // will cause the event to go back to its
+              revertDuration: 0  //  original position after the drag
+            })
+          })
+        }
+          init_events($('#external-events div.external-event'))
+     
+        var date = new Date()
+
+        var d    = date.getDate(),
+            m    = date.getMonth(),
+            y    = date.getFullYear()   
+          
+        $('#calendar_old').fullCalendar({
+          header    : {
+            left    : 'prev,next',
+            center  : 'title',
+            right   : 'month'
+          },
+          buttonText: {
+            today   : 'today',
+            month   : 'month',
+            },
+       
+         
+          events    : [ 
+
+          ],
+
+          editable  : false,
+          droppable : false,
+
         })
-
+     
       })
-    }
 
-    init_events($('#external-events div.external-event'))
-
-    /* initialize the calendar
-     -----------------------------------------------------------------*/
-    //Date for the calendar events (dummy data)
-    var date = new Date()
-    var d    = date.getDate(),
-        m    = date.getMonth(),
-        y    = date.getFullYear()
-    $('#calendar').fullCalendar({
-      header    : {
-        left  : 'prev,next today',
-        center: 'title',
-        right : 'month,agendaWeek,agendaDay'
-      },
-      buttonText: {
-        //today: 'today',
-        month: 'month',
-        //week : 'week',
-        //day  : 'day'
-      },
-      //Random default events
-      events    : [
-        {
-          title          : 'All Day Event',
-          start          : new Date(y, m, 25),
-          backgroundColor: '#f56954', //red
-          borderColor    : '#f56954' //red
-        },
-        {
-          title          : 'Long Event',
-          start          : new Date(y, m, d - 15),
-          end            : new Date(y, m, d - 2),
-          backgroundColor: '#f39c12', //yellow
-          borderColor    : '#f39c12' //yellow
-        },
-        {
-          title          : 'Meeting',
-          start          : new Date(y, m, d, 10, 30),
-          allDay         : false,
-          backgroundColor: '#0073b7', //Blue
-          borderColor    : '#0073b7' //Blue
-        },
-        {
-          title          : 'Lunch',
-          start          : new Date(y, m, d, 12, 0),
-          end            : new Date(y, m, d, 14, 0),
-          allDay         : false,
-          backgroundColor: '#00c0ef', //Info (aqua)
-          borderColor    : '#00c0ef' //Info (aqua)
-        },
-        {
-          title          : 'Birthday Party',
-          start          : new Date(y, m, d + 1, 19, 0),
-          end            : new Date(y, m, d + 1, 22, 30),
-          allDay         : false,
-          backgroundColor: '#00a65a', //Success (green)
-          borderColor    : '#00a65a' //Success (green)
-        },
-        {
-          title          : 'Click for Google',
-          start          : new Date(y, m, 28),
-          end            : new Date(y, m, 29),
-          url            : 'http://google.com/',
-          backgroundColor: '#3c8dbc', //Primary (light-blue)
-          borderColor    : '#3c8dbc' //Primary (light-blue)
-        }
-      ],
-      editable  : true,
-      droppable : true, // this allows things to be dropped onto the calendar !!!
-      drop      : function (date, allDay) { // this function is called when something is dropped
-
-        // retrieve the dropped element's stored Event Object
-        var originalEventObject = $(this).data('eventObject')
-
-        // we need to copy it, so that multiple events don't have a reference to the same object
-        var copiedEventObject = $.extend({}, originalEventObject)
-
-        // assign it the date that was reported
-        copiedEventObject.start           = date
-        copiedEventObject.allDay          = allDay
-        copiedEventObject.backgroundColor = $(this).css('background-color')
-        copiedEventObject.borderColor     = $(this).css('border-color')
-
-        // render the event on the calendar
-        // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-        $('#calendar').fullCalendar('renderEvent', copiedEventObject, true)
-
-        // is the "remove after drop" checkbox checked?
-        if ($('#drop-remove').is(':checked')) {
-          // if so, remove the element from the "Draggable Events" list
-          $(this).remove()
-        }
-
-      }
-    })
-
-    /* ADDING EVENTS */
-    var currColor = '#3c8dbc' //Red by default
-    //Color chooser button
-    var colorChooser = $('#color-chooser-btn')
-    $('#color-chooser > li > a').click(function (e) {
-      e.preventDefault()
-      //Save color
-      currColor = $(this).css('color')
-      //Add color effect to button
-      $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor })
-    })
-    $('#add-new-event').click(function (e) {
-      e.preventDefault()
-      //Get value and make sure it is not null
-      var val = $('#new-event').val()
-      if (val.length == 0) {
-        return
-      }
-
-      //Create events
-      var event = $('<div />')
-      event.css({
-        'background-color': currColor,
-        'border-color'    : currColor,
-        'color'           : '#fff'
-      }).addClass('external-event')
-      event.html(val)
-      $('#external-events').prepend(event)
-
-      //Add draggable funtionality
-      init_events(event)
-
-      //Remove event from text input
-      $('#new-event').val('')
-    })
-  })
+ $('.select2').select2();
 </script>
+<style type="text/css">
+  .fc-time{
+    display: none !important;
+  }
+</style>
+@endsection

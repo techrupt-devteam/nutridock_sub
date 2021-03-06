@@ -250,7 +250,7 @@ class SubscriptionController extends Controller
 
         }
 
-        $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete();
+       // $old_duration_delete  = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$id])->delete(); duration_id
 
          $failed = 0;  
             $duration_flag = $request->input('duration_flag');
@@ -269,8 +269,16 @@ class SubscriptionController extends Controller
                   {
                     $arr_data1['price_per_pack'] = $request->input('price'.$d);
                   }  
+                  
+                  if($request->input('duration_id'.$d))
+                  {
+                     $subscription_duration = \DB::table('nutri_dtl_subscription_duration')->where('duration_id','=',$request->input('duration_id'.$d))->update($arr_data1);
+                  }
+                  else
+                  {
+                    $subscription_duration  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
+                  }
 
-                  $subscription_duration  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
                   if($subscription_duration)
                   {
                     $failed = 0;
@@ -394,5 +402,33 @@ class SubscriptionController extends Controller
         }   
         $this->base_model->where(['sub_plan_id'=>$plan_id])->update($arr_data);
         //return \Redirect::back();
+    }
+     public function status_duration(Request $request)
+    {
+
+        $status                   =  $request->status;
+        $duration_id              =  $request->durations_id;
+        $check_day_assign_cnt     =  \DB::table('nutri_dtl_subscriber')->where('duration_id','=',$duration_id)->where('expiry_date','>=',date('Y-m-d'))->get()->count(); 
+
+        if($check_day_assign_cnt == 0)
+        { 
+            $arr_data                =  [];
+            if($status=="true")
+            {
+             $arr_data['is_active']   =  '1';
+            }
+            if($status=="false")
+            {
+             $arr_data['is_active']   =  '0';
+            }   
+            $dur_status = \DB::table('nutri_dtl_subscription_duration')->where(['duration_id'=>$duration_id])->update($arr_data);
+            
+            $message = "success";
+        }
+        else
+        {
+             $message = "failed";
+        }    
+        return $message;
     }
 }
