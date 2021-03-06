@@ -91,6 +91,8 @@ class SignUpController extends Controller
                 ['subscriber_id' =>  $subscriber->id],
                 ['subscriber_name' =>  request('name')]
             );
+
+           
             $subscriberDetails->save();
             Session::put('subscriber_id', $subscriberDetails->id);
 
@@ -113,14 +115,16 @@ class SignUpController extends Controller
         $valid = DeliveryLocation::where('delivery_pincode', $request['pincode'])
         ->where('is_active', '1')
         ->where('is_deleted', '0')
-        ->first();       
+        ->first();    
+        
        
         $delivery_pincode = ($valid) ? $request['pincode'] : '';
-        $getStateData = City::where('id', $valid['delivery_city_id'])->first();
-
-        Session::put('delivery_pincode', $delivery_pincode);
-        Session::put('delivery_city_id', $valid['delivery_city_id']);
-        Session::put('delivery_state_id', $getStateData['state_id']);
+        if($valid) {
+            $getStateData = City::where('id', $valid['delivery_city_id'])->first();
+            Session::put('delivery_pincode', $delivery_pincode);
+            Session::put('delivery_city_id', $valid['delivery_city_id']);
+            Session::put('delivery_state_id', $getStateData['state_id']);
+        }       
 
        return $delivery_pincode;            
     }
@@ -167,8 +171,7 @@ class SignUpController extends Controller
         $api = new Api(config('custom.razor_key'), config('custom.razor_secret'));
 
         //Fetch payment information by razorpay_payment_id
-        $payment = $api->payment->fetch($Request['razorpay_payment_id'])->capture(array('amount'=>$Request['totalAmount']*100));
-       
+        $payment = $api->payment->fetch($Request['razorpay_payment_id'])->capture(array('amount'=>$Request['totalAmount']*100));      
         
 		$data = [
 		'transaction_id' => $payment->id,
@@ -233,8 +236,8 @@ class SignUpController extends Controller
 
        
         $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-                ->update($data);   
-                
+                ->update($data); 
+
         if($update) {
             $arrData = array('total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id'));
             return $arrData;

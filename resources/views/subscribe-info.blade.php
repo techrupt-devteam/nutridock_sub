@@ -467,8 +467,8 @@ function chkValidPin()
           data: {
           pincode : $("#pincode").val(),
           },
-        success: function (data) {
-          if(data){            
+        success: function (data) {          
+          if(data != ''){ 
             location.href = "{{ URL::to('/') }}/sign-up";
           } else {
             $("#errValidZip").html('Sorry we are not delivering at '+ $("#pincode").val());

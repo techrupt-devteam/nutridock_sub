@@ -1050,7 +1050,6 @@ function getData() {
   $("#no_of_days").val($('input[name=radioDuration]:checked').attr('id')); 
  
   $($('input[name=radioMealType]:checked')).each(function (i, val) { 
-    alert(this.value);
     selectedMealTypeName += (selectedMealTypeName.length > 0 ? ', ' : '') + this.id;
     //selectedMealTypeVal += (selectedMealTypeVal.length > 0 ? ', ' : '') + this.val();
   }); 
