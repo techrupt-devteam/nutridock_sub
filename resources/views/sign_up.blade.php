@@ -607,7 +607,9 @@ background-color:blue
                           <div class="col-md-12 col-sm-6">
                             <div class="form-group" id="mealtype_div">
                                 <label class="control-label">Select meal type</label>
-                                <select multiple id="mealtype1" class="form-control" name="address1_meal[]" onchange="selectSessionValue('mealtype1');">
+                                <select multiple id="mealtype1" class="form-control" name="address1_meal[]" >
+                                <option value="None">None</option>
+                                
                                 </select>
                               <input type="hidden" name="" id="checkout_address1_meal1">
                             </div>
@@ -636,7 +638,7 @@ background-color:blue
                           <div class="col-md-12 col-sm-6">
                             <div class="form-group" id="mealtype_div">
                                 <label class="control-label">Select meal type</label>
-                                <select multiple id="mealtype1" class="form-control" name="address2_meal[]" onchange="selectSessionValue('mealtype2');">
+                                <select multiple id="mealtype2" class="form-control" name="address2_meal[]">
                                 </select>
                                 <input type="hidden" name="" id="checkout_address1_meal2">
                             </div>
@@ -655,7 +657,7 @@ background-color:blue
                       <div class="col-md-12">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value="1" name="termsConditions" class="showDive" id="termsConditions" required="required">
+                            <input type="checkbox" value="1" name="termsConditions" class="showDive" id="termsConditions" required="required" data-parsley-group="step-4">
                           </label>
                           <a href="{{url('')}}/terms_conditions">I Agree With Terms & Conditions? <span style="color: red;">*</span></a><br>
                           <span id="err_termsConditions" style="color: red;font-size: 13px;"></span> </div>
@@ -803,6 +805,23 @@ $('#start_date').datepicker({
   startDate: new Date($("#start_date").val()),
 });
 
+// $('#mealtype1').change(function(){
+//   var getMealTypeData = new Array();
+//   $($('input[name=radioMealType]:checked')).each(function () { 
+//     getMealTypeData += '<option value="'+this.value+'">'+this.id+'</option>';    
+//   }); 
+//   $('#mealtype1').html(getMealTypeData);
+// });
+
+
+// $('#mealtype2').change(function(){
+//   var getMealTypeData2 = new Array();
+//   $($('input[name=radioMealType]:checked')).each(function () { 
+//     getMealTypeData2 += '<option value="'+this.value+'">'+this.id+'</option>';    
+//   }); 
+//   $('#mealtype2').html(getMealTypeData2);
+// });
+
 $("#btnSubmit").click(function(){
   $.ajax({
       url: '{{ URL::to('/') }}/checkout',
@@ -839,9 +858,16 @@ function paySuccess(total_amount,subscriber_id)
         totalAmount : totalAmount ,order_id : order_id,
         }, 
         success: function (msg) {
-          alert(msg);
+          if(msg){
+            location.href = '{{ URL::to('/') }}/thankyou'
+          } else {
+            return false;
+          }
            // window.location.href = SITEURL + 'thank-you';
-        }
+        },
+        error: function (data) {
+          return false;
+        },
       });    
   },
 "prefill": {
@@ -992,13 +1018,13 @@ $(document).ready(function() {
   var mySessionId = '<?php echo Session::getId(); ?>';
   //console.log(mySessionId);
 
-  // var x = new SlimSelect({
-  //   select: '#mealtype1'
-  // });
+  var x = new SlimSelect({
+    select: '#mealtype1'
+  });
 
-  // var x = new SlimSelect({
-  //   select: '#mealtype2'
-  // });
+  var x = new SlimSelect({
+    select: '#mealtype2'
+  });
 });
 
 /************* @START: CODE FOR GET PLAN PRICE  *************/
@@ -1008,10 +1034,16 @@ function getPlanPrice()
   var duration_id = $('input[type="radio"][name="radioDuration"]:checked').val(); 
  
   var selectedMealType = new Array();
+  var getMealTypeData = new Array();
+
   $("#meals input[type=checkbox]:checked").each(function () {
     selectedMealType.push(this.value);
-
+    getMealTypeData.push('<option value='+this.value+'">'+this.id+'</option');
   });
+
+  $('#mealtype1').html(getMealTypeData);
+  $('#mealtype2').html(getMealTypeData);
+
   $("#meal_type").val(selectedMealType); 
   //alert(subscription_plan_id+" meal type: "+selectedMealType+" duration: "+duration_id);
   if((subscription_plan_id != '') && (duration_id != 'undefined') && (selectedMealType != '')) {
@@ -1065,5 +1097,8 @@ function getData() {
   $("#checkout_total_amount").html(formatCurrency(total_price)); 
 }
 /************* @END: CODE FOR GET PLAN PRICE  *************/
+
+
+
 </script>
 @endsection 
