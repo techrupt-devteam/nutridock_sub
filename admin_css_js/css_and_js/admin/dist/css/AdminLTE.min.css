@@ -385,6 +385,10 @@ color:#ccc
     border-top: 1px solid #ccc;
     border-left: 1px solid #CCC;
 }
+.user-panel h4 {
+    white-space: normal;
+    margin-top: 0px;
+}
 #image-preview input {
     line-height: 200px;
     font-size: 80px;
@@ -2389,9 +2393,6 @@ opacity:1
 }
 .table tr td .progress {
 	margin-top:5px
-}
-.table-bordered {
-	border:1px solid #ddd
 }
 .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
 	border:1px solid #ddd
@@ -4415,4 +4416,105 @@ filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e73f7c', endCo
     background: -moz-linear-gradient(right,#8845f5,#aa7af8) !important;
     background: -webkit-linear-gradient(right,#8845f5,#aa7af8) !important;
     background: linear-gradient(to left,#8845f5,#aa7af8) !important;
+}
+.list-group {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.list-group-item {
+    padding: 0.82rem 1.25rem;
+	border: 0px;
+}
+.media {
+    display: flex;
+    align-items: flex-start;
+}
+.list-group-item .media img {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+.media-body {
+    flex: 1;
+}
+.tx-15 {
+    font-size: 15px;
+	margin-top: 0px;
+}
+.mb-1, .my-1 {
+    margin-bottom: 0.25rem !important;
+}
+
+.pt-2, .py-2 {
+    padding-top: 0.5rem !important;
+}
+.mt-1, .my-1 {
+    margin-top: 0.25rem !important;
+}
+.product-timeline ul.timeline-1 {
+    list-style-type: none;
+    position: relative;
+}
+.product-timeline ul.timeline-1 > li {
+    margin: 20.7px 0;
+        margin-top: 20.7px;
+    padding-left: 1rem;
+}
+.product-timeline ul.timeline-1 > li .product-icon {
+    width: 37px;
+    height: 37px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
+    background-color: #f3f6f7;
+    font-size: 20px;
+    line-height: 37px;
+    font-size: 17px;
+}
+.bg-primary-gradient {
+    background-image: linear-gradient(to left, #0db2de 0%, #005bea 100%) !important;
+}
+.tx-14 {
+    font-size: 14px;
+}
+.font-weight-semibold {
+    font-weight: 500 !important;
+}
+.float-right {
+    float: right !important;
+}
+.text-muted {
+    color: #7987a1 !important;
+}
+.tx-12 {
+    font-size: 12px;
+}
+.bg-danger-gradient {
+    background-image: linear-gradient(45deg, #f93a5a, #f7778c) !important;
+}
+
+.bg-warning-gradient {
+    background-image: linear-gradient(to left, #efa65f, #f76a2d) !important;
+}
+.product-timeline ul.timeline-1::before {
+    content: ' ';
+    margin: 20px 20px 0 22px;
+    display: inline-block;
+    position: absolute;
+    left: -2px;
+    height: 94%;
+    z-index: 0;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    border-left: 2px dotted #c0ccda;
+}
+.text-white{
+	color:#FFF;
+}
+.country-table .table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: #ecf0fa;
 }
