@@ -120,7 +120,7 @@ Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanP
 Route::post('/checkout', 						'Front\SignUpController@checkout');
 Route::post('/pay-success', 					'Front\SignUpController@paySuccess');
 Route::get('/thankyou', 						'Front\SignUpController@thankyou');
-
+Route::get('/sign-in',							['as'=>'loginModal','uses'=> 'SignUpController@loginModal']);
 
 
 
