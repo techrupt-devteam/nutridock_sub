@@ -74,9 +74,7 @@ font-weight: 700;
 .ltx-btn-wrap a:hover {
     background-color: #1c2a39;
 }
-.fixed-top {
-    position: sticky !important;
-}
+
 .vc_column-inner {
     padding: 2rem;
 }
@@ -87,8 +85,8 @@ font-weight: 700;
 .ltx-icon.bg-main {
    width: 130px;
     height: 130px;
-    background-color: #8abb36;
-    border: 1px solid #8abb3652;
+    background-color: #0185d0;
+    border: 1px solid #0185d0;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -120,8 +118,11 @@ font-weight: 700;
 	font-weight: 800;
 	font-size: 18px;
 	line-height: 1.3em;
-	color: #1c2a39;
+	color: #3c281d;
 	text-transform: capitalize;
+}
+.section.bg-green {
+    padding: 70px 0px;
 }
 .ltx-block-icon .in {
     text-align: center;
@@ -149,8 +150,8 @@ font-weight: 700;
 .how-to-work h2 {
     font-size: 35px;
     text-align: center;
-    font-weight: 800;
-    color: #70bb43;
+    font-weight: 600;
+    color: #3c281d;
 }
 .What-you-get{
 	background-image: url(../img/bg-pattern-1.jpeg);
@@ -335,7 +336,7 @@ font-weight: 700;
     min-width: 200px;
 }
 .box-icon-classic-title a:hover {
-    color: #90d124;
+    color: #f4c901;
 }
 .section-2.gray {
     padding: 2rem 0 3rem;
@@ -348,7 +349,7 @@ font-weight: 700;
     max-width: 660px;
     margin-left: auto;
     margin-right: auto;
-    background-color: #ffffffd1;
+    background-color: #ffffff;
     margin-top: -215px;
     z-index: 9;
     position: relative;
@@ -364,7 +365,7 @@ font-weight: 700;
     background-image: url(../img/bg-pattern-1.jpeg);
 }
 .bg-green{
-    background-color: #3a9700c4;
+    background-color: #512F1DCC;
     background-image: url(../img/footer.png);
     background-attachment: fixed;
 }
@@ -465,9 +466,10 @@ color: inherit;
     margin-top: 0px;
     margin-bottom: 16px;
     padding-bottom: 0px;
-    color: #333;
+    color: #3c281d;
     font-size: 2rem;
     line-height: 1.16em;
+    font-weight: 600;
 }
 .ff-paragraph {
     font-size: 14px;
@@ -605,8 +607,8 @@ color: inherit;
 }
 .btn-darkblue{
     color: #fff;
-    background-color: #213142;
-    border-color: #1c2a39;
+    background-color: #0185D0;;
+    border-color: #0185D0;
     letter-spacing: 0.6px;
     font-family: "Open Sans", sans-serif !important;
 }

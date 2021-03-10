@@ -80,32 +80,24 @@
         <!-- End Facebook Pixel Code -->
    </head>
    <body>
-   <!--  <script type="text/javascript">var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date;!function(){var t=document.createElement("script"),e=document.getElementsByTagName("script")[0];t.async=!0,t.src="https://embed.tawk.to/5f97bc44aca01a1688360165/default",t.charset="UTF-8",t.setAttribute("crossorigin","*"),e.parentNode.insertBefore(t,e)}()
-      </script> -->
+  
       <noscript><iframe height="0"src="https://www.googletagmanager.com/ns.html?id=GTM-MQV3CBB"style="display:none;visibility:hidden"width="0"></iframe></noscript>
-      <div class="align-items-center d-lg-flex d-none fixed-top"id="topbar">
-         <div class="container d-flex">
-            <div class="contact-info mr-auto"><i class="fa fa-envelope-o"></i> <a href="mailto:customercare@nutridock.com">customercare@nutridock.com</a> <i class="fa fa-phone"></i> 7447725922</div>
-            <div class="social-links"><a href="https://www.facebook.com/nutridock0/"class="facebook"target="_blank"><i class="fa fa-facebook"></i></a> 
-            <a href="https://www.instagram.com/nutri_dock/?igshid=1iz93rjouag24"class="instagram"target="_blank"><i class="fa fa-instagram"></i></a></div>
-         </div>
-      </div>
+      
       <header class="fixed-top"id="header">
          <div class="align-items-center container d-flex">
-            <a href="{{url('')}}"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo.png"> </a>
-            <a href="{{url('')}}/subscribe_info" class="btn btn-outline-success d-md-none d-sm-none m-order-btn p-1" style="right: 148px;">Subscribe</a>
-            <a href="http://order.nutridock.com/"class="btn btn-success d-md-none d-sm-none m-order-btn p-1"target="_tab">Order Now</a>
+            <a href="{{url('')}}"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> </a>
             <nav class="d-none d-lg-block ml-auto nav-menu">
                <ul class="nav">
-                  <li id="home"><a href="{{url('')}}">Home</a></li>
+                  <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
+                  <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
                   <li><a href="{{url('')}}/about">About</a></li>
                   <li><a href="{{url('')}}/menu">Menu</a></li>
-                  <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
+                  
                   <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
                   <li><a href="{{url('')}}/faq">FAQ</a></li> -->
                   <li><a href="{{url('')}}/contact">Contact</a></li>
-                  <li class="under-line-none"><a  data-toggle="modal" data-target="#login" class="btn btn-outline-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none" >Login</a></li>
-                  <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li>
+                  <li class="under-line-none"><a  data-toggle="modal" data-target="#login" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none" >Login</a></li>
+                  <!-- <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li> -->
                </ul>
             </nav>
          </div>

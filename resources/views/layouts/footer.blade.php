@@ -18,48 +18,36 @@
 			<div class="row mb-60">
 				<div class="col-lg-4 col-md-12 text-center text-md-left">
 					<a href="index.php"><img src="{{url('')}}/public/front/img/logo-white.svg" alt="Nutridock Restaurant & Catering" style="max-width:100px"></a>
-					<p class="text-center text-md-left" style="color:#959595;font-size:14px">We are here to help you make the shift from restrictive dieting to mindful eating, in a way that is easy and enjoyable.</p>
-					<ul class="contact-info-list pl-0 text-left">
-						<li class="media mb-10 media.inline-block">
-							<div class="media-left"><i class="color-main2 fa fa-map-marker"></i></div>
-							<div class="media-body darklinks mt-0">Nutridock, Store B-17,MIDC Ambad, Nashik, Next To Seva Nexa Service Center, Maharashtra 422010</div>
-						</li>
-						<li class="media mb-10 media.inline-block">
-							<div class="media-left"><i class="color-main2 fa fa-envelope-o"></i></div>
-							<div class="media-body darklinks mt-0">customercare@nutridock.com</div>
-						</li>
-						<li class="media mb-10 media.inline-block">
-							<div class="media-left"><i class="color-main2 fa fa-phone"></i></div>
-							<div class="media-body darklinks mt-0">+91 7447725922</div>
-						</li>
-						<li class="media mb-10 media.inline-block">
-							<div class="media-left"><i class="color-main2 fa fa-clock-o"></i></div>
-							<div class="media-body darklinks mt-0">MON- SUN: 10:00 AM - 10:00 PM
-								<br>
-							</div>
-						</li>
+					<p class="text-center text-md-left" style="color:#eee;font-size:14px;">We are here to help you make the shift from restrictive dieting to mindful eating, in a way that is easy and enjoyable.
+					</p>
+					<ul class="mt-3 p-0 social-links">
+						<li><a href="https://www.facebook.com/nutridock0/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="https://www.instagram.com/nutri_dock/?igshid=1iz93rjouag24" target="_blank"><i class="fa fa-instagram"></i></a></li>
 					</ul>
+					
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="widget-theme-wrapper">
 						<div class="widget" id="mwt_recent-2">
-							<h3 class="widget-title">Recent Posts</h3>
-							<ul class="links-darkgrey list-unstyled pl-0">
-								<?php foreach($recent_data as $row): ?>
-									<li class="media post type-post"><a class="media-left"><img src="{{url('')}}/uploads/images/{{$row->image}}"alt=""class="attachment-thumbnail size-thumbnail wp-post-image"></a>
-										<div class="media-body">
-										    <?php $link = $row->link;
-                                        $dashedTitle = str_replace(" ", "-", $link); ?>
-											<h4><a href="{{url('')}}/blog_detail/{{$dashedTitle}}"><!--{!! substr(strip_tags($row->blog_title), 0, 35) !!}-->{!! $row->blog_title !!}</a></h4>
-											<div class="item-meta"><span class="widget-post-date"><i class="color-main fa fa-calendar"></i>{{ date('F d, Y', strtotime($row->created_at)) }}</span></div>
-										</div>
-									</li>
-									<?php endforeach; ?>
+							<h3 class="widget-title">Contact Us</h3>
+							<ul class="contact-info-list pl-0 text-left">
+								<li class="media mb-10 media.inline-block">
+									<div class="media-left"><i class="color-main2 fa fa-map-marker"></i></div>
+									<div class="media-body darklinks mt-0">Nutridock, Store B-17,MIDC Ambad, Nashik, Next To Seva Nexa Service Center, Maharashtra 422010</div>
+								</li>
+								<li class="media mb-10 media.inline-block">
+									<div class="media-left"><i class="color-main2 fa fa-envelope-o"></i></div>
+									<div class="media-body darklinks mt-0">customercare@nutridock.com</div>
+								</li>
+								<li class="media mb-10 media.inline-block">
+									<div class="media-left"><i class="color-main2 fa fa-phone"></i></div>
+									<div class="media-body darklinks mt-0">+91 7447725922</div>
+								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-5 col-sm-6 col-xl-3 fadeInRight wow">
+				<div class="col-lg-4 col-md-5 col-sm-6 fadeInRight wow">
 					<div class="widget-theme-wrapper" style="overflow:hidden">
 						<div class="widget" id="mwt_recent-2">
 							<h3 class="widget-title">Newsletter</h3>
@@ -72,10 +60,7 @@
 							</form>
 						</div>
 					</div>
-					<ul class="mt-3 p-0 social-links">
-						<li><a href="https://www.facebook.com/nutridock0/" target="_blank"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="https://www.instagram.com/nutri_dock/?igshid=1iz93rjouag24" target="_blank"><i class="fa fa-instagram"></i></a></li>
-					</ul>
+					
 				</div>
 			</div>
 		</div>
@@ -86,16 +71,8 @@
 			<div class="col-md-6 text-center text-md-left">
 				<p>© Nutridock 2020. All rights reserved.</p>
 			</div>
-			<div class="col-md-6">
-				<ul class="breadcrumb">
-					<li><a href="{{url('')}}">Home</a></li>
-					<li><a href="{{url('')}}/about">About</a></li>
-					<li><a href="{{url('')}}/menu">Menu</a></li>
-					<li><a href="{{url('')}}/blog">Blog</a></li>
-					<li><a href="{{url('')}}/faq">Faq</a></li>
-						<li><a href="https://forms.gle/7L9DEok2KCsdXBTT9">Feedback</a></li>
-					<li><a href="{{url('')}}/contact">Contact</a></li>
-				</ul>
+			<div class="col-md-6 text-md-right pt-2 text-white text-center">
+				Designed By : <a href="#">Techrupt</a>
 			</div>
 		</div>
 	</div>
@@ -103,17 +80,7 @@
 <a href="https://wa.link/3o9k29" target="_blank" class="whatsapp-link">
     <img src="{{url('')}}/public/front/img/whatsapp-icon.svg">
 </a>
-<div class="sticky-container d-none d-md-block">
-	<ul class="sticky">
-		<li class="hover-item">
-			<a href="http://order.nutridock.com/" class="hvr-icon-wobble-horizontal"><img src="{{url('')}}/public/front/img/order-cart.svg"> <b class="footer-sticky1">Order Now</b></a>
-		</li>
 
-		<li class="hover-item">
-			<a href="{{url('')}}/subscribe_info" class="hvr-icon-wobble-horizontal"><img src="{{url('')}}/public/front/img/diat-plan.svg"> <b class="footer-sticky1">Subscription</b></a>
-		</li>
-	</ul>
-</div>
 
 <div class="footer-fix-menu">
     <div class="row no-gutters">
