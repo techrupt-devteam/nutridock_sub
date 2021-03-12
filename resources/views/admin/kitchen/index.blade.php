@@ -12,7 +12,7 @@
             <h3 class="box-title">{{ $page_name." ".$title }}</h3>
             <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Cloude Kitchen</a> </div>
           <!-- /.box-header -->
-          <div class="box-body">
+          <div class="box-body"><div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -40,6 +40,7 @@
                 </tbody>
               
             </table>
+          </div>
           </div>
           <!-- /.box-body --> 
         </div>

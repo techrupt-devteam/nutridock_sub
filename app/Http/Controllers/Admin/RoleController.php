@@ -32,6 +32,7 @@ class RoleController extends Controller
     {
         $arr_data = [];
         $data     = $this->base_model->get();
+
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -141,5 +142,32 @@ class RoleController extends Controller
             return \Redirect::back();
         }
         
+    }
+
+    public function status(Request $request)
+    {
+
+        $status  = $request->status;
+        $role_id = $request->role_id;
+        $user_data = $this->base_user->where('roles','=',$role_id)->where('is_deleted','=','0')->get();   
+        if(count($user_data)>0)
+        {
+            return 0;
+        }
+        else
+        {
+            $arr_data               = [];
+            if($status=="true")
+            {
+              $arr_data['is_active'] = '1';
+            }
+            if($status=="false")
+            {
+              $arr_data['is_active'] = '0';
+            }   
+            $this->base_model->where(['role_id'=>$role_id])->update($arr_data);
+            return 1;
+        }    
+        //return \Redirect::back();
     }
 }

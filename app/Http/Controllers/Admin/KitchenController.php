@@ -47,12 +47,29 @@ class KitchenController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = \DB::table('nutri_mst_kitchen')
+        $city = Session::get('login_city_id');
+        if($city!="all")
+        {
+
+            $data   = \DB::table('nutri_mst_kitchen')
+                         ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                         ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                         ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                         ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
+                         ->where('nutri_mst_kitchen.city_id','=',$city);
+        }
+        else
+        {
+
+            $data     = \DB::table('nutri_mst_kitchen')
                      ->join('state','nutri_mst_kitchen.state_id','=','state.id')
                      ->join('city','nutri_mst_kitchen.city_id','=','city.id')
                      ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
-                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
-                     ->where('nutri_mst_kitchen.is_deleted','<>',1)
+                     ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*');
+        }             
+
+
+              $data = $data->where('nutri_mst_kitchen.is_deleted','<>',1)
                      ->orderBy('kitchen_id', 'DESC')
                      ->get();
        

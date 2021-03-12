@@ -48,12 +48,29 @@ class NutritionsitController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = \DB::table('users')
+        $city = Session::get('login_city_id');
+        if($city!="all")
+        {
+            $data   = \DB::table('users')
+                      ->join('role','users.roles','=','role.role_id')
+                      ->join('state','users.state','=','state.id')
+                      ->join('city','users.city','=','city.id')
+                      ->join('locations','users.area','=','locations.id')
+                      ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
+                      ->where('users.city','=',$city);
+        }
+        else
+        {
+
+         $data    =  \DB::table('users')
                      ->join('role','users.roles','=','role.role_id')
                      ->join('state','users.state','=','state.id')
                      ->join('city','users.city','=','city.id')
-                     ->join('locations','users.area','=','locations.id')
-                     ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
+                     ->join('locations','users.area','=','locations.id');
+
+        } 
+
+        $data = $data ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
                      ->where('users.roles','=',1)
                      ->where('users.is_deleted','<>',1)
                      ->orderBy('id', 'DESC')

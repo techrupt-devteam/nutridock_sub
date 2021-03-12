@@ -6,21 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\Location;
 use App\Models\city;
+use App\Models\DeliveryLocation;
 use Session;
 use Sentinel;
 use Validator;
 use DB;
 class LocationsController extends Controller
 {
-    public function __construct(Location $Location,City $City,State $State)
+    public function __construct(Location $Location,City $City,State $State,DeliveryLocation $DeliveryLocation)
     {
-        $data               = [];
-        $this->base_model   = $Location; 
-        $this->base_city    = $City; 
-        $this->base_state   = $State; 
-        $this->title        = "Location";
-        $this->url_slug     = "location";
-        $this->folder_path  = "admin/location/";
+        $data                   = [];
+        $this->base_model       = $Location; 
+        $this->base_city        = $City; 
+        $this->base_state       = $State; 
+        $this->base_dlocation   = $DeliveryLocation; 
+        $this->title            = "Location";
+        $this->url_slug         = "location";
+        $this->folder_path      = "admin/location/";
     }
 
     public function index()
@@ -61,7 +63,8 @@ class LocationsController extends Controller
         $validator = Validator::make($request->all(), [
                'state' => 'required',
                 'city' => 'required',
-                'area' => 'required'
+                'area' => 'required',
+                'pincode' => 'required'
             ]);
 
         if ($validator->fails()) 
@@ -77,16 +80,22 @@ class LocationsController extends Controller
             return \Redirect::back();
         }
 
-        $arr_data                 = [];
-        $arr_data['area']   = $request->input('area');
-        $arr_data['city']   = $request->input('city');
-        $arr_data['state']  = $request->input('state');
-        $role = $this->base_model->create($arr_data);
+        $arr_data             = [];
+        $arr_data['area']     = $request->input('area');
+        $arr_data['city']     = $request->input('city');
+        $arr_data['state']    = $request->input('state');
+        $arr_data['pincode']  = $request->input('pincode');
+        $location = $this->base_model->create($arr_data);
       
         if(!empty($role))
         {
-            Session::flash('success', 'Success! Record added successfully.');
-            return \Redirect::to('admin/manage_location');
+           Session::flash('success', 'Success! Record added successfully.');
+           return \Redirect::to('admin/manage_location');
+
+            $arr_data2                         = [];
+            $arr_data2['delivery_pincode']     = $request->input('pincode');
+            $arr_data2['delivery_city_id']     = $request->input('city');
+            $location_data = $this->base_dlocation->create($arr_data2);
         }
         else
         {
@@ -120,7 +129,8 @@ class LocationsController extends Controller
         $validator = Validator::make($request->all(), [
                 'state' => 'required',
                 'city' => 'required',
-                'area' => 'required'
+                'area' => 'required',
+                'pincode' => 'required'
             ]);
 
         if ($validator->fails()) 
@@ -134,11 +144,19 @@ class LocationsController extends Controller
             Session::flash('error', "Area already exist!");
             return \Redirect::back();
         }
-        $arr_data               = [];
-        $arr_data['area']   = $request->input('area');
-        $arr_data['city']   = $request->input('city');
-        $arr_data['state']  = $request->input('state');
+        $arr_data              = [];
+        $arr_data['area']      = $request->input('area');
+        $arr_data['city']      = $request->input('city');
+        $arr_data['state']     = $request->input('state');
+        $arr_data['pincode']   = $request->input('pincode');
+
         $update = $this->base_model->where(['id'=>$id])->update($arr_data);
+
+        $arr_data2                         = [];
+        $arr_data2['delivery_pincode']     = $request->input('pincode');
+        $arr_data2['delivery_city_id']     = $request->input('city');
+        $location_data = $this->base_dlocation->create($arr_data2);
+
         Session::flash('success', 'Success! Record update successfully.');
         return \Redirect::to('admin/manage_location');
         

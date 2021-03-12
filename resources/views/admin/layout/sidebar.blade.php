@@ -82,7 +82,7 @@
         </li> 
      
 
-      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_subscriber_calender' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
+      <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_subscriber_calender'||Request::segment(2)=='manage_new_subscriber'||Request::segment(2)=='manage_expire_subscriber' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
             <a href="#">
               <i class="fa fa-television"></i><span>Subscriber</span>
               <span class="pull-right-container">
@@ -231,7 +231,7 @@
                   </span>
                 </a>
               </li>
-               <li @if(Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') class="active" @endif>
+              <li @if(Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_permission">
                   <i class="fa fa-circle-o"></i> <span>Role Permission</span>
                   <span class="pull-right-container">
@@ -240,6 +240,23 @@
               </li>
             </ul>
         </li>
+        <li class="treeview @if(Request::segment(2)=='manage_gst' || Request::segment(2)=='add_gst' || Request::segment(2)=='edit_gst' ) active @endif">
+          <a href="#">
+            <i class="fa fa-percent"></i> <span>GST Setting</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li @if(Request::segment(2)=='manage_gst' || Request::segment(2)=='add_gst' || Request::segment(2)=='edit_gst' ) class="active" @endif><a href="{{url('/admin')}}/manage_gst"><i class="fa fa-circle-o"></i>GST Master</a></li>
+          </ul>
+        </li>
+       <!--  <li>
+          <a href="{{url('/public')}}/chatify" target="_blank">
+            <i class="glyphicon glyphicon-comment"></i><span>Messager</span>
+          </a>
+        </li> -->
+
     @else
 <!--------------------Dynamic Menu with permission---------------------->
       <li @if(Request::segment(2)=='dashbord') class="active" @endif>
@@ -275,11 +292,14 @@
 
                     @if(isset($session_permissions) && in_array($sub_menu[0],$session_permissions) && !empty($session_permissions))
                     <li @if(Request::segment(2)=='manage_'.$sub_menu[3] || Request::segment(2)=='add_'.$sub_menu[3] || Request::segment(2)=='edit_'.$sub_menu[3] || Request::segment(2)=='add_subscriber_meal_program') class="active" @endif>
+                    
                       <a href="{{url('/admin')}}/{{$sub_menu[2]}}">
                          <i class="fa fa-circle-o"></i> <span>{{$sub_menu[1]}}</span>
                         <span class="pull-right-container">
                         </span>
-                      </a> 
+                      </a>
+                    
+                      
                     </li> 
                     @endif
                   @endforeach 
@@ -289,7 +309,11 @@
            @endif 
          @endforeach
     @endif
-
+        <li>
+          <a href="{{url('/public')}}/chatify" target="_blank">
+            <i class="glyphicon glyphicon-comment"></i><span>Messager</span>
+          </a>
+        </li>
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>

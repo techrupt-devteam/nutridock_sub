@@ -72,12 +72,13 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="nutritionsit_id">Nutritionist<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="nutritionist_id" id="nutritionist_id" required="true"  data-parsley-errors-container="#nutritionsit_error" data-parsley-error-message="Please select Nutritionsit." disabled="">
+                         <select class="form-control select2" name="nutritionist_id1" id="nutritionist_id1" required="true"  data-parsley-errors-container="#nutritionsit_error" data-parsley-error-message="Please select Nutritionsit." disabled="">
                           <option value="">-Select Nutritionsit-</option>
                             @foreach($users as $key => $uvalue)
                              <option value="{{$uvalue->id}}" <?php if($data['nutritionist_id']==$uvalue->id){ echo "selected"; }?>>{{ucfirst($uvalue->name)}}</option>
                             @endforeach
                           </select>
+                          <input type="hidden" name="nutritionist_id" value="{{$data['nutritionist_id']}}">
                          <div id="nutritionsit_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -96,12 +97,14 @@
                               <tbody id="subscriber_body">
                                 <?php $subscriber_id = explode(",",$data['subscriber_id']); ?> 
                                 @foreach($subscriber as $key => $svalue)
+                                @if(!in_array($svalue->id, $assign_subcriber))
                                   <tr>
                                        <td>
-                                           <input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?> <?php echo (in_array($svalue->id, $assign_subcriber) ? 'disabled' : '')?> required data-parsley-errors-container='#name_error' data-parsley-error-message='Please select at least one subscriber' >
+                                           <input type="checkbox" name="subscriber_id[]" class="checkbox_allmenu" id="Subscriber" value="{{$svalue->id}}" <?php echo (in_array($svalue->id, $subscriber_id) ? 'checked' : '')?>  required data-parsley-errors-container='#name_error' data-parsley-error-message='Please select at least one subscriber' >
                                        </td>
                                      <td>{{ucfirst($svalue->subscriber_name)}}</td>
-                                  </tr>  
+                                  </tr>
+                                @endif    
                                 @endforeach
                               </tbody>
                            </table>

@@ -75,68 +75,76 @@
                 </ul></td></tr>
              <tr>
 		   	 	<td><strong>Mobile:</strong> {{ $value->mobile }} Days</td>
-		   	 	<td><strong>Email:</strong>{{ ucfirst($value->email)}}</td>
+		   	 	<td><strong>Email:</strong>{{ $value->email}}</td>
 		   	 </tr>
 		   	  <tr>
 		   	 	<td><strong>Age:</strong> {{ $value->subscriber_age }}</td>
 		   	 	<td><strong>Gender:</strong>{{ ucfirst($value->subscriber_gender)}}</td>
 		   	 </tr>
 		   	  <tr>
-		   	 	<td><strong>Weight:</strong> {{ $value->subscriber_weight }}</td>
-		   	 	<td><strong>Height:</strong>{{ $value->subscriber_height_in_feet.".".$value->subscriber_height_in_inches}}</td>
+		   	 	<td><strong>Weight:</strong> {{ (!empty($value->subscriber_weight))?$value->subscriber_weight:"NA" }}</td>
+		   	 	<td><strong>Height:</strong>{{ (!empty($value->subscriber_height_in_feet))?$value->subscriber_height_in_feet.".".$value->subscriber_height_in_inches:"NA"}}</td>
 		   	 </tr>
 		   	 <tr>
-		   	 	<td><strong>Physical Activity:</strong> {{ $value->physical_activity }}</td>
-		   	 	<td><strong>Other Food:</strong>{{ $value->other_food}}</td>
+		   	 	<td><strong>Physical Activity:</strong> {{ (!empty($value->physical_activity))?$value->physical_activity:"NA" }}</td>
+		   	 	<td><strong>Other Food:</strong>{{ (!empty($value->other_food))?$value->other_food:"NA"}}</td>
 		   	 </tr>
 		   	 <tr>
 		   	 	<td colspan="2">
 		   	 		<strong>Any lifestyle disease:</strong><br>
-		   	 		<p>{{ucfirst($value->lifestyle_disease)}}</p>
+		   	 		<p>{{(!empty($value->lifestyle_disease))?ucfirst($value->lifestyle_disease):"NA"}}</p>
 		   	 	</td>
 		   	 </tr>
 		   	 <tr>
 		   	 	<td colspan="2">
 		   	 		<strong>Any food preparation instructions:</strong><br>
-		   	 		<p>{{ucfirst($value->food_precautions)}}</p>
+		   	 		<p>{{(!empty($value->food_precautions))?ucfirst($value->food_precautions):"NA"}}</p>
 		   	 	</td>
 		   	 </tr>
 		   	 <tr>
 		   	 	<td>
 		   	 		<strong>Address1:</strong><br>
-		   	 		<p>{{ucfirst($value->address1)}}</p>
+		   	 	<p>{{(!empty($value->address))?ucfirst($value->address):"NA"}}</p>
 		   	 	</td>
 		   	 	<td>
 		   	 		<strong>Address2:</strong><br>
-		   	 		<p>{{ucfirst($value->address2)}}</p>
+		   	 		<p>{{(!empty($value->address2))?ucfirst($value->address2):"NA"}}</p>
 		   	 	</td>
 		   	 </tr>
 		   	 <tr>
 		   	 	<td>
 		   	 		<strong>Pincode1</strong><br>
-		   	 		<p>{{ucfirst($value->pincode1)}}</p>
+		   	 		<p>{{(!empty($value->pincode1))?ucfirst($value->pincode1):"NA"}}</p>
 		   	 	</td>
 		   	 	<td>
 		   	 		<strong>Pincode2</strong><br>
-		   	 		<p>{{ucfirst($value->pincode2)}}</p>
+		   	 		<p>{{(!empty($value->pincode2))?ucfirst($value->pincode2):"NA"}}</p>
 		   	 	</td>
 		   	 </tr>
 		   	 <tr>
 		   	 	<td>
 		   	 		<strong>Meal Type1</strong><br>
+		   	 		@if(count($get_meal_type2)!=0)
 		   	 		<ul>
 		   	 		  @foreach ($get_meal_type2 as $m2value)
                        <li class='btn-sm btn-warning'>{{ ucfirst($m2value->meal_type_name)}}</li>
                       @endforeach  
 		   	 		</ul>
+		   	 		@else
+		   	 		 {{'NA'}}
+		   	 		@endif
 		   	 	</td>
 		   	 	<td>
 		   	 		<strong>Meal Type2</strong><br>
+		   	 		@if(count($get_meal_type3)!=0)
 					<ul>
 						@foreach ($get_meal_type3 as $m3value)
 						<li class='btn-sm btn-warning'>{{ ucfirst($m3value->meal_type_name)}}</li>
 						@endforeach  
 					</ul>
+					@else
+		   	 		 {{'NA'}}
+		   	 		@endif
 		   	 	</td>
 		   	 </tr>
 		   	 

@@ -34,11 +34,21 @@
               </ol>
             </div>
             <div class="box-header">
-              <h3 class="box-title"><!-- {{ $page_name." ".$title }} --></h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Assign Nutritionist</a>
-            </div>
+              <!-- <h3 class="box-title">{{ $page_name." ".$title }}</h3> -->
+              
+               
+              
+              <div  class="col-md-12">
+                <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Assign Subscriber to Nutritionist</a></div>
+              <div class="alert alert-info col-md-12 mt-4 text-right" style="
+    margin-top: 13px;
+">
+                    <strong ><i class="glyphicon glyphicon-hand-right"></i> Note! Assign Subscriber to Nutritionist </strong>is for those Nutritionist, who is not assign to any Subscriber yet. <i class="glyphicon glyphicon-upload"></i>
+                   </div>
+               </div>
+           
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body"><div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -73,6 +83,7 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

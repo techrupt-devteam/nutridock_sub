@@ -96,7 +96,8 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/parsley.js"></script>
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
-
+<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
    $('.select2').select2();
   $(function () {
@@ -117,6 +118,8 @@ function  getcity_dropdown(){
         email: email
       }
     }).done(function(data) {
+         
+        if(data !="NULL"){
          if(data != "users"){
             $('#city').html(data);
             $('#city_select').show();
@@ -127,6 +130,14 @@ function  getcity_dropdown(){
             $('#city_select').hide();
             $("#city").removeAttr("required");
          }
+       }
+       else
+       {
+           swal("Not Valid User", "Enter username  is not valid user!", "warning")
+          $('#city').hide();
+          $('#city_select').hide();
+          $("#city").removeAttr("required");
+       }
     });
 
 

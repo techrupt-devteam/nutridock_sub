@@ -169,7 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+         \Chatify\ChatifyServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -236,7 +236,8 @@ return [
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class, 
         'Image'        => Intervention\Image\Facades\Image::class,
         'Input'        => Illuminate\Support\Facades\Input::class,
-        'PDF'          => niklasravnsborg\LaravelPdf\Facades\Pdf::class
+        'PDF'          => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Chatify'      => Chatify\Facades\ChatifyMessenger::class,
 
 
     ],
