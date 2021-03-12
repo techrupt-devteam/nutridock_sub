@@ -89,13 +89,15 @@ class SignUpController extends Controller
         if($subscriber->save()) {
             $subscriberDetails =   SubscriberDetails::firstOrNew(
                 ['subscriber_id' =>  $subscriber->id],
-                ['subscriber_name' =>  request('name')]
+                ['subscriber_name' =>  request('name')],
+                ['session_id' =>  session()->getId()]
             );
 
            
             $subscriberDetails->save();
             Session::put('subscriber_id', $subscriberDetails->id);
 
+            
             return 'true';
         } else {
             return 'false';
@@ -229,7 +231,7 @@ class SignUpController extends Controller
         //'address2_deliver_mealtype' => $input['address2_meal'],
         'state' => Session::get('delivery_state_id'),
         'city' => Session::get('delivery_city_id'),
-        'session_id' => '',
+        'session_id' => session()->getId(),
         'transaction_id' => '',
         'subscriber_id' => Session::get('subscriber_id'),
         'payment_status' => 'Initiated');
@@ -246,6 +248,22 @@ class SignUpController extends Controller
         }
                 
         return $update;
+    }
+
+
+    public function thankyou() {     
+        $data['seo_title'] = "";
+        $recent_data = [];
+        $recent_value     = \DB::table('blog')
+                        ->orderby('id','DESC')
+                        ->limit(3)
+                        ->get();
+
+        if($recent_value) {
+            $recent_data = $recent_value->toArray();
+        }
+
+        return view('thank_you_signup')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Thank You"]); 
     }
 }
 ?>
