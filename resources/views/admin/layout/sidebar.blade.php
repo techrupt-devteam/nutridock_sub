@@ -309,7 +309,7 @@
          @endforeach
     @endif
         <li>
-          <a href="{{url('/public')}}/chatify" target="_blank">
+          <a href="{{url('/admin')}}/chatify" target="_blank">
             <i class="glyphicon glyphicon-comment"></i><span>Messager</span>
           </a>
         </li>

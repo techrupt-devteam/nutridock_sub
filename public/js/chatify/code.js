@@ -297,6 +297,7 @@ function IDinfo(id, type) {
             dataType: 'JSON',
             success: (data) => {
                 // avatar photo
+                console.log(data.user_avatar);
                 $('.messenger-infoView').find('.avatar').css('background-image', 'url("' + data.user_avatar + '")');
                 $('.header-avatar').css('background-image', 'url("' + data.user_avatar + '")');
                 // Show shared and actions

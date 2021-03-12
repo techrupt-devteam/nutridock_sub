@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'name' => env('CHATIFY_NAME', 'Nutridock Messenger'),
+    'name' => env('CHATIFY_NAME', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     | e.g. : app.test/chatify
     */
 
-    'path' => env('CHATIFY_PATH', 'chatify'),
+    'path' => env('CHATIFY_PATH', 'admin/chatify'),
 
     /*
     |--------------------------------------------------------------------------
