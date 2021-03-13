@@ -115,7 +115,7 @@
    <section class="section bg-green">
       <!-- bg-default -->
       <div class="container">
-         <h2 class="title-style-3 mb-3 font-weight-bold"style="margin-left: -8px;"> Menu Highlights </h2>
+         <h2 class="title-style-3 text-white mb-3 font-weight-bold"style="margin-left: -8px;"> Menu Highlights </h2>
          <div class="row row-30">
             <!-- justify-content-center align-items-center -->
             <div class="col-md-9 col-lg-4 d-none d-md-block d-lg-block p-2">
