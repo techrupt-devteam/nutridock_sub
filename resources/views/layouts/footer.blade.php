@@ -171,5 +171,10 @@ $(document).ready(function() {
 }), $(".reply").click(function() {
 	var e = $(this).attr("data-val");
 	$(".divReply" + e).show(), $(".blog_id").val(e)
-})
+});
+
+
+$('#signIn').on('click',function(){
+   $('#signinModal').modal('show');
+});
 </script>
