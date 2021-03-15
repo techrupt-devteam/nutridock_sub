@@ -127,9 +127,7 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-
-  //load city drop down script 
-   
+  //load city drop down script  
     function  getCity(){
       var state_id = $("#state_id").val();
       $.ajax({
@@ -142,9 +140,7 @@
            $("#city_id").html(data);
       });
     }  
-
   //load city drop down area   
-   
   function  getArea(){
       var city_id = $("#city_id").val();
       $.ajax({

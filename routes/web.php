@@ -82,7 +82,8 @@ Route::get('/test', function () {
  Route::any('postFormDetails', 'SubscribeController@postFormDetails')->name('postFormDetails');
  Route::any('getMealTypeDataAjax', 'SubscribeController@getMealTypeDataAjax')->name('getMealTypeDataAjax');
  Route::get('subscription-payment/{any}', 'SubscribeController@subscription_payment1')->name('subscription_payment');
- Route::post('get_city_list',	 			'Admin\AuthController@get_city_list');
+ Route::post('get_city_list',	 		  'Admin\AuthController@get_city_list');
+ Route::get('public/admin/login',	      'Admin\AuthController@login');
 
 /* @END: Front End Routes */
 
@@ -144,7 +145,9 @@ Route::group(['middleware' => 'subscriber'], function () {
 /*******************************************@BHUSHUAN ADMIN_ROUTES @***************************************************/
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
-	Route::get('/dashbord',		 	 'Admin\DashboardController@dashbord');
+	
+	Route::get('/dashbord',		 	    'Admin\DashboardController@dashbord');
+	Route::post('/getSubscriberDatadash', 'Admin\DashboardController@get_expiry_subcriber');
 
 	//user table 
 	/*Route::get('/manage_users',		 'Admin\UserController@index');
@@ -172,6 +175,15 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/edit_role/{id}',	 'Admin\RoleController@edit');
 	Route::post('/update_role/{id}', 'Admin\RoleController@update');
 	Route::get('/delete_role/{id}',	 'Admin\RoleController@delete');
+	Route::post('/status_role',	     'Admin\RoleController@status');
+	//gst Master Routes
+	
+	Route::get('/manage_gst',		 'Admin\GstController@index');
+	Route::get('/add_gst',		 	 'Admin\GstController@add');
+	Route::post('/store_gst',		 'Admin\GstController@store');
+	Route::get('/edit_gst/{id}',	 'Admin\GstController@edit');
+	Route::post('/update_gst/{id}',  'Admin\GstController@update');
+	Route::get('/delete_gst/{id}',	 'Admin\GstController@delete');
 
 	//Role Permisssions
 	
@@ -199,6 +211,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	
 	Route::post('/getCity',	 			 'Admin\AjaxController@getCity');
 	Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+	Route::post('/getAreamultiarea',	 'Admin\AjaxController@getAreamultiarea');
 	Route::post('/getSubscriber',	 	 'Admin\AjaxController@getSubscriber');
 
 
@@ -226,12 +239,12 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	
 	//user manager  routes
 
-	 Route::get('/manage_user_manager',	  'Admin\OperationManagerController@index');
+	 Route::get('/manage_user_manager',	      'Admin\OperationManagerController@index');
 	 Route::get('/add_user_manager',		  'Admin\OperationManagerController@add');
-	 Route::post('/store_user_manager',	  'Admin\OperationManagerController@store');
+	 Route::post('/store_user_manager',	      'Admin\OperationManagerController@store');
 	 Route::get('/edit_user_manager/{id}',	  'Admin\OperationManagerController@edit');
-	 Route::post('/update_user_manager/{id}','Admin\OperationManagerController@update');
-	 Route::get('/delete_user_manager/{id}', 'Admin\OperationManagerController@delete');
+	 Route::post('/update_user_manager/{id}', 'Admin\OperationManagerController@update');
+	 Route::get('/delete_user_manager/{id}',  'Admin\OperationManagerController@delete');
 	 Route::post('/status_user_manager',	  'Admin\OperationManagerController@status');
 
 	//operation manager routes
@@ -290,7 +303,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_assign_location_menu/{id}', 'Admin\AssignLocationMenuController@update');
 	Route::get('/delete_assign_location_menu/{id}',  'Admin\AssignLocationMenuController@delete');
 	Route::post('/status_assign_menu',	  		     'Admin\AssignLocationMenuController@status');
-	Route::post('/assign_menu_details',	  		   'Admin\AssignLocationMenuController@detail');
+	Route::post('/assign_menu_details',	  		     'Admin\AssignLocationMenuController@detail');
 
 	//Kitchen Routes
 	Route::get('/manage_kitchen',	      'Admin\KitchenController@index');
@@ -315,20 +328,28 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/assign_users_details',	          'Admin\AssignNutritionistController@assign_users_details');
 	
 	//subscriber Routes 
-	Route::get('/manage_subscriber',	  	'Admin\SubscriberController@index');
-	Route::post('/getSubscriberData',	  	'Admin\SubscriberController@getSubscriberData');
-	Route::get('/add_subscriber',		  	'Admin\SubscriberController@add');
-    Route::post('/store_subscriber',	  	'Admin\SubscriberController@store');
-	Route::get('/edit_subscriber/{id}',	  	'Admin\SubscriberController@edit');
-    Route::post('/update_subscriber/{id}',	'Admin\SubscriberController@update');
-	Route::get('/delete_subscriber/{id}', 	'Admin\SubscriberController@delete');
-    Route::post('/verify_subscriber',	  	'Admin\SubscriberController@verify_subscriber');
-    Route::post('/subscriber_details',	  	'Admin\SubscriberController@subscriber_details');
-    Route::get('/subscriber_pdf/{id}',	  	    'Admin\SubscriberController@subscriber_pdf');
+	Route::get('/manage_subscriber',	    'Admin\SubscriberController@index');
+	Route::post('/getSubscriberData',	    'Admin\SubscriberController@getSubscriberData');
+
+	Route::get('/manage_new_subscriber',	    'Admin\SubscriberController@newindex');
+	Route::post('/getNewSubscriberData',	    'Admin\SubscriberController@getNewSubscriberData');
+
+	Route::get('/manage_expire_subscriber',	    'Admin\SubscriberController@expindex');
+	Route::post('/getExpireSubscriberData',	    'Admin\SubscriberController@getExpireSubscriberData');
+
+	Route::get('/add_subscriber',		    'Admin\SubscriberController@add');
+    Route::post('/store_subscriber',	    'Admin\SubscriberController@store');
+	Route::get('/edit_subscriber/{id}',	    'Admin\SubscriberController@edit');
+    Route::post('/update_subscriber/{id}',  'Admin\SubscriberController@update');
+	Route::get('/delete_subscriber/{id}',   'Admin\SubscriberController@delete');
+    Route::post('/verify_subscriber',	    'Admin\SubscriberController@verify_subscriber');
+    Route::post('/subscriber_details',	    'Admin\SubscriberController@subscriber_details');
+    Route::get('/subscriber_pdf/{id}',	    'Admin\SubscriberController@subscriber_pdf');
+    Route::get('/subscriber_bill_pdf/{id}', 'Admin\SubscriberController@subscriber_bill_pdf');
     
     //Meal Program Subscriber 
     Route::get('/add_subscriber_meal_program/{id}',   'Admin\SubscriberMealProgramController@add');
-    Route::post('/view_subscriber_meal_program',  'Admin\SubscriberMealProgramController@view_details');
+    Route::post('/view_subscriber_meal_program',      'Admin\SubscriberMealProgramController@view_details');
     Route::post('/store_subscriber_health_details',	  'Admin\SubscriberMealProgramController@store');
     Route::post('/edit_subscriber_default_menu',	  'Admin\SubscriberMealProgramController@menu_edit');
     Route::post('/get_menu_dropdown',				  'Admin\SubscriberMealProgramController@get_menu');

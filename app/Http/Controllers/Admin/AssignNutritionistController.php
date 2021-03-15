@@ -9,6 +9,8 @@ use App\Models\Location;
 use App\Models\User;
 use App\Models\city;
 use App\Models\State;
+use App\Models\SubscriberMaster;
+use App\Models\SubscriberDetails;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
 use Config;
@@ -42,13 +44,28 @@ class AssignNutritionistController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = \DB::table('nutri_mst_subcriber_assign')
+        $city = Session::get('login_city_id');
+        if($city!="all")
+        {
+            $data = \DB::table('nutri_mst_subcriber_assign')
                      ->join('state','nutri_mst_subcriber_assign.state_id','=','state.id')
                      ->join('city','nutri_mst_subcriber_assign.city_id','=','city.id')
                      ->join('users','nutri_mst_subcriber_assign.nutritionist_id','=','users.id')
-                  //   ->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
+                     //->join('locations','nutri_mst_assign_location_menu.area_id','=','locations.id')
                      ->select('state.name as state_name','city.city_name','nutri_mst_subcriber_assign.*','users.name')
-                     ->where('nutri_mst_subcriber_assign.is_deleted','<>',1)
+                     ->where('nutri_mst_subcriber_assign.city_id','=',$city);
+        }
+        else
+        {
+            $data = \DB::table('nutri_mst_subcriber_assign')
+                     ->join('state','nutri_mst_subcriber_assign.state_id','=','state.id')
+                     ->join('city','nutri_mst_subcriber_assign.city_id','=','city.id')
+                     ->join('users','nutri_mst_subcriber_assign.nutritionist_id','=','users.id')
+                     ->select('state.name as state_name','city.city_name','nutri_mst_subcriber_assign.*','users.name');
+              
+
+        }             
+             $data = $data->where('nutri_mst_subcriber_assign.is_deleted','<>',1)
                      ->orderBy('nutri_mst_subcriber_assign.subcriber_assign_id', 'DESC')
                      ->get();
 
@@ -78,20 +95,18 @@ class AssignNutritionistController extends Controller
     //Assign Nutritionist Store Function
     public function store(Request $request)
     {
-
-       $validator = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
                 'subscriber_id'   => 'required',
                 'nutritionist_id' => 'required',
                 'state_id'        => 'required',
                 'city_id'         => 'required'
-            ]);
+        ]);
 
-        if ($validator->fails()) 
+        if($validator->fails()) 
         {
             return $validator->errors()->all();
         }
    
-
         $subscriber_data   = implode(",",$request->input('subscriber_id'));
         //$nutritionist_data = implode(",",$request->input('nutritionist_id'));
 
@@ -102,10 +117,61 @@ class AssignNutritionistController extends Controller
         $arr_data['nutritionist_id']    = $request->input('nutritionist_id');
         $assign_nutritionist            = $this->base_model->create($arr_data);
         if(!empty($assign_nutritionist))
-        {
-          
-            Session::flash('success', $this->Insert);
-            return \Redirect::to('admin/manage_assign_nutritionist');
+        {    $msg = 0;
+            foreach($request->input('subscriber_id') as $value)
+            {
+                $subscriber_dtl_id = $value; 
+                $get_subscriber_data = \DB::table('nutri_dtl_subscriber')
+                                       ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                       ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                       ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                       ->select('nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.state','nutri_dtl_subscriber.city','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile','nutri_dtl_subscriber.subscriber_id','nutri_dtl_subscriber.id as subscriber_dtl_id')
+                                       ->where('nutri_dtl_subscriber.is_deleted','<>',1)
+                                       ->where('nutri_dtl_subscriber.id','=',$value)
+                                       ->get()->toArray();
+
+                $subscriber_data = $get_subscriber_data[0];
+
+                $is_exist = $this->base_users->where('subscriber_dtl_id','=',$subscriber_data->subscriber_dtl_id)->where('is_deleted','<>',1)->count();
+                if($is_exist)
+                {      
+                   $arr_data_users['nutritionist_id']      = $request->input('nutritionist_id');
+                   $store_subscrbiber_users                = $this->base_users->where(['subscriber_dtl_id'=>$subscriber_data->subscriber_dtl_id])->update($arr_data_users);
+                }else{                      
+                //add user table to subscriber
+                $arr_data_users['name']                 = $subscriber_data->subscriber_name;
+                $arr_data_users['email']                = $subscriber_data->email;
+                $arr_data_users['mobile']               = $subscriber_data->mobile;
+                $arr_data_users['city']                 = $subscriber_data->city;
+                $arr_data_users['state']                = $subscriber_data->state;
+                $arr_data_users['subscriber_id']        = $subscriber_data->subscriber_id;
+                $arr_data_users['subscriber_dtl_id']    = $subscriber_data->subscriber_dtl_id;
+                $arr_data_users['nutritionist_id']      = $request->input('nutritionist_id');
+                $arr_data_users['roles']                = "subscriber";
+                $arr_data_users['password']             = "";            
+                $store_subscrbiber_users                = $this->base_users->create($arr_data_users);
+
+                if($store_subscrbiber_users){
+
+                    $arr_dat = []; 
+                    $arr_dat['user_id'] = $store_subscrbiber_users->id; 
+                    $arr_dat['completed_at'] = 1; 
+                    $arr_dat['completed'] = 1;   
+                    $activations = \DB::table('activations')->insert($arr_dat);
+                }
+                else{
+                    
+                    $msg++;
+                }
+               }
+            
+
+            } 
+            if($msg==0) 
+            {
+             Session::flash('success', $this->Insert);
+             return \Redirect::to('admin/manage_assign_nutritionist');
+            }
         }
         else
         {
@@ -136,7 +202,6 @@ class AssignNutritionistController extends Controller
 
        // dd($assign_subscriber_array);    
 
-
         if(!empty($data))
         {
             $arr_data = $data->toArray();
@@ -151,7 +216,7 @@ class AssignNutritionistController extends Controller
         $data['subscriber']   = $subscriber;
         $data['users']        = $users;
         $data['state']        = $state;
- $data['assign_subcriber']    = $assign_subscriber_array;
+        $data['assign_subcriber']    = $assign_subscriber_array;
         $data['page_name']    = "Edit";
         $data['url_slug']     = $this->url_slug;
         $data['title']        = $this->title;
@@ -185,6 +250,54 @@ class AssignNutritionistController extends Controller
         //$arr_data['nutritionist_id']    = $request->input('nutritionist_id');
         $assign_nutritionist_update   = $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
 
+
+        foreach($request->input('subscriber_id') as $value)
+            {
+                $subscriber_dtl_id = $value; 
+                $get_subscriber_data = \DB::table('nutri_dtl_subscriber')
+                                       ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                       ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                       ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                       ->select('nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.state','nutri_dtl_subscriber.city','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile','nutri_dtl_subscriber.subscriber_id','nutri_dtl_subscriber.id as subscriber_dtl_id')
+                                       ->where('nutri_dtl_subscriber.is_deleted','<>',1)
+                                       ->where('nutri_dtl_subscriber.id','=',$value)
+                                       ->get()->toArray();
+
+                $subscriber_data = $get_subscriber_data[0];     
+
+                $is_exist = $this->base_users->where('subscriber_dtl_id','=',$subscriber_data->subscriber_dtl_id)->where('is_deleted','<>',1)->count();
+                if($is_exist)
+                {      
+                   $arr_data_users['nutritionist_id']      = $request->input('nutritionist_id');
+                   $store_subscrbiber_users                = $this->base_users->where(['subscriber_dtl_id'=>$subscriber_data->subscriber_dtl_id])->update($arr_data_users);
+                }
+                else
+                {
+                  //add user table to subscriber
+                    $arr_data_users['name']                 = $subscriber_data->subscriber_name;
+                    $arr_data_users['email']                = $subscriber_data->email;
+                    $arr_data_users['mobile']               = $subscriber_data->mobile;
+                    $arr_data_users['city']                 = $subscriber_data->city;
+                    $arr_data_users['state']                = $subscriber_data->state;
+                    $arr_data_users['subscriber_id']        = $subscriber_data->subscriber_id;
+                    $arr_data_users['subscriber_dtl_id']    = $subscriber_data->subscriber_dtl_id;
+                    $arr_data_users['nutritionist_id']      = $request->input('nutritionist_id');
+                    $arr_data_users['roles']                = "subscriber";
+                    $arr_data_users['password']             = "";            
+                    $store_subscrbiber_users                = $this->base_users->create($arr_data_users);
+
+                    if($store_subscrbiber_users){
+
+                        $arr_dat = []; 
+                        $arr_dat['user_id'] = $store_subscrbiber_users->id; 
+                        $arr_dat['completed_at'] = 1; 
+                        $arr_dat['completed'] = 1;   
+                        $activations = \DB::table('activations')->insert($arr_dat);
+                    }
+                     
+                } 
+        }
+
         Session::flash('success', $this->Update );
         return \Redirect::to('admin/manage_assign_nutritionist');        
     }
@@ -192,11 +305,15 @@ class AssignNutritionistController extends Controller
     //Assign Nutritionist delete function
     public function delete($id)
     {
-        $id = base64_decode($id);
+        /*  $id = base64_decode($id);
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
         $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record deleted successfully.');
+        return \Redirect::back();*/
+        $id= base64_decode($id);
+        $this->base_model->where(['subcriber_assign_id'=>$id])->delete();
+        Session::flash('success',$this->Delete);
         return \Redirect::back();
     } 
 

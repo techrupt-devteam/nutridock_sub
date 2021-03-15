@@ -37,24 +37,46 @@ class SubscriptionController extends Controller
 
     public function index()
     {
-        $arr_data = [];
-        $data     = \DB::table('nutri_mst_subscription_plan')
+        $arr_data          = [];
+        $city = Session::get('login_city_id');
+        if($city!="all")
+        {
+
+            $data   = \DB::table('nutri_mst_subscription_plan')
                      //->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
                     ->join('city','nutri_mst_subscription_plan.city','=','city.id')
                     ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
-                    ->where('nutri_mst_subscription_plan.is_deleted','<>','1')
+                    ->where('nutri_mst_subscription_plan.city','=',$city);
+        }
+        else
+        {
+             $data  = \DB::table('nutri_mst_subscription_plan')
+                        //->join('nutri_mst_plan','nutri_mst_subscription_plan.plan_id','=','nutri_mst_plan.plan_id')
+                        ->join('city','nutri_mst_subscription_plan.city','=','city.id')
+                        ->join('locations','nutri_mst_subscription_plan.area','=','locations.id');
+        }
+
+           $data = $data ->where('nutri_mst_subscription_plan.is_deleted','<>','1')
                     ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
                     ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->get();
         //
+        $area              = $this->base_location->select('id')->get()->toArray();
+        $area_data         = [];
+        foreach ($area as $key => $value) {
+           $area_data [] = $value;   
+        }
+
         if(!empty($data))
         {
-            $arr_data = $data->toArray();
+            $arr_data      = $data->toArray();
         }
-       // dd($arr_data);
+      
         $data['data']      = $arr_data;
+        $data['area']      = $area_data;
         $data['page_name'] = "Manage";
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
+       // dd($data);
         return view($this->folder_path.'index',$data);
     }
  
@@ -76,7 +98,7 @@ class SubscriptionController extends Controller
                 'sub_name' => 'required',
                 //'plan_id' => 'required',
                 'city' => 'required',
-                'area' => 'required',
+               // 'area' => 'required',
           
             ]);
 
@@ -107,7 +129,7 @@ class SubscriptionController extends Controller
         $arr_data['sub_name']    = $request->input('sub_name');
         //$arr_data['plan_id']     = $request->input('plan_id');
         $arr_data['city']        = $request->input('city');
-        $arr_data['area']        = $request->input('area');
+        $arr_data['area']        = implode(',',$request->input('area'));
         $arr_data['plan_description'] = $request->input('plan_description');
         $arr_data['icon_image'] = $randomString."".$icon_img->getClientOriginalName();
         $plan = $this->base_model->create($arr_data);
@@ -196,7 +218,7 @@ class SubscriptionController extends Controller
                 'sub_name'         => 'required',
                 //'plan_id' => 'required',
                 'city'             => 'required',
-                'area'             => 'required'
+               // 'area'             => 'required'
             ]);
         if ($validator->fails()) 
         {
@@ -217,7 +239,7 @@ class SubscriptionController extends Controller
         $arr_data['sub_name']         = $request->input('sub_name');
         //$arr_data['plan_id']        = $request->input('plan_id');
         $arr_data['city']             = $request->input('city');
-        $arr_data['area']             = $request->input('area');
+        $arr_data['area']             = implode(',',$request->input('area'));
         $arr_data['plan_description'] = $request->input('plan_description');
         
         if(isset($_FILES['icon_image']["name"]) && !empty($_FILES['icon_image']["name"]))
@@ -273,19 +295,22 @@ class SubscriptionController extends Controller
                   if($request->input('duration_id'.$d))
                   {
                      $subscription_duration = \DB::table('nutri_dtl_subscription_duration')->where('duration_id','=',$request->input('duration_id'.$d))->update($arr_data1);
+
+                    $failed = 0;
                   }
                   else
                   {
-                    $subscription_duration  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
+                    $subscription_duration1  = \DB::table('nutri_dtl_subscription_duration')->insert($arr_data1); 
+                    if($subscription_duration1)
+                    {
+                        $failed = 0;
+                    }else
+                    {
+                      $failed++;
+                    }
                   }
 
-                  if($subscription_duration)
-                  {
-                    $failed = 0;
-                  }else
-                  {
-                    $failed++;
-                  }
+                 
                 }
             }
 
@@ -296,7 +321,7 @@ class SubscriptionController extends Controller
         }
         else
         {
-            Session::flash('error', $this->Delete);
+            Session::flash('error', $this->Error);
             return \Redirect::back();
         }
     }
@@ -308,12 +333,19 @@ class SubscriptionController extends Controller
         $plan_details     = \DB::table('nutri_mst_subscription_plan')
                            
                             ->join('city','nutri_mst_subscription_plan.city','=','city.id')
-                            ->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
+                            //->join('locations','nutri_mst_subscription_plan.area','=','locations.id')
                             ->where('nutri_mst_subscription_plan.sub_plan_id','=',$plan_id)
-                            ->select('nutri_mst_subscription_plan.*','city.city_name','locations.area as area_name')
+                            ->select('nutri_mst_subscription_plan.*','city.city_name')
                             ->orderBy('nutri_mst_subscription_plan.sub_plan_id', 'DESC')->first();
         //$plan_details = $this->base_model->where(['sub_plan_id'=>$plan_id])->first();
         $subscription_duration    = \DB::table('nutri_dtl_subscription_duration')->where(['sub_plan_id'=>$plan_id])->orderBy('duration_id', 'ASC')->get();
+
+        $location_data = $this->base_location->where(['city'=>$plan_details->city])->get();
+        
+
+           
+              
+    
         $html='<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
@@ -322,14 +354,19 @@ class SubscriptionController extends Controller
                 <div class="row">
               
                   <div class="col-md-4"><h5 class="modal-title"><b>City: </b>'.ucfirst($plan_details->city_name).'</h5></div>
+                  <div class="col-md-4"><h5 class="modal-title"></h5></div> 
                   <div class="col-md-4"><h5 class="modal-title"></h5></div>
-                  <div class="col-md-4"><h5 class="modal-title"><b>Area: </b>'.ucfirst($plan_details->area_name).'</h5></div>
-                   
-                </div>
-                
-             
+                  <div class="col-md-12"><h5 class="modal-title"><b>Area: </b>';
+                foreach ($location_data as $key => $value1) 
+                { 
+                  
+                  if(in_array($value1->id,explode(",",$plan_details->area))){  
+                   $area_name = $value1->area; 
+                    $html.= $area_name." | ";
+                  }
+                }          
                
-              </div>
+               $html.='</h5></div></div> </div>
               <div class="modal-body">
                 <table class="table table-bordered">
                     <thead style="background-color: #ccb591;">

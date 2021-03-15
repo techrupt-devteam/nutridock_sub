@@ -1,5 +1,5 @@
 @extends('admin.layout.master')
-
+ 
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -36,7 +36,8 @@
               </ol>
 
             </div>
-            <div class="row"> <div class="box-body">
+           <div class="row"> 
+              <div class="box-body">
                 <div class="col-md-12">
                     <div class="alert alert-info alert-dismissible">
                       <h4><i class="fa fa-sticky-note"></i> Note!</h4>
@@ -48,7 +49,6 @@
                     </div>
                 </div></div>
             </div>
-
             <!-- /.box-header -->
             <div class="box-body">
             <div class="table-responsive">
@@ -58,23 +58,13 @@
                        <th>Name</th>
                        <th>Email</th>
                        <th>Mobile</th>
-                       <th>City</th> 
-                       <th>Start Date</th>
-                       <th width="10%">Expire Date</th>
-                       <th>Payment Status</th>
-                       <th width="25%">Action</th>
-                    </thead>  
-                    <tfoot>
-                       <th>Id</th>
-                       <th>Name</th>
-                       <th>Email</th>
-                       <th>Mobile</th>
-                       <th>City</th> 
-                       <th>Start Date</th>
-                       <th>Expire Date</th>
-                       <th>Payment Status</th>
-                       <th >Action</th>
-                    </tfoot>        
+                      
+                      <th>Start Date</th>
+                      <th width="25%">Expire Date</th>
+                      <th>Payment Status</th>
+                    
+                      </thead>  
+                           
                </table>
              </div>
             </div>
@@ -101,6 +91,13 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
  <style type="text/css">
    .expire_row{
      background-color: #e80f0f1c !important;  
@@ -115,7 +112,7 @@
             "processing": true,
             "serverSide": true,
             "ajax":{
-                     "url": "{{url('/admin')}}/getSubscriberData",
+                     "url": "{{url('/admin')}}/getExpireSubscriberData",
                      "dataType": "json",
                      "type": "POST",
                      "data":{ _token: "{{csrf_token()}}"}
@@ -126,11 +123,10 @@
                 { data: "name",},
                 { data: "email",},
                 { data: "mobile",},       
-                { data: "city",},       
                 { data: "start_date",},
                 { data: "expire_date",},
                 { data: "status"},
-                { data: "action"}
+               // { data: "action"}
             ],
             rowCallback: function (row, data) {
               if (data.class_r=="expire_row") {
@@ -138,7 +134,11 @@
               }else{
                 $(row).addClass('noexp');
               }
-            }
+            },
+            dom: 'Bfrtip',
+            buttons: [
+              'csv', 'excel', 'pdf'
+            ]
 
 
 

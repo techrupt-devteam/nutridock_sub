@@ -15,7 +15,14 @@
         <li class="active">{{ $page_name." ".$title }}</li>
       </ol>
     </section> -->
-
+   <style type="text/css">
+    .select2-container--default .select2-selection--multiple {
+    background-color: white !important;
+    border-radius: 0px !important;
+    border: 1px solid #d2d6de !important;
+    cursor: text;
+  }
+</style>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -70,7 +77,7 @@
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="area" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
+                         <select class="form-control select2" name="area[]" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area." multiple="">
                           <option value="">-Select Area-</option>
                           <option value=""></option>
                         </select>
@@ -264,14 +271,14 @@ function addDurationRow()
       }
   }
   
-  getArea(); 
+  getArea1(); 
   
-  function getArea() 
+  function getArea1() 
   {        
-      var city_id = <?php echo  $data['city'];?>;   
-      var area_id = <?php echo  $data['area'];?>;
+      var city_id = <?php echo $data['city'];?>;   
+      var area_id = "<?php echo $data['area'];?>";
       $.ajax({
-          url: "{{url('/admin')}}/getArea",
+          url: "{{url('/admin')}}/getAreamultiarea",
           type: 'post',
           data: {city: city_id,area:area_id},
           success: function (data) 

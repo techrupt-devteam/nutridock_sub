@@ -51,10 +51,10 @@ class AssignLocationMenuController extends Controller
                      ->orderBy('nutri_mst_assign_location_menu.assign_menu_id', 'DESC')
                      ->get();
 
-        if(!empty($data))
+        /*if(!empty($data))
         {
             $arr_data = $data->toArray();
-        }     
+        }  */   
        
         $data['data']      = $arr_data;
         $data['page_name'] = "Manage";

@@ -31,7 +31,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">State<span style="color:red;" >*</span></label>
-                      <select class="form-control select2" id="state" name="state" required="true" onchange="get_city();">
+                      <select class="form-control select2" id="state" name="state" required="true" onchange="get_city();" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select state.">
                         <option value="">Select State</option>
                         @foreach($state as $svalue)
                          @php 
@@ -43,12 +43,13 @@
                         <option value="{{$svalue->id}}" {{$selected}}>{{$svalue->name}}</option>
                         @endforeach
                       </select>
+                         <div id="state_error" style="color:red;"></div> 
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">City<span style="color:red;" >*</span></label>
-                      <select class="form-control select2" id="city" name="city" required="true">
+                      <select class="form-control select2" id="city" name="city" required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
                         <option value="">Select City</option>
                          @foreach($city as $cvalue)
                            @php 
@@ -60,14 +61,25 @@
                           <option value="{{$cvalue->id}}" {{$selected}}>{{$cvalue->city_name}}</option>
                           @endforeach
                       </select>
+                        <div id="city_error" style="color:red;"></div>   
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Area<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" required="true" value="{{$data['area']}}">
+                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" data-parsley-errors-container="#area_error" data-parsley-error-message="Please enter area." required="true" value="{{$data['area']}}">
+                           <div id="area_error" style="color:red;"></div>        
                     </div>
-                  </div>  
+                  </div> 
+                </div>
+                  <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="oldpassword">Pincode<span style="color:red;" >*</span></label>
+                      <input type="text" class="form-control " id="pincode" data-parsley-type="number" required="true" data-parsley-errors-container="#pincode_error"  name="pincode" data-parsley-type="number" placeholder="Pinocde" required="true" value="{{$data['pincode']}}">
+                        <div id="pincode_error" style="color:red;"></div>                     
+                    </div>
+                  </div>   
                </div>
               </div>
               <!-- /.box-body -->

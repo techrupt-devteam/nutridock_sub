@@ -49,18 +49,36 @@ class OperationManagerController extends Controller
     public function index()
     {
         $arr_data = [];
-        $data     = \DB::table('users')
+
+        $city = Session::get('login_city_id');
+        if($city!="all")
+        {
+            $data = \DB::table('users')
+                      ->join('role','users.roles','=','role.role_id')
+                      ->join('state','users.state','=','state.id')
+                      ->join('city','users.city','=','city.id')
+                      ->join('locations','users.area','=','locations.id')
+                      ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
+                      ->where('users.city','=',$city);
+        }
+        else
+        {
+            $data     = \DB::table('users')
                      ->join('role','users.roles','=','role.role_id')
                      ->join('state','users.state','=','state.id')
                      ->join('city','users.city','=','city.id')
                      ->join('locations','users.area','=','locations.id')
-                     ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*')
-                     ->where('users.roles','<>',1)
-                     ->where('users.is_deleted','<>',1)
-                     ->orderBy('id', 'DESC')
-                     ->get();
+                     ->select('role.role_name','state.name as state_name','city.city_name','locations.area as area_name','users.*');
+                     
+        }
+            $data    = $data
+                         ->where('users.roles','<>',1)
+                         ->where('users.is_deleted','<>',1)
+                         ->orderBy('id', 'DESC')
+                         ->get();
+                     
 
-         if(!empty($data))
+        if(!empty($data))
         {
             $arr_data = $data->toArray();
         }     
@@ -75,7 +93,7 @@ class OperationManagerController extends Controller
     //operation_manager folder add view call function for insert data
     public function add()
     {
-        $role              = $this->base_role->get();
+        $role              = $this->base_role->where('is_active','=','1')->get();
         $state             = $this->base_state->get();
         $data['page_name'] = "Add";
         $data['role']      = $role;

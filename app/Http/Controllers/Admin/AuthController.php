@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Auth;
 //use Session;
 
 class AuthController extends Controller
@@ -57,6 +57,9 @@ class AuthController extends Controller
             'password' => $request->input('password'),
         ];
         
+        $Auth = Auth::guard('web')->attempt($credentials);
+
+      
         //get_role_permission  
         if($arr_user->roles!='admin'){
             $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
@@ -391,22 +394,31 @@ class AuthController extends Controller
         $user_name = $request->email;
         
         $user      =  \DB::table('users')->where(['email'=>$request->email])->get()->first(); 
-      
-        if($user->roles =='admin')
+        if(count($user)>0)
         {
-            $get_city   = \DB::table('city')->get();
-            $html       = '<option value="">-Select City-</option>';
-            $html      .= '<option value="all">All</option>';
-            foreach ($get_city as $key => $value) 
+
+            if($user->roles =='admin')
             {
-                $html.="<option value=".$value->id.">".$value->city_name."</option>";     
+                $get_city   = \DB::table('city')->get();
+                $html       = '<option value="">-Select City-</option>';
+                $html      .= '<option value="all">All</option>';
+                foreach ($get_city as $key => $value) 
+                {
+                    $html.="<option value=".$value->id.">".$value->city_name."</option>";     
+                }
             }
-        }else
-        {
-          $html = "users";     
+            else
+            {
+              $html = "users";     
+            }
         }
-        
+        else
+        {
+           $html = "NULL"; 
+        }
         return $html;
     
     }
+
+    
 }

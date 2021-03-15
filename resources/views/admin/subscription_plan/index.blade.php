@@ -37,7 +37,7 @@
                   <th>Subscription Plan Name</th>
                 
                   <th>City</th>
-                  <th>Area</th>
+                  <!-- <th>Area</th> -->
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -49,8 +49,10 @@
                       <td>{{ucfirst($value->sub_name)}}</td>
                      
                       <td>{{ucfirst($value->city_name)}}</td>
-                      <td>{{ucfirst($value->area_name)}}</td>
-                   
+                      <!-- <td>
+                     
+                      </td>
+                    -->
                       <td>
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->sub_plan_id;?>);">
                            <i class="fa fa-info-circle"></i> Plan Details</button>

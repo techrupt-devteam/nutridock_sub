@@ -9,7 +9,8 @@ class Role extends Model
     protected $table 	   = "role";
     protected $primaryKey  = "role_id";
     protected $fillable = [
-		"role_name"
+		"role_name",
+		"is_active"
 	];
 
 	public function Module()

@@ -58,7 +58,7 @@ class PermissionController extends Controller
     {
       //$type = $this->moduletype->get();
       $module = $this->module->orderby('module_id','ASC')->get();
-      $role = $this->role->get();
+      $role = $this->role->where('is_active','=','1')->get();
       $data['page_name'] = "Add";
       $data['module']      = $module;
       $data['role']      = $role;

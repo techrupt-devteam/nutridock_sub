@@ -3,7 +3,14 @@
    <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-   
+   <style type="text/css">
+    .select2-container--default .select2-selection--multiple {
+    background-color: white !important;
+    border-radius: 0px !important;
+    border: 1px solid #d2d6de !important;
+    cursor: text;
+  }
+</style>
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -57,7 +64,7 @@
                     <div class="">
                       <div class="form-group">
                         <label for="nutritionsit_area">Area<span style="color:red;" >*</span></label>
-                         <select class="form-control select2" name="area" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area.">
+                         <select class="form-control select2" name="area[]" id="area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please select area." multiple="">
                           <option value="">-Select Area-</option>
                           <option value=""></option>
                         </select>

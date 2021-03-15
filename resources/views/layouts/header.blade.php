@@ -82,6 +82,7 @@
                   data-target="#login" 
                   data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
                   Login</a></li>
+                  <li class="under-line-none"><a  data-toggle="modal" data-target="#login" class="btn btn-outline-success text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none" >Login</a></li>
                   <!-- <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li> -->
                </ul>
             </nav>
