@@ -58,8 +58,7 @@ class ContactController extends Controller
 
 
     public function store(Request $request)
-    {
-        
+    {        
         $arr_rules      = $arr_data = array();
 
         $arr_rules['_token']   = "required";
@@ -204,8 +203,7 @@ class ContactController extends Controller
                 
             return redirect('/thank-you'); 
         }
-        
-     }
+   
     }
 
 
