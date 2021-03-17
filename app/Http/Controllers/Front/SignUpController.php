@@ -84,9 +84,9 @@ class SignUpController extends Controller
 
 
     public function storeBasicDetails(Request $request) { 
-        $checkExist = SubscriberMaster::where('mobile', '=', request('mobile'));
+        $checkExist = SubscriberMaster::where('mobile', '=', $request->mobile)->exists();
         
-        if( $checkExist) {
+        if($checkExist) {
             return "Already Exist";
         } else {
             $subscriber =   SubscriberMaster::firstOrNew(
