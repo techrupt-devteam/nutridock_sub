@@ -56,16 +56,43 @@ class PermissionController extends Controller
  
     public function add()
     {
-      //$type = $this->moduletype->get();
-      $module = $this->module->orderby('module_id','ASC')->get();
+      //$module = $this->module->orderBy('module_id','ASC')->get();
+      $module = $this->module->where('parent_id','=',0)->get();
+      
+         $module_array = [];
+      foreach ($module as $key => $value) {
+         $module_array[$value['module_id']]['module_name'] = $value['module_name'];
+         $module_array[$value['module_id']]['module_id']   = $value['module_id'];
+         $module_array[$value['module_id']]['parent_id']   = $value['parent_id'];
+         $child_module = $this->module->where('parent_id','=', $value['module_id'])->get()->toArray();
+         $module_array[$value['module_id']]['child']= $child_module;
+      }
+
+      
+     // dd($parent_array);
       $role = $this->role->where('is_active','=','1')->get();
       $data['page_name'] = "Add";
-      $data['module']      = $module;
+      $data['module']    = $module_array;
       $data['role']      = $role;
+      $data['html']      = "<li>test</li>";
       $data['title']     = $this->title;
       $data['url_slug']  = $this->url_slug;
       return view($this->folder_path.'add',$data);
     }
+
+    /*function buildTree($items) {
+
+        $childs = array();
+
+        foreach($items as $item)
+            $childs[$item->parent_id][] = $item;
+
+        foreach($items as $item) if (isset($childs[$item->module_id]))
+            $item->childs = $childs[$item->module_id];
+
+        return $childs[0];
+    }*/
+
     
     public function get_menu(Request $request)
     {
@@ -96,7 +123,7 @@ class PermissionController extends Controller
                     <td>'.$i.') </td>
                     <td>'.$value['module_name'].'</td>
                     <td class="text-center"> <input type="checkbox" class="form-check-input" name="permission_access[]" id="" value="'.$value['module_id'].'" '.(in_array($value['module_id'], $permission_arr) ? 'checked' : '').'></td>
-                  </tr>';
+                   </tr>';
           }
           else
           {
@@ -165,9 +192,22 @@ class PermissionController extends Controller
             $arr_data = $data->toArray();
         }
 
-        $module   = $this->module->orderby('module_id','ASC')->get();
+        //$module   = $this->module->orderby('module_id','ASC')->get();
+          $module = $this->module->where('parent_id','=',0)->get();
+      
+          $module_array = [];
+          foreach ($module as $key => $value) {
+             $module_array[$value['module_id']]['module_name'] = $value['module_name'];
+             $module_array[$value['module_id']]['module_id']   = $value['module_id'];
+             $module_array[$value['module_id']]['parent_id']   = $value['parent_id'];
+             $child_module = $this->module->where('parent_id','=', $value['module_id'])->get()->toArray();
+             $module_array[$value['module_id']]['child']= $child_module;
+          }
+
+
+
         $role     = $this->role->get();        
-        $data['module']    = $module;
+        $data['module']    = $module_array;
         $data['role']      = $role;
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";

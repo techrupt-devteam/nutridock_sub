@@ -21,4 +21,13 @@ class Module extends Model
     {
         return $this->belongsTo('App\Models\ModuleType','type_id');
     }
+
+    public function parent() {
+      return $this->belongsToOne(static::class, 'parent_id');
+    }
+
+    //each category might have multiple children
+    public function children() {
+      return $this->hasMany(static::class, 'parent_id')->orderBy('module_name', 'asc');
+    }
 }

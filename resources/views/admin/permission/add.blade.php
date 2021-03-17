@@ -67,22 +67,22 @@
                           </tr>
                         </thead>
                         <?php $i =1;?>
+
                         @foreach($module as $mvalue)
-                          <tr>
-                            @if($mvalue->parent_id==0)
-                             
-                             <td><b>{{$i}}</b></td>
-                             <td><input type="checkbox" class="form-check-input {{$mvalue->module_id}}checkboxall" name="permission_access[]"  value="{{$mvalue->module_id}}" onclick="all_click(<?php echo $mvalue->module_id;?>);" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module"> <strong>{{ucfirst($mvalue->module_name)}}</strong></td> 
-
-                            @else
-
-                             <td></td>
-                             <td style="padding-left: 25px !important;"> <input type="checkbox" class="form-check-input    @if($mvalue->parent_id!=0) {{$mvalue->parent_id}}checkbox @endif"  name="permission_access[]"  required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module" onclick="allrm_click(<?php echo $mvalue->parent_id;?>)" value="{{$mvalue->module_id}}">
-                              {{$mvalue->module_name}}
-                             </td> 
-                            @endif 
-                          </tr>  
-                           @if($mvalue->parent_id==0) @php $i++; @endphp  @endif 
+                              <tr>
+                                 <td><b>{{$i}}</b></td>
+                                 <td><input type="checkbox" class="form-check-input {{$mvalue['module_id']}}checkboxall" name="permission_access[]"  value="{{$mvalue['module_id']}}" onclick="all_click(<?php echo $mvalue['module_id'];?>);" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module"><strong>{{ucfirst($mvalue['module_name'])}} @@ {{$mvalue['module_id']}}</strong></td> 
+                              </tr> 
+                              @foreach($mvalue['child'] as $cmvalue)
+                              <tr> 
+                                 <td></td>
+                                 <td style="padding-left: 25px !important;"> <input type="checkbox" class="form-check-input    {{$cmvalue['parent_id']}}checkbox"  name="permission_access[]"  required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module" onclick="allrm_click(<?php echo $cmvalue['parent_id'];?>)" value="{{$cmvalue['module_id']}}">
+                                  {{$cmvalue['module_name']}} ** {{$cmvalue['parent_id']}}
+                                 </td>
+                              </tr> 
+                              @endforeach
+                          
+                           @if($mvalue['parent_id']==0) @php $i++; @endphp  @endif 
                         @endforeach
                         </table>
                      </div>
