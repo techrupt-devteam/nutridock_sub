@@ -100,7 +100,7 @@ class LoginController extends Controller
                 $mail->Subject    = "One Time Password for Nutridock Fit login";
                 $mail->setFrom($this->email,'Nutridock-Admin'); //sender
                 $mail->MsgHTML($msg);
-                $mail->addAddress('developer@techrupt.in'); // reciviwer
+                $mail->addAddress($checkExist->email); // reciviwer
                 $mail->send();
                 return "success";
             } catch (Exception $e) {
@@ -126,7 +126,10 @@ class LoginController extends Controller
             // curl_close( $ch );
 
         }
-       }        
+       }   
+       else {
+           return 'false';
+       }     
     }
 
 

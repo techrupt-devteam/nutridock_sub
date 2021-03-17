@@ -224,13 +224,6 @@ p{
     font-size: 14px;
     color: #262626;
 }
-.parsley-errors-list{
-  color: #f00;
-  font-weight: 400;
-  font-size: 13px;
-  list-style:none;
-  padding:0px;
-}   
 
 .active1{
   color: #fcd40a;
@@ -312,10 +305,12 @@ background-color:blue
           {!! csrf_field() !!}
               <!-- @START: Personal Details tab -->
               <div class="row setup-content step-1" id="step-1">
+             
                   <div class="col-sm-12">
                     <h4 class="info-text"> Let's start with the basic details.</h4>
                   </div>
                   <div class="col-sm-12 mb-3">
+                  <div class="alert alert-danger" id="signup-alert-danger" role="alert" style="font-size:13px" ></div>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="input-group mb-0"> 
@@ -800,6 +795,7 @@ background-color:blue
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 $(document).ready(function () {
+$('.alert-danger').hide();
 $('#start_date').datepicker({ 
   format:'yyyy-mm-dd', 
   startDate: new Date($("#start_date").val()),
@@ -932,9 +928,20 @@ allNextBtn.click(function(){
                 mobile  : $("#mobile_no").val()
               },
             success: function (data) {
-              if(data){
+              if(data == 'exist') {
+                $('#signup-alert-danger').html('<b>' +$("#mobile_no").val()+ '</b> Mobile number already registered with Nutridock Fit<br /> Please login to your account, or register with another Mobile Number');   
+               $('#signup-alert-danger').show();
+
+               window.setTimeout(function() {
+                  $("#signup-alert-danger").fadeTo(500, 0).slideUp(500, function(){
+                     $(this).remove(); 
+                  });
+               }, 5000);
+
+                return false;
+              } else if(data == 'true'){
                 nextStepWizard.removeAttr('disabled').trigger('click');
-              }
+              } 
             },
             error: function (data) {
               return false;
