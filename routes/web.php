@@ -119,7 +119,7 @@ Route::post('/get_plan_details', 	 			'Front\SignUpController@getSubscriptionPla
 Route::post('/subscribe-info', 	 				'Front\SignUpController@getSubscribePlan');
 Route::post('/check_valid_pin', 	 			'Front\SignUpController@getCheckValidPin');
 Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanPrice');
-Route::post('/checkout', 						'Front\SignUpController@checkout');
+Route::post('/checkout_sub', 						'Front\SignUpController@checkout');
 Route::post('/pay-success', 					'Front\SignUpController@paySuccess');
 Route::get('/thankyou', 						'Front\SignUpController@thankyou');
 Route::get('/sign-in',							['as'=>'signinModal','uses'=> 'Front\SignUpController@signinModal']);
@@ -136,6 +136,12 @@ Route::group(['middleware' => 'subscriber'], function () {
 	//Route::post('/chat/{id}',	  				'Front\SubscriptionUserController@subscriber_details');
 	Route::get('/chat', 						'Front\SubscriptionUserController@getChatList');
 	Route::get('/goforchat/{id}', 					'Front\SubscriptionUserController@chatWithNutrionist');
+
+	Route::get('/logout', function(){
+		Auth::logout();		
+		Session::flush();
+		return Redirect::to('subscribe-info');
+	});
 	
 });
 
@@ -149,7 +155,7 @@ Route::get('/notifyadmin','Admin\NotificationController@notify');
 Route::group(['prefix' => 'admin','middleware' => 'admin'], function () 
 {
 	
-	Route::get('/dashbord',		 	    'Admin\DashboardController@dashbord');
+	Route::get('/dashbord',		 	      'Admin\DashboardController@dashbord');
 	Route::post('/getSubscriberDatadash', 'Admin\DashboardController@get_expiry_subcriber');
 	
 	//notification show

@@ -49,6 +49,52 @@
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
       <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
+      <style>
+      /* Special class on .container surrounding .navbar, used for positioning it into place. */
+        .navbar-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        margin-top: 20px;
+        }
+
+        /* Flip around the padding for proper display in narrow viewports */
+        .navbar-wrapper .container {
+        padding-left: 0;
+        padding-right: 0;
+        }
+        .navbar-wrapper .navbar {
+        padding-left: 15px;
+        padding-right: 15px;
+        }
+
+        .navbar-content
+        {
+            width:320px;
+            padding: 15px;
+            padding-bottom:0px;
+        }
+        .navbar-content:before, .navbar-content:after
+        {
+            display: table;
+            content: "";
+            line-height: 0;
+        }
+        .navbar-nav.navbar-right:last-child {
+        margin-right: 15px !important;
+        }
+        .navbar-footer 
+        {
+            background-color:#DDD;
+        }
+        .navbar-footer-content { padding:15px 15px 15px 15px; }
+        .dropdown-menu {
+        padding: 0px;
+        overflow: hidden;
+        }
+      </style>
    </head>
    <body> 
     <header class="fixed-top"id="header">
@@ -64,14 +110,39 @@
             <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
             <li><a href="{{url('')}}/faq">FAQ</a></li> -->
             <li><a href="{{url('')}}/contact">Contact</a></li>
-            
+<!--             
             <li class="under-line-none">
             <a 
             id="signIn"
             data-toggle="modal" 
             data-target="#login" 
             data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
-            Login</a></li>          
+            Login</a></li>  -->
+           
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account
+                    <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-content">
+                                <div class="row">     
+                                         
+                                    <div class="col-md-12 text-left pr-4">
+                                        <h6 style="color: #64BB2C;">
+                                        <i class="fa fa-envelope-open" aria-hidden="true"></i> 
+                                        {{ Session::get('subscriber_email') }}</h6>
+                                        <p class="text-muted" style="color:#000">
+                                        <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i>
+                                        {{ Session::get('subscriber_mobile') }}</p>
+                                        <div class="divider">
+                                        </div>
+                                        <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active">LOGOUT</a><br />
+                                    </div>
+                                </div>
+                            </div>                           
+                        </li>
+                    </ul>
+                </li>
+           
         </ul>
     </nav>
     </div>

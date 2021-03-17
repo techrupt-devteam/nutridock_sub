@@ -48,8 +48,9 @@ class SubscriptionUserController extends Controller
 
         /* Start: get data for subscription plan */
         //Arr::set($data, 'getSubscriptionPlan', SubscriptionPlan::getData());
-        /* End: get data for subscription plan */ 
+        /* End: get data for subscription plan */     
 
+      
        
         $data = '';
         return view('dashboard')->with(['data' => $data, 'seo_title' => "Dashboard"]); 
@@ -258,8 +259,23 @@ class SubscriptionUserController extends Controller
 
     public function chatWithNutrionist(Request $request)
     {       
-        Auth::loginUsingId($request['id']);
+       
+        $data = Auth::loginUsingId($request->id)->toArray();
+        
+        $credentials = [
+          'email'    => $request->id."_".$data['email'],
+          'password' => bcrypt(Session::get('subscriber_otp')),
+       ]; 
+      //$user = \Sentinel::authenticate($credentials);
 
+      //dd($user);
+      $Auth = Auth::guard('web')->attempt($credentials);
+
+
+     
+
+      dd($Auth);
+      return redirect('/admin/chatify');
     }
 }
 ?>

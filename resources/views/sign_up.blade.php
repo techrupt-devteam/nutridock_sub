@@ -308,7 +308,7 @@ background-color:blue
               </div>
               </div>
           </div>
-          <form action="{{url('/')}}/checkout" method="POST" role="form" id="sign-up" class="w-100" >
+          <form role="form" id="sign-up" class="w-100" method="POST"  action="#">
           {!! csrf_field() !!}
               <!-- @START: Personal Details tab -->
               <div class="row setup-content step-1" id="step-1">
@@ -349,7 +349,7 @@ background-color:blue
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="text" class="form-control" id="mobile" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1">
+                            <input type="text" class="form-control" id="mobile_no" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1">
                           </div>
                           <div id="mobile-errors"></div>
                         </div>
@@ -824,14 +824,16 @@ $('#start_date').datepicker({
 
 $("#btnSubmit").click(function(){
   $.ajax({
-      url: '{{ URL::to('/') }}/checkout',
-      type: 'post',
+      url: '{{ URL::to('/') }}/checkout_sub',
+      type: 'POST',
       dataType: 'json',
       data: $('form#sign-up').serialize(),
       success: function(data) {       
+     
         if(data) {
           paySuccess(data['total_amount'],data['subscriber_id']);
         }
+        
       }
   }); 
 });
@@ -851,7 +853,7 @@ function paySuccess(total_amount,subscriber_id)
   "handler": function (response){
       $.ajax({
         url: '{{ URL::to('/') }}/pay-success',
-        type: 'post',
+        type: 'POST',
         dataType: 'json',
         data: {
         razorpay_payment_id: response.razorpay_payment_id , 
@@ -927,7 +929,7 @@ allNextBtn.click(function(){
             data: {
                 name    : $("#full_name").val(),
                 email   : $("#email").val(),
-                mobile  : $("#mobile").val()
+                mobile  : $("#mobile_no").val()
               },
             success: function (data) {
               if(data){
@@ -1075,7 +1077,7 @@ function getData() {
   var total_price;
 
   $("#checkout_name").html($("input[name='full_name']").val());
-  $("#checkout_phone_no").html($("input[name='mobile']").val());
+  $("#checkout_phone_no").html($("input[name='mobile_no']").val());
   $("#checkout_email").html($("input[name='email']").val());
   $("#checkout_meal_name").html($('input[name=radioSubscriptionPlan]:checked').attr('id'));
   $("#checkout_no_of_days").html($('input[name=radioDuration]:checked').attr('id'));
@@ -1087,7 +1089,6 @@ function getData() {
   }); 
  
   $("#checkout_meal_type_name").html(selectedMealTypeName); 
-
   
   $("#checkout_sale_price").html(formatCurrency($("input[name='salePrice']").val()));
   $("#checkout_gst_price").html(formatCurrency(calculateGST($("input[name='salePrice']").val())));
@@ -1097,8 +1098,5 @@ function getData() {
   $("#checkout_total_amount").html(formatCurrency(total_price)); 
 }
 /************* @END: CODE FOR GET PLAN PRICE  *************/
-
-
-
 </script>
 @endsection 

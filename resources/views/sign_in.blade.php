@@ -39,7 +39,7 @@
                            <span>Enter your mobile number to enable 2-step verfication</span>
                         </div>
                         <div class="form-group mx-auto" style="max-width: 258px;">
-                          <input type="text" id="mobile" name="mobile" class="form-control" placeholder="xxx-xxx-4560 " autocomplete="off" maxlength="10" 
+                          <input type="text" id="mobile" name="mobile" class="form-control" placeholder="xxx-xxx-4560 " autocomplete="nope" maxlength="10" 
                           style="padding-left: 42px;">
                           
                         <span class="form-control-feedback">+91</span>
@@ -49,13 +49,13 @@
                               <label class="">Phone verfication</label>
                               <span>Enter your OTP code</span>
                            </div>
-                           <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
-                           <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
-                           <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+                           <input type="text" id="digit-1" name="digit-1" data-next="digit-2" autocomplete="nope" />
+                           <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" autocomplete="nope" />
+                           <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" autocomplete="nope" />
                            <span class="splitter">&ndash;</span>
-                           <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
-                           <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
-                           <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
+                           <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" autocomplete="nope" />
+                           <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" autocomplete="nope" />
+                           <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" autocomplete="nope" />
                         </div>
                         <!-- <div class="form-group">
                         <div class="time-set">
