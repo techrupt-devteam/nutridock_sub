@@ -84,27 +84,33 @@ class SignUpController extends Controller
 
 
     public function storeBasicDetails(Request $request) { 
-        $subscriber =   SubscriberMaster::firstOrNew(
-                            ['email' =>  request('email')],
-                            ['mobile' => request('mobile')]
-                        );
+        $checkExist = SubscriberMaster::where('mobile', '=', request('mobile'));
+        
+        if( $checkExist) {
+            return "Already Exist";
+        } else {
+            $subscriber =   SubscriberMaster::firstOrNew(
+                ['email' =>  request('email')],
+                ['mobile' => request('mobile')]
+            );
 
-        if($subscriber->save()) {
+            if($subscriber->save()) {
             $subscriberDetails =   SubscriberDetails::firstOrNew(
                 ['subscriber_id' =>  $subscriber->id],
                 ['subscriber_name' =>  request('name')],
                 ['session_id' =>  session()->getId()]
             );
 
-           
+
             $subscriberDetails->save();
             Session::put('subscriber_id', $subscriberDetails->id);
 
-            
+
             return 'true';
-        } else {
-            return 'false';
-        }       
+
+        }
+     }      
+          
     }
 
     /* FUNCTION: Get Plan Details */
