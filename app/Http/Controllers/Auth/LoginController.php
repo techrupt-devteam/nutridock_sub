@@ -66,6 +66,7 @@ class LoginController extends Controller
         ->where('is_active', '1')
         ->where('is_deleted', '0')
         ->first();  
+       
 
        if($checkExist) {
         $characters = '01234567';

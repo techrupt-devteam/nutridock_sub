@@ -158,7 +158,7 @@ $("#btnSignIn").click(function() {
         type: "POST",
         url: "{{ URL::to('/') }}/check-login",
         data: $("#frmSignIn").serialize(),
-        success: function (data) {  
+        success: function (data) { 
            if(data == 'success') {       
                $('#signin-alert-success').html(' <b>OTP sent to your given "Mobile Number" & your "Regitsered Email" at Nutridock Fit.</b>');       
                $('#signin-alert-success').show();
@@ -202,7 +202,7 @@ $("#btnVerify").click(function() {
         url: "{{ URL::to('/') }}/check-otp",
         data: $("#frmSignIn").serialize(),
         success: function (data) {   
-           if(data) {
+           if(data == 'true') {
             window.location.href = "{{ URL::to('/') }}/dashboard";
            } else {            
               alert("Invalid otp");
