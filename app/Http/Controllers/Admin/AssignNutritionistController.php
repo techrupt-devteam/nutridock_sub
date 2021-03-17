@@ -9,6 +9,8 @@ use App\Models\Location;
 use App\Models\User;
 use App\Models\city;
 use App\Models\State;
+use Pusher\Pusher;
+use App\Models\Notification;
 use App\Models\SubscriberMaster;
 use App\Models\SubscriberDetails;
 use Intervention\Image\ImageManager;
@@ -21,17 +23,31 @@ use Validator;
 use DB;
 class AssignNutritionistController extends Controller
 {
-    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User)
+    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,Notification $Notification)
     {
-        $data                = [];
-        $this->base_model    = $AssignNutritionist; 
-        $this->base_users    = $User; 
-        $this->base_location = $Location; 
-        $this->base_city     = $City; 
-        $this->base_state    = $State; 
-        $this->title         = "Assign Nutritionist";
-        $this->url_slug      = "assign_nutritionist";
-        $this->folder_path   = "admin/assign_nutritionist/";
+        $data                       = [];
+        $this->base_model           = $AssignNutritionist; 
+        $this->base_users           = $User; 
+        $this->base_location        = $Location; 
+        $this->base_city            = $City; 
+        $this->base_state           = $State; 
+        $this->base_notification    = $Notification; 
+        $this->title                = "Assign Nutritionist";
+        $this->url_slug             = "assign_nutritionist";
+        $this->folder_path          = "admin/assign_nutritionist/";
+        //Push Notification 
+        $this->options = array(
+        'cluster' => env('PUSHER_APP_CLUSTER'),
+        'encrypted' => true
+        );
+
+        //Default set pusher api code 
+        $this->pusher = new Pusher(
+        env('PUSHER_APP_KEY'),
+        env('PUSHER_APP_SECRET'),
+        env('PUSHER_APP_ID'), 
+        $this->options
+        );
         //Message
         $this->Insert        = Config::get('constants.messages.Insert');
         $this->Update        = Config::get('constants.messages.Update');
@@ -117,7 +133,16 @@ class AssignNutritionistController extends Controller
         $arr_data['nutritionist_id']    = $request->input('nutritionist_id');
         $assign_nutritionist            = $this->base_model->create($arr_data);
         if(!empty($assign_nutritionist))
-        {    $msg = 0;
+        {   
+
+            // $data['message'] = "New Subscriber asssign";
+            // $this->pusher->trigger('notify-channel', 'App\\Events\\Notify', $data);
+            $notify_arr['message']    = 'New subscriber has been assigned to you!';
+            $notify_arr['users_role'] = 1 ; 
+            $notify_arr['user_id']    = $request->input('nutritionist_id'); 
+            $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+            $msg = 0;
             foreach($request->input('subscriber_id') as $value)
             {
                 $subscriber_dtl_id = $value; 
@@ -140,7 +165,7 @@ class AssignNutritionistController extends Controller
                 }else{                      
                 //add user table to subscriber
                 $arr_data_users['name']                 = $subscriber_data->subscriber_name;
-                $arr_data_users['email']                = $subscriber_data->email;
+                $arr_data_users['email']                = $subscriber_data->subscriber_dtl_id."_".$subscriber_data->email;
                 $arr_data_users['mobile']               = $subscriber_data->mobile;
                 $arr_data_users['city']                 = $subscriber_data->city;
                 $arr_data_users['state']                = $subscriber_data->state;
@@ -275,7 +300,7 @@ class AssignNutritionistController extends Controller
                 {
                   //add user table to subscriber
                     $arr_data_users['name']                 = $subscriber_data->subscriber_name;
-                    $arr_data_users['email']                = $subscriber_data->email;
+                    $arr_data_users['email']                = $subscriber_data->subscriber_dtl_id."_".$subscriber_data->email;
                     $arr_data_users['mobile']               = $subscriber_data->mobile;
                     $arr_data_users['city']                 = $subscriber_data->city;
                     $arr_data_users['state']                = $subscriber_data->state;
@@ -297,6 +322,15 @@ class AssignNutritionistController extends Controller
                      
                 } 
         }
+
+        /*$data['message'] = "New Subscriber asssign";
+        $this->pusher->trigger('notify-channel', 'App\\Events\\Notify', $data);*/
+
+        $notify_arr['message']    = 'New subscriber has been assigned to you!';
+        $notify_arr['users_role'] = 1 ; 
+        $notify_arr['user_id']    = $request->input('nutritionist_id'); 
+        $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
 
         Session::flash('success', $this->Update );
         return \Redirect::to('admin/manage_assign_nutritionist');        

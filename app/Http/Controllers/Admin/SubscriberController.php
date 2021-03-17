@@ -311,6 +311,7 @@ class SubscriberController extends Controller
         
 
                       if($disabled==""){
+
                        if($default_meal_added_or_not > 0){
                         $nestedData['action'] .='<a href="'.url('/admin').'/add_subscriber_meal_program/'.base64_encode($value->id).'"  class="btn btn-primary btn-sm"  title="'.$title.'">
                                 <i class="glyphicon glyphicon-plus"></i>
@@ -321,7 +322,9 @@ class SubscriberController extends Controller
                             </a>';
                         }
 
-                       }else{
+                       }
+                       else{
+                        
                         $nestedData['action'] .="<button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewMealProgramDetails(".$value->id.")' title='Subscriber meal program details' ><i class='glyphicon glyphicon-copy'></i></button>";
                        } 
                        

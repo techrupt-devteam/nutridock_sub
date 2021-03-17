@@ -1,3 +1,4 @@
+
 @extends('admin.layout.master')
 <?php  
   $session_user = Session::get('user');
@@ -356,6 +357,77 @@
             </div>
           </div>
         </div>
+        <!------------------------------Nutritionist Dashboard------------------------------->
+        @elseif($session_user->roles=='1')
+        <div class="row">
+            <div class="col-md-7">
+              <div class="row">
+                <div class="col-md-4">
+              <!-- small box -->
+              <div class="small-box bg-success-gradient">
+                <div class="inner">
+                  <h4 class="wf"><strong>@if(!empty($data['total_subscriber_count'])){{$data['total_subscriber_count']}}@else 0 @endif</strong></h4>
+                  <p class="wf">Total Subscriber <small>All subscriber</small></p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-cutlery"></i>
+                </div>
+                  <a href="{{url('/admin')}}/manage_subscriber" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> 
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-md-4">
+              <!-- small box -->
+              <div class="small-box bg-gradient-custom-orange">
+                <div class="inner">
+                 <h4 class="wf"><strong>@if(!empty($data['new_subscriber_count'])){{$data['new_subscriber_count']}}@else 0 @endif</strong></h4>
+                  <p class="wf">New Subscription <small>{{date('F Y', strtotime(date('Y-m-d')))}}</small></p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-plus"></i>
+                </div>
+                  <a href="{{url('/admin')}}/manage_new_subscriber" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> 
+              </div>
+            </div>
+            <!-- ./col --> 
+            <!-- ./col -->
+            <div class="col-md-4">
+              <!-- small box -->
+              <div class="small-box bg-gradient-custom-indigo">
+                <div class="inner">
+                 <h4 class="wf" ><strong>@if(!empty($data['expire_subscriber_count'])){{$data['expire_subscriber_count']}}@else 0 @endif</strong></h4>
+                  <p class="wf" >Expire Subscription <small>{{date('F Y', strtotime(date('Y-m-d')))}}</small></p>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-user-times"></i>
+                </div>
+                <a href="{{url('/admin')}}/manage_expire_subscriber" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="box box-info ">
+              <div class="box-header with-border" style="background-color: #c3d4b0 !important;">
+                <h3 class="box-title">Subscriber Monthly Statistics</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                  </button>
+                  <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                </div>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <div class="chart" style="position: relative; height:40vh;">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
 
         @endif
       </div>
@@ -385,9 +457,10 @@
 var canvas = document.getElementById('barChart');
 var data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ,"Aug","Sep","Oct","Nov","Dec"],
-   
+
     datasets: [
         {
+
             label: "Active Subscriber",
             backgroundColor: "#39e21aa1",
             borderColor: "#1d8c08",
@@ -414,11 +487,20 @@ animation: {
         duration:5000
 },
 x: {
-            gridLines: {
-                offsetGridLines: true
-            }
-        }
+      gridLines: {
+          offsetGridLines: true
+      }
 
+  },
+scales: {
+    yAxes: [{
+        ticks: {
+                min: 0,
+                stepSize:1,
+                max:<?php echo  $data['total_subscriber_count']?>,
+            }
+    }]
+}
 };
 
 var myBarChart = Chart.Bar(canvas,{

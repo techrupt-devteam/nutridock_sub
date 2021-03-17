@@ -54,87 +54,144 @@ class DashboardController extends Controller
         $login_user_details      = Session::get('user');
         $city = Session::get('login_city_id');
         $where = "";
-        if($city!="all")
+        if($login_user_details->roles!='1')
         {
-            $nutritionist_count      = $this->base_users->where('roles','=',1)->where('city','=',$city);
-            $opermanager_count       = $this->base_users->where('roles','=',2)->where('city','=',$city);
-            $total_subscriber_count  = $this->base_subscriber_dtl->where('city','=',$city);
-            $new_subscriber_count    = $this->base_subscriber_dtl->where('city','=',$city);
-            $expire_subscriber_count = $this->base_subscriber_dtl->where('city','=',$city);
-                        $kitchen     = \DB::table('nutri_mst_kitchen')
-                                         ->join('state','nutri_mst_kitchen.state_id','=','state.id')
-                                         ->join('city','nutri_mst_kitchen.city_id','=','city.id')
-                                         ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
-                                         ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
-                                         ->where('city','=',$city);
+            if($city!="all")
+            {
+                $nutritionist_count      = $this->base_users->where('roles','=',1)->where('city','=',$city);
+                $opermanager_count       = $this->base_users->where('roles','=',2)->where('city','=',$city);
+                $total_subscriber_count  = $this->base_subscriber_dtl->where('city','=',$city);
+                $new_subscriber_count    = $this->base_subscriber_dtl->where('city','=',$city);
+                $expire_subscriber_count = $this->base_subscriber_dtl->where('city','=',$city);
+                            $kitchen     = \DB::table('nutri_mst_kitchen')
+                                             ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                                             ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                                             ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                                             ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
+                                             ->where('city','=',$city);
 
-           // $subscribre_dtl          = \DB::table('nutri_dtl_subscriber')->where('city','=',$city);
-        }
-        else
-        {
-            $nutritionist_count     = $this->base_users->where('roles','=',1);
-            $opermanager_count       = $this->base_users->where('roles','=',2);
-            $total_subscriber_count  = $this->base_subscriber_dtl;
-            $new_subscriber_count    = $this->base_subscriber_dtl;
-            $expire_subscriber_count = $this->base_subscriber_dtl;
-                        $kitchen     = \DB::table('nutri_mst_kitchen')
-                                        ->join('state','nutri_mst_kitchen.state_id','=','state.id')
-                                        ->join('city','nutri_mst_kitchen.city_id','=','city.id')
-                                        ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
-                                        ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*');
-           // $subscribre_dtl          = \DB::table('nutri_dtl_subscriber');
-                         
-                                         
-        }
+               // $subscribre_dtl          = \DB::table('nutri_dtl_subscriber')->where('city','=',$city);
+            }
+            else
+            {
+                $nutritionist_count     = $this->base_users->where('roles','=',1);
+                $opermanager_count       = $this->base_users->where('roles','=',2);
+                $total_subscriber_count  = $this->base_subscriber_dtl;
+                $new_subscriber_count    = $this->base_subscriber_dtl;
+                $expire_subscriber_count = $this->base_subscriber_dtl;
+                            $kitchen     = \DB::table('nutri_mst_kitchen')
+                                            ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                                            ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                                            ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                                            ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*');
+               // $subscribre_dtl          = \DB::table('nutri_dtl_subscriber');
+                             
+                                             
+            }
+
+                
+
+            //users count
+            $nutritionist_count      =  $nutritionist_count->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+            $opermanager_count       =  $opermanager_count->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
+            //subscriber count   
+            $total_subscriber_count  = $total_subscriber_count->where('is_approve','=',1)->where('is_deleted','<>',1)->get()->count();
+            $new_subscriber_count    = $new_subscriber_count->where('is_approve','=',1)->whereMonth('start_date','=',date('m'))->where('start_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
+            $expire_subscriber_count = $expire_subscriber_count->where('is_approve','=',1)->whereMonth('expiry_date','=',date('m'))->where('expiry_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
+
 
             
 
-        //users count
-        $nutritionist_count      =  $nutritionist_count->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
-        $opermanager_count       =  $opermanager_count->where('is_active','=',1)->where('is_deleted','<>',1)->get()->count();
-        //subscriber count   
-        $total_subscriber_count  = $total_subscriber_count->where('is_approve','=',1)->where('is_deleted','<>',1)->get()->count();
-        $new_subscriber_count    = $new_subscriber_count->where('is_approve','=',1)->whereMonth('start_date','=',date('m'))->where('start_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
-        $expire_subscriber_count = $expire_subscriber_count->where('is_approve','=',1)->where('expiry_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
+            //nutridock kitechn all location 
+            $kitchen        = $kitchen
+                             ->where('nutri_mst_kitchen.is_deleted','<>',1)
+                             ->orderBy('kitchen_id', 'DESC')
+                             ->get();
 
-        //nutridock kitechn all location 
-        $kitchen        = $kitchen
-                         ->where('nutri_mst_kitchen.is_deleted','<>',1)
-                         ->orderBy('kitchen_id', 'DESC')
-                         ->get();
-
-        $sub_array = [];   
-        $exp_array = [];   
-        $month     = array(1,2,3,4,5,6,7,8,9,10,11,12);
-        foreach ($month as $mvalue) {
-           
-           if($city!="all")
-           {
-                $start_month  = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('start_date','=',$mvalue)->count();
-                $sub_array[]  =  $start_month;
-                $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->count();
-                $exp_array[]  =  $expiry_month;
-           }else
-           {
-              $start_month  = \DB::table('nutri_dtl_subscriber')->whereMonth('start_date','=',$mvalue)->count();
-              $sub_array[]  =  $start_month;
-              $expiry_month = \DB::table('nutri_dtl_subscriber')->whereMonth('expiry_date','=',$mvalue)->count();
-              $exp_array[]  =  $expiry_month;
-           }
-          
+            $sub_array = [];   
+            $exp_array = [];   
+            $month     = array(1,2,3,4,5,6,7,8,9,10,11,12);
+            foreach ($month as $mvalue) {
+               
+               if($city!="all")
+               {
+                $start_month  = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('start_date','=',$mvalue)->where('expiry_date','>=',date('Y-m-d'))->count();
+                    $sub_array[]  =  $start_month;
+                    $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->count();
+                    /*$start_month  = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('start_date','=',$mvalue)->count();
+                    $sub_array[]  =  $start_month;
+                    $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->count();*/
+                    $exp_array[]  =  $expiry_month;
+               }else
+               {
+                  /*$start_month  = \DB::table('nutri_dtl_subscriber')->whereMonth('start_date','=',$mvalue)->count();
+                  $sub_array[]  =  $start_month;
+                  $expiry_month = \DB::table('nutri_dtl_subscriber')->whereMonth('expiry_date','=',$mvalue)->count();*/
+                  $start_month  = \DB::table('nutri_dtl_subscriber')->whereMonth('start_date','=',$mvalue)->where('expiry_date','>=',date('Y-m-d'))->count();
+                    $sub_array[]  =  $start_month;
+                    $expiry_month = \DB::table('nutri_dtl_subscriber')->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->count();
+                  $exp_array[]  =  $expiry_month;
+               }
+              
+            }
+                   $data['opermanager_count']       = $opermanager_count;
+        $data['nutritionist_count']      = $nutritionist_count;
+        
         }
+        /*-----------------Nutritionist Dashboard Code-----------------*/
+        if($login_user_details->roles == "1")
+        {
+            $assign_subscriber = Session::get('assign_subscriber'); 
+      
+            $total_subscriber_count  = $this->base_subscriber_dtl->where('city','=',$city)
+                                       ->whereIn('id',$assign_subscriber);
+            $new_subscriber_count    = $this->base_subscriber_dtl->where('city','=',$city)
+                                       ->whereIn('id',$assign_subscriber);
+            $expire_subscriber_count = $this->base_subscriber_dtl->where('city','=',$city)
+                                       ->whereIn('id',$assign_subscriber);
+            $kitchen                 = \DB::table('nutri_mst_kitchen')
+                                       ->join('state','nutri_mst_kitchen.state_id','=','state.id')
+                                       ->join('city','nutri_mst_kitchen.city_id','=','city.id')
+                                       ->join('locations','nutri_mst_kitchen.area_id','=','locations.id')
+                                       ->select('state.name as state_name','city.city_name','locations.area as area_name','nutri_mst_kitchen.*')
+                                       ->where('city','=',$city);
 
+            //subscriber count   
+            $total_subscriber_count  = $total_subscriber_count->where('is_approve','=',1)->where('is_deleted','<>',1)->get()->count();
+            $new_subscriber_count    = $new_subscriber_count->where('is_approve','=',1)->whereMonth('start_date','=',date('m'))->where('start_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
+            $expire_subscriber_count = $expire_subscriber_count->where('is_approve','=',1)->whereMonth('expiry_date','=',date('m'))->where('expiry_date','<=',date('Y-m-d'))->where('is_deleted','<>',1)->get()->count();
+
+            //nutridock kitechn all location 
+            $kitchen        = $kitchen
+                             ->where('nutri_mst_kitchen.is_deleted','<>',1)
+                             ->orderBy('kitchen_id', 'DESC')
+                             ->get();
+
+            $sub_array = [];   
+            $exp_array = [];   
+            $month     = array(1,2,3,4,5,6,7,8,9,10,11,12);
+            foreach ($month as $mvalue) {
+               
+              
+                    $start_month  = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('start_date','=',$mvalue)->where('expiry_date','>=',date('Y-m-d'))->whereIn('id',$assign_subscriber)->count();
+                    $sub_array[]  =  $start_month;
+                    $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->whereIn('id',$assign_subscriber)->count();
+                    $exp_array[]  =  $expiry_month;
+               
+              
+            }
+
+        }
             
         $data['sub_array']      = $sub_array;
         $data['exp_array']      = $exp_array;
-       //dd($data);
-        $data['nutritionist_count']      = $nutritionist_count;
+        //dd($data);
+
         $data['kitchen']                 = $kitchen;
-        $data['opermanager_count']       = $opermanager_count;
+
         $data['total_subscriber_count']  = $total_subscriber_count;
         $data['new_subscriber_count']    = $new_subscriber_count;
         $data['expire_subscriber_count'] = $expire_subscriber_count;
-
         return view('admin/dashbord')->with(['data' => $data]);
    }
 

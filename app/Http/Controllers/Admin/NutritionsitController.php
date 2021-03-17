@@ -24,10 +24,10 @@ class NutritionsitController extends Controller
     public function __construct(USer $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
     {
         $data                = [];
-        $this->email         = "bhushantechrupt@gmail.com";
-        $this->Host          = "smtp.gmail.com";
-        $this->Port          = 587;
-        $this->Password      = "bhushan@9912";
+        $this->email         =  Config::get('constants.mail.email');
+        $this->Host          =  Config::get('constants.mail.host');
+        $this->Port          =  Config::get('constants.mail.port');
+        $this->Password      =  Config::get('constants.mail.password');
         $this->base_model    = $Nutritionsit; 
         $this->base_location = $Location; 
         $this->base_city     = $City; 

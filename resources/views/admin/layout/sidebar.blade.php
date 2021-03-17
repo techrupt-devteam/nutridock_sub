@@ -40,6 +40,14 @@
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
           </a>
         </li>
+        <li @if(Request::segment(2)=='manage_notification'|| Request::segment(2)=='notification') class="active" @endif>
+          <a href="{{url('/admin')}}/manage_notification">
+            <i class="fa fa-bell"></i> <span>Notification</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red notif-count">0</small>
+            </span>
+          </a>
+        </li>
       
       <li class="treeview ">
             <a href="#">
@@ -263,6 +271,14 @@
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
+      <li @if(Request::segment(2)=='manage_notification' || Request::segment(2)=='notification') class="active" @endif>
+          <a href="{{url('/admin')}}/manage_notification">
+            <i class="fa fa-bell"></i> <span>Notification</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red notif-count">0</small>
+            </span>
+          </a>
+        </li>
         @foreach($session_parent_menu as $parent_value)
           @if(!empty($parent_value[1]))
             @if(isset($session_permissions) && in_array($parent_value[2],$session_permissions) && !empty($session_permissions))
@@ -313,6 +329,7 @@
             <i class="glyphicon glyphicon-comment"></i><span>Messager</span>
           </a>
         </li>
+
         <li class="treeview @if(Request::segment(2)=='change_password') active @endif">
           <a href="#">
             <i class="fa fa-gear"></i> <span>Setting</span>
