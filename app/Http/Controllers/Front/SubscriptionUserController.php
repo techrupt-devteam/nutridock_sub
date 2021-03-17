@@ -264,17 +264,19 @@ class SubscriptionUserController extends Controller
         
         $credentials = [
           'email'    => $request->id."_".$data['email'],
-          'password' => bcrypt(Session::get('subscriber_otp')),
+          'password' => Session::get('subscriber_otp'),
        ]; 
-      //$user = \Sentinel::authenticate($credentials);
+      
 
       //dd($user);
       $Auth = Auth::guard('web')->attempt($credentials);
-
-
+      $user = \Sentinel::authenticate($credentials);
+       if(!$user) {
+        \Sentinel::login($user);
+       }
      
 
-      dd($Auth);
+      dd($user);
       return redirect('/admin/chatify');
     }
 }

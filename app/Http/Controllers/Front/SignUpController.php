@@ -278,16 +278,10 @@ class SignUpController extends Controller
 
        
         $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-                ->update($data);  
+                ->update($data);         
 
-        if($update) {         
-
-          
-            $arrData = ['total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id')];
-            return $arrData;
-        } else {
-            return $update;
-        }               
+        $arrData = ['total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id')];
+        return $arrData;          
       
     }
 
