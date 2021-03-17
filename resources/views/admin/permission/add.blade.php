@@ -71,13 +71,13 @@
                         @foreach($module as $mvalue)
                               <tr>
                                  <td><b>{{$i}}</b></td>
-                                 <td><input type="checkbox" class="form-check-input {{$mvalue['module_id']}}checkboxall" name="permission_access[]"  value="{{$mvalue['module_id']}}" onclick="all_click(<?php echo $mvalue['module_id'];?>);" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module"><strong>{{ucfirst($mvalue['module_name'])}} @@ {{$mvalue['module_id']}}</strong></td> 
+                                 <td><input type="checkbox" class="form-check-input {{$mvalue['module_id']}}checkboxall" name="permission_access[]"  value="{{$mvalue['module_id']}}" onclick="all_click(<?php echo $mvalue['module_id'];?>);" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module"><strong>{{ucfirst($mvalue['module_name'])}} </strong></td> 
                               </tr> 
                               @foreach($mvalue['child'] as $cmvalue)
                               <tr> 
                                  <td></td>
                                  <td style="padding-left: 25px !important;"> <input type="checkbox" class="form-check-input    {{$cmvalue['parent_id']}}checkbox"  name="permission_access[]"  required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one menu module" onclick="allrm_click(<?php echo $cmvalue['parent_id'];?>)" value="{{$cmvalue['module_id']}}">
-                                  {{$cmvalue['module_name']}} ** {{$cmvalue['parent_id']}}
+                                  {{$cmvalue['module_name']}} 
                                  </td>
                               </tr> 
                               @endforeach
