@@ -13,6 +13,7 @@ use App\Models\MenuModel;
 use App\Models\MenuCategoryModel;
 use App\Models\MealType;
 use App\Models\SpecificationModel;
+use App\Models\Notification;
 use Session;
 use Sentinel;
 use Validator;
@@ -21,7 +22,7 @@ use Config;
 use Carbon;
 class SubscriberMealProgramController extends Controller
 {
-    public function __construct(SubscriberMealPlan $SubscriberMealPlan,MenuModel $MenuModel,DefaultMeal $DefaultMeal,SubscriberHealthDetails $SubscriberHealthDetails,SubscriberDetails $SubscriberDetails,SubscriberDefaultMeal $SubscriberDefaultMeal,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType)
+    public function __construct(SubscriberMealPlan $SubscriberMealPlan,MenuModel $MenuModel,DefaultMeal $DefaultMeal,SubscriberHealthDetails $SubscriberHealthDetails,SubscriberDetails $SubscriberDetails,SubscriberDefaultMeal $SubscriberDefaultMeal,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType,Notification $Notification)
     {
         $data                               = [];
         $this->base_model                   = $SubscriberMealPlan; 
@@ -33,6 +34,7 @@ class SubscriberMealProgramController extends Controller
         $this->base_menu_specification      = $SpecificationModel; 
         $this->base_default_meal            = $DefaultMeal; 
         $this->base_subscriber_default_meal = $SubscriberDefaultMeal;
+        $this->base_notification            = $Notification; 
         $this->title                        = "Subscriber Meal Program";
         $this->url_slug                     = "subscriber_meal_program";
         $this->folder_path                  = "admin/subscriber_meal_program/";
@@ -182,9 +184,27 @@ class SubscriberMealProgramController extends Controller
         $health_details = $this->base_health->create($arr_data);
         if(!empty($health_details))
         {
+            $login_user_details     = Session::get('user');
+            $nutritionist_id        = $login_user_details->id;
+            $subscriber_det         = \DB::table('nutri_dtl_subscriber')->where('subscriber_id','=',$request->input('subscriber_id'))->select('subscriber_name')->first();
+            //subscriber  notification
+            $notify_arr['message']    = 'Nutrtionist update meal program!';
+            $notify_arr['users_role'] = 1 ; 
+            $notify_arr['user_id']    = $request->input('subscriber_id'); 
+            $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+            //admin notification 
+            $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' update meal program for subscriber '.$subscriber_det->subscriber_name.'!';
+            $notify_arr['users_role'] = 'admin' ; 
+            $notify_arr['user_id']    = 1; 
+            $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+           
             $arr_data1               = [];
             $arr_data1['is_active']  = '0';
             $health_details          = $this->base_health->where('subcriber_id','=',$request->input('subscriber_id'))->where('nutritionist_id','=',$request->input('nutritionist_id'))->where('subscriber_health_id','<>',$health_details->id)->update($arr_data1);
+
+
 
             Session::flash('success', $this->Insert);
             return \Redirect::to('admin/add_subscriber_meal_program/'.base64_encode($request->input('subscriber_id')));
@@ -208,13 +228,9 @@ class SubscriberMealProgramController extends Controller
                             ->where('nutri_subscriber_meal_program.program_id','=',$program_id)
                             ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->first();
     
-   
       $menu_category      = $this->base_menu_category->get();
-
       $menu_specification = $this->base_menu_specification->get()->toarray(); 
-
       $meal_type          = $this->base_meal_type->get();
-
       $data=[];
       $data['program_data']        = $program_data;
       $data['menu_category']       = $menu_category;
@@ -322,6 +338,25 @@ class SubscriberMealProgramController extends Controller
         $arr_data['mealtype'] = $request->input('meal_type');
         $arr_data['menu_id']  = $request->input('menu_id');
         $menu_update          = $this->base_model->where(['program_id'=>$id])->update($arr_data);
+        
+        $subscriber_id         = $this->base_model->where(['program_id'=>$id])->select('subcriber_id')->first();
+
+        //notifications
+        $login_user_details     = Session::get('user');
+        $nutritionist_id        = $login_user_details->id;
+        $subscriber_det         = \DB::table('nutri_dtl_subscriber')->where('subscriber_id','=',$subscriber_id->subcriber_id)->select('subscriber_name')->first();
+
+        //subscriber  notification
+        $notify_arr['message']    = 'Nutrtionist update meal program menu!';
+        $notify_arr['users_role'] = 1 ; 
+        $notify_arr['user_id']    = $request->input('subscriber_id'); 
+        $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+        //admin notification 
+        $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change meal program menu for subscriber '.$subscriber_det->subscriber_name.'!';
+        $notify_arr['users_role'] = 'admin' ; 
+        $notify_arr['user_id']    = 1; 
+        $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
         Session::flash('success', $this->Insert);
         return \Redirect::to('admin/add_subscriber_meal_program/'.base64_encode($request->input('subscriber_id')));

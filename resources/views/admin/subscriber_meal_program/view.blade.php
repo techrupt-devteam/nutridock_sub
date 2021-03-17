@@ -36,7 +36,7 @@
                             <div class="input-group-addon btn-default">
                               BMI
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter BMI" id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi." value="{{ isset($health_details) ? ($health_details->bmi) : ('') }}" disabled>
+                            <input type="text" class="form-control"  id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi." value="{{ isset($health_details) ? ($health_details->bmi) : ('NA') }}" disabled>
                             <input type="hidden" name="subscriber_id" value="{{$subscriber_id}}">
                             <input type="hidden" name="nutritionist_id" value="{{$nutritionist_id}}">
                           </div>
@@ -52,7 +52,7 @@
                           <div class="input-group-addon btn-default">
                             BRM
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('') }}" disabled>
+                          <input type="text" class="form-control" "Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('NA') }}" disabled>
                         </div>
                         <div id="bmr_error" style="color:red;"></div>
                       </div>
@@ -66,7 +66,7 @@
                           <div class="input-group-addon btn-default">
                             <i class="fa fa-balance-scale"></i>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight." value="{{ isset($health_details) ? ($health_details->current_wt) : ('') }}" disabled>
+                          <input type="text" class="form-control" "Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight." value="{{ isset($health_details) ? ($health_details->current_wt) : ('NA') }}" disabled>
                         </div>
                         <div id="weight_error" style="color:red;"></div>
                       </div>
@@ -82,7 +82,7 @@
                           <div class="input-group-addon btn-default">
                             <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Body Fats" id="body_fat" name="body_fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats." value="{{ isset($health_details) ? ($health_details->body_fat) : ('') }}" disabled>
+                          <input type="text" class="form-control" "Enter Body Fats" id="body_fat" name="body_fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats." value="{{ isset($health_details) ? ($health_details->body_fat) : ('NA') }}" disabled>
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                     </div>
@@ -94,7 +94,7 @@
                       <label for="">Req.Calories<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('') }}" disabled></div>
+                        <input type="text" class="form-control" "Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('NA') }}" disabled></div>
                        <div id="calories_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -108,7 +108,7 @@
                       <label for="">Protine<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('') }}" disabled></div>
+                        <input type="text" class="form-control" "Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('NA') }}" disabled></div>
                        <div id="protein_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -119,7 +119,7 @@
                       <label for="">fat<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat." value="{{ isset($health_details) ? ($health_details->fat) : ('') }}" disabled></div>
+                        <input type="text" class="form-control" "Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat." value="{{ isset($health_details) ? ($health_details->fat) : ('NA') }}" disabled></div>
                        <div id="fts_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                       <label for="">Fiber<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><i class="fa fab fa-pagelines"></i></div>
-                        <input type="text" class="form-control" placeholder="Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber." value="{{ isset($health_details) ? ($health_details->fiber) : ('') }}" disabled></div>
+                        <input type="text" class="form-control" "Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber." value="{{ isset($health_details) ? ($health_details->fiber) : ('NA') }}" disabled></div>
                        <div id="Fiber_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -141,7 +141,7 @@
                       <label for="">Carbohydrates<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('') }}" disabled></div>
+                        <input type="text" class="form-control" "Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('NA') }}" disabled></div>
                        <div id="carbs_error" style="color:red;"></div>
                     </div>
                   </div>

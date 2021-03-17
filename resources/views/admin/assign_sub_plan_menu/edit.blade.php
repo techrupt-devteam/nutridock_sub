@@ -62,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-<?php// dd($get_inactive_days);?>
+                               
                               @foreach($subscription_plan_dtl as $sdvalue)
                                
                                @php $style="" @endphp
@@ -70,21 +70,20 @@
                                @php $style ="#bf000052"; @endphp
                                @endif
                              <tr style="background-color: {{$style}}">
-                              <td>{{$sdvalue->duration}} Days</td>
+                              <td>{{$sdvalue->duration}} Days </td>
                            
                               <td class='text-center'>
-                                @foreach($default_meal as $dm_value)
 
-
-                                  @if($dm_value->duration_id == $sdvalue->duration_id)
+                             
+                                 @if(in_array($sdvalue->duration_id,$default_meal))   
                                     <a href='javascript:void(0)' class='btn btn-sm btn-warning' onclick='editviewDetails(<?php echo $sdvalue->duration_id;?>,<?php echo $sdvalue->duration;?>);'><i class='fa fa-pencil'></i> Edit Default Menu</a>
-                                  @else 
+                                 @else
                                       <a href='javascript:void(0)' class='btn btn-sm btn-success' onclick='viewDetails(<?php echo $sdvalue->duration_id;?>,<?php echo $sdvalue->duration;?>);'><i class='fa fa-plus'></i> Add Default Menu</a>
                                   @endif
+          
 
 
-
-                                @endforeach
+                               
                                 </td>          
                              </tr>
 

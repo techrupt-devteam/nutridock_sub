@@ -105,7 +105,6 @@ class ModuleController extends Controller
             $arr_data = $data->toArray();
         }
         $parent = $this->base_model->where(['parent_id'=>0])->get();
-      
         $data['parent']    = $parent;
         $data['data']      = $arr_data;
         $data['page_name'] = "Edit";
@@ -118,12 +117,12 @@ class ModuleController extends Controller
     {
         $validator = Validator::make($request->all(), [
                 'module_name' => 'required',
-               /* 'parent_id'  => 'required',
+                /*'parent_id'  => 'required',
                 'module_url'  => 'required'*/
             ]);
-        if ($validator->fails()) 
+        if($validator->fails()) 
         {
-            return $validator->errors()->all();
+           return $validator->errors()->all();
         }
         $is_exist = $this->base_model->where('module_id','<>',$id)->where(['module_name'=>$request->input('module_name')])
                     ->count();

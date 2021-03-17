@@ -96,20 +96,32 @@ class AssignSubscriptionPlanMenuController extends Controller
         {
             $arr_data = $data->toArray();
         }   
-        $subscription_plan              = $this->base_subscription_plan->where('is_active','=','1')->where('is_deleted','<>','1')->get();
-        $subscription_plan_dtl          = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->orderBy('duration','ASC')->get();
-        $default_meal                   = $this->base_default_meal->where('sub_plan_id','=',$data->sub_plan_id)->groupBy('duration_id')->get();
-        $get_inactive_days              = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->where('is_active','=','0')->select('duration')->orderBy('duration','ASC')->get()->toArray();
+
+        $subscription_plan           = $this->base_subscription_plan->where('is_active','=','1')->where('is_deleted','<>','1')->get();
+        $subscription_plan_dtl       = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->orderBy('duration','ASC')->get();
+
+        $default_meal                = $this->base_default_meal->where('sub_plan_id','=',$data->sub_plan_id)->groupBy('duration_id')->get();
+
+        $get_inactive_days           = $this->base_subscription_plan_dtl->where('sub_plan_id','=',$data->sub_plan_id)->where('is_active','=','0')->select('duration')->orderBy('duration','ASC')->get()->toArray();
         
         $get_inactive_days_array = [];
+
         foreach ($get_inactive_days as $key => $value) {
           $get_inactive_days_array[] = $value['duration'];
         }
-       
+
+        $default_meal_array     = []; 
+        foreach ($default_meal as $key => $value) 
+        {
+          $default_meal_array[] = $value['duration_id'];
+        }
+        
+        //dd($default_meal_array);
         $data['data']                   = $arr_data;
         $data['subscription_plan']      = $subscription_plan;
         $data['subscription_plan_dtl']  = $subscription_plan_dtl;
-        $data['default_meal']           = $default_meal;
+       // $data['default_meal']           = $default_meal;
+        $data['default_meal']           = $default_meal_array;
         $data['get_inactive_days']      = $get_inactive_days_array;
         $data['page_name']              = "Edit";
         $data['url_slug']               = $this->url_slug;
@@ -344,10 +356,15 @@ class AssignSubscriptionPlanMenuController extends Controller
         $get_meal_type  = $this->base_meal_type->get();
         
         $message = 0;
-        $arr_data1                       = [];
-        $arr_data                        = [];
-        $arr_data1['sub_plan_id']        = $sub_plan_id;
-        $assign_menu_subscription_plan   = $this->base_model->create($arr_data1);
+            
+        $is_exists   = $this->base_default_meal->where('sub_plan_id','=',$sub_plan_id)->get()->count();
+        if($is_exists==0)
+        {
+            $arr_data1                       = [];
+            $arr_data                        = [];
+            $arr_data1['sub_plan_id']        = $sub_plan_id;
+            $assign_menu_subscription_plan   = $this->base_model->create($arr_data1);
+        }
 
         for($i=1;$i<=$duration_days;$i++)
         {   

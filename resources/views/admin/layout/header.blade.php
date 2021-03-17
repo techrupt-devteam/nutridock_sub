@@ -121,45 +121,22 @@
 
 
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <li class="dropdown notifications-menu ">
+            <a href="#" class="dropdown-toggle dropdown-notifications" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
+              <input type="hidden" id="notification_count" value="0">
+              <span class="label label-warning" id="notification_count_span">0</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
+              <li class="header">You have <span class="notif-count">0</span> notifications</li>
+              <li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                      page and may cause design problems
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-red"></i> 5 new members joined
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-user text-red"></i> You changed your username
-                    </a>
-                  </li>
+                
                 </ul>
               </li>
-              <li class="footer"><a href="#">View all</a></li>
+              <li class="footer"><a href="{{url('/admin')}}/manage_notification">View Notification</a></li>
             </ul>
           </li> 
          
@@ -177,4 +154,65 @@
         </ul>
       </div>
     </nav>
+    
+    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+    <script type="text/javascript">
+
+      /*var notificationsWrapper      = $('.dropdown-notifications');
+      var notificationsToggle       = notificationsWrapper.find('a[data-toggle]');
+      var notificationsCountElemVal = $('#notification_count').val();
+      var notificationsCountElem    = $('#notification_count_span').html(notificationsCountElemVal);
+      var notificationsCount        = parseInt(notificationsCountElemVal);
+      var notificationsWrapperdrp   = $('.dropdown-menu');
+      var notifications             = notificationsWrapperdrp.find('ul.menu');
+      var pusher                    = new Pusher('{{env("MIX_PUSHER_APP_KEY")}}', {
+      cluster                       : '{{env("PUSHER_APP_CLUSTER")}}',
+      encrypted                     : true
+      });
+      var channel = pusher.subscribe('notify-channel');
+      channel.bind('App\\Events\\Notify', function(data) {
+        var existingNotifications = notifications.html();
+        var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+        var newNotificationHtml = 
+        `<li>
+          <a href="#">
+            <i class="fa fa-users text-aqua"></i> `+data.message+`
+          </a>
+        </li>
+        `;
+        notifications.html(newNotificationHtml + existingNotifications);
+        notificationsCount += 1;
+
+        $('#notification_count_span').html(notificationsCount);
+        //notificationsCountElem.attr('data-count', notificationsCount);
+        $('.notif-count').html(notificationsCount);
+        $('#notification_count').val(notificationsCount);
+        notificationsWrapper.show();
+      });*/
+
+     /* var notificationsWrapper=$(".dropdown-notifications"),notificationsToggle=notificationsWrapper.find("a[data-toggle]"),notificationsCountElemVal=$("#notification_count").val(),notificationsCountElem=$("#notification_count_span").html(notificationsCountElemVal),notificationsCount=parseInt(notificationsCountElemVal),notificationsWrapperdrp=$(".dropdown-menu"),notifications=notificationsWrapperdrp.find("ul.menu"),pusher=new Pusher('{{env("MIX_PUSHER_APP_KEY")}}',{cluster:'{{env("PUSHER_APP_CLUSTER")}}',encrypted:!0}),channel=pusher.subscribe("notify-channel");channel.bind("App\\Events\\Notify",function(n){var i=notifications.html(),t=(Math.floor(52*Math.random()),'<li>\n          <a href="#">\n            <i class="fa fa-users text-aqua"></i> '+n.message+"\n          </a>\n        </li>\n        ");notifications.html(t+i),notificationsCount+=1,$("#notification_count_span").html(notificationsCount),$(".notif-count").html(notificationsCount),notificationsWrapper.show()});*/
+
+      function notification() 
+      { 
+        
+         $.ajax({
+              url: "{{url('/admin')}}/notification_data",
+              type: 'post',
+             success: function (data) 
+              {
+                  var  result =  data.split("#");
+                //  var old_notification = parseInt($('#notification_count').val()) + parseInt(result[1]);
+                  var old_notification = result[1];
+                   $('#notification_count').val(old_notification);
+                   $('#notification_count_span').html(old_notification);
+                   $('.notif-count').html(old_notification);
+                   $('.menu').html(result[0]);
+              }
+          });
+      }
+        notification();   
+      var timerID = setInterval(function() {
+        notification(); 
+      }, 3000);
+    </script>
   </header>

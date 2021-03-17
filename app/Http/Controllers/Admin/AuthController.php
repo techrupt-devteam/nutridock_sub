@@ -12,17 +12,17 @@ use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 //use Session;
-
+use Config;
 class AuthController extends Controller
 {
 
     public function __construct()
     {
         $data                = [];
-        $this->email         = "bhushantechrupt@gmail.com";
-        $this->Host          = "smtp.gmail.com";
-        $this->Port          = 587;
-        $this->Password      = "bhushan@9912";
+        $this->email         =  Config::get('constants.mail.email');
+        $this->Host          =  Config::get('constants.mail.host');
+        $this->Port          =  Config::get('constants.mail.port');
+        $this->Password      =  Config::get('constants.mail.password');
       
     }
 
