@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\SubscriberMaster;
+use App\Models\User;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Input;
@@ -37,7 +37,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    //protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -46,7 +46,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+       // $this->middleware('guest')->except('logout');
 
 
         $this->email         = "bhushantechrupt@gmail.com";
@@ -59,6 +59,7 @@ class LoginController extends Controller
     public function checkLogin()
     {
         $input = Input::all(); 
+
         $mobile_no = $input['mobile'];
 
         $checkExist = SubscriberMaster::where('mobile', $input['mobile'])
@@ -78,6 +79,8 @@ class LoginController extends Controller
                           ->update(['password'=>bcrypt($randstring)]);
 
         if($updatePassword) {
+            Session::put('subscriber_email', $checkExist->email);
+
             $mobile_no = $input['mobile'];
             $msg='You system generated One time password is '.$randstring.'. ';        
             
@@ -136,11 +139,16 @@ class LoginController extends Controller
             $otp .= $input['digit-'.$j];
         }      
 
-        $checkPwdExist = SubscriberMaster::where('mobile', $input['mobile'])->first();     
+        $checkPwdExist = SubscriberMaster::where('mobile', $input['mobile'])->first();         
 
-        if(Hash::check($otp,$checkPwdExist['password'])) {           
-            Session::put('subscriber_id', $checkPwdExist->id);       
+        if(Hash::check($otp,$checkPwdExist['password'])) { 
+            $updatePassword = User::where('subscriber_id', $checkPwdExist->id)
+            ->update(['password'=>bcrypt($otp)]);   
 
+            Session::put('subscriber_id', $checkPwdExist->id);
+            Session::put('subscriber_mobile', $input['mobile']);
+            Session::put('subscriber_otp', $otp);  
+                          
             
             return 'true';
         } else {

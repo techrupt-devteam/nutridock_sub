@@ -23,6 +23,7 @@ use App\Models\SubscriberDetails;
 use App\Models\SubscriptionPlanDetails;
 use App\Models\DeliveryLocation;
 use App\Models\City;
+use App\Models\Notification;
 
 use Session;
 use Sentinel;
@@ -75,6 +76,8 @@ class SignUpController extends Controller
         /* Start: get data for Subscribe Now details */
         Arr::set($data, 'getSubscribeNowData', SubscribeNow::getData());
         /* End: get data for Subscribe Now details */
+
+          
         
         return view('sign_up')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
     }  
@@ -184,6 +187,43 @@ class SignUpController extends Controller
         $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
         ->update($data); 
 
+        if($update) {     
+            
+            $getSubscriberDtl = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
+            
+            ->first();
+
+
+            $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
+            ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+            ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
+            ->where('nutri_dtl_subscriber.id','=',Session::get('subscriber_id'))
+            ->select('nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.no_of_days','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.expiry_date')
+            ->first();
+
+
+           
+            $addNotification =  Notification::create(
+                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
+                'users_role' => 'admin',
+                'user_id' => 1]
+            );       
+    
+            $addNotification->save();  
+       
+         // add notification for operation manager
+           $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = ".Session::get('delivery_state_id')." AND `city` = ".Session::get('delivery_city_id')." AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = ".Session::get('delivery_pincode').")");          
+           
+            $addNotificationOperation =  Notification::create(
+                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
+                'users_role' => 2,
+                'user_id' => $getId[0]->id]
+            );
+
+            $addNotificationOperation->save();
+           
+        }
+
 		return $update;    
 	}
 
@@ -238,16 +278,17 @@ class SignUpController extends Controller
 
        
         $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-                ->update($data); 
+                ->update($data);  
 
-        if($update) {
-            $arrData = array('total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id'));
+        if($update) {         
+
+          
+            $arrData = ['total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id')];
             return $arrData;
         } else {
-            $update = false;
-        }
-                
-        return $update;
+            return $update;
+        }               
+      
     }
 
 
@@ -266,9 +307,7 @@ class SignUpController extends Controller
         return view('thank_you_signup')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Thank You"]); 
     }
 
-    public function signinModal()
-    {
-      
+    public function signinModal() {      
         return view('sign_in');
     }
 }
