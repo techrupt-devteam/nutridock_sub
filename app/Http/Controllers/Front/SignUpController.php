@@ -265,5 +265,11 @@ class SignUpController extends Controller
 
         return view('thank_you_signup')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Thank You"]); 
     }
+
+    public function signinModal()
+    {
+      
+        return view('sign_in');
+    }
 }
 ?>

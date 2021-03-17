@@ -12,59 +12,7 @@
 	max-width: 100%
 }
 </style>
-<div id="footer-wrapper">
-	<footer id="footer">
-		<div class="container">
-			<div class="row mb-60">
-				<div class="col-lg-4 col-md-12 text-center text-md-left">
-					<a href="index.php"><img src="{{url('')}}/public/front/img/logo-white.svg" alt="Nutridock Restaurant & Catering" style="max-width:100px"></a>
-					<p class="text-center text-md-left" style="color:#eee;font-size:14px;">We are here to help you make the shift from restrictive dieting to mindful eating, in a way that is easy and enjoyable.
-					</p>
-					<ul class="mt-3 p-0 social-links">
-						<li><a href="https://www.facebook.com/nutridock0/" target="_blank"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="https://www.instagram.com/nutri_dock/?igshid=1iz93rjouag24" target="_blank"><i class="fa fa-instagram"></i></a></li>
-					</ul>
-					
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="widget-theme-wrapper">
-						<div class="widget" id="mwt_recent-2">
-							<h3 class="widget-title">Contact Us</h3>
-							<ul class="contact-info-list pl-0 text-left">
-								<li class="media mb-10 media.inline-block">
-									<div class="media-left"><i class="color-main2 fa fa-map-marker"></i></div>
-									<div class="media-body darklinks mt-0">Nutridock, Store B-17,MIDC Ambad, Nashik, Next To Seva Nexa Service Center, Maharashtra 422010</div>
-								</li>
-								<li class="media mb-10 media.inline-block">
-									<div class="media-left"><i class="color-main2 fa fa-envelope-o"></i></div>
-									<div class="media-body darklinks mt-0">customercare@nutridock.com</div>
-								</li>
-								<li class="media mb-10 media.inline-block">
-									<div class="media-left"><i class="color-main2 fa fa-phone"></i></div>
-									<div class="media-body darklinks mt-0">+91 7447725922</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-5 col-sm-6 fadeInRight wow">
-					<div class="widget-theme-wrapper" style="overflow:hidden">
-						<div class="widget" id="mwt_recent-2">
-							<h3 class="widget-title">Newsletter</h3>
-							<p class="mb-3" style="color:#ddd">Enter Email here to be updated. We promise not to send you spam!</p>
-							<form action="{{url('/')}}/subscribe" class="form-inline newsletter" method="post" onsubmit="return submitUserForm1()">{{csrf_field()}}
-								<input class="email" type="email" name="email" placeholder="Subscribe to our newsletter" required>
-								<br>
-								<br>
-								<input class="submit" type="submit" value="Submit">
-							</form>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-</div>
+
 <div id="copyright-container">
 	<div class="container">
 		<div class="row">
@@ -115,12 +63,17 @@
 <script src="{{url('')}}/public/front/vendor/venobox/venobox.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script src="{{url('')}}/public/front/js/main.js"></script>
+<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+
+
 <!-- Parsley -->
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/parsley.js"></script>
 <script>
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip();
 	setNavigation();
+
 });
 
 function setNavigation() {

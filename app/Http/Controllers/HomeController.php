@@ -47,18 +47,18 @@ class HomeController extends Controller
         $data=[];
         $data['seo_title'] = "Home";
 
-         /*Recent Data*/
+        /*Recent Data*/
         $recent_data = [];
-        $recent_value     = \DB::table('blog')
+        $recent_value = \DB::table('blog')
                         ->orderby('id','DESC')
                         ->limit(3)
                         ->get();
-        if($recent_value)
-        {
+
+        if($recent_value) {
             $recent_data = $recent_value->toArray();
         }
-        $data['recent_data']  = $recent_data;
-       
+
+        $data['recent_data']  = $recent_data;       
         return view('dashboard',$data);
     }
 

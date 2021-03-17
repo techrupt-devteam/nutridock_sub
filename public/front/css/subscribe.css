@@ -85,8 +85,8 @@ font-weight: 700;
 .ltx-icon.bg-main {
    width: 130px;
     height: 130px;
-    background-color: #0185d0;
-    border: 1px solid #0185d0;
+    background-color: #8FC741;
+    border: 1px solid #8FC741;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -118,11 +118,11 @@ font-weight: 700;
 	font-weight: 800;
 	font-size: 18px;
 	line-height: 1.3em;
-	color: #3c281d;
+	color: #8FC741;
 	text-transform: capitalize;
 }
 .section.bg-green {
-    padding: 70px 0px;
+    padding: 50px 0px;
 }
 .ltx-block-icon .in {
     text-align: center;
@@ -151,7 +151,7 @@ font-weight: 700;
     font-size: 35px;
     text-align: center;
     font-weight: 600;
-    color: #3c281d;
+    color: #1c2a39;
 }
 .What-you-get{
 	background-image: url(../img/bg-pattern-1.jpeg);
@@ -365,7 +365,7 @@ font-weight: 700;
     background-image: url(../img/bg-pattern-1.jpeg);
 }
 .bg-green{
-    background-color: #512F1DCC;
+    background-color: #8FC741;
     background-image: url(../img/footer.png);
     background-attachment: fixed;
 }
@@ -466,7 +466,7 @@ color: inherit;
     margin-top: 0px;
     margin-bottom: 16px;
     padding-bottom: 0px;
-    color: #3c281d;
+    color: #8FC741;
     font-size: 2rem;
     line-height: 1.16em;
     font-weight: 600;
@@ -563,6 +563,7 @@ color: inherit;
     background-size: cover;
     background-repeat: no-repeat;
     height: 98%;
+    border-radius: 6px;
 }
 .new-meal-cal-and-btn-div.fit {
     display: -webkit-box;
@@ -607,8 +608,8 @@ color: inherit;
 }
 .btn-darkblue{
     color: #fff;
-    background-color: #0185D0;;
-    border-color: #0185D0;
+    background-color: #8FC741;;
+    border-color: #8FC741;
     letter-spacing: 0.6px;
     font-family: "Open Sans", sans-serif !important;
 }

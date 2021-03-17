@@ -49,48 +49,36 @@
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
       <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
-   
-     
-        <noscript>
-          <img height="1" width="1" style="display:none" 
-               src="https://www.facebook.com/tr?id=787474255350064&ev=PageView&noscript=1"/>
-        </noscript>
-        <!-- End Facebook Pixel Code -->
    </head>
-   <body>
-  
+   <body> 
+    <header class="fixed-top"id="header">
+    <div class="align-items-center container d-flex">
+    <a href="{{url('')}}/subscribe-info"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> </a>
+    <nav class="d-none d-lg-block ml-auto nav-menu">
+        <ul class="nav">
+            <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
+            <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
+            <li><a href="{{url('')}}/about">About</a></li>
+            <li><a href="{{url('')}}/menu">Menu</a></li>
+            
+            <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
+            <li><a href="{{url('')}}/faq">FAQ</a></li> -->
+            <li><a href="{{url('')}}/contact">Contact</a></li>
+            
+            <li class="under-line-none">
+            <a 
+            id="signIn"
+            data-toggle="modal" 
+            data-target="#login" 
+            data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
+            Login</a></li>          
+        </ul>
+    </nav>
+    </div>
+    <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-      
-      <header class="fixed-top"id="header">
-         <div class="align-items-center container d-flex">
-            <a href="{{url('')}}/subscribe-info"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> </a>
-            <nav class="d-none d-lg-block ml-auto nav-menu">
-               <ul class="nav">
-                  <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
-                  <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
-                  <li><a href="{{url('')}}/about">About</a></li>
-                  <li><a href="{{url('')}}/menu">Menu</a></li>
-                  
-                  <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
-                  <li><a href="{{url('')}}/faq">FAQ</a></li> -->
-                  <li><a href="{{url('')}}/contact">Contact</a></li>
-                  
-                  <li class="under-line-none">
-                  <a 
-                  id="signIn"
-                  data-toggle="modal" 
-                  data-target="#login" 
-                  data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
-                  Login</a></li>
-                  <li class="under-line-none"><a  data-toggle="modal" data-target="#login" class="btn btn-outline-success text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none" >Login</a></li>
-                  <!-- <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li> -->
-               </ul>
-            </nav>
-         </div>
-         <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      </header>
-      @include('sign_in')
+</header>
 
 
 

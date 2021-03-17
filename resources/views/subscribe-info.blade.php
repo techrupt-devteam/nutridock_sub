@@ -1,4 +1,6 @@
-@extends('layouts.master') @section('content') 
+@extends('layouts.master') 
+@section('content') 
+
 <link rel="stylesheet" href="{{url('')}}/public/front/css/subscribe.css" />
 <main>
    <div id="demo" class="carousel slide" data-ride="carousel">
@@ -40,8 +42,8 @@
                       </a>
                     </div>                 
                      <div class="col-12">                    
-                       <div class="input-group mx-auto" style="max-width: 460px;">
-                           <input type="text" class="form-control pincode" maxlength="6" placeholder="Pincode"  data-parsley-type="digits" data-parsley-length="[6,6]" data-parsley-zip="in" data-parsley-errors-container="#zip-errors" name="pincode" id="pincode" required>
+                        <div class="input-group mx-auto" style="max-width: 460px;">
+                           <input type="text" class="form-control pincode" maxlength="6" placeholder="Pincode"  data-parsley-type="digits" data-parsley-length="[6,6]" data-parsley-zip="in" data-parsley-errors-container="#zip-errors" name="pincode" id="pincode" required="required" autocomplete="off">
                            <div class="input-group-append">
                               <span class="input-group-text btn btn-darkblue">
                               <button type="button" value="button" class="text-white btn get-start-btn" onclick="chkValidPin()">Get Started</button>
@@ -115,7 +117,7 @@
    <section class="section bg-green">
       <!-- bg-default -->
       <div class="container">
-         <h2 class="title-style-3 mb-3 font-weight-bold"style="margin-left: -8px;"> Menu Highlights </h2>
+         <h2 class="title-style-3 text-white mb-3 font-weight-bold"style="margin-left: -8px;"> Menu Highlights </h2>
          <div class="row row-30">
             <!-- justify-content-center align-items-center -->
             <div class="col-md-9 col-lg-4 d-none d-md-block d-lg-block p-2">
@@ -203,9 +205,14 @@
                         <div class="col-sm-6 col-md-4 col-6  pr-2 mb-3 fit-meal-card">
                            <article class="product product-3">
                               <div class="product-body">
-                                 <div class="product-figure"><img src="{{url('')}}/uploads/images/647399ddc20ecf2f6038977eb876c3bca6dd738b.jpg" class="img-fluid" /> </div>
-                                 <h5 class="product-title"><a href="">The Indian Wrestler</a></h5>
-                                 <div class="new-meal-sub-text">Tandoori Cottage Cheese Steak, Coriander, Brown Rice, Kadai Grav</div>
+                                 <div class="product-figure">
+                                 <img src="{{url('')}}/uploads/images/647399ddc20ecf2f6038977eb876c3bca6dd738b.jpg" class="img-fluid" /> 
+                                 </div>
+                                 <h5 class="product-title">
+                                 <a href="">The Indian Wrestler</a></h5>
+                                 <div class="new-meal-sub-text">
+                                 Tandoori Cottage Cheese Steak, Coriander, Brown Rice, Kadai Grav
+                                 </div>
                                  <div class="new-meal-cal-and-btn-div fit">
                                     <div class="carbs-info">
                                        <div class="cal-div gray-color">
@@ -455,6 +462,8 @@
       </div>
    </div>
 </main>
+
+  
 <script type="text/javascript">
 /* check deleivery location*/
 function chkValidPin()
@@ -481,5 +490,6 @@ function chkValidPin()
       }); 
   }  
 }   
+
 </script>
 @endsection
