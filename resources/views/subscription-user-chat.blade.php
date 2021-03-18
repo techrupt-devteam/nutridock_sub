@@ -37,8 +37,8 @@
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
                                   
-                                    <button type='button' class='btn btn-warning btn-sm' title='Chat with Nutrionist' style="font-size: 20px; color: #000" onclick="window.location='goforchat/{{ $value->id }}'"><i class="fa fa-weixin" aria-hidden="true" ></i>
-                                    </button>
+                                    <a href="goforchat/{{ $value->id }}" target="_blank"  class='btn btn-warning btn-sm' title='Chat with Nutrionist' style="font-size: 20px; color: #000"><i class="fa fa-weixin" aria-hidden="true" ></i>
+                                    </a>
                                     </td>
                                     </tr>
                                 @endforeach
