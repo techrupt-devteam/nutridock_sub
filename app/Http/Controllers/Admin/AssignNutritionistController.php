@@ -291,6 +291,7 @@ class AssignNutritionistController extends Controller
                 $subscriber_data = $get_subscriber_data[0];     
 
                 $is_exist = $this->base_users->where('subscriber_dtl_id','=',$subscriber_data->subscriber_dtl_id)->where('is_deleted','<>',1)->count();
+                echo"<br>".$is_exist;
                 if($is_exist)
                 {      
                    $arr_data_users['nutritionist_id']      = $request->input('nutritionist_id');
