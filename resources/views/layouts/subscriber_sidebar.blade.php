@@ -8,7 +8,7 @@
                 <a href="mysubscription" class="link"><i class="fa fa-shopping-basket"></i> My Subscriptions</a> 
             </li>
 			<li class="list-item ">
-				<a href="" class="link"><i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
+				<a href="mealprogram" class="link"><i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
 			</li>
 			<li class="list-item">
                 <a href="{{ URL('') }}/chat" class="link">
