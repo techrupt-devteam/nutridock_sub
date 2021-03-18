@@ -1,4 +1,14 @@
-<!-- The Modal -->
+
+<style>
+.parsley-required{
+  color: #f00;
+  font-weight: 400;
+  font-size: 13px;
+  list-style:none;
+  padding:0px;
+}   
+
+</style>
 <div class="modal" id="signinModal" data-keyboard="false" data-backdrop="static">
    <div class="modal-dialog modal-lg modal-dialog-centered">
      <div class="modal-content">
@@ -25,6 +35,7 @@
             <div class="col-xs-12 col-md-7 align-self-center">
               <div class="login-inner-form">
                 <div class="details">
+                 
                   <h3 class="text-center d-none d-md-block">Sign into your account</h3>
                   <div class="login-logo d-none-md d-lg-none text-center"> <a href="javascript:void(0)"> 
                      <img src="{{url('')}}/public/front/img/logo.png" class="login-logo" style="max-width: 75px;"> 
@@ -32,7 +43,7 @@
                   </div>
                   <div class="">
                     <div class="login-box-body">
-                      <form method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off" id="frmSignIn">
+                      <form method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off" id="frmSignIn" data-parsley-validate="">
                       {!! csrf_field() !!}
                         <div class="title-login">
                            <label class="">Register phone</label>
@@ -40,7 +51,7 @@
                         </div>
                         <div class="form-group mx-auto" style="max-width: 258px;">
                           <input type="text" id="mobile" name="mobile" class="form-control" placeholder="xxx-xxx-4560 " autocomplete="nope" maxlength="10" 
-                          style="padding-left: 42px;">
+                          style="padding-left: 42px;" required="required">
                           
                         <span class="form-control-feedback">+91</span>
                      </div>
@@ -69,16 +80,29 @@
                         <div class="row ">
                           <div class="col-sm-6 mx-auto">
                             <div class="position-relative width-120 mr-15">
-                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block">Login</button>
+
+                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Login</button>
 
                                <button type="button" name="btnVerify" id="btnVerify" class="btn btn-dark btn-block">Verify</button>
+                              
                             </div>
+                          
                           </div>
+
+                          <div class="col-sm-12 pt-4 text-left">
+                           <div class="alert alert-success" id="signin-alert-success" role="alert" style="font-size:13px" >
+                          
+                           </div>
+                           <div class="alert alert-danger" id="signin-alert-danger" role="alert" style="font-size:13px" >
+                          
+                           </div>
+                           </div> 
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -86,14 +110,20 @@
        </div>         
     </div>
 </div>
-
+ 
 <script>
 $(document).ready(function(){
     $("#btnVerify").hide();
+    $("#error_msg").hide();
+    $("#loginspinner").hide();
+    $('#signin-alert-success').hide();
+    $('#signin-alert-danger').hide();
+    
 });
 
 
 $('.otp-textbox').find('input').each(function() {
+   
 	$(this).attr('maxlength', 1);
 
 	$(this).on('keyup', function(e) {
@@ -120,22 +150,45 @@ $('.otp-textbox').find('input').each(function() {
 });
 
 $("#btnSignIn").click(function() {
-   $("#btnSignIn").hide();
-    $.ajax({
+  
+   if($('#frmSignIn').parsley().validate())
+   {
+      $("#loginspinner").show();
+      $.ajax({
         type: "POST",
         url: "{{ URL::to('/') }}/check-login",
         data: $("#frmSignIn").serialize(),
-        success: function (data) {   
-           if(data == 'success') {
+        success: function (data) { 
+           if(data == 'success') {       
+               $('#signin-alert-success').html(' <b>OTP sent to your given "Mobile Number" & your "Regitsered Email" at Nutridock Fit.</b>');       
+               $('#signin-alert-success').show();
+               window.setTimeout(function() {
+                  $("#signin-alert-success").fadeTo(500, 0).slideUp(500, function(){
+                     $(this).remove(); 
+                  });
+               }, 3000);
+
                $("#btnSignIn").hide();
-               $("#btnVerify").show();
-               
+               $("#btnVerify").show();              
+           } else  if(data == 'false') {
+               $('#signin-alert-danger').html(' <b>Invalid mobile number, please try again with your Regitsered "Mobile No" at Nutridock Fit.</b>');   
+               $('.alert-danger').show();
+
+               window.setTimeout(function() {
+                  $("#signin-alert-danger").fadeTo(500, 0).slideUp(500, function(){
+                     $(this).remove(); 
+                  });
+               }, 3000);
+
+               $("#loginspinner").hide();
            }
         },
         error: function (data) {        
             return false;
         },
     });
+   }
+   
 });
 
 
@@ -143,15 +196,17 @@ $("#btnSignIn").click(function() {
 $("#btnVerify").click(function() {
    $("#btnVerify").show();
    $("#btnSignIn").hide();
+
     $.ajax({
         type: "POST",
         url: "{{ URL::to('/') }}/check-otp",
         data: $("#frmSignIn").serialize(),
         success: function (data) {   
-           if(data) {
+           if(data == 'true') {
             window.location.href = "{{ URL::to('/') }}/dashboard";
-           } else {
+           } else {            
               alert("Invalid otp");
+               return false;
            }
         },
         error: function (data) {        
