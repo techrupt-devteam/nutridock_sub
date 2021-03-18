@@ -130,18 +130,24 @@ Route::post('/check-otp', 						'Auth\LoginController@checkOtp');
 Route::group(['middleware' => 'subscriber'], function () {
 	// Only authenticated users may access this route...
 	Route::get('/dashboard', 					'Front\SubscriptionUserController@index');
-	Route::get('/mysubscription', 				'Front\SubscriptionUserController@mySubscription');
+	Route::get('/mysubscription', 				'Front\SubscriptionUserController@mySubscription');	
 	Route::get('/profile', 						'Front\SubscriptionUserController@index');
 	Route::post('/details',	  					'Front\SubscriptionUserController@subscriber_details');
 	//Route::post('/chat/{id}',	  				'Front\SubscriptionUserController@subscriber_details');
 	Route::get('/chat', 						'Front\SubscriptionUserController@getChatList');
-	Route::get('/goforchat/{id}', 					'Front\SubscriptionUserController@chatWithNutrionist');
+	Route::get('/goforchat/{id}', 				'Front\SubscriptionUserController@chatWithNutrionist');
 
 	Route::get('/logout', function(){
 		Auth::logout();		
 		Session::flush();
 		return Redirect::to('subscribe-info');
 	});
+
+	//route for meal program
+	Route::get('/mealprogram', 					'Front\UserMealProgramController@mealProgram');
+	Route::get('/subscriber_calendar', 			'Front\UserMealProgramController@getCalendar');
+
+	
 	
 });
 

@@ -71,6 +71,10 @@ class SubscriptionUserController extends Controller
         return view('subscription-user-plans')->with(['data' => $data, 'seo_title' => "My Subscription"]); 
     }
 
+
+  
+
+
     // Subscriber Details 
     public function subscriber_details(Request $request)
     {
