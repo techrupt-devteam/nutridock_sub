@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Arr;
-
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 //use App\Http\Controllers\DateTime;
 use App\Http\Requests;
@@ -260,24 +260,155 @@ class SubscriptionUserController extends Controller
     public function chatWithNutrionist(Request $request)
     {       
        
-        $data = Auth::loginUsingId($request->id)->toArray();
+      $subscriber_dtl_id   = $request->id;
+      $subscriber_login_id = DB::table('users')->where('id','=',$request->id)->select('email','name','id','subscriber_dtl_id')->get()->toArray();
+      $subscriber_login_id=$subscriber_login_id[0];
+
+      $arr_user = \DB::table('users')->where('email',$subscriber_login_id->email)->where('is_deleted','<>',1)->first();
         
+        if($arr_user->is_active == 0 & $arr_user->roles!='admin')
+        {
+            Session::flash('error', '!! You account has been deactivated please contact Nutridock Admin !!');
+            return \Redirect::back();
+        }
+
         $credentials = [
-          'email'    => $request->id."_".$data['email'],
-          'password' => Session::get('subscriber_otp'),
-       ]; 
-      
+            'email'    => $subscriber_login_id->email,
+            'password' => Session::get('subscriber_otp'),
+        ];
+        
+        $Auth = Auth::guard('web')->attempt($credentials);
 
-      //dd($user);
-      $Auth = Auth::guard('web')->attempt($credentials);
-      $user = \Sentinel::authenticate($credentials);
-       if(!$user) {
-        \Sentinel::login($user);
-       }
-     
+     // dd($Auth);
+        //get_role_permission  
+        if($arr_user->roles!='admin'){
+            $get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles])->select('permission_access')->get()->toarray();
+            //$get_permission_data = \DB::table('permission')->where(['role_id'=>$arr_user->roles,'type_id'=>$arr_user->type_id])->select('permission_access')->get()->toarray();
+            if(!empty($get_permission_data))
+            {
+                $permission_arr = explode(",",$get_permission_data[0]->permission_access);
+            }
+            //get module list type  wise 
+            //$get_module_data = \DB::table('module')->where(['type_id'=>$arr_user->type_id])->get()->toarray();
+            
+             $get_module_data = \DB::table('module')->get()->toarray();
+             $get_parent_menu = \DB::table('module')->where('parent_id','=',0)->get()->toarray();
 
-      dd($user);
-      return redirect('/admin/chatify');
+             $parent_menu = [];
+             $sub_menu = [];
+             foreach ($get_parent_menu as $key1 => $pmvalue) 
+             {
+                 
+                    $parent_menu[$key1][] = $pmvalue->module_name;
+                    $parent_menu[$key1][] = $pmvalue->module_url;
+                    $parent_menu[$key1][] = $pmvalue->module_id;
+                    $parent_menu[$key1][] = $pmvalue->module_url_slug;
+                    
+                    $get_child_menu = \DB::table('module')->where('parent_id','=', $pmvalue->module_id)->get()->toarray();
+                    if(count($get_child_menu)>0)
+                    {   
+                        foreach ($get_child_menu as $key2 => $cmvalue) {
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_id;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][] = $cmvalue->module_name;
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url; 
+                          $sub_menu[$pmvalue->module_name]['menu'][$key2][]  = $cmvalue->module_url_slug; 
+                        }
+                    }
+            }
+        }
+        
+        if(!IS_Null($request->input('city')) && !empty($request->input('city')) && $arr_user->roles=='admin')
+        {
+            if($request->input('city')!= 'all'){
+              $get_city   = \DB::table('city')->where('id','=',$request->input('city'))->first();
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+              
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
+            }
+            else
+            {
+
+              $request->session()->put("login_city_id",$request->input('city'));
+              $request->session()->save();
+            }
+
+        }
+        elseif($arr_user->roles!='admin')
+        {
+              $get_city   = \DB::table('city')->where('id','=',$arr_user->city)->first();
+
+
+              $get_assign_Subscriber_id   = \DB::table('nutri_mst_subcriber_assign')
+                                            ->where('nutritionist_id','=',$arr_user->id)
+                                            ->where('is_deleted','<>',1)
+                                            ->select('subscriber_id')->first();
+           
+              if(!empty($get_assign_Subscriber_id) && isset($get_assign_Subscriber_id))
+              {
+
+                $subscribers = explode(',',$get_assign_Subscriber_id->subscriber_id);                              
+                $request->session()->put("assign_subscriber",$subscribers);
+                $request->session()->save(); 
+              }
+
+
+
+              $request->session()->put("login_city_name",$get_city->city_name);
+              $request->session()->save();
+              $request->session()->put("login_city_id",$arr_user->city);
+              $request->session()->save();
+              $request->session()->put("login_city_state",$get_city->state_id);
+              $request->session()->save(); 
+                
+        }
+
+
+        //dd(Session::getId());
+        $user = \Sentinel::authenticate($credentials);
+
+        if (!empty($user))
+        {
+            \Sentinel::login($user);
+            //Session::put('user', $arr_user);   
+            $request->session()->put("user",$arr_user);
+            $request->session()->save();  
+            if($arr_user->roles!='admin'){
+
+                if(!empty($get_permission_data))
+                {
+                  $request->session()->put("permissions",$permission_arr);
+                  $request->session()->save(); 
+                }else
+                {
+                  $request->session()->put("permissions",[]);
+                  $request->session()->save();  
+                }
+                
+                $request->session()->put("module_data",$get_module_data);
+                $request->session()->save();
+
+                $request->session()->put("parent_menu",$parent_menu);
+                $request->session()->save();
+                
+                $request->session()->put("sub_menu",$sub_menu);
+                $request->session()->save();
+               
+                /* $request->session()->put("module_type",$get_module_type);
+                $request->session()->save();*/
+
+            }
+
+            return redirect('admin/chatify');
+        }
+        else
+        {
+            Session::flash('error', 'Error! Incorrect username or password.');
+            return \Redirect::back();
+        }
     }
 }
 ?>

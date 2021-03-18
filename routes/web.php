@@ -88,7 +88,7 @@ Route::get('/test', function () {
 
 /* @END: Front End Routes */
 
-Route::get('admin/', 							'Admin\AuthController@login');
+//Route::get('admin/', 							'Admin\AuthController@login');
 //Route::get('/', 			   					'Admin\AuthController@login');
 Route::get('admin/login', 						'Admin\AuthController@login');
 Route::post('admin/login_process', 				'Admin\AuthController@login_process');
