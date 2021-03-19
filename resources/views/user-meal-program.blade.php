@@ -62,8 +62,52 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery/dist/jquery.min.js"></script>
+<script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery-ui/jquery-ui.min.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 <script>
 	$('#dtable').DataTable();  
 
+<<<<<<< HEAD
+=======
+//function to show details of subscriber
+function viewDetails(id) { 
+    var id  = id ;
+    //alert(id);
+    $.ajax({
+        url: "{{url('')}}/subscriber_calendar",
+        type: 'get',
+        data: {sid :id },
+        success: function (data) 
+        {
+        $('#content').html(data);
+        }
+    });
+    return false;
+} 
+
+// function getCalender(){
+//     var subscriber_id =$('#subscriber_id').val();
+//     $.ajax({
+//       type: "POST",
+//       url: "{{url('/admin')}}/getMealDetails",
+//       data: {
+//         subscriber_id: subscriber_id
+//       }
+//     }).done(function(data) {
+ 
+//     $('#old_calender').hide();
+//     $('#new_calender').html(data);
+//   });
+// }  
+>>>>>>> e035aee6e1fb06ac61cc3b94e6e71a9a2852c41a
 </script>
 @endsection

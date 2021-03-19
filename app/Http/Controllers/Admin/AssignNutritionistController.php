@@ -187,10 +187,37 @@ class AssignNutritionistController extends Controller
                 else{
                     
                     $msg++;
-                }
-               }
-            
+                } 
+                
+                    //send notification 
+                    $notitification_id = $request->input('nutritionist_id');
+                    $nutritionist_dt   = \DB::table('users')->where('id','=',$request->input('nutritionist_id'))
+                    ->first();
+                    $subscriber_id     = $subscriber_data->subscriber_id;
+                    $operation_details = \DB::table('users')->where('area','=',$nutritionist_dt->area)->where('roles','=',2)->first();
 
+                    // notification send    
+                    $notify_arr1['message']            = ucfirst($subscriber_data->subscriber_name).' subscriber has been assigned to you!';
+                    $notify_arr1['users_role']         = 1 ; 
+                    $notify_arr1['user_id']            = $nutritionist_dt->id; 
+                    $assign_nutritionist_notification = $this->base_notification->create($notify_arr1);
+
+                    // subscriber send    
+                    $notify_arr2['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber '.$subscriber_data->subscriber_name;
+                    $notify_arr2['users_role']         = "subscriber" ; 
+                    $notify_arr2['user_id']            = $subscriber_id; 
+                    $assign_subscriber_notification   = $this->base_notification->create($notify_arr2);
+
+                    // operation send      
+                    $notify_arr3['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber '.$subscriber_data->subscriber_name;
+                    $notify_arr3['users_role']         = 2 ; 
+                    $notify_arr3['user_id']            = $operation_details->id; 
+                    $assign_operation_notification    = $this->base_notification->create($notify_arr3);
+
+
+
+
+               }
             } 
             if($msg==0) 
             {
@@ -320,6 +347,33 @@ class AssignNutritionistController extends Controller
                         $arr_dat['completed'] = 1;   
                         $activations = \DB::table('activations')->insert($arr_dat);
                     }
+
+
+                    //send notification 
+                    $notitification_id = $request->input('nutritionist_id');
+                    $nutritionist_dt   = \DB::table('users')->where('id','=',$request->input('nutritionist_id'))
+                    ->first();
+                    $subscriber_id     = $subscriber_data->subscriber_id;
+                    $operation_details = \DB::table('users')->where('area','=',$nutritionist_dt->area)->where('roles','=',2)->first();
+
+                    // notification send    
+                    $notify_arr1['message']            = ucfirst($subscriber_data->subscriber_name).' subscriber has been assigned to you!';
+                    $notify_arr1['users_role']         = 1 ; 
+                    $notify_arr1['user_id']            = $nutritionist_dt->id; 
+                    $assign_nutritionist_notification = $this->base_notification->create($notify_arr1);
+
+                    // subscriber send    
+                    $notify_arr2['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber'.$subscriber_data->subscriber_name;
+                    $notify_arr2['users_role']         = "subscriber" ; 
+                    $notify_arr2['user_id']            = $subscriber_id; 
+                    $assign_subscriber_notification   = $this->base_notification->create($notify_arr2);
+
+                    // operation send      
+                    $notify_arr3['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber'.$subscriber_data->subscriber_name;
+                    $notify_arr3['users_role']         = 2 ; 
+                    $notify_arr3['user_id']            = $operation_details->id; 
+                    $assign_operation_notification    = $this->base_notification->create($notify_arr3);
+                    
                      
                 } 
         }
@@ -327,10 +381,7 @@ class AssignNutritionistController extends Controller
         /*$data['message'] = "New Subscriber asssign";
         $this->pusher->trigger('notify-channel', 'App\\Events\\Notify', $data);*/
 
-        $notify_arr['message']    = 'New subscriber has been assigned to you!';
-        $notify_arr['users_role'] = 1 ; 
-        $notify_arr['user_id']    = $request->input('nutritionist_id'); 
-        $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+      
 
 
         Session::flash('success', $this->Update );

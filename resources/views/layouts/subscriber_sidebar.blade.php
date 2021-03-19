@@ -1,6 +1,9 @@
 <div class="col-md-4 col-lg-3">
 	<div class="user-left-nav">
 		<ul class="list-unstyled user-nav-list">
+			<li class="list-item {{ Request::is('notification_sub') ? 'active' : '' }}">
+				<a href="notification_sub" class="link"><i class="icon fa icon fa-bell"></i>Notification <span class="notif-count circle_notification"></span></a>
+			</li>
 			<li class="list-item {{ Request::is('profile') ? 'active' : '' }}">
 				<a href="profile" class="link"> <i class="icon fa icon fa-user-circle-o"></i>My Profile</a>
 			</li>
@@ -12,8 +15,9 @@
 			</li>
 			<li class="list-item {{ Request::is('chat') ? 'active' : '' }}">
                 <a href="{{ URL('') }}/chat" class="link">
-					<i class="fa fa-weixin"></i> Chat with Nutrionist</a> 
-            </li>	
+				<i class="fa fa-weixin"></i> Chat with Nutrionistc </a> 
+            </li>
+            	
 			<li class="list-item"><span class="link">
                 <i class="icon fa icon fa-sign-out"></i>
                 <a class="dropdown-action-item" href="{{ URL('') }}/logout">
@@ -23,3 +27,19 @@
 		</ul>
 	</div>
 </div>
+<style>
+.circle_notification {
+    width: 20px  !important;
+    height: 20px !important;
+    position: absolute !important;
+    background-color: #8bc34a !important;
+    font-size: 12px !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 1.8 !important;
+    font-weight: 600 !important;
+    margin-left: 11px !important;
+    margin-top: 1px !important;
+   
+}
+</style>

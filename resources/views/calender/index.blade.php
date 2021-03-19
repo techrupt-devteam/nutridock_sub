@@ -1,58 +1,30 @@
-  <div class="content-wrapper">
-    <section class="content">
-      <div class="row">
 
-        <div class="col-md-12">
-          
-          <!-- /. box -->
-          <div class="box box-solid">
-            <div class="box-header with-border" style="background-color: #66b31e4d;">
-              <h3 class="box-title">View Subscriber Meal Plan</h3>
-            </div>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-info alert-dismissible">
-                      <h4><i class="fa fa-sticky-note"></i> Note!</h4>
-                      <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>
-                    </div>
-                </div>
-              </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    
-                  </div>
-              <!-- <div class="input-group">
-                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-                <div class="input-group-btn">
-                  <button id="add-new-event" type="button" class="btn btn-primary btn-flat">Add</button>
-                </div>
-              </div> -->
-            </div>
-          </div>
-        </div>
        <!--------------Calender Data Load Div------------->
-        <div class="row" id="old_calender">
-          <div class="col-md-12">
-          
-          <div class="box box-primary">
-            <div class="box-body no-padding">
-              <!-- THE CALENDAR -->
-              <div id="calendar_old"></div>
+
+   <?php if($data['datacount']==0){?>
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-body"><br/>
+            <div class="alert alert-danger alert-dismissible">
+              <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+              <p>Meal program is not created for this user, contact Nutritionist.</p>
             </div>
-            <!-- /.box-body -->
           </div>
-          <!-- /. box -->
         </div>
-        <!-- /.col -->
       </div>
-       <div class="row" id="new_calender">
-       </div>
+   <?php } else { ?>
+
+   <div class="col-md-12" >
+      <div class="box box-primary">
+          <div class="box-body" style="padding:20px !important;">
+             
+              <div id="calendar"></div>
+             
+          </div>
       </div>
+    </div> 
+  <?php } ?>
         
-      <!-- /.row -->
-    </section>
-  </div>
 <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery/dist/jquery.min.js"></script>
 <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery-ui/jquery-ui.min.js"></script>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css' rel='stylesheet' />
@@ -65,84 +37,7 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 
-<script>
-
-<?php  if(isset($login_city_state) && !empty($login_city_state)) {?>
- getCity();
-
- getSubscriber1();
- function  getSubscriber1(){
-   //   alert("test");
-      $.ajax({
-        type: "POST",
-        url: "{{url('/admin')}}/getSubscriber",
-        data: {
-          state: <?php echo $login_city_state?>,
-          city : <?php echo $login_city_id?>
-        }
-      }).done(function(data) {
-           $("#subscriber_id").html(data);
-           $('#subscriber_id').removeAttr("disabled");
-          
-      });
-    }  
-
-    $("#state_id").attr("disabled", true);
-
-<?php }?>
-
-//City  load 
-  function  getCity(){
-      var state_id = $("#state_id").val();
-      $.ajax({
-        type: "POST",
-        url: "{{url('/admin')}}/getCity",
-        data: {
-          state: state_id
-        }
-      }).done(function(data) {
-           $("#city_id").html(data);
-           $('#city_id').removeAttr("disabled")
-           <?php  if(isset($login_city_state) && !empty($login_city_state)) {?>
-           $('#city_id').val(<?php echo $login_city_id; ?>);
-               $("#city_id").attr("disabled", true);
-         <?php } ?>
-      });
-    } 
-  
-  //Subscriber load
-  function  getSubscriber(){
-      var city_id = $("#city_id").val();
-      var state_id = $("#state_id").val();
-      $.ajax({
-        type: "POST",
-        url: "{{url('/admin')}}/getSubscriber",
-        data: {
-          state: state_id,
-          city : city_id
-        }
-      }).done(function(data) {
-           $("#subscriber_id").html(data);
-           $('#subscriber_id').removeAttr("disabled")
-      });
-    }  
- //
-  function getCalender(){
-    var subscriber_id =$('#subscriber_id').val();
-    $.ajax({
-      type: "POST",
-      url: "{{url('/admin')}}/getMealDetails",
-      data: {
-        subscriber_id: subscriber_id
-      }
-    }).done(function(data) {
- 
-    $('#old_calender').hide();
-    $('#new_calender').html(data);
-  });
-}  
-
-
+<script type="text/javascript">
 
    $(function () {
    
@@ -166,28 +61,68 @@
         }
           init_events($('#external-events div.external-event'))
      
-        var date = new Date()
+        /*var date = new Date()
 
         var d    = date.getDate(),
             m    = date.getMonth(),
             y    = date.getFullYear()   
-          
-        $('#calendar_old').fullCalendar({
+       */
+        $('#calendar').fullCalendar({
+
+         
           header    : {
             left    : 'prev,next',
             center  : 'title',
             right   : 'month'
           },
+
           buttonText: {
             today   : 'today',
             month   : 'month',
-            },
-       
-         
+          },
+        
           events    : [ 
 
-          ],
+          <?php for($i=1;$i<=$data['days'];$i++) {
+             if(isset($data['calender_data'][$i]) && !empty($data['calender_data'][$i])){
+               $count=count($data['calender_data'][$i]);
+            
+             if($count>0){ 
+              for($j=0 ;$j<$count;$j++){ 
+               
 
+                ?>
+          
+            {
+              title          : '<?php echo $data['calender_data'][$i][$j]['title'];?>',
+              start          : '<?php echo date('Y',strtotime($data['calender_data'][$i][$j]['start']));?>,<?php echo date('m',strtotime($data['calender_data'][$i][$j]['start']));?>,<?php echo date('d',strtotime($data['calender_data'][$i][$j]['start']));?>',
+             
+              backgroundColor: '<?php echo $data['calender_data'][$i][$j]['backgroundColor'];?>', 
+              tooltip        : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
+              description        : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
+              borderColor    : '<?php echo $data['calender_data'][$i][$j]['borderColor'];?>' 
+            },
+            
+          <?php
+              }
+             }
+            }
+           }
+          ?>
+          
+
+          ],
+            
+
+          eventRender: function(eventObj, $el) {
+            $el.popover({
+              title: eventObj.title,
+              content: eventObj.description,
+              trigger: 'hover',
+              placement: 'top',
+              container: 'body'
+            });
+          },
           editable  : false,
           droppable : false,
 
@@ -195,11 +130,37 @@
      
       })
 
- $('.select2').select2();
 </script>
 <style type="text/css">
-  .fc-time{
-    display: none !important;
-  }
+.fc-time{
+   display: none !important;
+}
+.popover-title
+{  background-color: #f3f212;font-weight: 600;
+   text-align: center;
+}
+.fc-day-grid-event {
+    text-align: center;
+    padding: 6px !important;
+    max-width: 79%;
+    text-transform: uppercase;
+    color: #000;
+    margin: 2px auto !important;
+}
+.popover-title {
+    background-color: #66b31e !important;
+    border-radius: 4px 4px 0 0  !important;
+    color: #FFF !important;
+}
+.popover{
+    border: 1px solid #4caf50;border-radius: 4px !important;
+}
+.fc-scroller{
+    /* height: 516px; */
+    overflow: none !important;
+}
+.fc-scroller.fc-day-grid-container {
+    overflow: unset !important;
+    height: auto !important;
+}
 </style>
-

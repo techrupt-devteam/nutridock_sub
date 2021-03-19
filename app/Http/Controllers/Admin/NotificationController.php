@@ -87,6 +87,7 @@ class NotificationController extends Controller
         $assign_subscriber      = Session::get('assign_subscriber'); 
         $user                   = \Sentinel::check();
         $login_user_details     = Session::get('user');
+      
         $user_role              = $login_user_details->roles;
         
         /*if($user_role=='admin' && $login_city_id !="all")
@@ -109,12 +110,14 @@ class NotificationController extends Controller
           
 
         $data                   =  \DB::table('nutri_notification')
+                                   ->where('users_role','=',$user_role)
                                    ->where('user_id','=',$login_user_details->id)
                                    ->where('is_active','=',1)
                                    ->orderBy('notification_id', 'DESC')
                                    ->get();
         
         $count                  = \DB::table('nutri_notification')
+                                  ->where('users_role','=',$user_role)
                                   ->where('user_id','=',$login_user_details->id)
                                   ->where('is_active','=',1)
                                   ->get()->count();
@@ -146,6 +149,79 @@ class NotificationController extends Controller
         $data['url_slug']               = $this->url_slug;
         $data['title']                  = $this->title;
         return view($this->folder_path.'index',$data);
+    }
+
+    public function notification_subscriber(Request $request)
+    {
+       
+        $data   =  \DB::table('nutri_notification')
+                    ->where('user_id','=',Session::get('subscriber_id'))
+                    ->where('users_role','=',"subscriber")
+                    ->where('is_active','=',1)
+                    ->orderBy('notification_id', 'DESC')
+                    ->get();
+
+        $count  = \DB::table('nutri_notification')
+                    ->where('user_id','=',Session::get('subscriber_id'))
+                    ->where('users_role','=',"subscriber")
+                    ->where('is_active','=',1)
+                    ->get()
+                    ->count();
+         
+
+      
+        $html  = "";
+
+        foreach ($data as $key => $value) {
+
+        $html .= "<li > 
+            <a href='".url('/').'/subscriber_notification/'.$value->notification_id."' style=''>".ucfirst($value->message)."</a>
+            </li>";         
+        }        
+        return $html."#".$count;
+
+    }
+
+    public function subscriber_notification(Request $request)
+    {
+        $notification_id                =  $request->id;
+        $arr_data                       = [];
+        $arr_data['is_active']          = '0';
+        $assign_nutritionist_update     = $this->base_model->where(['notification_id'=>$notification_id])->update($arr_data);
+        $notification_data              = $this->base_model->where(['notification_id'=>$notification_id])->get();
+        $data['notification']           = $notification_data;
+        $data['page_name']              = "Manage";
+        $data['url_slug']               = $this->url_slug;
+        $data['title']                  = $this->title;
+
+        return view('subscription-notification',$data);
+    }
+
+    public function subscriber_index(Request $request)
+    {
+
+
+        
+        $notification_data      =   \DB::table('nutri_notification')->where('user_id','=',Session::get('subscriber_id'))
+                                  ->where('users_role','=','subscriber')
+                                  ->limit(50)
+                                  ->orderBy('notification_id', 'DESC')
+                                  ->get();
+        $arr_data                  = [];
+        $arr_data['is_active']     = '0';   
+
+         \DB::table('nutri_notification')->where(['user_id'=>Session::get('subscriber_id'),'users_role'=>'subscriber'])->update($arr_data);
+
+        $data['notification']      = $notification_data;
+        $data['page_name']         = "Manage";
+        $data['url_slug']          = $this->url_slug;
+        $data['title']             = $this->title;
+        if(count($notification_data) == 0)
+        {
+           Session::flash('warning', "You have not any notification !!");
+        }
+
+        return view('subscription-notification',$data);
     }
 
 }
