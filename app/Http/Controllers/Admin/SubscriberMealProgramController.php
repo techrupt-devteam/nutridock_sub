@@ -64,12 +64,16 @@ class SubscriberMealProgramController extends Controller
           //subscription Plan &  duration id
             $sub_plan_id = $get_subscriber_details->sub_plan_id;
             $duration_id = $get_subscriber_details->duration_id;
-          // default_menu add on subscriber
+           //default_menu add on subscriber
             $get_default_menu = $this->base_default_meal
                               ->where('duration_id','=',$duration_id)
                               ->where('sub_plan_id','=',$sub_plan_id)
                               ->get();
 
+            //subscriber default meal plan array  
+            $get_subscriber_meal_program = explode(',',$get_subscriber_details->meal_type_id);                  
+
+            //dd($get_subscriber_meal_program);
 
              if(!is_null($get_default_menu))
              {
@@ -85,15 +89,18 @@ class SubscriberMealProgramController extends Controller
                     { 
                         foreach ($get_default_menu as $default_value) 
                         {
-                            
-                            $arr_data['day']              = $default_value->day;
-                            $arr_data['sub_plan_id']      = $sub_plan_id;
-                            $arr_data['duration_id']      = $duration_id;
-                            $arr_data['mealtype']         = $default_value->mealtype;
-                            $arr_data['menu_id']          = $default_value->menu_id;
-                            $arr_data['subcriber_id']     = $id;
-                            $arr_data['nutritionist_id']  = $nutritionist_id;
-                            $add_subscriber_default_menu  =  $this->base_subscriber_default_meal->create($arr_data);
+                            //check selected meal plan and set this mealplan on default meal plan
+                            if(in_array($default_value->mealtype,$get_subscriber_meal_program))
+                            { 
+                              $arr_data['day']              = $default_value->day;
+                              $arr_data['sub_plan_id']      = $sub_plan_id;
+                              $arr_data['duration_id']      = $duration_id;
+                              $arr_data['mealtype']         = $default_value->mealtype;
+                              $arr_data['menu_id']          = $default_value->menu_id;
+                              $arr_data['subcriber_id']     = $id;
+                              $arr_data['nutritionist_id']  = $nutritionist_id;
+                              $add_subscriber_default_menu  =  $this->base_subscriber_default_meal->create($arr_data);
+                           }
                         }
                     }  
 
@@ -184,27 +191,42 @@ class SubscriberMealProgramController extends Controller
         $health_details = $this->base_health->create($arr_data);
         if(!empty($health_details))
         {
-            $login_user_details     = Session::get('user');
-            $nutritionist_id        = $login_user_details->id;
-            $subscriber_det         = \DB::table('nutri_dtl_subscriber')->where('subscriber_id','=',$request->input('subscriber_id'))->select('subscriber_name')->first();
+          
+            //notifications
+            $login_user_details       = Session::get('user');
+            $nutritionist_id          = $login_user_details->id;
+
+            //get subscriber details table get information 
+            $subscriber_det           = \DB::table('nutri_dtl_subscriber')->where('id','=',$request->input('subscriber_id'))->first();
+            
+            //operation details 
+            $operation_details        = \DB::table('users')->where('area','=',$login_user_details->area)->where('roles','=',2)->first();
+
+ 
+
             //subscriber  notification
-            $notify_arr['message']    = 'Nutrtionist update meal program!';
-            $notify_arr['users_role'] = 1 ; 
-            $notify_arr['user_id']    = $request->input('subscriber_id'); 
+            $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change health details for subscriber '.$subscriber_det->subscriber_name.'!';
+            $notify_arr['users_role'] = "subscriber" ; 
+            $notify_arr['user_id']    = $subscriber_det->subscriber_id; 
             $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
             //admin notification 
-            $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' update meal program for subscriber '.$subscriber_det->subscriber_name.'!';
+            $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change health details for subscriber '.$subscriber_det->subscriber_name.'!';
             $notify_arr['users_role'] = 'admin' ; 
             $notify_arr['user_id']    = 1; 
             $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+ 
+            //operation manger notification
+            $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change health details for subscriber '.$subscriber_det->subscriber_name.'!';
+            $notify_arr['users_role'] = 2 ; 
+            $notify_arr['user_id']    = $operation_details->id; 
+            $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
-           
+
+            //health udate query             
             $arr_data1               = [];
             $arr_data1['is_active']  = '0';
             $health_details          = $this->base_health->where('subcriber_id','=',$request->input('subscriber_id'))->where('nutritionist_id','=',$request->input('nutritionist_id'))->where('subscriber_health_id','<>',$health_details->id)->update($arr_data1);
-
-
 
             Session::flash('success', $this->Insert);
             return \Redirect::to('admin/add_subscriber_meal_program/'.base64_encode($request->input('subscriber_id')));
@@ -344,12 +366,16 @@ class SubscriberMealProgramController extends Controller
         //notifications
         $login_user_details     = Session::get('user');
         $nutritionist_id        = $login_user_details->id;
-        $subscriber_det         = \DB::table('nutri_dtl_subscriber')->where('subscriber_id','=',$subscriber_id->subcriber_id)->select('subscriber_name')->first();
+        //get subscriber  details
+        $subscriber_det         = \DB::table('nutri_dtl_subscriber')->where('id','=',$subscriber_id->subcriber_id)->first();
+        
+        //operation details 
+        $operation_details        = \DB::table('users')->where('area','=',$login_user_details->area)->where('roles','=',2)->first();
 
         //subscriber  notification
-        $notify_arr['message']    = 'Nutrtionist update meal program menu!';
-        $notify_arr['users_role'] = 1 ; 
-        $notify_arr['user_id']    = $request->input('subscriber_id'); 
+        $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change meal program menu for subscriber '.$subscriber_det->subscriber_name.'!';
+        $notify_arr['users_role'] = "subscriber" ; 
+        $notify_arr['user_id']    = $subscriber_det->subscriber_id; 
         $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
         //admin notification 
@@ -357,6 +383,12 @@ class SubscriberMealProgramController extends Controller
         $notify_arr['users_role'] = 'admin' ; 
         $notify_arr['user_id']    = 1; 
         $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+        //operation manger notification
+          $notify_arr['message']    = 'Nutrtionist '.$login_user_details->name.' change meal program menu for subscriber '.$subscriber_det->subscriber_name.'!';
+          $notify_arr['users_role'] = 2 ; 
+          $notify_arr['user_id']    = $operation_details->id; 
+          $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
         Session::flash('success', $this->Insert);
         return \Redirect::to('admin/add_subscriber_meal_program/'.base64_encode($request->input('subscriber_id')));

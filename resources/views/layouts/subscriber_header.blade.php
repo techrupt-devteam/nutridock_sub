@@ -94,6 +94,11 @@
         padding: 0px;
         overflow: hidden;
         }
+        .notification_ul ul.menu.p-2 {
+          max-height: 200px !important;
+          overflow: auto !important;
+          scrollbar-width: thin !important;
+        }
       </style>
    </head>
    <body> 
@@ -118,7 +123,23 @@
             data-target="#login" 
             data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
             Login</a></li>  -->
-           
+              <li class="dropdown notifications-menu ">
+                <a href="#" class="dropdown-toggle dropdown-notifications" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <input type="hidden" id="notification_count" value="0">
+                  <span class="label label-warning" id="notification_count_span">0</span>
+                </a>
+                <ul class="dropdown-menu notification_ul">
+                   <li class="header p-2" >You have <span class="notif-count">0</span> notifications</li>
+                    <ul class="menu p-2">
+                    </ul>
+                   </li>
+                 </li>
+                   <li class="footer">
+                    <a href="{{url('/admin')}}/manage_notification">View Notification</a>
+                  </li>
+                </ul>
+              </li> 
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account
                     <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -150,7 +171,92 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
-
+<script type="text/javascript">
+    function notification() 
+    { 
+      
+       $.ajax({
+            url: "{{url('/')}}/notification_subscriber",
+            type: 'post',
+           success: function (data) 
+            {
+                var  result =  data.split("#");
+              //  var old_notification = parseInt($('#notification_count').val()) + parseInt(result[1]);
+                var old_notification = result[1];
+                 $('#notification_count').val(old_notification);
+                 $('#notification_count_span').html(old_notification);
+                 $('.notif-count').html(old_notification);
+                 $('.menu').html(result[0]);
+            }
+        });
+    }
+         notification();   
+      /*var timerID = setInterval(function() {
+        notification(); 
+      }, 3000);*/
+</script>
+<style type="text/css">
+  .notification_ul .header {
+    font-size: 14px;
+  }
+  .notification_ul {
+    max-width: 263px;
+    margin-top: 72px !important;
+    transform: none !important;
+   border-radius: 0px;
+}
+.notifications-menu a #notification_count_span {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-color: #8bc34a;
+    font-size: 12px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.8;
+    font-weight: 600;
+    margin-left: -11px;
+    margin-top: -7px;
+}
+.notification_ul li.footer a {
+    color: #034eab;
+    text-align: center;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+.notification_ul li.footer {
+    padding: 1px 0px 6px;
+    background-color: #e9ecef;
+}
+.notification_ul .menu li a {
+    text-transform: capitalize;
+    font-size: 13px !important;
+    font-weight: 400;
+    word-break: normal;
+    white-space: normal !important;
+    color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.nav-menu a:hover #notification_count_span {
+    color: #FFF;
+}
+.notification_ul ul.menu li {
+    border-bottom: 1px solid #8bc34a;
+    padding-bottom: 6px;
+}
+.notification_ul .header {
+    font-size: 14px;
+    background-color: #5eca38;
+    color: #fff;
+    padding: 8px !important;
+    width: 200px;
+    font-weight: 600;
+}
+</style>
 </header>
 
 

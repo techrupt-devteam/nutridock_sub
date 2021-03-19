@@ -151,7 +151,9 @@ Route::group(['middleware' => 'subscriber'], function () {
 	
 });
 
-
+	Route::post('/notification_subscriber',  'Admin\NotificationController@notification_subscriber');
+	Route::get('/subscriber_notification/{id}',  'Admin\NotificationController@subscriber_notification');
+	Route::get('/notification_sub',  	     'Admin\NotificationController@subscriber_index');
 /**********************************************************************************************/
 
 /*******************************@Bhushan Notification Route@***********************************/
