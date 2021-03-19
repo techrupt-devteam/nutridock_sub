@@ -5050,3 +5050,18 @@ font-size:.9375rem;
 		padding-top: 0;
 	}
 }
+.table td {
+    padding: .35rem;
+    vertical-align: top;
+    border-top: 1px dashed #999 !important;
+}
+.table th {
+    padding: .45rem;
+    vertical-align: top;
+    border-top: 1px solid #999 !important;
+	border-bottom: 1px solid #999 !important;
+	background-color: #e1f4d4;
+	color:#218937;
+	text-transform: uppercase;
+	font-weight: 600;
+}

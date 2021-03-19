@@ -27,7 +27,8 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>                    
+                                <tbody>    
+                                             
                                 @foreach($data as $key=>$value)
                                     <tr>
                                     <td>{{ $value->subscriber_name }}</td>
@@ -36,7 +37,7 @@
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
                                     <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
-                                    <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
+                                    <button type='button' class='btn btn-success btn-sm' onclick='location.href="editmealprogram/{{$value->id}}"' title='Edit Meal Program'><i class="icon fa fa-pencil"></i></button>
                                     </td>
                                     </tr>
                                 @endforeach
@@ -64,19 +65,5 @@
 <script>
 	$('#dtable').DataTable();  
 
-//function to show details of subscriber
-function viewDetails(id) { 
-    var id  = id ;
-    //alert(id);
-    $.ajax({
-        url: "{{url('')}}/subscriber_calendar",
-        type: 'get',
-        data: {sid :id },
-        success: function (data) 
-        {
-        $('#content').html(data);
-        }
-    });
-} 
 </script>
 @endsection
