@@ -27,7 +27,8 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>                    
+                                <tbody>    
+                                             
                                 @foreach($data as $key=>$value)
                                     <tr>
                                     <td>{{ $value->subscriber_name }}</td>
@@ -35,9 +36,8 @@
                                     <td>{{ date('d-M-Y', strtotime($value->start_date)) }}</td>
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
-                                    <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Calender'><i class='fa fa-info-circle'></i></button>
-
-                                    <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
+                                    <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
+                                    <button type='button' class='btn btn-success btn-sm' onclick='location.href="editmealprogram/{{$value->id}}"' title='Edit Meal Program'><i class="icon fa fa-pencil"></i></button>
                                     </td>
                                     </tr>
                                 @endforeach

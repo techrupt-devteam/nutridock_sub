@@ -146,6 +146,12 @@ Route::group(['middleware' => 'subscriber'], function () {
 	//route for meal program
 	Route::get('/mealprogram', 					'Front\UserMealProgramController@mealProgram');
 	Route::get('/subscriber_calendar', 			'Front\UserMealProgramController@getCalendar');
+	Route::get('/editmealprogram/{id}', 		'Front\UserMealProgramController@editMealProgram');
+	Route::get('/editmeal', 					'Front\UserMealProgramController@menuEdit');
+
+	Route::post('/get_menu_dropdown',			'Front\UserMealProgramController@get_menu');
+    Route::post('/get_menu_macros',				'Front\UserMealProgramController@get_menu_macros');
+
 
 	
 	

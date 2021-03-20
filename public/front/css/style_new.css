@@ -4483,6 +4483,7 @@ font-size:.9375rem;
 	padding-right: 10px;
 	padding-bottom: 16px;
 	padding-left: 5px;
+	
 }
 .my-account .address-coupon-container {
     -moz-box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.24);
@@ -4490,6 +4491,8 @@ font-size:.9375rem;
     box-shadow:0 2px 3px 0 rgba(0, 0, 0, 0.24);
     background-color: var(--white);
 	padding: 80px 10px 30px;
+	border-top: 1px solid #E8E8E8;
+	
 }
 .my-account .address-coupon-container .heading .discount-icon {
     line-height: 0;
@@ -5049,4 +5052,19 @@ font-size:.9375rem;
 	.box_right .form-group .label-control {
 		padding-top: 0;
 	}
+}
+.table td {
+    padding: .35rem;
+    vertical-align: top;
+    border-top: 1px dashed #999 !important;
+}
+.table th {
+    padding: .45rem;
+    vertical-align: top;
+    border-top: 1px solid #999 !important;
+	border-bottom: 1px solid #999 !important;
+	background-color: #e1f4d4;
+	color:#218937;
+	text-transform: uppercase;
+	font-weight: 600;
 }

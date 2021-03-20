@@ -21,6 +21,9 @@ use App\Models\SubscriberDetails;
 use App\Models\User;
 use App\Models\city;
 use App\Models\State;
+use App\Models\MenuCategoryModel;
+use App\Models\SpecificationModel;
+use App\Models\MealType;
 use Intervention\Image\ImageManager;
 use DateTime;
 use Config;
@@ -34,7 +37,7 @@ use DB;
 class UserMealProgramController extends Controller
 {
 
-    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails)
+    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType)
     {
         $data                           = [];
         
@@ -50,6 +53,10 @@ class UserMealProgramController extends Controller
         $this->title                    = "Subscriber";
         $this->url_slug                 = "subscriber_calender";
         $this->folder_path              = "calender/";
+
+        $this->base_meal_type               = $MealType;
+        $this->base_menu_category           = $MenuCategoryModel;
+        $this->base_menu_specification      = $SpecificationModel;
 
         //Message
         $this->Insert                   = Config::get('constants.messages.Insert');
@@ -75,9 +82,7 @@ class UserMealProgramController extends Controller
     }
 
 
-    public function getCalendar(Request $request)
-    {
-      
+    public function getCalendar(Request $request) {    
 
         $data=[];      
         $subscriber_id       = $request->input('sid');; 
@@ -93,8 +98,7 @@ class UserMealProgramController extends Controller
         $cnt   = '';
         $calender_data = []; 
         
-        for ($i=1; $i<=$days1; $i++) 
-        { 
+        for ($i=1; $i<=$days1; $i++) { 
            
              $program_data   = \DB::table('nutri_subscriber_meal_program')
                                 ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
@@ -106,8 +110,7 @@ class UserMealProgramController extends Controller
             $count = $program_data->count();
             if($count > 0){
               $cnt = $count;
-            }
-            else{
+            } else {
               $cnt = 0;
             }
 
@@ -129,9 +132,7 @@ class UserMealProgramController extends Controller
               
                 $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title);
                 $calender_data[$i][$key]['backgroundColor']   = $colors[$key];
-                $calender_data[$i][$key]['borderColor']       = $colors[$key];
-               
-               
+                $calender_data[$i][$key]['borderColor']       = $colors[$key];  
            }  
         }
 
@@ -140,10 +141,90 @@ class UserMealProgramController extends Controller
         $data['start_date']          = date('Y-m-d',strtotime($subscriber_details->start_date));
         $data['calender_data']       = $calender_data;
 
-
-
         //dd($data);
         return view($this->folder_path.'index')->with(['data' => $data, 'seo_title' => "My Subscription"]); 
+
+    }
+
+    public function editMealProgram(Request $request) {       
+        $data = [];
+
+       
+
+        $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
+                            ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
+                            ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                            ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_subscriber_meal_program.subcriber_id')
+                            ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                            ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
+                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
+
+      //dd($get_default_menu );
+
+        Arr::set($data,null,$get_default_menu);
+
+
+        return view('user-edit-meal-program')->with(['data' => $data, 'seo_title' => "Edit Meal program"]); 
+    }
+
+
+    public function menuEdit(Request $request)
+    {
+       
+      $program_id         = $request->program_id;
+
+      $program_data   = \DB::table('nutri_subscriber_meal_program')
+                            ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
+                            ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                            ->where('nutri_subscriber_meal_program.program_id','=',$program_id)
+                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->first();
+    
+      $menu_category      = $this->base_menu_category->get();
+      $menu_specification = $this->base_menu_specification->get()->toarray(); 
+      $meal_type          = $this->base_meal_type->get();
+
+      $data=[];
+      $data['program_data']        = $program_data;
+      $data['menu_category']       = $menu_category;
+      $data['menu_specification']  = $menu_specification;
+      $data['meal_type']           = $meal_type;
+
+    
+     
+
+      //return view('user-changemenu-ajax')->with(['data' => $data, 'seo_title' => "Edit Meal program"]);
+      return view('user-changemenu-ajax',$data);
+    }
+
+
+    public function get_menu_macros(Request $request)
+    {
+         $menu_id   = $request->menu_id;
+         $menu_data =  $this->base_menu->where('id','=',$menu_id)->select('calories','proteins','carbohydrates','fats')->first();
+         $data      = [];
+         $data[]      = $menu_data->calories;
+         $data[]      = $menu_data->proteins;
+         $data[]      = $menu_data->carbohydrates;
+         $data[]      = $menu_data->fats;
+         $html        ="<thead>
+                            <tr style='background-color:#cacaca!important;'>
+                              <td class='text-center'><strong>Calories</strong></td>
+                              <td class='text-center'><strong>Proteins</strong></td>
+                              <td class='text-center'><strong>Carbohydrates</strong></td>
+                              <td class='text-center'><strong>Fats</strong></td>
+                              <td class='text-center'><strong>Total</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                             <td class='text-center'>".$menu_data->calories."</td>
+                             <td class='text-center'>".$menu_data->proteins."</td>
+                             <td class='text-center'>".$menu_data->carbohydrates."</td>
+                             <td class='text-center'>".$menu_data->fats."</td>
+                             <td class='text-center'>".array_sum($data)."</td>
+                            </tr>
+                        </tbody>"; 
+        return $html; 
 
     }
 
