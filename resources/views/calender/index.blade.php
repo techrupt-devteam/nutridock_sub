@@ -5,9 +5,9 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-body"><br/>
-            <div class="alert alert-danger alert-dismissible">
-              <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-              <p>Meal program is not created for this user, contact Nutritionist.</p>
+            <div class="alert alert-info alert-dismissible">
+              <h4><i class="icon fa fa-warning"></i> Alert!</h4>
+              <p>Meal program is not created for this subscriber, <b>please contact nutritionist or operation manager!!</b></p>
             </div>
           </div>
         </div>

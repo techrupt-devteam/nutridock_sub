@@ -136,7 +136,7 @@
                    </li>
                  </li>
                    <li class="footer">
-                    <a href="{{url('/admin')}}/manage_notification">View Notification</a>
+                    <a href="{{url('/')}}/notification_sub">View Notification</a>
                   </li>
                 </ul>
               </li> 
@@ -191,9 +191,9 @@
         });
     }
          notification();   
-      /*var timerID = setInterval(function() {
+      var timerID = setInterval(function() {
         notification(); 
-      }, 3000);*/
+      }, 3000);
 </script>
 <style type="text/css">
   .notification_ul .header {

@@ -90,24 +90,6 @@ class NotificationController extends Controller
       
         $user_role              = $login_user_details->roles;
         
-        /*if($user_role=='admin' && $login_city_id !="all")
-        {
-
-            $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->get();
-
-            $arr_data               = [];
-            $arr_data['state_id']   = $request->input('state_id');
-            $arr_data['cgst']       = $request->input('cgst');
-            $arr_data['sgst']       = $request->input('sgst');
-            $arr_data['igst']       = $request->input('igst');
-            $gst_add                = $this->base_model->create($arr_data);
-
-        }
-        else
-        {
-            $expiry_month = \DB::table('nutri_dtl_subscriber')->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->get();
-        }*/ 
-          
 
         $data                   =  \DB::table('nutri_notification')
                                    ->where('users_role','=',$user_role)
@@ -121,6 +103,7 @@ class NotificationController extends Controller
                                   ->where('user_id','=',$login_user_details->id)
                                   ->where('is_active','=',1)
                                   ->get()->count();
+
 
         $html  = "";
 

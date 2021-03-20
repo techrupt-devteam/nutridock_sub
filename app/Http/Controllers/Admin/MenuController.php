@@ -8,6 +8,7 @@ use App\Models\MenuCategoryModel;
 use App\Models\IngredientsModel;
 use App\Models\SpecificationModel;
 use App\Models\MealType;
+use App\Models\Notification;
 use Config;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
@@ -19,7 +20,7 @@ use DB;
 
 class MenuController extends Controller
 {
-    public function __construct(MealType $MealType,MenuModel $MenuModel,MenuCategoryModel $MenuCategoryModel,IngredientsModel $IngredientsModel,SpecificationModel $SpecificationModel)
+    public function __construct(MealType $MealType,MenuModel $MenuModel,MenuCategoryModel $MenuCategoryModel,IngredientsModel $IngredientsModel,SpecificationModel $SpecificationModel,Notification $Notification)
     {
         $data                            = [];
         $this->base_model                = $MenuModel; 
@@ -233,7 +234,7 @@ class MenuController extends Controller
                       }
                 }
             }
-
+            
             Session::flash('success',  $this->Insert);
             return \Redirect::to('admin/manage_menu');
         }
