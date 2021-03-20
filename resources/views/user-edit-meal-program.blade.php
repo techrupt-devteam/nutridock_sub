@@ -13,13 +13,37 @@
                 <div class="profile-container">
                     <div class="address-coupon-container clearfix pt-4">                       
                         <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
-                           EDIT MEAL PROGRAM
+                           EDIT MEAL PROGRAM  
+                           <button class="btn btn-sm btn-primary pull-right" onclick="location.href='{{ URL('') }}/mealprogram'">
+                           <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
                         </div>
                         <div class="box-body">
+                            <div class="col-md-12">
+                            <table class="table table-sm" style="font-size: 14px;">
+                                <tbody>
+                                @foreach($data as $key=>$value) 
+                                @if($key == 0)     
+                                  <tr>
+                                  <td width="25%">Subscriber Name: </td>
+                                  <td>{{ $value->subscriber_name }}</td>
+                                  </tr>
+                                  <td width="25%">Plan Name: </td>
+                                  <td>{{ $value->sub_name }} <br />
+                                  <small><b>From:</b> </small>{{ date('d-M-Y',strtotime($value->start_date)) }}
+                                  <small><b>To:</b> </small>{{ date('d-M-Y',strtotime($value->expiry_date)) }}</td>
+                                  </tr>
+                                 
+                                @endif                          
+                                @endforeach
+                              </tbody>
+                            </table>
+                            </div>
+                          
                             <div class="table-responsive"  style="font-size: 14px;">
                             <table id="dtable" class="ui celled table table-sm "  style="width:100%" style="botder-top:1px solid #DEE2E6">
+                                                   
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th style="background:#e5e5e5; color:#000">Date</th>
                                         <th>Meal Type</th>
                                         <th>Meal</th>
@@ -30,21 +54,24 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>   
-                               
-                                @foreach($data as $key=>$value)
+                                <tbody> 
+                              
+                                @foreach($data as $key=>$value)      
                                     <tr>
-                                    <td style="background:#e5e5e5; color:#000">{{ date('d-M-Y', strtotime($value->start_date. " + ".$value->day." day")) }}  
-                                    <small><b>(Day {{ $value->day }}</small>)</b></td>
+                                    <td style="background:#e5e5e5; color:#000" class="pl-4">{{ date('d-M-Y', strtotime($value->start_date. " + ".$value->day." day")) }}  
+                                    <small><b>[Day {{ $value->day }}</small>]</b></td>
                                     <td>{{ $value->meal_type_name }}</td>                     
                                     <td>{{ $value->menu_title }}</td>
                                     <td><i class="fa fa-fire" aria-hidden="true"></i> {{ $value->calories }}</td>
-                                    <td><img src="{{ URL('') }}/uploads/images/protein.jpg"" alt="your image" width="20" height="20"> {{ $value->proteins }}</td>
-                                    <td><img src="{{ URL('') }}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"> {{ $value->carbohydrates }}</td>
-                                    <td><img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> {{ $value->fats }}</td>                   
                                     <td>
-                                   
-                                    <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='editMealProgram({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
+                                      <img src="{{ URL('') }}/uploads/images/protein.jpg"" alt="your image" width="20" height="20"> {{ $value->proteins }}</td>
+                                    <td>
+                                        <img src="{{ URL('') }}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"> {{ $value->carbohydrates }}</td>
+                                    <td>
+                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> {{ $value->fats }}</td>                   
+                                    <td>                                   
+                                      <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details'  onclick='editMeal({{$value->program_id}})' title='Edit Meal'><i class="icon fa fa-pencil"></i></button>
+                                      <button class="btn btn-sm btn-danger" itle='Skip Meal'><i class="icon fa fa-minus-circle" ></i></button>
                                     </td>
                                     </tr>
                                 @endforeach
@@ -73,17 +100,17 @@
 	//$('#dtable').DataTable();  
 
 //function to show details of subscriber
-// function editDetails(id) { 
-//     var id  = id ;
-//     //alert(id);
-//     $.ajax({
-//         url: "{{url('')}}/editmealprogram",
-//         type: 'get',
-//         data: {sid :id },
-//         success: function (data) {
-//             alert(data);
-//         }
-//     });
-// } 
+function editMeal(id) { 
+    var id  = id ;
+    $.ajax({
+        url: "{{url('/')}}/editmeal",
+        type: 'get',
+        data: {program_id :id },
+        success: function (data) {
+            alert(data);
+            $("#content").html(data);
+        }
+    });
+} 
 </script>
 @endsection

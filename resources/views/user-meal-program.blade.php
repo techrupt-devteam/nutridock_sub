@@ -76,8 +76,6 @@
 <script>
 	$('#dtable').DataTable();  
 
-<<<<<<< HEAD
-=======
 //function to show details of subscriber
 function viewDetails(id) { 
     var id  = id ;
@@ -108,6 +106,5 @@ function viewDetails(id) {
 //     $('#new_calender').html(data);
 //   });
 // }  
->>>>>>> e035aee6e1fb06ac61cc3b94e6e71a9a2852c41a
 </script>
 @endsection

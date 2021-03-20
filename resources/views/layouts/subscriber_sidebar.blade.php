@@ -2,16 +2,16 @@
 	<div class="user-left-nav">
 		<ul class="list-unstyled user-nav-list">
 			<li class="list-item {{ Request::is('notification_sub') ? 'active' : '' }}">
-				<a href="notification_sub" class="link"><i class="icon fa icon fa-bell"></i>Notification <span class="notif-count circle_notification"></span></a>
+				<a href="{{ url('/')}}/notification_sub" class="link"><i class="icon fa icon fa-bell"></i>Notification <span class="notif-count circle_notification"></span></a>
 			</li>
 			<li class="list-item {{ Request::is('profile') ? 'active' : '' }}">
-				<a href="profile" class="link"> <i class="icon fa icon fa-user-circle-o"></i>My Profile</a>
+				<a href="{{ url('/')}}/profile" class="link"> <i class="icon fa icon fa-user-circle-o"></i>My Profile</a>
 			</li>
 			<li class="list-item {{ Request::is('mysubscription') ? 'active' : '' }}" >
-                <a href="mysubscription" class="link"><i class="fa fa-shopping-basket"></i> My Subscriptions</a> 
+                <a href="{{ url('/')}}/mysubscription" class="link"><i class="fa fa-shopping-basket"></i> My Subscriptions</a> 
             </li>
 			<li class="list-item {{ Request::is('mealprogram') ? 'active' : '' }}">
-				<a href="mealprogram" class="link"><i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
+				<a href="{{ url('/')}}/mealprogram" class="link"><i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
 			</li>
 			<li class="list-item {{ Request::is('chat') ? 'active' : '' }}">
                 <a href="{{ URL('') }}/chat" class="link">
