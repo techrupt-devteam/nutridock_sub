@@ -13,6 +13,9 @@ class SubscriberDefaultMeal extends Model
 							'mealtype',   
 							'menu_id',
 							'subcriber_id',
-							'nutritionist_id'
+							'nutritionist_id',
+							'meal_on_date',
+							'compenset_date',
+							'skip_meal_flag'
                          ];
 }

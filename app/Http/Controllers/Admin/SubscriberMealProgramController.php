@@ -19,7 +19,7 @@ use Sentinel;
 use Validator;
 use DB;
 use Config;
-use Carbon;
+use Carbon\Carbon;
 class SubscriberMealProgramController extends Controller
 {
     public function __construct(SubscriberMealPlan $SubscriberMealPlan,MenuModel $MenuModel,DefaultMeal $DefaultMeal,SubscriberHealthDetails $SubscriberHealthDetails,SubscriberDetails $SubscriberDetails,SubscriberDefaultMeal $SubscriberDefaultMeal,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType,Notification $Notification)
@@ -64,6 +64,26 @@ class SubscriberMealProgramController extends Controller
           //subscription Plan &  duration id
             $sub_plan_id = $get_subscriber_details->sub_plan_id;
             $duration_id = $get_subscriber_details->duration_id;
+           
+            $date  = Carbon::parse($get_subscriber_details->start_date);
+            $now   = Carbon::parse($get_subscriber_details->expiry_date);
+            $days  = $date->diffInDays($now);
+            $days1 = $days + 1;
+            
+           //CREATE START_DATE ARRAY
+            $date_array =[];
+            for($i=1; $i<=$days1; $i++) 
+            { 
+               if($i==1){
+                   
+                $date_array[$i] = date('Y-m-d', strtotime($get_subscriber_details->start_date));
+                }else{
+                    $d=$i-1;
+                    
+                $date_array[$i] = date('Y-m-d', strtotime($get_subscriber_details->start_date . '+'.$d.' day'));
+                } 
+            } 
+
            //default_menu add on subscriber
             $get_default_menu = $this->base_default_meal
                               ->where('duration_id','=',$duration_id)
@@ -86,7 +106,7 @@ class SubscriberMealProgramController extends Controller
                                     ->where('sub_plan_id','=',$sub_plan_id)
                                     ->count();
                     if($Is_exists == 0)
-                    { 
+                    {   
                         foreach ($get_default_menu as $default_value) 
                         {
                             //check selected meal plan and set this mealplan on default meal plan
@@ -99,9 +119,15 @@ class SubscriberMealProgramController extends Controller
                               $arr_data['menu_id']          = $default_value->menu_id;
                               $arr_data['subcriber_id']     = $id;
                               $arr_data['nutritionist_id']  = $nutritionist_id;
+                              $arr_data['meal_on_date']     = $date_array[$default_value->day]; 
                               $add_subscriber_default_menu  =  $this->base_subscriber_default_meal->create($arr_data);
+
+                              
                            }
+                         
                         }
+
+
                     }  
 
                    //Render default subscriber menu data

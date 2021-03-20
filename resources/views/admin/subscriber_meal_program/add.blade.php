@@ -215,7 +215,7 @@
                        
                           @if($i!=$gdmvalue->day)
                           <tr style="background-color:#cacaca!important;">
-                              <td><strong>Day {{$gdmvalue->day}}</strong></td>
+                              <td><strong>{{date('d-M-Y',strtotime($gdmvalue->meal_on_date))}} [ Day {{$gdmvalue->day}}]</strong></td>
                               <td width="20%"><strong>Menu Name</strong></td>
                               <td width="10%"><strong>Calories</strong></td>
                               <td width="10%"><strong>Proteins</strong></td>
