@@ -193,7 +193,18 @@
           success: function (data) 
           {
             $('#modal-details').modal('hide');
-            location.reload();
+            
+            toastr.options =
+            {
+            "closeButton" : true,
+            "progressBar" : true
+            }
+            if(data =="success"){
+  	      	 toastr.success("Menu update successfully!!");
+            }else
+            {
+              toastr.error("Menu update error!!");
+            }
           }
        });
     }

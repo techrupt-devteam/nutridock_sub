@@ -93,7 +93,7 @@
                     <div class="form-group">
                       <label for="">Req.Calories<span style="color:red;" >*</span></label>
                       <div class="input-group">
-                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.png" alt="your image" width="20" height="20"/></div>
+                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.svg" alt="your image" width="20" height="20"/></div>
                         <input type="text" class="form-control" "Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('NA') }}" disabled></div>
                        <div id="calories_error" style="color:red;"></div>
                     </div>
@@ -107,7 +107,7 @@
                     <div class="form-group">
                       <label for="">Protine<span style="color:red;" >*</span></label>
                       <div class="input-group">
-                        <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.jpg" alt="your image" width="20" height="20"/></div>
+                        <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.svg" alt="your image" width="20" height="20"/></div>
                         <input type="text" class="form-control" "Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('NA') }}" disabled></div>
                        <div id="protein_error" style="color:red;"></div>
                     </div>
@@ -140,7 +140,7 @@
                     <div class="form-group">
                       <label for="">Carbohydrates<span style="color:red;" >*</span></label>
                       <div class="input-group">
-                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.png" alt="your image" width="20" height="20"/></div>
+                        <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"/></div>
                         <input type="text" class="form-control" "Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('NA') }}" disabled></div>
                        <div id="carbs_error" style="color:red;"></div>
                     </div>
@@ -179,32 +179,38 @@
                             @endphp
 
                           @endif
-
-                          <tr>
-                             <td><strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong></td>
+                             @if($gdmvalue->skip_meal_flag=="y")
+                             @php $style="background-color:#ff000030 !important";@endphp
+                            @else
+                             @php $style=""; @endphp
+                            @endif 
+                          <tr  style="{{$style}}">
+                             <td><strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong><br/>@if($gdmvalue->skip_meal_flag=="y")
+                              <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($gdmvalue->compenset_date))}}</b></small>
+                              @endif</td>
                              <td><strong>{{$gdmvalue->menu_title}}</strong></td>
                            
                               <td>
-                                   <strong>{{$gdmvalue->calories}}</strong> 
+                                  <img src="{{ URL('') }}/uploads/images/calories.svg"" alt="your image" width="15" height="15">  <strong>{{$gdmvalue->calories}}</strong> 
                                  @php 
                                  $calories[]=$gdmvalue->calories; 
                                  $total += $gdmvalue->calories;
                                  @endphp
                               </td>
                               <td>
-                                  <strong>{{$gdmvalue->proteins}}</strong>
+                                  <img src="{{ URL('') }}/uploads/images/protein.svg"" alt="your image" width="15" height="15">  <strong>{{$gdmvalue->proteins}}</strong>
                                  @php 
                                  $proteins[]=$gdmvalue->proteins;
                                  $total += $gdmvalue->proteins; @endphp
                               </td>
                               <td>
-                                  <strong>{{$gdmvalue->carbohydrates}}</strong>
+                                  <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15">    <strong>{{$gdmvalue->carbohydrates}}</strong>
                                  @php $carbohydrates[]=$gdmvalue->carbohydrates;
                                  $total += $gdmvalue->carbohydrates; 
                                  @endphp
                               </td>
                               <td>
-                                  <strong>{{$gdmvalue->fats}}</strong>
+                                  <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> <strong>{{$gdmvalue->fats}}</strong>
                                  @php $fats[]=$gdmvalue->fats;
                                       $total +=$gdmvalue->fats 
                                  @endphp

@@ -28,7 +28,7 @@
               <i class="fa fa-bell bg-green"></i>
               <div class="timeline-item">
            <!--      <span class="time"><i class="fa fa-clock-o"></i>   {{ date('H:i',strtotime($value->created_at))}}</span> -->
-                <h3 class="timeline-header">{{ $value->message }} </h3>
+                <h3 class="timeline-header"> {!! html_entity_decode ($value->message)!!} </h3>
               </div>
             </li>
            @endforeach

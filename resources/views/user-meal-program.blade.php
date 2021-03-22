@@ -36,7 +36,7 @@
                                     <td>{{ date('d-M-Y', strtotime($value->start_date)) }}</td>
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
-                                    <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
+                                    <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Meal Program calendar'><i class="fa fa-calendar" aria-hidden="true" style="font-size: 16px;"></i></button>
                                     <button type='button' class='btn btn-success btn-sm' onclick='location.href="editmealprogram/{{$value->id}}"' title='Edit Meal Program'><i class="icon fa fa-pencil"></i></button>
                                     </td>
                                     </tr>

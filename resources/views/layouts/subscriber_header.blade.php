@@ -39,20 +39,16 @@
       <meta content=""name="keywords">
       <?php } ?>
       <link rel="icon"href="{{url('')}}/public/front/img/favicon.png">
-      <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
-      <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
       <link rel="apple-touch-icon"href="{{url('')}}/public/front/img/apple-touch-icon.png">
-      <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"> 
-     <link rel="stylesheet"href="{{url('')}}/public/front/vendor/bootstrap/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-     <link rel="stylesheet"rel="preload"href="{{url('')}}/public/front/vendor/icofont/icofont.min.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i">
+      <!--<link rel="stylesheet"href="{{url('')}}/public/front/vendor/bootstrap/css/bootstrap.min.css">-->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <!--<link rel="stylesheet"rel="preload"href="{{url('')}}/public/front/vendor/icofont/icofont.min.css">-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <link rel="stylesheet"href="{{url('')}}/public/front/vendor/owl.carousel/assets/owl.carousel.min.css">
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
       <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
-
       <style>
       /* Special class on .container surrounding .navbar, used for positioning it into place. */
         .navbar-wrapper {
@@ -261,7 +257,6 @@
     font-weight: 600;
 }
 </style>
-
 </header>
 
 
