@@ -58,15 +58,6 @@
                                 <tbody> 
                               
                                 @foreach($data as $key=>$value) 
-
-
-                                    <!-- <tr>
-                                    <td style="background:#e5e5e5; color:#000" class="pl-4">{{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
-                                    <small><b>[Day {{ $value->day }}</small>]</b></td>
-                                    <td style="border-left: dashed 1px #588937;border-right: dashed 1px #588937; background:#f5fcef" class="pl-3">
-                                    <div class="" style="color: #000; font-weight:600"> {{ $value->meal_type_name }}</div> 
-                                     
-                                    </td>                     -->
                                     @if($value->skip_meal_flag=="y")
                                      @php $style="background-color:#ff000030 !important";
                                      $bgcolor = '#ff000030';

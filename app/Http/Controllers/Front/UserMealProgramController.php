@@ -159,13 +159,13 @@ class UserMealProgramController extends Controller
         $data = [];
 
         $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
-        ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
-        ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
-        ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_meal_program.subcriber_id')
-        ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
-        ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
-        ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
-        ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
+                              ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
+                              ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                              ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_meal_program.subcriber_id')
+                              ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                              ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
+                              ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
+                              ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
 
       //dd($get_default_menu );
 
