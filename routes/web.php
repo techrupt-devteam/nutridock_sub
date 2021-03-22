@@ -151,6 +151,7 @@ Route::group(['middleware' => 'subscriber'], function () {
 
 	Route::post('/get_menu_dropdown',			'Front\UserMealProgramController@get_menu');
     Route::post('/get_menu_macros',				'Front\UserMealProgramController@get_menu_macros');
+	Route::post('/store_change_menu',			'Front\UserMealProgramController@changeMenu');
 
 
 	

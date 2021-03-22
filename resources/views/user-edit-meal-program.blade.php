@@ -11,6 +11,7 @@
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account" >
                 <div class="profile-container">
+                  @include('layouts._status_msg')
                     <div class="address-coupon-container clearfix pt-4">                       
                         <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
                            EDIT MEAL PROGRAM  
@@ -45,7 +46,7 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th style="background:#e5e5e5; color:#000">Date</th>
-                                        <th>Meal Type</th>
+                                        <th style="border-left: dashed 1px #588937;border-right: dashed 1px #588937">Meal Type</th>
                                         <th>Meal</th>
                                         <th>Calories</th>
                                         <th>Proteins</th>
@@ -56,11 +57,16 @@
                                 </thead>
                                 <tbody> 
                               
-                                @foreach($data as $key=>$value)      
+                                @foreach($data as $key=>$value) 
+
+
                                     <tr>
-                                    <td style="background:#e5e5e5; color:#000" class="pl-4">{{ date('d-M-Y', strtotime($value->start_date. " + ".$value->day." day")) }}  
+                                    <td style="background:#e5e5e5; color:#000" class="pl-4">{{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
                                     <small><b>[Day {{ $value->day }}</small>]</b></td>
-                                    <td>{{ $value->meal_type_name }}</td>                     
+                                    <td style="border-left: dashed 1px #588937;border-right: dashed 1px #588937; background:#f5fcef" class="pl-3">
+                                    <div class="" style="color: #000; font-weight:600"> {{ $value->meal_type_name }}</div>
+                                     
+                                    </td>                     
                                     <td>{{ $value->menu_title }}</td>
                                     <td><i class="fa fa-fire" aria-hidden="true"></i> {{ $value->calories }}</td>
                                     <td>
@@ -96,18 +102,26 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"> -->
 <script>
 	//$('#dtable').DataTable();  
-
+// $(document).ready(function() {
+//   var x = new SlimSelect({
+//     select: '#menu_specifiation'
+//   });
+// });
 //function to show details of subscriber
 function editMeal(id) { 
     var id  = id ;
     $.ajax({
         url: "{{url('/')}}/editmeal",
         type: 'get',
-        data: {program_id :id },
+        data: {
+          program_id :id 
+          
+        },
         success: function (data) {
-            alert(data);
             $("#content").html(data);
         }
     });
