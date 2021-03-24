@@ -24,11 +24,11 @@
                                         <th>Plan Details</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th>Action</th>
+                                        <th>Action </th>
                                     </tr>
                                 </thead>
-                                <tbody>    
-                                             
+                                <tbody>  
+                               
                                 @foreach($data as $key=>$value)
                                     <tr>
                                     <td>{{ $value->subscriber_name }}</td>

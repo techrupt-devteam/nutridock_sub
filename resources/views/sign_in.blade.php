@@ -51,8 +51,7 @@
                         </div>
                         <div class="form-group mx-auto" style="max-width: 258px;">
                           <input type="text" id="mobile" name="mobile" class="form-control" placeholder="xxx-xxx-4560 " autocomplete="nope" maxlength="10" 
-                          style="padding-left: 42px;" required="required">
-                          
+                          style="padding-left: 42px;" required="required">                          
                         <span class="form-control-feedback">+91</span>
                      </div>
                         <div class="form-group otp-textbox">

@@ -155,34 +155,31 @@ class UserMealProgramController extends Controller
 
     }
 
-    public function editMealProgram(Request $request) {       
-        $data = [];
+    public function editMealProgram(Request $request) {
+      $currentdate = Carbon::now('Asia/Kolkata'); 
 
-        $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
-                              ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
-                              ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
-                              ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_meal_program.subcriber_id')
-                              ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
-                              ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
-                              ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
-                              ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
+      $data = [];
 
-      //dd($get_default_menu );
+      $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
+                            ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
+                            ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                            ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_meal_program.subcriber_id')
+                            ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                            ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
+                            ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
+                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
+       
 
         Arr::set($data,null,$get_default_menu);
-
      
-        return view('user-edit-meal-program')->with(['data' => $data, 'seo_title' => "Edit Meal program"]); 
+        return view('user-edit-meal-program')->with(['data' => $data, 'seo_title' => "Edit Meal program", 'currentdate' => $currentdate]); 
     }
 
 
 
 
-    public function menuEdit(Request $request)
-    {
-       
+    public function menuEdit(Request $request) {       
       $program_id         = $request->program_id;
-
       $program_data   = \DB::table('nutri_subscriber_meal_program')
                             ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
                             ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
@@ -298,26 +295,20 @@ class UserMealProgramController extends Controller
 
 
     public function changeMenu(Request $request) {
-      
+      $currentdate = Carbon::now('Asia/Kolkata'); 
       $id                   = $request->program_id;    
-      $arr_data['menu_id']  = $request->menu_id;     
-      $menu_update          = SubscriberDefaultMeal::where(['program_id'=>$id])->update($arr_data);
+      $arr_data['menu_id']  = $request->menu_id;   
 
-      Session::flash('success',"Menu updated successfully");
-      //return \Redirect::back();
-
+      $checkAllowEdit = SubscriberDefaultMeal::where(['program_id'=>$id])->first('meal_on_date');
      
-      
-      //$subscriber_id         = $this->base_model->where(['program_id'=>$id])->select('subcriber_id')->first();
 
-       if($menu_update) {
-          //  Session::flash('success',"Menu updated successfully");
-    
-          // return \Redirect::to('editmealprogram/'.$request->input('subscriber_id'));
-          return "success";
-       }else{
-         return "fail";
-       }
+      if(strtotime($checkAllowEdit['meal_on_date']." 20:00:00") >= strtotime($currentdate)) {        
+        $menu_update          = SubscriberDefaultMeal::where(['program_id'=>$id])->update($arr_data);       
+        return 'success';
+      } else {
+        Session::flash('error',"Sorry you can not change your menu for tommorow after 8.00 PM");
+        return 'error';
+      }
     }
      
     public function skipMeal(Request $request)

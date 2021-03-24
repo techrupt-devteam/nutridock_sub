@@ -67,6 +67,7 @@
             <nav class="d-none d-lg-block ml-auto nav-menu">
                <ul class="nav">
                   <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
+                 
                   <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
                   <li><a href="{{url('')}}/about">About</a></li>
                   <li><a href="{{url('')}}/menu">Menu</a></li>

@@ -307,10 +307,10 @@ background-color:blue
               <div class="row setup-content step-1" id="step-1">
              
                   <div class="col-sm-12">
-                    <h4 class="info-text"> Let's start with the basic details.</h4>
+                    <h4 class="info-text"> Let's start with the basic details.</h4>                    
                   </div>
                   <div class="col-sm-12 mb-3">
-                  <div class="alert alert-danger" id="signup-alert-danger" role="alert" style="font-size:13px" ></div>
+                  <div class="alert alert-danger" id="signup-alert-danger" role="alert" style="font-size:13px; display:none" ></div>
                     <div class="row">
                       <div class="col-md-12">
                         <div class="input-group mb-0"> 
@@ -334,7 +334,8 @@ background-color:blue
                           <label class="control-label">Email <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3" ><i class="fa fa-envelope" aria-hidden="true"></i></span> </div>
-                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" data-parsley-group="step-1">
+                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" data-parsley-group="step-1" value="{{ Session::get('subscriber_email') }}" 
+                            {{ Session::get('subscriber_email') ? 'readonly' : ''}}>
                           </div>
                           <div id="email-errors"></div>
                         </div>
@@ -344,7 +345,9 @@ background-color:blue
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="text" class="form-control" id="mobile_no" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1">
+                            <input type="text" class="form-control" id="mobile_no" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1" value="{{ Session::get('subscriber_mobile') }}"
+                            {{ Session::get('subscriber_mobile') ? 'readonly' : ''}}
+                            >
                           </div>
                           <div id="mobile-errors"></div>
                         </div>
@@ -776,7 +779,7 @@ background-color:blue
                   <!-- Invoice --> 
                 </div>
                 <div class="wizgard-footer">               
-                  <button class="btn btn-success pb-1 pt-1 pull-right" type="submit" id="btnSubmit">
+                  <button class="btn btn-success pb-1 pt-1 pull-right" type="button" id="btnSubmit">
                     <i class="fa fa-hand-o-right" aria-hidden="true"></i> &nbsp;  Finish 
                   </button>
                 </div>

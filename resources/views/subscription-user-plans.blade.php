@@ -12,7 +12,8 @@
               <div class="col-md-8 col-lg-9  my-account" >
                 <div class="profile-container">
                     <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
+                        <div class="heading pt20">
+                        <i class="fa fa-shopping-basket"></i>
                             MY SUBSCRIPTION     
                         </div>
                         <div class="box-body">

@@ -1,5 +1,6 @@
 @extends('layouts.subscriber_master')
 @section('content')
+
 <main>
    <section class="user-panel">
       <div class="container">
@@ -8,6 +9,7 @@
             <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span> Profile</span></li>
           </ol>
            <div class="row">
+           
                @include('layouts.subscriber_sidebar')      
               <div class="col-md-8 col-lg-9  my-account" > 
                 <div class="profile-container">
@@ -40,7 +42,12 @@
                                 @endforeach
                               </tbody>
                             </table>
-                            </div>                          
+                            </div>  
+                            <div class="oaerror warning mb-2"><strong>Note:</strong> You can change your Meal for tomorrow, till today's 8PM.</div>   
+                            <div class="oaerror danger mb-2"><strong>Note:</strong> If you want to skip your meal, "Nutridock fit" allows you to compensate your meal within 10 days after your subscription has been expired 
+                            
+                            
+                            </div>                        
                             <div class="table-responsive"  style="font-size: 14px;">
                             <table id="dtable" class="ui celled table table-sm"  style="width:100%" style="botder-top:1px solid #DEE2E6">                                                   
                                 <thead>
@@ -56,7 +63,7 @@
                                     </tr>
                                 </thead>
                                 <tbody> 
-                              
+                             
                                 @foreach($data as $key=>$value) 
                                     @if($value->skip_meal_flag=="y")
                                      @php $style="background-color:#ff000030 !important";
@@ -68,7 +75,8 @@
                                      @endphp
                                     @endif     
                                     <tr style="{{$style}}">
-                                    <td style="background:#e5e5e5; color:#000" class="pl-4">{{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
+                                    <td style="background:#e5e5e5; color:#000" class="pl-4">
+                                    {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
                                     <small><b>[Day {{ $value->day }}</small>]</b><br/>
                                     @if($value->skip_meal_flag=="y")
                                     <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($value->compenset_date))}}</b></small>
@@ -84,9 +92,18 @@
                                         <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15"> {{ $value->carbohydrates }}</td>
                                     <td>
                                       <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->fats }}</td>                   
-                                    <td>                                   
+                                    <td>  
+                                     
+                                      @if(strtotime($value->meal_on_date." 20:00:00") >= strtotime($currentdate))                                                
                                       <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details'  onclick='editMeal({{$value->program_id}})' title='Edit Meal'><i class="icon fa fa-pencil"></i></button>
-                                      <button class="btn btn-sm btn-danger" itle='Skip Meal'  data-toggle='modal' data-target='#modal-details2' onclick="skip_meal({{$value->program_id}})"><i class="icon fa fa-minus-circle" ></i></button>
+                                      <button class="btn btn-sm btn-danger" itle='Skip Meal'  data-toggle='modal' data-target='#modal-details2' onclick="skip_meal({{$value->program_id}})">
+                                      <i class="fa fa-pause-circle" aria-hidden="true" style="font-size:16px"></i></button>
+                                      @else
+                                      <img src="{{url('/')}}/uploads/images/Prohibited-75-512.png" width="28" />
+                                      <img src="{{url('/')}}/uploads/images/stop.svg" width="28" />
+                                      @endif
+                                      
+                                     
                                     </td>
                                     </tr>
                                 @endforeach

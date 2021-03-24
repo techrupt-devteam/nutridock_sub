@@ -49,7 +49,10 @@
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
       <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
       <style>
+
       /* Special class on .container surrounding .navbar, used for positioning it into place. */
         .navbar-wrapper {
         position: absolute;
@@ -108,7 +111,7 @@
     <nav class="d-none d-lg-block ml-auto nav-menu">
         <ul class="nav">
             <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
-            <li><a href="{{url('')}}/subscribe-info">Subscription</a></li>
+           
             <li><a href="{{url('')}}/about">About</a></li>
             <li><a href="{{url('')}}/menu">Menu</a></li>
             
@@ -156,10 +159,23 @@
                                         {{ Session::get('subscriber_mobile') }}</p>
                                         <div class="divider">
                                         </div>
-                                        <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active">LOGOUT</a><br />
+                                        <!-- <a href="{{ URL('') }}/dashboard" class="btn btn-primary btn-sm active">My Account</a>
+                                        <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active">LOGOUT</a><br /> -->
                                     </div>
                                 </div>
-                            </div>                           
+                            </div>  
+                            <div class="navbar-footer">
+                              <div class="navbar-footer-content">
+                                  <div class="row">                                  
+                                      <div class="col-md-6">
+                                      <a href="{{ URL('') }}/dashboard" class="btn btn-primary btn-sm active"><i class="fa fa-user-circle" aria-hidden="true"></i> My Account</a>                                          
+                                      </div>
+                                      <div class="col-md-6">
+                                          <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active"><i class="icon fa icon fa-sign-out"></i> LOGOUT</a>                                      
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>                         
                         </li>
                     </ul>
                 </li>
