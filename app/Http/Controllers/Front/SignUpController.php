@@ -217,7 +217,7 @@ class SignUpController extends Controller
 
            
             $addNotification =  Notification::create(
-                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
+                ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b> has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
                 'users_role' => 'admin',
                 'user_id' => 1]
             );       
@@ -225,10 +225,12 @@ class SignUpController extends Controller
             $addNotification->save();  
        
          // add notification for operation manager
-           $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = ".Session::get('delivery_state_id')." AND `city` = ".Session::get('delivery_city_id')." AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = ".Session::get('delivery_pincode').")");          
-           
+             $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = '".Session::get('delivery_state_id')."' AND `city` = '".Session::get('delivery_city_id')."' AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = '".Session::get('delivery_pincode')."')");  
+
+
+          
             $addNotificationOperation =  Notification::create(
-                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
+                ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b>  has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
                 'users_role' => 2,
                 'user_id' => $getId[0]->id]
             );
@@ -280,19 +282,20 @@ class SignUpController extends Controller
         'pincode1' => $input['pincode1'],
         //'address1_deliver_mealtype' => $input['address1_meal'],
         'address2' => $input['address2'],
-        'pincode2' => $input['pincode2'],
+        'pincode2'       => $input['pincode2'],
         //'address2_deliver_mealtype' => $input['address2_meal'],
-        'state' => Session::get('delivery_state_id'),
-        'city' => Session::get('delivery_city_id'),
-        'session_id' => session()->getId(),
+        'state'          => Session::get('delivery_state_id'),
+        'city'           => Session::get('delivery_city_id'),
+        'session_id'     => session()->getId(),
         'transaction_id' => '',
-        'subscriber_id' => Session::get('subscriber_id'),
+        //'subscriber_id'  => Session::get('subscriber_id'),
         'payment_status' => 'Initiated');
 
-       
-        $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-                ->update($data);         
-
+        
+      // $update = SubscriberDetails::where('subscriber_id','=',Session::get('subscriber_id'))
+        $update = \DB::table('nutri_dtl_subscriber')->where('id','=',Session::get('subscriber_id'))
+                 ->update($data);         
+        //dd($data);
         $arrData = ['total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id')];
         return $arrData;          
       
