@@ -49,6 +49,7 @@
       <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Prata&display=swap">
       <link rel="stylesheet"href="{{url('')}}/public/front/css/style_new.css">
       <script type="text/javascript"async src="https://platform-api.sharethis.com/js/sharethis.js#property=5fad134a413ed100120cd9b2&product=inline-follow-buttons"></script>
+
       <style>
       /* Special class on .container surrounding .navbar, used for positioning it into place. */
         .navbar-wrapper {

@@ -122,9 +122,10 @@ Route::post('/get_subscription_plan_price', 	'Front\SignUpController@getSubPlanP
 Route::post('/checkout_sub', 						'Front\SignUpController@checkout');
 Route::post('/pay-success', 					'Front\SignUpController@paySuccess');
 Route::get('/thankyou', 						'Front\SignUpController@thankyou');
-Route::get('/sign-in',							['as'=>'signinModal','uses'=> 'Front\SignUpController@signinModal']);
-Route::post('/check-login', 					'Auth\LoginController@checkLogin');
-Route::post('/check-otp', 						'Auth\LoginController@checkOtp');
+Route::get('/sign-in',	['as'=>'signinModal','uses'=> 'Front\SignUpController@signinModal']);
+Route::post('/check-login', 'Auth\LoginController@checkLogin');
+Route::post('/check-otp', 'Auth\LoginController@checkOtp');
+
 
 
 Route::group(['middleware' => 'subscriber'], function () {
@@ -150,10 +151,20 @@ Route::group(['middleware' => 'subscriber'], function () {
 	Route::get('/editmeal', 					'Front\UserMealProgramController@menuEdit');
 	Route::get('/skipmeal', 					'Front\UserMealProgramController@skipMeal');
 	Route::post('/store_skip_menu', 		    'Front\UserMealProgramController@store_skip_menu');
-
 	Route::post('/get_menu_dropdown',			'Front\UserMealProgramController@get_menu');
     Route::post('/get_menu_macros',				'Front\UserMealProgramController@get_menu_macros');
 	Route::post('/store_change_menu',			'Front\UserMealProgramController@changeMenu');
+    //my health history routes 
+	Route::get('/health-history', 				'Front\UserMealProgramController@health_history');
+	Route::get('/edit-health-details/{id}', 	'Front\UserMealProgramController@edit_health_history');
+	Route::post('/update-health-details', 	    'Front\UserMealProgramController@update_health_details');
+	Route::post('/update-health-store', 	    'Front\UserMealProgramController@update_health_store');
+	
+	//Delivery Address
+    Route::post('/change_address', 			'Front\SubscriptionUserController@subscriber_address_changed');
+	Route::post('/update-address', 	    'Front\SubscriptionUserController@update_address');
+	Route::post('/chk_pincode', 	    'Front\SubscriptionUserController@pincode_check');
+	
 
 
 	

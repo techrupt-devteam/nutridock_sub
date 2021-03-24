@@ -3,10 +3,8 @@
 <main>
    <section class="user-panel">
       <div class="container">
-         <ol class="breadcrumb product_des-breadcrumb">
-            <li><a href="https://www.nykaa.com">Home &nbsp;</a></li>
-            <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span> Profile</span></li>
-         </ol>
+          @php $title ="Chat with nutritionist"; @endphp 
+          @include('layouts.bread_crum')
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account" >

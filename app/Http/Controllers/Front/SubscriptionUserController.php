@@ -414,5 +414,52 @@ class SubscriptionUserController extends Controller
             return \Redirect::back();
         }
     }
+
+    public function subscriber_address_changed(Request $request)
+    {   
+        $subscriber_id  = $request->sid;
+        $subscriberData = DB::table('nutri_dtl_subscriber')
+                          ->where('id', '=', $subscriber_id)
+                          ->first();  
+    
+        Arr::set($data,NULL, $subscriberData);
+        return view('subscription-change-address-ajax')->with(['data' => $data]); 
+    }
+
+    public function update_address(Request $request)
+    {
+      $subscriber_id          = $request->input('id');
+      $arr_data['address1']  = $request->input('address1');
+      $arr_data['address2']  = $request->input('address2');
+      $arr_data['pincode1']   = $request->input('pincode1');
+      $arr_data['pincode2']   = $request->input('pincode2');
+      $subscriber_update_addr = \DB::table('nutri_dtl_subscriber')
+                                ->where(['id'=>$subscriber_id])
+                                ->update($arr_data);
+
+      Session::flash('success',"Address update successfully!!");
+      return \Redirect::back();
+
+    }
+
+    public function pincode_check(Request $request)
+    {
+      $pincode = $request->pincode;
+
+      $pincode_cnt = DB::table('nutri_mst_delivery_location')
+                          ->where('delivery_pincode', '=', $pincode)
+                          ->count();  
+      if($pincode_cnt > 0)
+      {
+        $msg = "<p style='color:green !important;'>we are delivering at <b>".$pincode."</b><p>";
+      }else{ 
+        $msg = "<p style='color:red !important;'>Sorry we are not delivering at <b>".$pincode."</b></p>";
+      }     
+     
+      return $msg;
+
+    }
+
+
 }
 ?>

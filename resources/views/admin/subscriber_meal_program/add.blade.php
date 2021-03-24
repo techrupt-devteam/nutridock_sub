@@ -88,7 +88,7 @@
                         <label for="">BMR<span style="color:red;" >*</span></label>
                          <div class="input-group">
                           <div class="input-group-addon btn-default">
-                            BRM
+                            BMR
                           </div>
                           <input type="text" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('') }}">
                         </div>

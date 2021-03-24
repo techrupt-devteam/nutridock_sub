@@ -40,10 +40,10 @@ class NotificationController extends Controller
         $user_role              = $login_user_details->roles;
         
         $notification_data      =   \DB::table('nutri_notification')->where('user_id','=',$login_user_details->id)
-                                  ->where('users_role','=',$user_role)
-                                  ->limit(50)
-                                  ->orderBy('notification_id', 'DESC')
-                                  ->get();
+                                      ->where('users_role','=',$user_role)
+                                      ->limit(50)
+                                      ->orderBy('notification_id', 'DESC')
+                                      ->get();
         $arr_data                  = [];
         $arr_data['is_active']     = '0';               
          \DB::table('nutri_notification')->where(['user_id'=>$login_user_details->id])->update($arr_data);

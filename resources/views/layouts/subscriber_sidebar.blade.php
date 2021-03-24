@@ -13,6 +13,9 @@
 			<li class="list-item {{ Request::is('mealprogram') ? 'active' : '' }}">
 				<a href="{{ url('/')}}/mealprogram" class="link"><i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
 			</li>
+            <li class="list-item {{ Request::is('health-history') ? 'active' : '' }}">
+                <a href="{{ url('/')}}/health-history" class="link"><i class="fa fa-user-md"></i> My Health History</a>
+            </li>
 			<li class="list-item {{ Request::is('chat') ? 'active' : '' }}">
                 <a href="{{ URL('') }}/chat" class="link">
 				<i class="fa fa-weixin"></i> Chat with Nutrionistc </a> 
