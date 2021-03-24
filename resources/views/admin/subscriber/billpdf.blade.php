@@ -8,9 +8,9 @@ $value = $data['get_subscriber_details'];
 	<title> Subscriber Details </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 	<style>
 		.container{
 			border:3px solid !important;
@@ -234,10 +234,10 @@ invoice table tfoot tr:first-child td {
                         
                 	</div> -->
                 </div>
-                <table border="1" cellspacing="1" cellpadding="10">
+                <table  border="1" cellspacing="1" cellpadding="10">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th width="5%">#</th>
                             <th class="text-cenetr">Date</th>
                             <th class="text-cenetr">Plan</th>
                             <th class="text-left">Days</th>
@@ -248,13 +248,13 @@ invoice table tfoot tr:first-child td {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
+                            <td width="5%">1</td>
                             <td>{{date('d-m-Y',strtotime($value->start_date))}}</td>
                             <td>{{ucfirst($value->sub_name)}}</td>
                             <td>{{ $value->no_of_days}} Days</td>
                             <td>{{ $value->is_price_per_mealorpack}} 
 							</td>
-                            <td style="text-align: right !important;"><strong><small>  ₹ {{$value->price_per_meal}}</small></strong></td>
+                            <td style="text-align: center !important;"><strong><small>  ₹ {{$value->price_per_meal}}</small></strong></td>
                         </tr>
                     </tbody>
                     <tfoot >
@@ -280,11 +280,11 @@ invoice table tfoot tr:first-child td {
                         <tr>
                             <td colspan="4"></td>
                             <td colspan=""><strong class="font">Grand Total</strong></td>
-                            <td class="text-center"><strong class="font">  ₹ {{$value->total_amount}}</strong></td>
+                            <td class="text-center"><strong class="font">  ₹ {{round($value->total_amount)}}</strong></td>
                         </tr>
                         <tr>
-                            <td>In Word</td>
-                            <td colspan="5"><strong class="font">  ₹ {{$value->total_amount}}</strong></td>
+                            <td width="10%">In Word</td>
+                            <td colspan="5"><strong class="font"> {{ucfirst($data['inword'])}}</strong></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -294,10 +294,6 @@ invoice table tfoot tr:first-child td {
                     <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
                 </div> -->
             </main>
-            <hr/>
-            <p style="text-align:center !important;">
-                Invoice was created on a computer and is valid without the signature and seal.
-            </p>
         </div>
         <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
         <div></div>
