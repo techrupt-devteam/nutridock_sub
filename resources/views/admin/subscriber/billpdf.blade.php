@@ -301,4 +301,3 @@ invoice table tfoot tr:first-child td {
 </div>
 </body>
 </html>
-

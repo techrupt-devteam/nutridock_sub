@@ -207,9 +207,9 @@
         });
     }
          notification();   
-      // var timerID = setInterval(function() {
-      //   notification(); 
-      // }, 3000);
+      var timerID = setInterval(function() {
+        notification(); 
+      }, 3000);
 </script>
 <style type="text/css">
   .notification_ul .header {

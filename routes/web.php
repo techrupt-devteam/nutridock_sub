@@ -9,7 +9,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 /* @START: Front End Routes */
 Route::get('/clear', function() {
 	Artisan::call('cache:clear');
