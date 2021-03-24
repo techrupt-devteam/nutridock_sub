@@ -20,6 +20,7 @@
           <ul class="timeline">
                
             @foreach($notification as $value)  
+           
             <li class="time-label">
               <span class="bg-green">
                 {{ date('d M y',strtotime($value->created_at))}}

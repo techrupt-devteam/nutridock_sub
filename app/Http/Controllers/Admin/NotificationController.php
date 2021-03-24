@@ -110,7 +110,7 @@ class NotificationController extends Controller
         foreach ($data as $key => $value) {
 
            $html .= "<li > <a href='".url('/admin').'/notification/'.$value->notification_id."'><i class='fa fa-bell'
-           ></i>".ucfirst($value->message)."</a></li>";         
+           ></i>".ucfirst(html_entity_decode($value->message))."</a></li>";         
         }        
         return $html."#".$count;
 

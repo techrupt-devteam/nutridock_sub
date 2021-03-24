@@ -76,7 +76,6 @@ class SignUpController extends Controller
         /* Start: get data for Subscribe Now details */
         Arr::set($data, 'getSubscribeNowData', SubscribeNow::getData());
         /* End: get data for Subscribe Now details */
-
           
         
         return view('sign_up')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
@@ -87,27 +86,34 @@ class SignUpController extends Controller
         $checkExist = SubscriberMaster::where('mobile', '=', $request->mobile)->first();
         
         if($checkExist) {
+            
+            $subscriberDetails =   SubscriberDetails::create(
+                ['subscriber_id' =>   $checkExist->id,
+                'subscriber_name' =>  request('name'),
+                'session_id' =>  session()->getId()]
+            );           
 
-           return "exist";
+            $subscriberDetails->save();
+
+            Session::put('subscriber_id', $subscriberDetails->id);
+            return 'true';
             
         } else {
-            $subscriber =   SubscriberMaster::firstOrNew(
-                ['email' =>  request('email')],
-                ['mobile' => request('mobile')]
+            $subscriber =   SubscriberMaster::create(
+                ['email' =>  request('email'),
+                'mobile' => request('mobile')]
             );
 
             if($subscriber->save()) {
-            $subscriberDetails =   SubscriberDetails::firstOrNew(
-                ['subscriber_id' =>  $subscriber->id],
-                ['subscriber_name' =>  request('name')],
-                ['session_id' =>  session()->getId()]
+            $subscriberDetails =   SubscriberDetails::create(
+                ['subscriber_id' =>  $subscriber->id,
+                'subscriber_name' =>  request('name'),
+                'session_id' =>  session()->getId()]
             );
-
+            
 
             $subscriberDetails->save();
             Session::put('subscriber_id', $subscriberDetails->id);
-
-
             return 'true';
 
         }
@@ -192,15 +198,14 @@ class SignUpController extends Controller
         'payment_status' => $payment->status,
 		];
 
-        $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-        ->update($data); 
+        $update = SubscriberDetails::where('id', Session::get('subscriber_id'))
+        ->update($data);         
 
-        if($update) {     
+        if($update) {    
             
-            $getSubscriberDtl = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-            
-            ->first();
+            $getSubscriberDtl = SubscriberDetails::where('id', Session::get('subscriber_id'))->first();
 
+            
 
             $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
             ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
@@ -228,10 +233,10 @@ class SignUpController extends Controller
                 'user_id' => $getId[0]->id]
             );
 
-            $addNotificationOperation->save();
-           
-        }
+            $addNotificationOperation->save();           
 
+            Session::put('subscriber_id', $getSubscriberDtl['subscriber_id']);           
+        }
 		return $update;    
 	}
 

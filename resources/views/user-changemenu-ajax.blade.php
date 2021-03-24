@@ -49,19 +49,18 @@
                   <div class="col-md-6">
                     <div class="form-group"> 
                       <?php 
-                             $data  = explode(",",$program_data->specification_id); 
+                      $data  = explode(",",$program_data->specification_id); 
                       ?>
-                      <label  class="d-block">Search Menu by Specification<span style="color:red;">*</span></label>
+                      <label  class="d-block">Search Menu by Specification
+                      <span style="color:red;">*</span>
+                      </label>
                        <select name="menu_specifiation" id="menu_specifiation" class="form-control" required="true" data-parsley-errors-container="#menu_specifiation_error" data-parsley-error-message="Please select specification" multiple="multiple" onchange="get_menu();">
                          
                          @foreach($menu_specification as $specification_value)
-                         <?php
-                           
-                            if(in_array($specification_value['id'],$data))
-                            {
+                         <?php                           
+                            if(in_array($specification_value['id'],$data)) {
                               $selected = "selected"; 
-                            }else
-                            {
+                            } else {
                               $selected = " ";
                             }
                          ?>
@@ -78,7 +77,7 @@
                     <div class="form-group">
                       <label class="d-block">Menu<span style="color:red;" >*</span></label>
                        <select name="menu_id" id="menu_id" class="form-control" required="true" data-parsley-errors-container="#menu_error" data-parsley-error-message="Please select menu" onchange="get_menu_macros();">
-                         <option value="">-Select Category-</option>
+                         <option value="">Select Category</option>
                         </select>  
                        <div id="menu_error" style="color:red;"></div>
                     </div>
@@ -102,12 +101,15 @@
 
 
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/parsley.js"></script>
-<!-- <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">       -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
+<link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
+
 <style type="text/css">
-.d-block{display:block}.w-100{width:100%!important}.select2-selection{width:100%!important}.select2{width:100%!important}.select2-container--default .select2-selection--multiple{background-color:#fff!important;cursor:text!important}.select2-container--default .select2-selection--multiple{background-color:#fff!important;border:1px solid #d2d6de!important;border-radius:0!important;cursor:text!important}.select2-container--default .select2-selection--single .select2-selection__arrow{height:34px!important;position:absolute!important;top:1px!important;right:1px!important;width:20px!important}
+.d-block{display:block}.w-100{width:100%!important}.select2-selection{width:100%!important}.select2{width:100%!important}.select2-container--default .select2-selection--multiple{background-color:#fff!important;cursor:text!important}.select2-container--default .select2-selection--multiple{background-color:#fff!important;border:1px solid #d2d6de!important;border-radius:0!important;cursor:text!important}.select2-container--default .select2-selection--single .select2-selection__arrow{height:34px!important;position:absolute!important;top:1px!important;right:1px!important;width:20px!important}.select2-container--default .select2-selection--multiple .select2-selection__choice{ color:#fff; }
 </style>
 <script type="text/javascript">
-// $('#menu_specifiation').select2();
+$('#menu_specifiation').select2();
 // $('#menu_id').select2();
 // $('#menu_category').select2();
 // $('#meal_type').select2();
@@ -192,6 +194,7 @@
           data: $("#frmChangeMenu").serialize(),
           success: function (data) 
           {
+           
             $('#modal-details').modal('hide');
             
             toastr.options =
@@ -199,11 +202,13 @@
             "closeButton" : true,
             "progressBar" : true
             }
+
             if(data =="success"){
-  	      	 toastr.success("Menu update successfully!!");
-            }else
-            {
-              toastr.error("Menu update error!!");
+  	      	 toastr.success("Your meal has been updated successfully!");
+            } else if(data =="error") {
+  	      	 toastr.success("Sorry! You cannot changed your meal for tommorow after 8.00PM.");
+            } else {
+              toastr.error("Error! while updating meal, please contact to Nutridock Fit Customer Care.");
             }
           }
        });
