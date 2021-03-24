@@ -371,6 +371,7 @@ class UserMealProgramController extends Controller
       $operation_info   =  \DB::table('users')
                              ->where('city','=',$nutrtionist_info->city)
                              ->where('area','=',$nutrtionist_info->area)
+                              ->where('roles','=',2)
                              ->select('name','roles','city','area','id')
                              ->first();
  
@@ -382,7 +383,7 @@ class UserMealProgramController extends Controller
       $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
       //admin notification 
-      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."<b/> !" ;
+      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
       $notify_arr['users_role'] = 'admin' ; 
       $notify_arr['user_id']    = 1; 
       $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
@@ -394,10 +395,8 @@ class UserMealProgramController extends Controller
       $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
 
 
-      
       Session::flash('success',"Menu skip successfully");
       return \Redirect::back();
-
 
 
 
@@ -417,6 +416,132 @@ class UserMealProgramController extends Controller
         return $num.'th';
  
     }
+    
+    //Health list
+    public function health_history(Request $request)
+    {
+        $getSubscriberData = DB::table('nutri_mst_subscriber')
+
+                ->join('nutri_dtl_subscriber','nutri_mst_subscriber.id', '=', 'nutri_dtl_subscriber.subscriber_id')
+                ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                ->where('nutri_mst_subscriber.id', '=', Session::get('subscriber_id'))
+                ->get()->toArray();  
+            
+          Arr::set($data,NULL, $getSubscriberData);          
+            
+         
+          return view('user-health-details')->with(['data' => $data, 'seo_title' => "My Health List"]); 
+    } 
+      
+
+    public function edit_health_history(Request $request)
+    {
+
+        $data = [];
+
+        $get_health_history   = \DB::table('nutri_subscriber_health_details')
+                                  ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_health_details.subcriber_id')
+                                  ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                                  ->join('users','users.id', '=', 'nutri_subscriber_health_details.nutritionist_id')
+                                  ->where('nutri_subscriber_health_details.subcriber_id','=',$request->id)
+                                  ->select('nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_subscriber_health_details.*','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.expiry_date','users.name')
+                                  ->orderBy('nutri_subscriber_health_details.subscriber_health_id','DESC')
+                                  ->get();
+
+        Arr::set($data,null,$get_health_history);
+
+        return view('user-health-history')->with(['data' => $data, 'seo_title' => "Edit Meal program"]); 
+
+    }  
+    
+    public function update_health_details(Request $request){
+      
+      $subscriber_health_id = $request->subscriber_health_id;
+      $get_health_history   = \DB::table('nutri_subscriber_health_details')
+                                ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_health_details.subcriber_id')
+                                ->where('nutri_subscriber_health_details.subscriber_health_id','=',$subscriber_health_id)
+                                ->where('nutri_subscriber_health_details.is_active','=',1)
+                                ->select('nutri_subscriber_health_details.*','nutri_dtl_subscriber.subscriber_name')
+                                ->first();
+      Arr::set($data,null,$get_health_history);
+      return view('user-health-ajax')->with(['health_details' => $data, 'seo_title' => "Update Health"]); 
+
+    }
+
+
+
+    public function update_health_store(Request $request){
+      
+      $subscriber_health_id       = $request->subscriber_health_id;
+      $current_wt                 = $request->input('current_wt');  
+      $bmr                        = $request->input('bmr'); 
+      $bmi                        = $request->input('bmi'); 
+      $body_fat                   = $request->input('body_fat');  
+      $req_calories               = $request->input('req_calories');  
+      $protein                    = $request->input('protein');
+      $fat                        = $request->input('fat');
+      $fiber                      = $request->input('fiber');
+      $carbs                      = $request->input('carbs');
+      $arr_data['current_wt']     = $current_wt;
+      $arr_data['bmr']            = $bmr;
+      $arr_data['bmi']            = $bmi;
+      $arr_data['body_fat']       = $body_fat;
+      $arr_data['req_calories']   = $req_calories;
+      $arr_data['protein']        = $protein;
+      $arr_data['fat']            = $fat;
+      $arr_data['fiber']          = $fiber;
+      $arr_data['carbs']          = $carbs;
+      
+                $menu_update      = \DB::table('nutri_subscriber_health_details')
+                                    ->where(['subscriber_health_id'=>$subscriber_health_id])
+                                    ->update($arr_data);
+
+      //Send Notification Admin / Operation / Nutrtionist
+       $subscriber_dtl_id         = $request->input('subcriber_id');
+       //get subscriber info
+       $subscriber_data   =  \DB::table('nutri_dtl_subscriber')
+                             ->where('id','=',$subscriber_dtl_id)
+                             ->select('subscriber_name')
+                             ->first();     
+      //Nutrtionist info                        
+      $nutrtionist_info   =  \DB::table('users')
+                             ->where('id','=',$request->input('nutritionist_id'))
+                            ->select('name','roles','city','area')
+                             ->first();
+
+      //operation manager Info                  
+      $operation_info   =  \DB::table('users')
+                             ->where('city','=',$nutrtionist_info->city)
+                             ->where('area','=',$nutrtionist_info->area)
+                             ->where('roles','=',2)
+                             ->select('name','roles','city','area','id')
+                             ->first();
+ 
+      
+      //nutrtionist  notification
+      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed update health details !" ;
+      $notify_arr['users_role'] = 1; 
+      $notify_arr['user_id']    = $request->input('nutritionist_id'); 
+      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+      //admin notification 
+      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed update health details !" ;
+      $notify_arr['users_role'] = 'admin' ; 
+      $notify_arr['user_id']    = 1; 
+      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+      //operation manger notification
+      $notify_arr['message']    =  "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed update health details !" ;
+      $notify_arr['users_role'] = 2 ; 
+      $notify_arr['user_id']    = $operation_info->id; 
+      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+      Session::flash('success',"Update health details successfully !!");
+      return \Redirect::back();
+
+    }
+
+
 
 }
 ?>

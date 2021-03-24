@@ -1,16 +1,16 @@
 @extends('layouts.subscriber_master')
 @section('content')
 <main>
-   <section class="user-panel">
+    <section class="user-panel">
       <div class="container">
-         <ol class="breadcrumb product_des-breadcrumb">
-            <li><a href="https://www.nykaa.com">Home &nbsp;</a></li>
-            <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span> Profile</span></li>
-         </ol>
+          @php $title ="Subscription"; @endphp 
+          @include('layouts.bread_crum')
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account" >
+
                 <div class="profile-container">
+                                      @include('layouts._status_msg')  
                     <div class="address-coupon-container clearfix pt-4">                       
                         <div class="heading pt20">
                         <i class="fa fa-shopping-basket"></i>
@@ -37,7 +37,8 @@
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
                                     <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
-                                    <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
+                                    <!-- <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button> -->
+                                    <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='changeAddress({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
                                     </td>
                                     </tr>
                                 @endforeach
@@ -50,6 +51,7 @@
            </div> 
       </div>
    </section>
+
    <div class="modal fade" id="modal-details" role="dialog" >
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -75,7 +77,7 @@
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 
 <script>
-	$('#dtable').DataTable();  
+	//$('#dtable').DataTable();  
 
 //function to show details of subscriber
 function viewDetails(id) { 
@@ -91,5 +93,20 @@ function viewDetails(id) {
         }
     });
 } 
+
+function changeAddress(id)
+{
+  $.ajax({
+        url: "{{url('')}}/change_address",
+        type: 'post',
+        data: {sid :id },
+        success: function (data) 
+        {
+        $('#content').html(data);
+        }
+    });
+}
+
+
 </script>
 @endsection

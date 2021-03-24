@@ -3,15 +3,15 @@
 <main>
    <section class="user-panel">
       <div class="container">
-         @php $title ="Meal Program"; @endphp 
+         @php $title ="My Health History"; @endphp 
           @include('layouts.bread_crum')
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account" >
                 <div class="profile-container">
                     <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
-                            MEAL PROGRAM
+                        <div class="heading pt20"><i class="fa fa-stethoscope"></i>
+                         My Health History
                         </div>
                         <div class="box-body">
                             <div class="table-responsive"  style="font-size: 14px;">
@@ -22,11 +22,10 @@
                                         <th>Plan Details</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th>Action </th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>  
-                               
+                                <tbody>      
                                 @foreach($data as $key=>$value)
                                     <tr>
                                     <td>{{ $value->subscriber_name }}</td>
@@ -34,8 +33,8 @@
                                     <td>{{ date('d-M-Y', strtotime($value->start_date)) }}</td>
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
-                                    <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Meal Program calendar'><i class="fa fa-calendar" aria-hidden="true" style="font-size: 16px;"></i></button>
-                                    <button type='button' class='btn btn-success btn-sm' onclick='location.href="editmealprogram/{{$value->id}}"' title='Edit Meal Program'><i class="icon fa fa-pencil"></i></button>
+                                   
+                                    <button type='button' class='btn btn-success btn-sm' onclick='location.href="edit-health-details/{{$value->id}}"' title='Edit Health deatils'><i class="fa fa-heartbeat"></i></button>
                                     </td>
                                     </tr>
                                 @endforeach

@@ -1,6 +1,7 @@
 @extends('admin.layout.master')
  
 @section('content')
+ <link rel="stylesheet" href="{{url('/admin_css_js')}}/css_and_js/admin/dist/css/AdminLTE.min.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -29,7 +30,7 @@
               <i class="fa fa-bell bg-green"></i>
               <div class="timeline-item">
          
-                <h3 class="timeline-header">{{ $value->message }}></h3>
+                <h3 class="timeline-header"> {!! html_entity_decode($value->message)!!} </h3>
               </div>
             </li>
            @endforeach

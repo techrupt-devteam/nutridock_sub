@@ -3,10 +3,8 @@
 <main>
    <section class="user-panel">
       <div class="container">
-         <ol class="breadcrumb product_des-breadcrumb">
-            <li><a href="https://www.nykaa.com">Home &nbsp;</a></li>
-            <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span> Profile</span></li>
-         </ol>
+          @php $title ="Profile"; @endphp 
+          @include('layouts.bread_crum')
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account">
@@ -152,4 +150,7 @@
      </div>
    </div>
  </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
 @endsection
