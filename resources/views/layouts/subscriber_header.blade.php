@@ -92,7 +92,6 @@
         {
             background-color:#DDD;
         }
-        .navbar-footer-content { padding:15px 15px 15px 15px; }
         .dropdown-menu {
         padding: 0px;
         overflow: hidden;
@@ -126,7 +125,7 @@
             data-target="#login" 
             data-url="{{ route('signinModal')}}" class="btn btn-outline-warning text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
             Login</a></li>  -->
-              <li class="dropdown notifications-menu ">
+              <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle dropdown-notifications" data-toggle="dropdown">
                   <i class="fa fa-bell-o"></i>
                   <input type="hidden" id="notification_count" value="0">
@@ -143,36 +142,40 @@
                   </li>
                 </ul>
               </li> 
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Account
-                    <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="navbar-content">
-                                <div class="row">     
-                                         
-                                    <div class="col-md-12 text-left pr-4">
-                                        <h6 style="color: #64BB2C;">
-                                        <i class="fa fa-envelope-open" aria-hidden="true"></i> 
-                                        
-                                        {{ Session::get('subscriber_email') }}</h6>
-                                        <p class="text-muted" style="color:#000">
-                                        <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i>
-                                        {{ Session::get('subscriber_mobile') }}</p>
-                                        <div class="divider">
-                                        </div>
-                                        <!-- <a href="{{ URL('') }}/dashboard" class="btn btn-primary btn-sm active">My Account</a>
-                                        <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active">LOGOUT</a><br /> -->
-                                    </div>
-                                </div>
-                            </div>  
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account <b class="caret"></b></a>
+                    <ul class="dropdown-menu account-Modal__inner">
+                        <li class="media ">
+                          <div class="media-left">
+                            <i class="fa fa-envelope-open" aria-hidden="true"></i> 
+                          </div>
+                          <div class="media-body">
+                            {{ Session::get('subscriber_email') }}
+                          </div>
+                        </li>
+
+                        <li class="media ">
+                          <div class="media-left">
+                            <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i> 
+                          </div>
+                          <div class="media-body">
+                            {{ Session::get('subscriber_mobile') }}
+                          </div>
+                        </li>
+                        <div class="divider">
+                        </div>
+                            
                             <div class="navbar-footer">
                               <div class="navbar-footer-content">
-                                  <div class="row">                                  
-                                      <div class="col-md-6">
-                                      <a href="{{ URL('') }}/dashboard" class="btn btn-primary btn-sm active"><i class="fa fa-user-circle" aria-hidden="true"></i> My Account</a>                                          
+                                  <div class="row no-gutters">                                  
+                                      <div class="col-md-8">
+                                      <a href="{{ URL('') }}/dashboard" class="btn btn-dark mt-0 active" style="border-radius: 0;height: 37px;line-height: 2.2;">
+                                        My Account</a>                                          
                                       </div>
-                                      <div class="col-md-6">
-                                          <a href="{{ URL('') }}/logout" class="btn btn-primary btn-sm active"><i class="icon fa icon fa-sign-out"></i> LOGOUT</a>                                      
+                                      <div class="col-md-4">
+                                          <a href="{{ URL('') }}/logout" class="btn btn-danger mt-0 active" style="border-radius: 0;height: 37px;line-height: 2.2;">
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                           </a>                                      
                                       </div>
                                   </div>
                               </div>
