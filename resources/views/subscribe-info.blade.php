@@ -73,7 +73,7 @@
             <div class="col-lg-3 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
-                     <img src="{{url('')}}/public/front/img/lede-gif-1554316333.gif" class="ltx-icon bg-main">
+                     <img src="{{url('')}}/public/front/img/Health-Profile.svg" class="ltx-icon bg-main">
                      <!-- <span class="ltx-icon fa fa-cutlery bg-main"></span> -->
                      <h2 class="header"> Give your Health Profile </h2>
                      <div class="descr">Once you sign up, the first step is letting us know details about your health such as height and weight, lifestyle, medical condition, and personal food choices.</div>
@@ -83,7 +83,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
-                     <img src="{{url('')}}/public/front/img/health-profile.gif" class="ltx-icon bg-main">
+                     <img src="{{url('')}}/public/front/img/Personal-Nutritionist.svg" class="ltx-icon bg-main">
                      <h2 class="header"> Get a Personal Nutritionist </h2>
                      <div class="descr">
                         Based on your health details, we will match you with one of our experienced nutritionists. The nutritionist will study your overall health and preferences in detail.
@@ -94,7 +94,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
-                     <img src="{{url('')}}/public/front/img/meal-plan.gif" class="ltx-icon bg-main">
+                     <img src="{{url('')}}/public/front/img/meal-plan.svg" class="ltx-icon bg-main">
                      <h2 class="header"> Customized Meal Plan </h2>
                      <div class="descr">
                         The nutritionist will curate a perfectly balanced and macro counted meal plan centered around your health needs and goals along with weekly health tracking 
@@ -105,7 +105,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon remove-after">
                   <div class="in">
-                     <img src="{{url('')}}/public/front/img/delivered-to-your-doorstep.gif" class="ltx-icon bg-main">
+                     <img src="{{url('')}}/public/front/img/Doorstep-Delivery.svg" class="ltx-icon bg-main">
                      <h2 class="header"> Contactless Doorstep Delivery</h2>
                      <div class="descr">Get your breakfast, lunch and dinner daily delivered to you fresh at your doorstep. Your meals will be delivered with all the Covid safety guidelines in place.</div>
                   </div>

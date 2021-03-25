@@ -5,249 +5,7 @@
 <!-- css -->
 <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 <!------ Include the above in your HEAD tag ---------->
-<style>
-.wizard-container {
-    background-color: #fff;
-    margin-top: 4rem;
-    border-radius: 6px;
-    /* min-height: 410px; */
-    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
-    padding: 18px 0px 0px;
-}
-.image-container {
-    background-position: center center;
-    background-size: cover;
-    position: relative;
-}
-.wizgard-footer {
-    position: relative;
-    padding: 9px 16px 8px;
-    background-color: #ddd;
-    width: 102%;
-    margin-left: -5px;
-    margin-right: -5px;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-.btn.btn-default.btn-circle {
-  text-align: center;
-  padding: 6px 6px;
-  font-size: 16px;
-  text-transform: capitalize;
-  background-color: #c1c1c1;
-  color: #FFFFFF !important;
-  font-weight: 600;
-  border: 0;
-  cursor: not-allowed;
-  pointer-events: none;
-  filter: alpha(opacity=65);
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.btn.btn-circle.btn-default.btn-primary {
-    background-color: #67d251;
-    box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
-}
-.stepwizard-step p {
-  margin-top: 2px;
-  margin-bottom: 5px;
-  font-size: 13px;
-}
-.setup-content {
-    padding:20px 20px 0px;
-    position: relative;
-    overflow: hidden;
-}
-.stepwizard-row {
-    display: table-row;
-}
-
-.stepwizard {
-    display: table;
-    width: 100%;
-    position: relative;
-    background-color: #e3e2e2;
-    padding: 12px 0px 0px;
-}
-
-.stepwizard-step button[disabled] {
-    opacity: 1 !important;
-    filter: alpha(opacity=100) !important;
-}
-
-.stepwizard-row:before {
-    top: 27px;
-    bottom: 0;
-    position: absolute;
-    content: " ";
-    width: 100%;
-    height: 1px;
-    background-color: #1c2a391c;
-    z-order: 0;
-}
-.wizard-header {
-    text-align: center;
-    padding: 0px 0 20px;
-}
-.wizard-header .wizard-title {
-    font-weight: 700;
-    color: #3C4858;
-}
-.stepwizard-step {
-    display: table-cell;
-    text-align: center;
-    position: relative;
-}
-.info-text {
-    text-align: center;
-    font-weight: 300;
-    margin: 10px 0 30px;
-    color: #1c2a39;
-}
-.btn-circle {
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.428571429;
-  border-radius: 15px;
-}
-label {
-    font-size: 14px;
-    color: #222;
-    font-weight: 600;
-}
-.radio-toolbar input[type="radio"]:checked + label {
-    background-color: #b3e6778f;
-    border-color: #67d251;
-}
-.radio-toolbar label {
-    display: inline-block;
-    background-color: #ddd;
-    padding: 6px 20px;
-    font-size: 13px;
-    border: 1px solid #bec0c1;
-        border-top-color: rgb(190, 192, 193);
-        border-right-color: rgb(190, 192, 193);
-        border-bottom-color: rgb(190, 192, 193);
-        border-left-color: rgb(190, 192, 193);
-   border-radius: 10px;
-    cursor: pointer;
-}
-.checkbox label, .radio label, label {
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #1C1C1C;
-    font-weight: 400;
-}
-.radio-toolbar input[type="radio"] {
-    opacity: 0;
-    position: fixed;
-    width: 0;
-}
-.chk-toolbar label {
-    display: inline-block;
-    background-color: #ddd;
-    padding: 6px 20px;
-    font-size: 13px;
-    border: 1px solid #bec0c1;
-    border-radius: 50px;
-    cursor: pointer;
-}
-.checkbox label, .radio label, label {
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #1C1C1C;
-    font-weight: 400;
-}
-.chk-toolbar input[type="checkbox"] {
-    opacity: 0;
-    position: fixed;
-    width: 0;
-}
-.chk-toolbar input[type="checkbox"]:checked + label {
-    background-color: #b3e6778f;
-    border-color: #67d251;
-}
-.offer-price span {
-    color: #5e5a5a;
-    font-size: 13px;
-}
-.og {
-    color: #64bb2c;
-    font-weight: bold;
-}
-.checkbox a, .checkbox {
-    color: #222;
-    font-size: 14px;
-}
-.invoice-from ul li {
-    font-size: 12px;
-}
-
-.mt10px{
-    margin-top: 10px;
-}
-.mt20px{
-    margin-top: 20px;
-}
-
-p{
-    line-height: 25px;
-}
-.wizard-navigation .active {
-  text-align: center;
-  padding: 12px 11px;
-  font-size: 12px;
-  text-transform: capitalize;
-  -webkit-font-smoothing: subpixel-antialiased;
-  background-color: #67d251;
-  border-radius: 4px;
-  color: #FFFFFF !important;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 16px 26px -10px rgba(78, 244, 54, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(176, 244, 54, 0.2);
-}
-.bl-0{
-  border-left:0px !important
-}
-.br-0{
-  border-right:0px !important 
-  }
-  .checkbox a , .checkbox {
-    color: #222;
-    font-size: 14px;
-}
-.table-bordered thead th {
-    border-bottom-width: 1px;
-    font-size: 14px;
-    color: #262626;
-}
-
-.active1{
-  color: #fcd40a;
-}
-.active2{
-background-color:blue
-}
-
-.radio-toolbar img {
-    height: 35px;
-    float: left;
-    margin-right: 10px;
-}
-
-.mrp {
-    text-decoration: line-through;
-    color: #ff0000bf;
-}
-
-.og {
-    color: #05a504;
-    font-weight: bold;
-}
-</style>
+<link href="{{url('')}}/public/front/css/signUp.css" rel="stylesheet"/>
 
 @section('content')
 
@@ -255,14 +13,14 @@ background-color:blue
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
 <script type="text/javascript" src="{{url('')}}/public/front/dist/date-time-picker.min.js"></script>
 <script type="text/javascript" src="{{url('')}}/public/front/js/settings.js"></script>
-<section class="mt-5 pb-0 pt-5">
+<section class="pb-0 pt-5" style="margin-top: 2.3rem">
   <div class="">
     <div class="image-container set-full-height pb-5" 
-    style="background-image: url('{{url('')}}/uploads/images/1.jpeg')"> 
+    style="background-image: url('{{url('')}}/uploads/images/bg-img.jpg')"> 
       <!--   Big container   -->
       <div class="container">
         <div class="row">
-          <div class="col-lg-8 mx-auto">
+          <div class="col-lg-9 mx-auto">
             <div class="wizard-container">
               <div class="wizard-header">
                 <h3 class="wizard-title"> Subscribe Now </h3>
@@ -355,7 +113,7 @@ background-color:blue
                     </div>
                   </div>
                   <div class="wizgard-footer"> 
-                   <span class="nextBtn btn btn-info pull-right" data-current-block="1" data-next-block="2">Next >
+                   <span class="nextBtn btn btn-dark pull-right" data-current-block="1" data-next-block="2">Next 
                    </span> 
                   </div>
               </div>
@@ -368,16 +126,16 @@ background-color:blue
                 </div>
                 <div class="col-sm-12 mb-3">
                  <div class="row">
-                   <div class="col-sm-5">
+                   <div class="col-sm-6">
                      <div class="row">
-                       <div class="col-5">
+                       <div class="col-6">
                           <div class="form-group label-floating">
                             <label class="control-label">Age <span class="text-danger">*</span></label>
                             <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
                             <div id="age-errors"></div>
                           </div>
                        </div>
-                       <div class="col-7">
+                       <div class="col-6">
                         <div class="form-group label-floating w-100">
                           <label class="control-label">Gender <span class="text-danger">*</span></label>
                           <select class="form-control" name="gender" id="gender" required="required" style="min-height:45px"  data-parsley-errors-container="#gender-errors" data-parsley-error-message="Gender required" data-parsley-group="step-2">
@@ -391,7 +149,7 @@ background-color:blue
                        </div>
                      </div>
                    </div>
-                   <div class="col-sm-7">
+                   <div class="col-sm-6">
                      <div class="row">
                        <div class="col-5">
                         <div class="form-group label-floating">
@@ -400,7 +158,7 @@ background-color:blue
                           <div id="weight-errors"></div>                        
                         </div>
                        </div>
-                       <div class="col-7">
+                       <div class="col-7 pl-2">
                         <label class="control-label">Height <span class="text-danger">*</span></label>
                         <div  class="form-group label-floating">
                           <div class="row">
@@ -418,10 +176,10 @@ background-color:blue
                    </div>
                  </div>
                  <div class="row">
-                   <div class="col-sm-6 col-md-4">
+                   <div class="col-sm-6">
                     <div class="form-group">
                       <label class="control-label">Physical Activity <span class="text-danger">*</span></label>
-                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2">
+                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2" style="min-height: 45px;">
                           <option selected="selected" value=" " >Select an option</option>
                            @foreach($data['getPhysicalActivityData'] as $getPhysicalActivity)
                           <option value="{{ $getPhysicalActivity['physical_activity_id'] }}">
@@ -432,10 +190,10 @@ background-color:blue
                         <div id="physical-activity-errors"></div> 
                     </div>
                    </div>
-                   <div class="col-sm-6 col-md-4">
+                   <div class="col-sm-6">
                       <div class="form-group">
                         <label class="control-label">Avoid / Dislike Food <span class="text-danger">*</span></label>
-                        <select id="avoid_food_id" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required" data-parsley-group="step-2">
+                        <select id="avoid_food_id" class="form-control" multiple name="avoid_or_dislike_food_id[]" data-parsley-checkmin="1" required data-parsley-errors-container="#avoid-or-dislike-errors"  data-parsley-error-message="Avoid / Dislike Food required" data-parsley-group="step-2">
                           <option value="None">None</option>
                           @foreach($data['getFoodAvoidData'] as $getFoodAvoidData)
                           <option value="{{ $getFoodAvoidData['food_avoid_id'] }}"> 
@@ -446,8 +204,8 @@ background-color:blue
                         <div id="avoid-or-dislike-errors"></div> 
                       </div>
                  </div>
-                 <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
+                 <div class="col-sm-12">
+                    <div class="form-group" style="z-index: unset;">
                         <div id="other_food_div">
                           <label class="control-label">Other Food</label>
                           <input name="other_food" type="text" class="form-control" placeholder="Other">
@@ -458,24 +216,24 @@ background-color:blue
                 </div>
                 <div class="col-sm-12 mb-3">
                   <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                       <div class="form-group label-floating" style="z-index: auto;">
                         <label class="control-label">Any lifestyle disease? (Diabetes,Cholesterol,etc)</label>
-                        <textarea class="form-control" rows="2" name="lifestyle_disease" id="lifestyle_disease" placeholder="Any lifestyle disease"></textarea>
+                        <textarea class="form-control" rows="1" name="lifestyle_disease" id="lifestyle_disease" placeholder="Any lifestyle disease"></textarea>
                       </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                       <div class="form-group label-floating" style="z-index: auto;">
                         <label class="control-label">Any food preparation instructions?</label>
-                        <textarea class="form-control" rows="2" name="food_precautions" id="food_precautions" placeholder="Any Food Precautions"></textarea>
+                        <textarea class="form-control" rows="1" name="food_precautions" id="food_precautions" placeholder="Any Food Precautions"></textarea>
                       </div>
                     </div>
                   </div>
                 </div>
                   <div class="wizgard-footer">
-                    <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
+                    <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" > Previous 
                     </button>
-                    <span class="nextBtn btn btn-info pull-right" data-current-block="2" data-next-block="3">Next ></span> 
+                    <span class="nextBtn btn btn-dark pull-right" data-current-block="2" data-next-block="3"> Next </span> 
                   
                   </div>
               </div>
@@ -484,28 +242,35 @@ background-color:blue
               <!-- @START: Plan details tab -->
               <div class="row setup-content step-3" id="step-3">
                 <div class="col-sm-12">
-                  <h4 class="info-text"> <span class="text-success font-weight-bold">Plan </span>Details</h4>
+                  <h4 class="info-text"> <span class="font-weight-bold" style="color:#70AA20">Plan </span>Details</h4>
                 </div>
-                <div class="col-sm-12 mb-3">     
+                <div class="col-sm-6 mb-2">     
                     <div class="form-group label-floating">
                     
-                    <label class="control-label">Select Subscription Plan <span class="text-danger">*</span></label>       
-                    @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlanKey => $getSubscriptionPlan)                        
-                      <div class="col-sm-12 radio-toolbar">                  
+                    <label class="control-label">Select Subscription Plan <span class="text-danger">*</span></label> 
+                    <div class="row">
+                      @foreach($data['getSubscriptionPlan'] as $getSubscriptionPlanKey => $getSubscriptionPlan)                        
+                      <div class="col-sm-12 radio-toolbar mb-2">                  
                         <input type="radio" id="{{ $getSubscriptionPlan['sub_name'] }}" name="radioSubscriptionPlan" value="{{ $getSubscriptionPlan['sub_plan_id'] }}" onchange="getPlan(this.value);" required="" data-parsley-errors-container="#sub-plan-errors" data-parsley-error-message="Please select subscription plan" data-parsley-group="step-3" {{($getSubscriptionPlanKey == 0) ? 'checked' : '' }} > 
-                        <label for="{{ $getSubscriptionPlan['sub_name'] }}"> 
+                        <label for="{{ $getSubscriptionPlan['sub_name'] }}" class="w-100"> 
                         <img src="{{url('')}}/uploads/subscription_icon/thumb/{{ $getSubscriptionPlan['icon_image'] }}" height="35">
                         {{ $getSubscriptionPlan['sub_name'] }} 
+                        <a href="#" class="float-right info-popover" data-placement="bottom" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
+                          <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </a>
+
                         </label>                        
                         </div>
                     @endforeach
+                    </div>      
+                   
                     <div id="sub-plan-errors"></div>
                  </div>
                 </div>
-                
-                <div class="col-sm-12 mb-3" id="plandetails" style="display: none;">
+
+                <div class="col-sm-6 mb-2">
                   <div class="row">
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-12 mb-3">
                       <div class="form-group label-floating">
                         <label class="control-label">No of Days <span class="text-danger">*</span></label>
                         <div class="col-sm-12 radio-toolbar">
@@ -514,7 +279,7 @@ background-color:blue
                         </div>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-4">
+                    <div class="col-sm-12 col-md-10">
                       <div class="form-group label-floating">
                         <label class="control-label">Start Date <span class="text-danger">*</span></label>
                         <div class="input-group date" >
@@ -529,6 +294,12 @@ background-color:blue
                         <div id="start-date-errors"></div>
                       </div>                      
                     </div>
+                  </div>
+                </div>
+                
+                <div class="col-sm-12 mb-3" id="plandetails" style="display: none;">
+                  <div class="row">
+                    
                     <div class="col-sm-12 mb-1">
                       <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
                       <div id="meals">
@@ -560,17 +331,18 @@ background-color:blue
                     <div class="col-sm-12 mb-1">
                       <div class="">
                         <label class="control-label">Price</label>
-                        <div style="border:dotted" class="p-2">
+                        <div style="border:1px dashed #4f4f4f;background-color: #e1e1e1;" class="p-2">
                           <div class="price"></div>
                         </div>
                       </div>
-                    </div> <span style="font-size: 12px;"><span style="color: #e81212;">*</span> 5% GST applicable</span>
+                    </div> 
+                    <span style="font-size: 12px;" class="ml-3 mt-2 p-2 alert-info"><span style="color: #e81212;">*</span> 5% GST applicable</span>
                   </div>
                 </div>
                 <div class="wizgard-footer">
                   <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                   </button>
-                  <span class="nextBtn btn btn-info pull-right" data-current-block="3" data-next-block="4">Next >
+                  <span class="nextBtn btn btn-dark pull-right" data-current-block="3" data-next-block="4">Next 
                   </span> 
                  
                 </div>
@@ -581,28 +353,28 @@ background-color:blue
               <div class="row setup-content step-4" id="step-4">
                 <div class="col-sm-12">
                   <h4 class="info-text"> 
-                    <span class="text-success font-weight-bold">Address</span>  Details
+                    <span class="font-weight-bold" style="color: #70AA20;">Address</span>  Details
                   </h4>
                 </div>
                   <div class="col-sm-12 mb-3">
                     <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="control-label">Address <span style="color: red;">*</span></label>
-                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="3" required="required" style="height: 134px;"  data-parsley-group="step-4"></textarea>
+                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="2" required="required"   data-parsley-group="step-4"></textarea>
                           <span id="err_address1" class="text-danger"></span>
                         </div>  
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <div class="row">
-                          <div class="col-md-12 col-sm-6">
+                          <div class="col-sm-6">
                             <div class="form-group">
                               <label class="control-label">Pincode <span style="color: red;">*</span></label>
                               <input type="text" placeholder="Pincode" name="pincode1" id="pincode1" class="form-control" required="required" minlength="6" maxlength="6"  data-parsley-group="step-4">
                               <span id="err_pincode1" class="text-danger"></span>
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-6">
+                          <div class="col-sm-6">
                             <div class="form-group" id="mealtype_div">
                                 <label class="control-label">Select meal type</label>
                                 <select multiple id="mealtype1" class="form-control" name="address1_meal[]" >
@@ -617,23 +389,23 @@ background-color:blue
                     </div>
                     <hr/>
                     <div class="row">
-                      <div class="col-md-8">
+                      <div class="col-md-12">
                         <div class="form-group">
                           <label class="control-label">Office Address <span style="color: red;">*</span></label>
-                          <textarea class="form-control" placeholder="Address" name="address2" id="address2" rows="3" required="required" style="height: 134px;"></textarea>
+                          <textarea class="form-control" placeholder="Address" name="address2" id="address2" rows="2" required="required"></textarea>
                           <span id="err_address1" class="text-danger"></span>
                         </div>  
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-12">
                         <div class="row">
-                          <div class="col-md-12 col-sm-6">
+                          <div class="col-sm-6">
                             <div class="form-group">
                               <label class="control-label">Pincode <span style="color: red;">*</span></label>
                               <input type="text" placeholder="Pincode" name="pincode2" id="pincode2"  class="form-control" required="required" minlength="6" maxlength="6">
                               <span id="err_pincode1" class="text-danger"></span>
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-6">
+                          <div class="col-sm-6">
                             <div class="form-group" id="mealtype_div">
                                 <label class="control-label">Select meal type</label>
                                 <select multiple id="mealtype2" class="form-control" name="address2_meal[]">
@@ -665,8 +437,8 @@ background-color:blue
                   <div class="wizgard-footer">
                     <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                     </button>
-                    <button type="button" class="nextBtn btn btn-info pull-right" data-current-block="4" data-next-block="5" onclick="getData();" >
-                    Next ></button> 
+                    <button type="button" class="nextBtn btn btn-dark pull-right" data-current-block="4" data-next-block="5" onclick="getData();" >
+                    Next </button> 
                     <!-- <button class="btn btn-success pb-1 pt-1 nextBtn pull-right" type="button" >
                       Next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i>
                     </button> -->
@@ -679,7 +451,7 @@ background-color:blue
                 <div class="col-sm-12 mb-3">
                   <!-- Invoice -->                      
                     <div class="row invoice row-printable">
-                    <div class="col-md-12"> 
+                    <div class=""> 
                       <!-- col-lg-12 start here -->
                       <div class="panel panel-default plain" id="dash_0"> 
                         <!-- Start .panel -->
@@ -699,24 +471,24 @@ background-color:blue
                               </div>
                             </div>
                             <div class="col-lg-12 text-right text-danger" ><small>Note : Please check & confirm your plan details</small></div>
-                            <div class="col-lg-12 border-top pt-3 mt-2">
+                            <div class="w-100 border-top pt-2 mt-2">
                               <div style="text-align: center; display: none;" id="all_details" >
                                   <span id="err_all_details" style="color: red;"> </span>
                               </div>                            
                               <div class="invoice-to mt-3 mb-3">
                                 <table>
                                   <tr>
-                                    <td>Name</td>
+                                    <td><strong> Name </strong></td>
                                     <td class="text-center" style="width:35px"> : </td>
                                     <td style="min-width: 76%;"><span id="checkout_name"></span></td>
                                   </tr>
                                   <tr>
-                                    <td> Mobile No.</td>
+                                    <td><strong> Mobile No. </strong></td>
                                     <td class="text-center" style="width:35px"> : </td>
                                     <td>+91 <span id="checkout_phone_no"></span></td>
                                   </tr>
                                   <tr>
-                                    <td>Email</td>
+                                    <td><strong> Email </strong></td>
                                     <td class="text-center" style="width:35px"> : </td>
                                     <td><span id="checkout_email"></span></td>
                                   </tr> 
@@ -729,8 +501,8 @@ background-color:blue
                                       <tr>
                                         <th class=" br-0">No. of days</th>
                                         <th class="per70 br-0">Meal Plan</th>
-                                        <th class="per5 text-center bl-0 br-0">Meal Type</th>
-                                        <th class="per25 text-center bl-0">Total</th>
+                                        <th class="per5 text-right bl-0 br-0">Meal Type</th>
+                                        <th class="per25 text-right bl-0">Total</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -759,8 +531,8 @@ background-color:blue
                                         </th>
                                       </tr>
                                       <tr>
-                                        <th colspan="3" class="text-right br-0" style="border-top: 0px; background-color:#ccc">Total</th>
-                                        <th class="text-right bl-0" style="border-top: 0px;background-color:#ccc"><span id="checkout_total_amount"></span> </th>
+                                        <td colspan="3" class="text-right br-0" style="border-top: 0px;font-weight: 600;color: #1c2a39;">Total</td>
+                                        <td class="text-right bl-0" style="border-top: 0px;font-weight: 600;color: #1c2a39;"><span id="checkout_total_amount"></span> </td>
                                       </tr>
                                     </tfoot>
                                   </table>
