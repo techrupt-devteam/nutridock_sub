@@ -64,6 +64,7 @@ class SubscriberController extends Controller
 
         $login_city_id = Session::get('login_city_id'); 
         $assign_subscriber = Session::get('assign_subscriber'); 
+        //dd($assign_subscriber);
         $user = \Sentinel::check();
         $login_user_details  = Session::get('user');
         $columns = array( 
@@ -73,24 +74,42 @@ class SubscriberController extends Controller
                             3=> 'Mobile',
                             4=> 'Action',
                         );
-        $data = \DB::table('nutri_dtl_subscriber')
-                        ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
-                        ->join('city','nutri_dtl_subscriber.city','=','city.id')
-                        ->join('state','nutri_dtl_subscriber.state','=','state.id')
-                        ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
-            if($login_city_id != "all" && $login_user_details->roles=="admin"){
+
+             if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin"){
+                    $data = \DB::table('nutri_dtl_subscriber')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                    ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
+            }else if($login_user_details->roles !=1){
+
+                $data = \DB::table('nutri_dtl_subscriber')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                    ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
+            }else{
+                $data = "" ;
+            }
+
+
+
+
+
+
+            if($login_city_id != "all" && $login_user_details->roles=="admin" && $data!=""){
                 $data     =  $data->where('nutri_dtl_subscriber.city','=',$login_city_id)
                                     ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                     ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
                                     ->get();         
                // dd("admin_All");           
-            }else if($login_user_details->roles=="admin"){
+            }else if($login_user_details->roles=="admin" && $data!=""){
                 $data     =  $data->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                               ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
                               ->get();     
 
             }
-            if(isset($assign_subscriber) && $login_user_details->roles!="admin"){
+            if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin" && $data!=""){
 
                 $data     =  $data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
                               ->where('nutri_dtl_subscriber.city','=',$login_city_id)
@@ -98,7 +117,7 @@ class SubscriberController extends Controller
                               ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
                               ->get();   
       
-            }else if($login_user_details->roles!="admin")
+            }else if($login_user_details->roles!="admin" && $data!="")
             {
                  $data     =  $data
                               ->where('nutri_dtl_subscriber.city','=',$login_city_id)
@@ -116,15 +135,29 @@ class SubscriberController extends Controller
         $dir = $request->input('order.0.dir');
         if(empty($request->input('search.value')))
         {   
+                if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin"){
 
-                $get_tbl_data = \DB::table('nutri_dtl_subscriber')
-                                ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
-                                ->join('city','nutri_dtl_subscriber.city','=','city.id')
-                                ->join('state','nutri_dtl_subscriber.state','=','state.id')
-                                ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
+                    $get_tbl_data = \DB::table('nutri_dtl_subscriber')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                                    ->where('nutri_dtl_subscriber.is_deleted','<>',1);  
+                }else if($login_user_details->roles !=1){
+                    $get_tbl_data = \DB::table('nutri_dtl_subscriber')
+                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                    ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                    ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                    ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
+                }else
+                {
+                    $get_tbl_data = "" ;
+                }
 
 
-                if($login_city_id != "all" && $login_user_details->roles=="admin"){    
+
+
+
+                if($login_city_id != "all" && $login_user_details->roles=="admin"  && $get_tbl_data !=""){    
                     $get_tbl_data  = $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)
                                        ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                        ->offset($start)
@@ -132,7 +165,7 @@ class SubscriberController extends Controller
                                        ->orderBy($order,$dir)
                                        ->get(); 
                     //   dd("admin_All");                  
-                } else if($login_user_details->roles=="admin"){
+                } else if($login_user_details->roles=="admin" && $get_tbl_data !=""){
 
                     $get_tbl_data  =  $get_tbl_data->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                       ->offset($start)
@@ -142,7 +175,7 @@ class SubscriberController extends Controller
                 }
 
 
-                if(isset($assign_subscriber)  && $login_user_details->roles!="admin"){
+                if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin" && $get_tbl_data !=""){
 
                   $get_tbl_data     =   $get_tbl_data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber) 
                                         ->where('nutri_dtl_subscriber.city','=',$login_city_id)  
@@ -153,7 +186,7 @@ class SubscriberController extends Controller
                                         ->get();    
                      
                 }
-                else if($login_user_details->roles!="admin")
+                else if($login_user_details->roles!="admin" && $get_tbl_data !="")
                 {
                   $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
                                         ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
@@ -169,13 +202,25 @@ class SubscriberController extends Controller
         else {
             
                $search = $request->input('search.value'); 
+
+ if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin"){
                $get_tbl_data  = \DB::table('nutri_dtl_subscriber')
                 ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
                 ->join('city','nutri_dtl_subscriber.city','=','city.id')
                 ->join('state','nutri_dtl_subscriber.state','=','state.id')
+                ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
+  }else if($login_user_details->roles !=1){
+                 $get_tbl_data  = \DB::table('nutri_dtl_subscriber')
+                ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                ->join('city','nutri_dtl_subscriber.city','=','city.id')
+                ->join('state','nutri_dtl_subscriber.state','=','state.id')
                 ->where('nutri_dtl_subscriber.is_deleted','<>',1);   
+            }else{
+                    $get_tbl_data ="";
+                }
 
-               if($login_city_id != "all" && $login_user_details->roles=="admin"){    
+
+               if($login_city_id != "all" && $login_user_details->roles=="admin" && $get_tbl_data!=""){    
                     $get_tbl_data  = $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)
                                     ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
                                     ->orWhere('nutri_mst_subscriber.email', 'LIKE',"%{$search}%")
@@ -187,7 +232,7 @@ class SubscriberController extends Controller
                                     ->orderBy($order,$dir)
                                     ->get();
                     //   dd("admin_All");                  
-                } else if($login_user_details->roles=="admin"){
+                } else if($login_user_details->roles=="admin" && $get_tbl_data!=""){
 
                     $get_tbl_data  = $get_tbl_data->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
@@ -202,8 +247,7 @@ class SubscriberController extends Controller
                 }
 
 
-               if(isset($assign_subscriber) && $login_user_details->roles!="admin"){
-
+               if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin" && $get_tbl_data!=""){
 
                   $get_tbl_data     =  $get_tbl_data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
                                         ->where('nutri_dtl_subscriber.city','=',$login_city_id) 
@@ -219,8 +263,10 @@ class SubscriberController extends Controller
                                         ->get();  
                      
                 }
-                else if($login_user_details->roles!="admin")
+                else if($login_user_details->roles!="admin" && $get_tbl_data!="")
                 {
+
+
                      $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id) 
                                         ->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")

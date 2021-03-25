@@ -184,8 +184,8 @@
     </nav>
     </div>
     <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
 <script type="text/javascript">
     function notification() 
