@@ -325,7 +325,7 @@ background-color:blue
                               <input type="text" name="full_name" class="form-control" id="full_name" aria-describedby="basic-addon3" placeholder="Full Name"
                               name="first_name" Choose placeholder="First Name" required="required" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
-                            <div id="firstname-errors"></div>
+                             <div id="firstname-errors"></div>
                              </div>
                         </div>
                       </div>
@@ -373,7 +373,7 @@ background-color:blue
                        <div class="col-5">
                           <div class="form-group label-floating">
                             <label class="control-label">Age <span class="text-danger">*</span></label>
-                            <input name="age" type="text" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
+                            <input name="age" type="number" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
                             <div id="age-errors"></div>
                           </div>
                        </div>
@@ -405,7 +405,8 @@ background-color:blue
                         <div  class="form-group label-floating">
                           <div class="row">
                             <div class="col-6 pr-1">
-                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required"><div id="height-in-feet-errors" data-parsley-group="step-2"></div>   
+                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required" data-parsley-group="step-2">
+                              <div id="height-in-feet-errors" ></div>   
                             </div>
                             <div class="col-6 pl-1">
                               <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required" data-parsley-group="step-2">

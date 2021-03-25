@@ -30,8 +30,8 @@
             <hr>
             <p> Having trouble? <a href="{{url('')}}/contact">Contact us</a></p>
             <p class="lead">
-                <a class="btn btn-success btn-sm" href="{{url('')}}/subscribe-info" role="button">
-                Continue to homepage
+                <a class="btn btn-success btn-sm" href="{{url('')}}/dashboard" role="button">
+                Go to My Account
                 </a>
             </p>
         </div>

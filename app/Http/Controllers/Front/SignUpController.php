@@ -24,6 +24,7 @@ use App\Models\SubscriptionPlanDetails;
 use App\Models\DeliveryLocation;
 use App\Models\City;
 use App\Models\Notification;
+use App\Models\User;
 
 use Session;
 use Sentinel;
@@ -205,8 +206,6 @@ class SignUpController extends Controller
             
             $getSubscriberDtl = SubscriberDetails::where('id', Session::get('subscriber_id'))->first();
 
-            
-
             $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
             ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
             ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
@@ -214,8 +213,6 @@ class SignUpController extends Controller
             ->select('nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.no_of_days','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.expiry_date')
             ->first();
 
-
-           
             $addNotification =  Notification::create(
                 ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b> has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
                 'users_role' => 'admin',
@@ -226,8 +223,6 @@ class SignUpController extends Controller
        
          // add notification for operation manager
              $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = '".Session::get('delivery_state_id')."' AND `city` = '".Session::get('delivery_city_id')."' AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = '".Session::get('delivery_pincode')."')");  
-
-
           
             $addNotificationOperation =  Notification::create(
                 ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b>  has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
@@ -237,9 +232,34 @@ class SignUpController extends Controller
 
             $addNotificationOperation->save();           
 
-            Session::put('subscriber_id', $getSubscriberDtl['subscriber_id']);           
+            Session::put('subscriber_id', $getSubscriberDtl['subscriber_id']);   
+            
+            $getSubscriberMst = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])->first();
+            
+            if($getSubscriberMst) {
+                Session::put('subscriber_email', $getSubscriberMst['email']);
+                Session::put('subscriber_mobile', $getSubscriberMst['mobile']); 
+
+                $characters = '01234567';
+                $randstring = '';
+
+                for ($i = 0; $i < 6; $i++) {
+                $randstring.= rand(0, strlen($characters));
+                }  
+
+                $updatePassword = User::where('subscriber_id', $getSubscriberDtl['subscriber_id'])
+                ->update(['password'=>bcrypt($randstring)]); 
+                
+                if($updatePassword)
+                {
+                    $updateSubscriberPassword = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])
+                    ->update(['password'=>bcrypt($randstring)]);
+
+                    Session::put('subscriber_otp', $randstring);  
+                }
+            }
         }
-		return $update;    
+        return $update;    
 	}
 
     public function checkout() {       

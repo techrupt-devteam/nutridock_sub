@@ -153,6 +153,7 @@
                                     <div class="col-md-12 text-left pr-4">
                                         <h6 style="color: #64BB2C;">
                                         <i class="fa fa-envelope-open" aria-hidden="true"></i> 
+                                        
                                         {{ Session::get('subscriber_email') }}</h6>
                                         <p class="text-muted" style="color:#000">
                                         <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i>
