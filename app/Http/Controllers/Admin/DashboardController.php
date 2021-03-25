@@ -142,7 +142,9 @@ class DashboardController extends Controller
         if($login_user_details->roles == "1")
         {
             $assign_subscriber = Session::get('assign_subscriber'); 
-      
+            if(!empty($assign_subscriber))
+            {
+
             $total_subscriber_count  = $this->base_subscriber_dtl->where('city','=',$city)
                                        ->whereIn('id',$assign_subscriber);
             $new_subscriber_count    = $this->base_subscriber_dtl->where('city','=',$city)
@@ -177,9 +179,15 @@ class DashboardController extends Controller
                     $sub_array[]  =  $start_month;
                     $expiry_month = \DB::table('nutri_dtl_subscriber')->where('city','=',$city)->whereMonth('expiry_date','=',$mvalue)->where('expiry_date','<=',date('Y-m-d'))->whereIn('id',$assign_subscriber)->count();
                     $exp_array[]  =  $expiry_month;
-               
-              
+
             }
+              $data['not_assign'] = false;
+          }
+          else
+          {
+              $data['not_assign'] = true;
+              return view('admin/dashbord')->with(['data' => $data]);
+          }
 
         }
             

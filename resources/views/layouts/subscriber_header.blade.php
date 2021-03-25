@@ -153,6 +153,7 @@
                                     <div class="col-md-12 text-left pr-4">
                                         <h6 style="color: #64BB2C;">
                                         <i class="fa fa-envelope-open" aria-hidden="true"></i> 
+                                        
                                         {{ Session::get('subscriber_email') }}</h6>
                                         <p class="text-muted" style="color:#000">
                                         <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i>
@@ -184,8 +185,8 @@
     </nav>
     </div>
     <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
 <script type="text/javascript">
     function notification() 
@@ -207,9 +208,9 @@
         });
     }
          notification();   
-      // var timerID = setInterval(function() {
-      //   notification(); 
-      // }, 3000);
+      var timerID = setInterval(function() {
+        notification(); 
+      }, 3000);
 </script>
 <style type="text/css">
   .notification_ul .header {

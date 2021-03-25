@@ -360,6 +360,7 @@
         <!------------------------------Nutritionist Dashboard------------------------------->
         @elseif($session_user->roles=='1')
         <div class="row">
+         
             <div class="col-md-7">
               <div class="row">
                 <div class="col-md-4">
@@ -429,7 +430,7 @@
         </div>
        
 
-        @endif
+       @endif
       </div>
       
     </section>
@@ -468,7 +469,7 @@ var data = {
             hoverBackgroundColor: "#aa7af8",
             hoverBorderColor: "#8845f5",
             //data: [65, 59, 30, 81, 56, 55, 40,80,100,200,80,30],
-            data: [<?php echo implode(',',$data['sub_array'])?>],
+            data: [<?php echo (!empty($data['sub_array']))?implode(',',$data['sub_array']):0?>],
         },
         {
             label: "Expire Subscriber",
@@ -478,7 +479,7 @@ var data = {
             hoverBackgroundColor: "#f1957e",
             hoverBorderColor: "#b94629",
             //data: [25, 39, 10, 65, 45, 35, 20,60,50,60,70,10],
-            data: [<?php echo implode(',',$data['exp_array'])?>],
+            data: [<?php echo (!empty($data['sub_array']))?implode(',',$data['exp_array']):0 ?>],
         }
     ]
 };
@@ -497,7 +498,7 @@ scales: {
         ticks: {
                 min: 0,
                 stepSize:1,
-                max:<?php echo  $data['total_subscriber_count']?>,
+                max:<?php echo  (!empty($data['total_subscriber_count']))?$data['total_subscriber_count']:0?>,
             }
     }]
 }
@@ -551,9 +552,7 @@ var myBarChart = Chart.Bar(canvas,{
 
             "processing"    : true,
             "serverSide"    : true,
-           /* "scrollY"       : "200px",
-            "scrollCollapse": true,
-            "paging"        : false,*/
+           
             "ajax":{
                      "url": "{{url('/admin')}}/getSubscriberDatadash",
                      "dataType": "json",
@@ -563,7 +562,7 @@ var myBarChart = Chart.Bar(canvas,{
             
             "columns": [
                 { data: "name",},
-             /*   { data: "email",},*/
+          
                 { data: "mobile",},       
                 { data: "expire_date",},
                 { data: "action",}

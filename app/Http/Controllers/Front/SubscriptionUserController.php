@@ -25,6 +25,7 @@ use App\Models\SubscriberDetails;
 use App\Models\SubscriptionPlanDetails;
 use App\Models\DeliveryLocation;
 use App\Models\City;
+use App\Models\User;
 
 use Session;
 use Sentinel;
@@ -255,6 +256,28 @@ class SubscriptionUserController extends Controller
         ->join('users','users.subscriber_dtl_id', '=', 'nutri_dtl_subscriber.id')
         ->where('nutri_mst_subscriber.id', '=', Session::get('subscriber_id'))
         ->get()->toArray();  
+
+
+        if(count($getSubscriberData) > 0)
+        {
+          $characters = '01234567';
+          $randstring = '';
+  
+          for ($i = 0; $i < 6; $i++) {
+          $randstring.= rand(0, strlen($characters));
+          }  
+  
+          $updatePassword = User::where('subscriber_id', Session::get('subscriber_id'))
+          ->update(['password'=>bcrypt($randstring)]); 
+          
+          if($updatePassword)
+          {
+              $updateSubscriberPassword = SubscriberMaster::where('id', Session::get('subscriber_id'))
+              ->update(['password'=>bcrypt($randstring)]);
+  
+              Session::put('subscriber_otp', $randstring);  
+          }
+        }       
     
         Arr::set($data,NULL, $getSubscriberData);
         return view('subscription-user-chat')->with(['data' => $data, 'seo_title' => "Chat With Nutrionist"]); 

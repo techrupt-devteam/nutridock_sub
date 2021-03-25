@@ -24,6 +24,7 @@ use App\Models\SubscriptionPlanDetails;
 use App\Models\DeliveryLocation;
 use App\Models\City;
 use App\Models\Notification;
+use App\Models\User;
 
 use Session;
 use Sentinel;
@@ -205,8 +206,6 @@ class SignUpController extends Controller
             
             $getSubscriberDtl = SubscriberDetails::where('id', Session::get('subscriber_id'))->first();
 
-            
-
             $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
             ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
             ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
@@ -214,10 +213,8 @@ class SignUpController extends Controller
             ->select('nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.no_of_days','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.expiry_date')
             ->first();
 
-
-           
             $addNotification =  Notification::create(
-                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
+                ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b> has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
                 'users_role' => 'admin',
                 'user_id' => 1]
             );       
@@ -225,19 +222,44 @@ class SignUpController extends Controller
             $addNotification->save();  
        
          // add notification for operation manager
-           $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = ".Session::get('delivery_state_id')." AND `city` = ".Session::get('delivery_city_id')." AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = ".Session::get('delivery_pincode').")");          
-           
+             $getId = DB::select("SELECT id FROM users WHERE roles = '2' AND `state` = '".Session::get('delivery_state_id')."' AND `city` = '".Session::get('delivery_city_id')."' AND `area` IN (SELECT id FROM `locations` WHERE `pincode` = '".Session::get('delivery_pincode')."')");  
+          
             $addNotificationOperation =  Notification::create(
-                ['message' =>  $getSubscriberDtl['subscriber_name']." has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
+                ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b>  has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']."days, From: ".date("d-M-Y",strtotime($getSubscriberDtl['start_date']))." To: ".date("d-M-Y",strtotime($getSubscriberDtl['expiry_date'])),
                 'users_role' => 2,
                 'user_id' => $getId[0]->id]
             );
 
             $addNotificationOperation->save();           
 
-            Session::put('subscriber_id', $getSubscriberDtl['subscriber_id']);           
+            Session::put('subscriber_id', $getSubscriberDtl['subscriber_id']);   
+            
+            $getSubscriberMst = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])->first();
+            
+            if($getSubscriberMst) {
+                Session::put('subscriber_email', $getSubscriberMst['email']);
+                Session::put('subscriber_mobile', $getSubscriberMst['mobile']); 
+
+                $characters = '01234567';
+                $randstring = '';
+
+                for ($i = 0; $i < 6; $i++) {
+                $randstring.= rand(0, strlen($characters));
+                }  
+
+                $updatePassword = User::where('subscriber_id', $getSubscriberDtl['subscriber_id'])
+                ->update(['password'=>bcrypt($randstring)]); 
+                
+                if($updatePassword)
+                {
+                    $updateSubscriberPassword = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])
+                    ->update(['password'=>bcrypt($randstring)]);
+
+                    Session::put('subscriber_otp', $randstring);  
+                }
+            }
         }
-		return $update;    
+        return $update;    
 	}
 
     public function checkout() {       
@@ -280,19 +302,20 @@ class SignUpController extends Controller
         'pincode1' => $input['pincode1'],
         //'address1_deliver_mealtype' => $input['address1_meal'],
         'address2' => $input['address2'],
-        'pincode2' => $input['pincode2'],
+        'pincode2'       => $input['pincode2'],
         //'address2_deliver_mealtype' => $input['address2_meal'],
-        'state' => Session::get('delivery_state_id'),
-        'city' => Session::get('delivery_city_id'),
-        'session_id' => session()->getId(),
+        'state'          => Session::get('delivery_state_id'),
+        'city'           => Session::get('delivery_city_id'),
+        'session_id'     => session()->getId(),
         'transaction_id' => '',
-        'subscriber_id' => Session::get('subscriber_id'),
+        //'subscriber_id'  => Session::get('subscriber_id'),
         'payment_status' => 'Initiated');
 
-       
-        $update = SubscriberDetails::where('subscriber_id', Session::get('subscriber_id'))
-                ->update($data);         
-
+        
+      // $update = SubscriberDetails::where('subscriber_id','=',Session::get('subscriber_id'))
+        $update = \DB::table('nutri_dtl_subscriber')->where('id','=',Session::get('subscriber_id'))
+                 ->update($data);         
+        //dd($data);
         $arrData = ['total_amount' => $totalAmount,'subscriber_id' => Session::get('subscriber_id')];
         return $arrData;          
       

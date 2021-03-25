@@ -391,16 +391,16 @@ class AssignNutritionistController extends Controller
     //Assign Nutritionist delete function
     public function delete($id)
     {
-        /*  $id = base64_decode($id);
+        $id = base64_decode($id);
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
         $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
         Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();*/
-        $id= base64_decode($id);
+        return \Redirect::back();
+      /*  $id= base64_decode($id);
         $this->base_model->where(['subcriber_assign_id'=>$id])->delete();
         Session::flash('success',$this->Delete);
-        return \Redirect::back();
+        return \Redirect::back();*/
     } 
 
     //on off staus
