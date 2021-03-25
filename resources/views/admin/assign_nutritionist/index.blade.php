@@ -75,9 +75,9 @@
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}" class="btn btn-sm btn-primary" title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                      <!--   <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->subcriber_assign_id )}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
                           <i class="fa fa-trash"></i>
-                        </a>
+                        </a> -->
                       </td>
                     </tr>
                   @endforeach
