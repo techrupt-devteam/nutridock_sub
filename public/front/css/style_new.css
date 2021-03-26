@@ -5068,6 +5068,7 @@ font-size:.9375rem;
 	/* text-transform: uppercase; */
 	font-weight: 600;
 }
+
 .error-notice {
 	margin: 5px 5px; /* Making sure to keep some distance from all side */
   }
@@ -5150,4 +5151,27 @@ input[type=number] {
     font-size: 13px;
     list-style: none;
     padding: 0px !important;
+}
+.account-Modal__inner.show {
+    max-width: 250px;
+    margin-top: 22px;
+}
+.account-Modal__inner .navbar-content {
+    width: 100%;
+    padding: 0px;
+}
+.account-Modal__inner .media {
+    padding: 5px;
+}
+
+.account-Modal__inner .media .media-body {
+    padding: 0px 5px;
+    margin-top: 0px;
+    margin-left: 13px;
+}
+.account-Modal__inner .media .media-left {
+    border-right: 1px solid #b5b5b5;
+    width: 25px;
+    color: #8bc34a;
+    text-align: center;
 }

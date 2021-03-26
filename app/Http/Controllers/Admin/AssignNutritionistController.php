@@ -134,7 +134,8 @@ class AssignNutritionistController extends Controller
         $assign_nutritionist            = $this->base_model->create($arr_data);
         if(!empty($assign_nutritionist))
         {   
-
+           
+    
             // $data['message'] = "New Subscriber asssign";
             // $this->pusher->trigger('notify-channel', 'App\\Events\\Notify', $data);
             /*$notify_arr['message']    = 'New subscriber has been assigned to you!';
@@ -363,13 +364,13 @@ class AssignNutritionistController extends Controller
                     $assign_nutritionist_notification = $this->base_notification->create($notify_arr1);
 
                     // subscriber send    
-                    $notify_arr2['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber'.$subscriber_data->subscriber_name;
+                    $notify_arr2['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber '.$subscriber_data->subscriber_name;
                     $notify_arr2['users_role']         = "subscriber" ; 
                     $notify_arr2['user_id']            = $subscriber_id; 
                     $assign_subscriber_notification   = $this->base_notification->create($notify_arr2);
 
                     // operation send      
-                    $notify_arr3['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber'.$subscriber_data->subscriber_name;
+                    $notify_arr3['message']            = 'Nurtidock assigned nutrtionist '.$nutritionist_dt->name.'  to subscriber '.$subscriber_data->subscriber_name;
                     $notify_arr3['users_role']         = 2 ; 
                     $notify_arr3['user_id']            = $operation_details->id; 
                     $assign_operation_notification    = $this->base_notification->create($notify_arr3);
@@ -395,12 +396,19 @@ class AssignNutritionistController extends Controller
         $arr_data               = [];
         $arr_data['is_deleted'] = '1';
         $this->base_model->where(['subcriber_assign_id'=>$id])->update($arr_data);
+        //Assign user deactivate
+     
+
+
+
+
+
         Session::flash('success', 'Success! Record deleted successfully.');
         return \Redirect::back();
-      /*  $id= base64_decode($id);
-        $this->base_model->where(['subcriber_assign_id'=>$id])->delete();
-        Session::flash('success',$this->Delete);
-        return \Redirect::back();*/
+        /*$id= base64_decode($id);
+          $this->base_model->where(['subcriber_assign_id'=>$id])->delete();
+          Session::flash('success',$this->Delete);
+          return \Redirect::back();*/
     } 
 
     //on off staus
