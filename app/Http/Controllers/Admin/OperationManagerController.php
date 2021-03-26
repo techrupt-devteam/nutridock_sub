@@ -182,26 +182,26 @@ class OperationManagerController extends Controller
             $arr_dat['completed'] = 1;   
             $activations = \DB::table('activations')->insert($arr_dat);
             //send mail function 
-            $html = '<tr>
-            <td style="padding: 20px 25px 10px 25px;background-color: #d8ffcf;">
+            $html = '<tr >
+            <td style="padding:0;Margin:0;padding-left:20px;padding-right:20px;padding-top:40px;background-color:#ececec !important;background-position:left top" bgcolor="transparent">
               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
                 <tr>
                   <td style="color: #1a2127; font-family: Arial, sans-serif;">
-                    <h1 style="font-size: 24px; color: #6dc83c;">Welcome to Nutridock Team,</h1>
-                    <h2 style="margin: 0px;text-transform: uppercase">Hello, '.ucfirst($request->input('operation_manager_name')).'</h2>
+                    <h1 style="font-size: 24px; color: #6dc83c; font-family:arial, helvetica neue, helvetica, sans-serif;margin-bottom:0px">Welcome to Nutridock Fit Team,</h1>
+                    <h2 style="margin: 0px;text-transform: uppercase font-family:arial, helvetica neue, helvetica, sans-serif;margin-top:0px">Hello,  '.ucfirst($request->input('operation_manager_name')).'</h2>
+                  </td>
+                </tr>
+                <tr>
+                   <td style="color: #222;font-family:arial, helvetica neue, helvetica,sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
+                    <p style="margin: 0; font-family:arial, helvetica neue, helvetica, sans-serif;">To start using your Nutridock Fit account, login to operation panel using following login credentials:</p>
+                    <p style="font-family:arial, helvetica neue, helvetica, sans-serif;"><b>Operation Panel Url</b>:https://www.nutridockfit.com/admin</p>
+                    <p style="font-family:arial, helvetica neue, helvetica, sans-serif;"><b>Username:</b> '.$request->input('operation_manager_email').'</p>
+                    <p style="font-family:arial, helvetica neue, helvetica, sans-serif;"><b>Password:</b> '.$password.'</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="color: #222; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
-                    <p style="margin: 0;">To start using your Nutridock account, login to Operation Panel using following login credentials:</p>
-                    <p><b>Operation Panel Url</b>: nutridoc.com</p>
-                    <p><b>Username:</b> '.ucfirst($request->input('operation_manager_email')).'</p>
-                    <p><b>Password:</b> '.$password.'</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="color: #222; font-family: Arial, sans-serif; font-size: 16px; line-height: 24px; padding: 20px 0 30px 0;">
-                    <p style="margin: 0">P.S. If you experience problems, please contact us at info@nutridock.com</p>
+                    <p style="margin: 0;font-family:arial, helvetica neue, helvetica, sans-serif;">P.S. If you experience problems, please contact us at info@nutridockfit.com</p>
                   </td>
                 </tr>
               </table>
@@ -328,20 +328,73 @@ class OperationManagerController extends Controller
   
      public function send_mail($html_body,$reciver_mail,$subject)
      {
+            $url =  filter_var(strip_tags(url('/')), FILTER_SANITIZE_URL);
             $html_content ='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
             <html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
             <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <title>Email Design</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><style type="text/css">
             a[x-apple-data-detectors] {color: inherit !important;}
             </style></head><body style="margin: 0; padding: 0;">  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
-            <td style="padding: 20px 0 30px 0;"><table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;"><tr><td align="center" bgcolor="#70bbd9"></td></tr>';
+            <td style="padding: 20px 0 30px 0;"><table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;"><tr><td align="center" bgcolor="#70bbd9"></td></tr><tr><td style="Margin:0;padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;background-color:#1d2a3a" bgcolor="#1d2a3a" align="left"><!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:270px" valign="top"><![endif]-->
+                    <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                      <tbody><tr style="border-collapse:collapse">
+                        <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:270px"><table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                            <tbody><tr style="border-collapse:collapse">
+                              <td class="es-m-p0l es-m-txt-c" style="padding:0;Margin:0;font-size:0" align="left">
+                                <a href="nutridockfit.com" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;">
+                                <img src="'.$url.'/uploads/images/white-logo.svg" alt="" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="183" height="57">
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody></table></td>
+                      </tr>
+                    </tbody></table>
+                   
+                    <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                      <tbody><tr style="border-collapse:collapse">
+                        <td align="left" style="padding:0;Margin:0;width:270px"><table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                            <tbody><tr style="border-collapse:collapse">
+                              <td class="es-m-txt-c" align="right" style="padding:0;Margin:0;">
+                                 <span class="es-button-border" style="border-style:solid; border-color:#1d2a3a;background:#FFFFFF;border-width:2px;display:inline-block;border-radius:10px;width:auto">
+                                 <a href="https://www.nutridockfit.com" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, helvetica neue, helvetica, sans-serif;font-size:14px;color:#1d2a3a;border-style:solid;border-color:#FFFFFF;border-width:15px 20px 15px 20px;display:inline-block;background:#FFFFFF;border-radius:10px;font-weight:bold;font-style:normal;line-height:17px;width:auto;text-align:center">Go to Website</a></span>
+                              </td>
+                            </tr>
+                          </tbody></table></td>
+                      </tr>
+                    </tbody></table>
+                   </td></tr>';
             $html_content.=$html_body;
-            $html_content.='<tr><td bgcolor="#33363d" style="padding: 20px 20px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;"><tr><td style="color: #ffffff; font-family: Arial, sans-serif; font-size: 14px;">
-            <p style="margin: 0;">The Nutridock Team</p><p style="margin: 0"> <a href="https://nutridock.com" style="color: #0087ff;font-weight: 600;letter-spacing: 0.5px;">https://nutridock.com</p></td>
-            <td align="right"><table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
-            <td>
-            <a href="https://www.facebook.com/nutridock0/" target="_blank">
-            <img src="https://nutridock.com/uploads/images/facebook.png" alt="Facebook" width="30" height="30" style="display: block;" border="0" /></a></td><td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td><td><a href="https://www.instagram.com/nutri_dock/?igshid=1iz93rjouag24" target="_blank"><img src="https://nutridock.com/uploads/images/instagram.png" alt="Instagram" width="30" height="30" style="display: block;" border="0" /></a></td></tr></table></td></tr></table></td></tr></table></td></tr></table></body></html>';
+            $html_content.='<tr><td style="Margin:0;padding-top:10px;padding-left:20px;padding-right:20px;padding-bottom:15px;background-color:#5CB031;background-position:left top" bgcolor="#0b5394" align="left"><table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                      <tbody><tr style="border-collapse:collapse">
+                        <td valign="top" align="center" style="padding:0;Margin:0;width:560px"><table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                            <tbody><tr style="border-collapse:collapse">
+                              <td align="left" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px"><h2 style="Margin:0;line-height:19px;mso-line-height-rule:exactly;font-family:arial, helvetica neue, helvetica, sans-serif;font-size:16px;font-style:normal;font-weight:normal;color:#FFFFFF"><strong>Have quastions?</strong></h2></td>
+                            </tr>
+                            <tr style="border-collapse:collapse">
+                              <td align="left" style="padding:0;Margin:0;padding-bottom:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;line-height:21px;color:#FFFFFF">We are here to help, learn more about us <a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#1d2a3a" href="">here</a></p>
+                                <p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;line-height:21px;color:#FFFFFF">or <a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;font-size:14px;text-decoration:none;color:#1d2a3a" href="">contact us</a><br>
+                                </p>
+                                </td>
+                            </tr>
+                          </tbody></table></td>
+                      </tr>
+                      <tr>
+                      <td>
+                      </td>
+                      </tr>
+                    </tbody></table></td></tr>
+                    <tr>
+<td align="left" style="Margin:0;padding-bottom:5px;padding-top:15px;padding-left:20px;padding-right:20px"><table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                      <tbody><tr style="border-collapse:collapse">
+                        <td valign="top" align="center" style="padding:0;Margin:0;width:560px"><table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                            <tbody><tr style="border-collapse:collapse">
+                              <td align="center" style="padding:0;Margin:0"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:12px;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;line-height:18px;color:#666666">This daily newsletter was sent to info@nutridockfit.com from company name because you subscribed. If you would not like to receive this email <a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:helvetica, helvetica neue, arial, verdana, sans-serif;font-size:12px;text-decoration:underline;color:#333333" class="unsubscribe" href="">unsubscribe here</a>.</p></td>
+                            </tr>
+                          </tbody></table></td>
+                      </tr>
+                    </tbody></table></td>
+                    </tr>
+                    </table></body></html>';
 
             $mail = new PHPMailer(true); 
             try 
