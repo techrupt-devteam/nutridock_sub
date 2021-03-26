@@ -397,8 +397,7 @@ class SubscriptionUserController extends Controller
         //dd(Session::getId());
         $user = \Sentinel::authenticate($credentials);
 
-        if (!empty($user))
-        {
+        if (!empty($user)) {
             \Sentinel::login($user);
             //Session::put('user', $arr_user);   
             $request->session()->put("user",$arr_user);
@@ -438,8 +437,7 @@ class SubscriptionUserController extends Controller
         }
     }
 
-    public function subscriber_address_changed(Request $request)
-    {   
+    public function subscriber_address_changed(Request $request) {   
         $subscriber_id  = $request->sid;
         $subscriberData = DB::table('nutri_dtl_subscriber')
                           ->where('id', '=', $subscriber_id)
@@ -449,8 +447,7 @@ class SubscriptionUserController extends Controller
         return view('subscription-change-address-ajax')->with(['data' => $data]); 
     }
 
-    public function update_address(Request $request)
-    {
+    public function update_address(Request $request) {
       $subscriber_id          = $request->input('id');
       $arr_data['address1']  = $request->input('address1');
       $arr_data['address2']  = $request->input('address2');
@@ -465,8 +462,7 @@ class SubscriptionUserController extends Controller
 
     }
 
-    public function pincode_check(Request $request)
-    {
+    public function pincode_check(Request $request) {
       $pincode = $request->pincode;
 
       $pincode_cnt = DB::table('nutri_mst_delivery_location')
@@ -480,9 +476,6 @@ class SubscriptionUserController extends Controller
       }     
      
       return $msg;
-
     }
-
-
 }
 ?>

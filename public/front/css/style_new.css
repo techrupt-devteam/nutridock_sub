@@ -5139,3 +5139,15 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+.parsley-errors-list ul
+{
+	padding-left:0px;
+}
+.parsley-errors-list li
+{
+	color: #f00;
+    font-weight: 400;
+    font-size: 13px;
+    list-style: none;
+    padding: 0px !important;
+}
