@@ -76,7 +76,7 @@ class SignUpController extends Controller
 
         /* Start: get data for Subscribe Now details */
         Arr::set($data, 'getSubscribeNowData', SubscribeNow::getData());
-        /* End: get data for Subscribe Now details */
+        /* End: get data for Subscribe Now details */       
           
         
         return view('sign_up')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
@@ -258,7 +258,16 @@ class SignUpController extends Controller
                     Session::put('subscriber_otp', $randstring);  
                 }
             }
+
+            
+
+
         }
+
+
+
+      
+
         return $update;    
 	}
 

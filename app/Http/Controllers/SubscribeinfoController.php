@@ -47,6 +47,21 @@ class SubscribeinfoController extends Controller
         Arr::set($data, 'getSubscribeNowPlan', SubscribeNowPlan::getData());
         //print_r($data); die;
         Arr::set($data, 'getMealTypeData', MealType::getData());
+
+        /* @Start: code to send email through smtp */
+        $data = array('name'=> 'Subscriber');
+        $to = 'developer@techrupt.in';
+        $cc = 'developer@techrupt.in';
+        //$bcc = array('it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
+        $subject = 'Thank You for connecting with us';
+        $customer_mail = Mail::send('contactmail', $data, function($message) use($to, $subject) {
+            $message->to($to);
+            //$message->cc($cc);
+            //$message->bcc($bcc);
+            $message->subject($subject);
+            $message->from('admin@nutridock.com','Nutridock-Admin');
+        });
+
         return view('subscribe-info')->with(['data' => $data,'recent_data' => $recent_data, 'seo_title' => "Subscribe Now"]); 
     }
 }
