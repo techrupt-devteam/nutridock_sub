@@ -59,7 +59,7 @@
               </div>
               </div>
           </div>
-          <form role="form" id="sign-up" class="w-100" method="POST"  action="#">
+          <form role="form" id="sign-up" class="w-100" method="POST"  action="#" data-parsley-validate="">
           {!! csrf_field() !!}
               <!-- @START: Personal Details tab -->
               <div class="row setup-content step-1" id="step-1">
@@ -81,7 +81,9 @@
                                 </span> 
                               </div>
                               <input type="text" name="full_name" class="form-control" id="full_name" aria-describedby="basic-addon3" placeholder="Full Name"
-                              name="first_name" Choose placeholder="First Name" required="required" data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
+                              name="first_name" Choose placeholder="First Name" required="required" 
+                              autocomplete="nope"
+                              data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
                              <div id="firstname-errors"></div>
                              </div>
@@ -92,7 +94,10 @@
                           <label class="control-label">Email <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3" ><i class="fa fa-envelope" aria-hidden="true"></i></span> </div>
-                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" data-parsley-group="step-1" value="{{ Session::get('subscriber_email') }}" 
+                            <input type="email" class="form-control" id="email" aria-describedby="basic-addon3" placeholder="Email" name="email" required="required" data-parsley-errors-container="#email-errors" 
+                            data-parsley-trigger="change"
+                            autocomplete="nope"
+                            data-parsley-group="step-1" value="{{ Session::get('subscriber_email') }}" 
                             {{ Session::get('subscriber_email') ? 'readonly' : ''}}>
                           </div>
                           <div id="email-errors"></div>
@@ -103,7 +108,15 @@
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="text" class="form-control" id="mobile_no" aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required"  data-parsley-length="[10, 10]" data-parsley-errors-container="#mobile-errors" maxlength="10" data-parsley-group="step-1" value="{{ Session::get('subscriber_mobile') }}"
+                            <input type="text" class="form-control" id="mobile_no" 
+                            autocomplete="nope"
+                            aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required" maxlength="10"
+                            data-parsley-pattern="^[0-9]*$" 
+                            data-parsley-trigger="keyup" 
+                            data-parsley-errors-container="#mobile-errors"     
+                            data-parsley-type="number"                        
+                            data-parsley-group="step-1" 
+                            value="{{ Session::get('subscriber_mobile') }}"
                             {{ Session::get('subscriber_mobile') ? 'readonly' : ''}}
                             >
                           </div>
@@ -131,7 +144,17 @@
                        <div class="col-6">
                           <div class="form-group label-floating">
                             <label class="control-label">Age <span class="text-danger">*</span></label>
-                            <input name="age" type="number" class="form-control" placeholder="Age" required="required"  data-parsley-errors-container="#age-errors" data-parsley-error-message="Age required" maxlength="3" data-parsley-group="step-2">
+                            <input name="age" 
+                            type="text" 
+                            autocomplete="nope"
+                            class="form-control" 
+                            placeholder="Age" 
+                            required="required"  
+                            data-parsley-errors-container="#age-errors" 
+                            data-parsley-error-message="Age required" 
+                            data-parsley-type="number"
+                            maxlength="3" 
+                            data-parsley-group="step-2">
                             <div id="age-errors"></div>
                           </div>
                        </div>

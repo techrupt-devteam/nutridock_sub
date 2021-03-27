@@ -23,7 +23,7 @@ Route::get('/test', function () {
     return view('admincontactmail');
 });
 
- Route::get('/', 'HomeController@index')->name('index');
+ Route::get('/', 'Front\SignUpController@index');
  
  Route::get('/order_index', function () {
     return view('ordernow/index');
@@ -160,13 +160,9 @@ Route::group(['middleware' => 'subscriber'], function () {
 	Route::post('/update-health-details', 	    'Front\UserMealProgramController@update_health_details');
 	Route::post('/update-health-store', 	    'Front\UserMealProgramController@update_health_store');
 	//Delivery Address
-    Route::post('/change_address', 			'Front\SubscriptionUserController@subscriber_address_changed');
-	Route::post('/update-address', 	    'Front\SubscriptionUserController@update_address');
-	Route::post('/chk_pincode', 	    'Front\SubscriptionUserController@pincode_check');
-	
-
-
-	
+    Route::post('/change_address', 				'Front\SubscriptionUserController@subscriber_address_changed');
+	Route::post('/update-address', 	    		'Front\SubscriptionUserController@update_address');
+	Route::post('/chk_pincode', 	    		'Front\SubscriptionUserController@pincode_check');	
 	
 });
 
