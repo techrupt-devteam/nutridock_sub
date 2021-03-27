@@ -49,7 +49,7 @@
                     <div>
                       <div class="form-group">
                         <label for="menu_name">Module Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="module_name" name="module_name" placeholder="Module Name" value="{{$data['module_name']}}" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="module_name" name="module_name" placeholder="Module Name" value="{{$data['module_name']}}" required="true">
                       </div>
                     </div>
                   </div>
@@ -57,7 +57,7 @@
                     <div>
                       <div class="form-group">
                         <label for="module_name">Module Url</label>
-                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL" value="{{$data['module_url']}}">
+                        <input type="text" autocomplete="off" class="form-control" id="module_url" name="module_url" placeholder="Module URL" value="{{$data['module_url']}}">
                       </div>
                     </div>
                   </div>
@@ -65,7 +65,7 @@
                     <div>
                       <div class="form-group">
                         <label for="module_name">Module Url Slug</label>
-                        <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug" value="{{$data['module_url_slug']}}">
+                        <input type="text" autocomplete="off" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug" value="{{$data['module_url_slug']}}">
                       </div>
                     </div>
                   </div>

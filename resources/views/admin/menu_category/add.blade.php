@@ -40,7 +40,7 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="form-group">
                         <label for="name">Menu Category Name <span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Menu Category Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the category name.">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Menu Category Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the category name." autocomplete="off">
                          <div id="name_error" style="color:red;"></div>
                       </div>
                   </div>

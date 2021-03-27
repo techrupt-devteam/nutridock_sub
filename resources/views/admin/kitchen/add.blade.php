@@ -41,7 +41,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="Kitchen_name">Kitechen Name<span style="color:red;" >*</span></label>
-                  <input type="text" class="form-control" id="kitchen_name" name="kitchen_name" data-parsley-errors-container="#Kitchen_names" data-parsley-error-message="Please enter name."  placeholder="Kitchen Name" required>
+                  <input type="text" autocomplete="off" class="form-control" id="kitchen_name" name="kitchen_name" data-parsley-errors-container="#Kitchen_names" data-parsley-error-message="Please enter name."  placeholder="Kitchen Name" required>
                   <div id="Kitchen_names" style="color:red;"></div>
                 </div>
               </div>
@@ -52,7 +52,7 @@
                   <label for="operation_manager_name">Customer Key<span style="color:red;" >*</span></label>
                   <div class="input-group">
                     <div class="input-group-addon"> <i class="fa fa-key"></i> </div>
-                    <input  type="text"  class="form-control"  id="customer_key" name="customer_key" placeholder="Customer Key" required data-parsley-errors-container="#customer_key_error" data-parsley-error-message="Please enter customer key.">
+                    <input type="text" autocomplete="off"  class="form-control"  id="customer_key" name="customer_key" placeholder="Customer Key" required data-parsley-errors-container="#customer_key_error" data-parsley-error-message="Please enter customer key.">
                   </div>
                   <div id="customer_key_error" style="color:red;"></div>
                 </div>
@@ -108,7 +108,7 @@
                   <label for="operation_manager_name">Pincode<span style="color:red;" >*</span></label>
                   <div class="input-group">
                     <div class="input-group-addon"> <i class="fa fa-map-marker"></i> </div>
-                    <input  type="text"  class="form-control"  id="pincode" name="pincode" placeholder="Pincode" required data-parsley-errors-container="#pincode_error" data-parsley-error-message="Please enter pincode.">
+                    <input type="text" autocomplete="off"  class="form-control"  id="pincode" name="pincode" placeholder="Pincode" required data-parsley-errors-container="#pincode_error" data-parsley-error-message="Please enter pincode.">
                   </div>
                   <div id="pincode_error" style="color:red;"></div>
                 </div>

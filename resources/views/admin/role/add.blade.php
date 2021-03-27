@@ -44,7 +44,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="role_name">Role Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Role Name" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="role_name" name="role_name" placeholder="Role Name" required="true">
                       </div>
                     </div>
                   </div>

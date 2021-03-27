@@ -50,7 +50,7 @@
                     <div>
                       <div class="form-group">
                         <label for="role_name">Subscription Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="sub_name" name="sub_name" placeholder="Subscription Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the subscription name." value="{{$data['sub_name']}}">
+                        <input type="text" autocomplete="off" class="form-control" id="sub_name" name="sub_name" placeholder="Subscription Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the subscription name." value="{{$data['sub_name']}}">
                         <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -122,7 +122,7 @@
                           
                           <tr class="tr_row_duration{{$key+1}}">
                             <td ><div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter Duration Days" id="duration{{$key+1}}" name="duration{{$key+1}}" required="true" data-parsley-errors-container="#duration_msg{{$key+1}}" data-parsley-error-message="Enter Duration Days" value="{{$durvalue->duration}}" readonly>
+                                <input type="text" autocomplete="off" class="form-control" placeholder="Enter Duration Days" id="duration{{$key+1}}" name="duration{{$key+1}}" required="true" data-parsley-errors-container="#duration_msg{{$key+1}}" data-parsley-error-message="Enter Duration Days" value="{{$durvalue->duration}}" readonly>
                                  <div class="input-group-addon btn-default">
                                     Days
                                   </div>
@@ -156,7 +156,7 @@
                                   @if(!empty($durvalue->price_per_pack))
                                   @php $price = $durvalue->price_per_pack; @endphp
                                   @endif
-                                  <input type="text" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" 
+                                  <input type="text" autocomplete="off" class="form-control pull-left" placeholder="Enter Price" id="price{{$key+1}}" name="price{{$key+1}}" required="true" data-parsley-errors-container="#meal_price{{$key+1}}" 
                                   value="{{number_format($price,2)}}" data-parsley-error-message="Please enter price.">
                                 </div>
                                 <span id="meal_price{{$key+1}}" style="color:red;"></span>
@@ -166,7 +166,7 @@
                                   <div class="input-group-addon">
                                     <i class="fa fa-rupee"></i>
                                   </div>
-                                  <input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{number_format($durvalue->discount_price,2)}}" onchange="get_compair_price({{$key+1}})">
+                                  <input type="text" autocomplete="off" class="form-control" placeholder="Enter Discounted Price" id="discount_price{{$key+1}}" name="discount_price{{$key+1}}" required="true" data-parsley-errors-container="#dis_price{{$key+1}}" data-parsley-error-message="Please enter discounted price." value="{{number_format($durvalue->discount_price,2)}}" onchange="get_compair_price({{$key+1}})">
                                 </div>
                                 <span id="dis_price{{$key+1}}" style="color:red;"></span>
                             </td>
@@ -259,7 +259,7 @@ function addDurationRow()
       var duration_flag = $('#duration_flag').val();
       duration_flag = parseInt(duration_flag)+parseInt(1); 
       $('#duration_flag').val(duration_flag);
-       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days">  <div class="input-group-addon btn-default"> Days</div></div><span id="duration_msg'+duration_flag +'" style="color:red;"></span></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price'+ duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" class="form-control" placeholder="Enter Discounted Price" id="discount_price'+duration_flag+ '" name="discount_price'+duration_flag+'" required="true" onchange="get_compair_price('+duration_flag+');" data-parsley-errors-container="#dis_price' + duration_flag + '" data-parsley-error-message="Please enter discount price." ></div><span id="dis_price'+ duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" autocomplete="off" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days">  <div class="input-group-addon btn-default"> Days</div></div><span id="duration_msg'+duration_flag +'" style="color:red;"></span></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price'+ duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Discounted Price" id="discount_price'+duration_flag+ '" name="discount_price'+duration_flag+'" required="true" onchange="get_compair_price('+duration_flag+');" data-parsley-errors-container="#dis_price' + duration_flag + '" data-parsley-error-message="Please enter discount price." ></div><span id="dis_price'+ duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#duration_body').append(tr);
      
   }  function removedurationRow_ajax(div_id)

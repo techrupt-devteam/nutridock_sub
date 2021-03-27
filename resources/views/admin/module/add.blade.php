@@ -58,7 +58,7 @@
                     <div>
                       <div class="form-group">
                         <label for="module_name">Module Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="module_name" name="module_name" placeholder="Module Name" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="module_name" name="module_name" placeholder="Module Name" required="true">
                       </div>
                     </div>
                   </div>
@@ -66,7 +66,7 @@
                     <div>
                       <div class="form-group">
                         <label for="module_name">Module Url</label>
-                        <input type="text" class="form-control" id="module_url" name="module_url" placeholder="Module URL">
+                        <input type="text" autocomplete="off" class="form-control" id="module_url" name="module_url" placeholder="Module URL">
                       </div>
                     </div>
                   </div>
@@ -74,7 +74,7 @@
                     <div>
                       <div class="form-group">
                         <label for="module_name">Module Url Slug</label>
-                        <input type="text" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug">
+                        <input type="text" autocomplete="off" class="form-control" id="module_url_slug" name="module_url_slug" placeholder="Module URL Slug">
                       </div>
                     </div>
                   </div>

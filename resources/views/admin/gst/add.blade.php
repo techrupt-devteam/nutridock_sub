@@ -57,7 +57,7 @@
                    
                       <div class="form-group">
                         <label for="module_name">CGST <span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="cgst" name="cgst" placeholder="CGST" required="true" ta-parsley-errors-container="#cgst_error" data-parsley-error-message="Please enter cgst." value="0">
+                        <input type="text" autocomplete="off" class="form-control" id="cgst" name="cgst" placeholder="CGST" required="true" ta-parsley-errors-container="#cgst_error" data-parsley-error-message="Please enter cgst." value="0">
                         <div id="#cgst_error" style="color:red;">
                       </div>
                     </div>
@@ -66,7 +66,7 @@
                    
                       <div class="form-group">
                         <label for="module_name">SGST <span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="sgst" name="sgst" placeholder="SGST" required="true" ta-parsley-errors-container="#sgst_error" data-parsley-error-message="Please enter sgst." value="0">
+                        <input type="text" autocomplete="off" class="form-control" id="sgst" name="sgst" placeholder="SGST" required="true" ta-parsley-errors-container="#sgst_error" data-parsley-error-message="Please enter sgst." value="0">
                         <div id="#sgst_error" style="color:red;">
                       </div>
                     </div>
@@ -76,7 +76,7 @@
                     
                       <div class="form-group">
                         <label for="module_name">IGST <span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="igst" name="igst" placeholder="IGST" required="true"
+                        <input type="text" autocomplete="off" class="form-control" id="igst" name="igst" placeholder="IGST" required="true"
                         ta-parsley-errors-container="#igst_error" data-parsley-error-message="Please enter igst." value="0">
                         <div id="#igst_error" style="color:red;">
                       </div>

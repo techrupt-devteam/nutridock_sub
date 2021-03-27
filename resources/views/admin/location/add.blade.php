@@ -63,7 +63,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Area<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please enter area.">
+                      <input type="text" autocomplete="off" class="form-control " id="area" name="area" placeholder="Area" required="true" data-parsley-errors-container="#area_error" data-parsley-error-message="Please enter area.">
                         <div id="area_error" style="color:red;"></div>                     
                     </div>
                   </div>
@@ -71,7 +71,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Pincode<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="pincode" name="pincode" placeholder="Pinocde" data-parsley-type="number" required="true" data-parsley-errors-container="#pincode_error" >
+                      <input type="text" autocomplete="off" class="form-control " id="pincode" name="pincode" placeholder="Pinocde" data-parsley-type="number" required="true" data-parsley-errors-container="#pincode_error" >
                         <div id="pincode_error" style="color:red;"></div>                     
                     </div>
                   </div>  
