@@ -80,7 +80,7 @@
                           <div class="col-sm-6 mx-auto">
                             <div class="position-relative width-120 mr-15">
 
-                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Login</button>
+                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Send OTP</button>
 
                                <button type="button" name="btnVerify" id="btnVerify" class="btn btn-dark btn-block">Verify</button>
                               

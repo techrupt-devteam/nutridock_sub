@@ -74,7 +74,7 @@
                             <div class="input-group-addon btn-default">
                               BMI
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter BMI" id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi." value="{{ isset($health_details) ? ($health_details->bmi) : ('') }}">
+                            <input type="text" autocomplete="off" class="form-control" placeholder="Enter BMI" id="bmi" name="bmi" required="true" data-parsley-errors-container="#bmi_error" data-parsley-error-message="Please enter bmi." value="{{ isset($health_details) ? ($health_details->bmi) : ('') }}">
                             <input type="hidden" name="subscriber_id" value="{{$subscriber_id}}">
                             <input type="hidden" name="nutritionist_id" value="{{$nutritionist_id}}">
                           </div>
@@ -90,7 +90,7 @@
                           <div class="input-group-addon btn-default">
                             BMR
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('') }}">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter BMR" id="bmr" name="bmr" required="true" data-parsley-errors-container="#bmr_error" data-parsley-error-message="Please enter bmr." value="{{ isset($health_details) ? ($health_details->bmr) : ('') }}">
                         </div>
                         <div id="bmr_error" style="color:red;"></div>
                       </div>
@@ -104,7 +104,7 @@
                           <div class="input-group-addon btn-default">
                             <i class="fa fa-balance-scale"></i>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight." value="{{ isset($health_details) ? ($health_details->current_wt) : ('') }}">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Current Weight" id="current_wt" name="current_wt" required="true" data-parsley-errors-container="#weight_error" data-parsley-error-message="Please enter weight." value="{{ isset($health_details) ? ($health_details->current_wt) : ('') }}">
                         </div>
                         <div id="weight_error" style="color:red;"></div>
                       </div>
@@ -120,7 +120,7 @@
                           <div class="input-group-addon btn-default">
                             <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Body Fats" id="body_fat" name="body_fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats." value="{{ isset($health_details) ? ($health_details->body_fat) : ('') }}">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Body Fats" id="body_fat" name="body_fat" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter body fats." value="{{ isset($health_details) ? ($health_details->body_fat) : ('') }}">
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                     </div>
@@ -132,7 +132,7 @@
                       <label for="">Req.Calories<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('') }}"></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter required calories" id="req_calories" name="req_calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{ isset($health_details) ? ($health_details->req_calories) : ('') }}"></div>
                        <div id="calories_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -146,7 +146,7 @@
                       <label for="">Protine<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('') }}"></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter required protein" id="protein" name="protein" required="true" data-parsley-errors-container="#protein_error" data-parsley-error-message="Please enter protein." value="{{ isset($health_details) ? ($health_details->protein) : ('') }}"></div>
                        <div id="protein_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -157,7 +157,7 @@
                       <label for="">fat<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat." value="{{ isset($health_details) ? ($health_details->fat) : ('') }}"></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter required fat" id="fat" name="fat" required="true" data-parsley-errors-container="#fts_error" data-parsley-error-message="Please enter fat." value="{{ isset($health_details) ? ($health_details->fat) : ('') }}"></div>
                        <div id="fts_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -168,7 +168,7 @@
                       <label for="">Fiber<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><i class="fa fab fa-pagelines"></i></div>
-                        <input type="text" class="form-control" placeholder="Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber." value="{{ isset($health_details) ? ($health_details->fiber) : ('') }}"></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter required fiber" id="fiber" name="fiber" required="true" data-parsley-errors-container="#Fiber_error" data-parsley-error-message="Please enter fiber." value="{{ isset($health_details) ? ($health_details->fiber) : ('') }}"></div>
                        <div id="Fiber_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -179,7 +179,7 @@
                       <label for="">Carbohydrates<span style="color:red;" >*</span></label>
                       <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('') }}"></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter required carbohydrates" id="carbs" name="carbs" required="true" data-parsley-errors-container="#carbs_error" data-parsley-error-message="Please enter carbohydrates." value="{{ isset($health_details) ? ($health_details->carbs) : ('') }}"></div>
                        <div id="carbs_error" style="color:red;"></div>
                     </div>
                   </div>
@@ -229,15 +229,46 @@
                             @endphp
 
                           @endif
-                           @if($gdmvalue->skip_meal_flag=="y")
+                          <!--  @if($gdmvalue->skip_meal_flag=="y")
                              @php $style="background-color:#ff000030 !important";@endphp
                             @else
                              @php $style=""; @endphp
-                            @endif 
+                            @endif -->
+
+                            @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
+                                     @php $style="background-color:#cff40385 !important";
+                                     $bgcolor = '#cff40385';
+                                     @endphp
+                                      @elseif($gdmvalue->skip_meal_flag=="y")
+                                     @php $style="background-color:#ff000030 !important";
+                                     $bgcolor = '#ff000030';
+                                     @endphp
+                                    @else
+                                     @php $style=""; 
+                                     $bgcolor = '#f5fcef';
+                                     @endphp
+                                    @endif  
                           <tr style="{{$style}}">
-                              <td><strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong><br/>@if($gdmvalue->skip_meal_flag=="y")
+                              <td>
+
+                                @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
+                                       <small  style="color:red"><b>Compensation Entry</b></small><br/>
+                                        <b style="color:red">{{ date('d-M-Y', strtotime($gdmvalue->meal_on_date)) }} </b> 
+                                      @else
+                                        {{ date('d-M-Y', strtotime($gdmvalue->meal_on_date)) }}  
+                                      @endif
+
+                                    <small><b>[Day {{ $gdmvalue->day }}</small>]</b><br/>
+                                    @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
+                                       <small><b style="color:red">compensated meal on date:    {{ date('d-M-Y', strtotime($gdmvalue->compenset_date)) }}  </b></small>
+                                    @elseif($gdmvalue->skip_meal_flag=="y")
+                                     <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($gdmvalue->compenset_date))}}</b></small>
+                                    @endif
+                              <!-- <strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong><br/>@if($gdmvalue->skip_meal_flag=="y")
                               <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($gdmvalue->compenset_date))}}</b></small>
-                              @endif</td>
+                              @endif -->
+
+                             </td>
                              <td><strong>{{$gdmvalue->menu_title}}</strong></td>
                            
                               <td>

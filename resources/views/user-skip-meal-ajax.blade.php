@@ -27,6 +27,7 @@
                           <input type="hidden" name="end_date" id="end_date" value="{{date('Y-m-d',strtotime($expiry_date .'+10day'))}}">
                           <input type="hidden" name="program_id" id="program_id" value="{{$program_id}}">
                           <input type="hidden" name="subscriber_dtl_id" id="subscriber_dtl_id" value="{{$subscriber_dtl_id}}">
+                          <input type="hidden" name="meal_type" id="meal_type" value="{{$program_data->mealtype}}">
                       </div>
                        <div id="date_error" style="color:red;"></div>
                   </div>            

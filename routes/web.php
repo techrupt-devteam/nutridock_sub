@@ -23,7 +23,7 @@ Route::get('/test', function () {
     return view('admincontactmail');
 });
 
- Route::get('/', 'Front\SignUpController@index');
+ Route::get('/', 'SubscribeinfoController@index');
  
  Route::get('/order_index', function () {
     return view('ordernow/index');
@@ -159,7 +159,6 @@ Route::group(['middleware' => 'subscriber'], function () {
 	Route::get('/edit-health-details/{id}', 	'Front\UserMealProgramController@edit_health_history');
 	Route::post('/update-health-details', 	    'Front\UserMealProgramController@update_health_details');
 	Route::post('/update-health-store', 	    'Front\UserMealProgramController@update_health_store');
-	
 	//Delivery Address
     Route::post('/change_address', 				'Front\SubscriptionUserController@subscriber_address_changed');
 	Route::post('/update-address', 	    		'Front\SubscriptionUserController@update_address');

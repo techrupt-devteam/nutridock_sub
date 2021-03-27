@@ -96,10 +96,10 @@
             {
               title          : '<?php echo $data['calender_data'][$i][$j]['title'];?>',
               start          : '<?php echo date('Y',strtotime($data['calender_data'][$i][$j]['start']));?>,<?php echo date('m',strtotime($data['calender_data'][$i][$j]['start']));?>,<?php echo date('d',strtotime($data['calender_data'][$i][$j]['start']));?>',
-             
+
               backgroundColor: '<?php echo $data['calender_data'][$i][$j]['backgroundColor'];?>', 
-              tooltip        : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
-              description        : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
+              tooltip        : '<?php echo $data['calender_data'][$i][$j]['ref_program_id'];?>',
+              description    : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
               borderColor    : '<?php echo $data['calender_data'][$i][$j]['borderColor'];?>' 
             },
             
@@ -115,9 +115,29 @@
             
 
           eventRender: function(eventObj, $el) {
+           
+           var str = eventObj.tooltip;
+           var data = str.split("#");
+            /*if(data[0]!="" && data[1]=="y"){ 
+
+
+            alert("ref_program_id "+data[0]);
+            alert("skip_meal_flag "+data[1]);
+
+            var userDate = eventObj.start;
+            var date_string1 = moment(userDate, "DD.MM.YYYY").format("YYYY-MM-DD");
+
+            //alert($el.find('.fc-day fc-widget-content fc-'+data[3]+' fc-future').attr("data-date")); 
+
+            alert($(".fc-future").attr("data-date"));
+            // alert("Date "+$(".fc-day fc-widget-content fc-"+data[3]+" fc-future").attr("data-date"));
+            // alert("name "+data[3]);
+
+            }*/
             $el.popover({
               title: eventObj.title,
               content: eventObj.description,
+              description:"test",
               trigger: 'hover',
               placement: 'top',
               container: 'body'
@@ -162,5 +182,18 @@
 .fc-scroller.fc-day-grid-container {
     overflow: unset !important;
     height: auto !important;
+}
+
+.popover-header {
+    padding: .5rem .75rem !important;
+    font-size: 1rem !important;
+    color: inherit !important;
+    font-weight: 900 !important;
+    background-color: #8bc34a !important;
+    border-bottom: 1px solid #ebebeb !important;
+    border-top-left-radius: calc(.3rem - 1px) !important;
+    border-top-right-radius: calc(.3rem - 1px) !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 </style>

@@ -45,7 +45,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="menu_name">Menu Category Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Menu Category Name" value="{{$data['name']}}" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the category name.">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Menu Category Name" value="{{$data['name']}}" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the category name." autocomplete="off">
                          <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
