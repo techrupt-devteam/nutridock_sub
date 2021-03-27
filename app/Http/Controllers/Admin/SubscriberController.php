@@ -729,7 +729,7 @@ class SubscriberController extends Controller
             $pdf->stream('sub_'.$id.'billpdf.pdf');
      
            
-           //return view('admin/subscriber/billpdf',);
+           //return view('admin/subscriber/billpdf');
          
     }
 
