@@ -14,7 +14,7 @@
                     <div class="address-coupon-container clearfix pt-4">                       
                         <div class="heading pt20">
                         <i class="fa fa-shopping-basket"></i>
-                            MY SUBSCRIPTION     
+                            MY SUBSCRIPTION 
                         </div>
                         <div class="box-body">
                             <div class="table-responsive"  style="font-size: 14px;">
@@ -62,8 +62,8 @@
   </div>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+
 <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery/dist/jquery.min.js"></script>
 <script src="{{url('/admin_css_js')}}/css_and_js/admin/jquery-ui/jquery-ui.min.js"></script>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css' rel='stylesheet' />
@@ -75,9 +75,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
-
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script>
-	//$('#dtable').DataTable();  
+$('#dtable').DataTable();  
 
 //function to show details of subscriber
 function viewDetails(id) { 

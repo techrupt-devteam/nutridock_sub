@@ -66,42 +66,26 @@
                            <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" autocomplete="nope" />
                            <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" autocomplete="nope" />
                            <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" autocomplete="nope" />
-                        </div>
-                        <!-- <div class="form-group">
-                        <div class="time-set">
-                           <label>Please enter otp</label>
-                           1:56
-                        </div>
-                        <div class="resend-otp">
-                           <a href="#">Resend OTP</a>
-                        </div> -->
+                        </div>                      
                      </div>
                         <div class="row ">
                           <div class="col-sm-6 mx-auto">
                             <div class="position-relative width-120 mr-15">
-
-                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Login</button>
-
-                               <button type="button" name="btnVerify" id="btnVerify" class="btn btn-dark btn-block">Verify</button>
-                              
-                            </div>
-                          
+                               <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Send OTP</button>
+                               <button type="button" name="btnVerify" id="btnVerify" class="btn btn-dark btn-block">Verify</button>                              
+                            </div>                          
                           </div>
-
                           <div class="col-sm-12 pt-4 text-left">
-                           <div class="alert alert-success" id="signin-alert-success" role="alert" style="font-size:13px" >
-                          
+                           <div class="alert alert-success" id="signin-alert-success" role="alert" style="font-size:13px" >                          
                            </div>
-                           <div class="alert alert-danger" id="signin-alert-danger" role="alert" style="font-size:13px" >
-                          
+                           <div class="alert alert-danger" id="signin-alert-danger" role="alert" style="font-size:13px" >                          
                            </div>
                            </div> 
                         </div>
                       </form>
                     </div>
                   </div>
-                </div>
-                
+                </div>                
               </div>
             </div>
           </div>
@@ -116,15 +100,11 @@ $(document).ready(function(){
     $("#error_msg").hide();
     $("#loginspinner").hide();
     $('#signin-alert-success').hide();
-    $('#signin-alert-danger').hide();
-    
+    $('#signin-alert-danger').hide();    
 });
 
-
-$('.otp-textbox').find('input').each(function() {
-   
+$('.otp-textbox').find('input').each(function() {   
 	$(this).attr('maxlength', 1);
-
 	$(this).on('keyup', function(e) {
 		var parent = $($(this).parent());		
 		if(e.keyCode === 8 || e.keyCode === 37) {
