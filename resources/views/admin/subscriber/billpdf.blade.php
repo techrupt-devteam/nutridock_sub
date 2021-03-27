@@ -5,7 +5,7 @@ $value = $data['get_subscriber_details'];
 <html lang="en">
 <html>
 <head>
-    <title>Bill pdf</title>
+    <title>{{ucfirst($value->subscriber_name)}} EInvoice</title>
 </head>
 <style type="text/css">
 h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
