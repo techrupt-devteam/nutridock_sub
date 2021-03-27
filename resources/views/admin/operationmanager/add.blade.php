@@ -44,7 +44,7 @@
                     <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="operation_manager_name" name="operation_manager_name" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter name."  placeholder="Name" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="operation_manager_name" name="operation_manager_name" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter name."  placeholder="Name" required="true">
                          <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -57,7 +57,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Email" required="true" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email.">
+                        <input type="text" autocomplete="off" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Email" required="true" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email.">
                       </div>
                         <div id="email_error" style="color:red;"></div>
                       </div>
@@ -71,7 +71,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Mobile No" required="true" data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no.">
+                             <input type="text" autocomplete="off"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Mobile No" required="true" data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no.">
                           </div>
                            <div id="mobile_error" style="color:red;"></div>
                       </div>

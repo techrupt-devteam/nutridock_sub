@@ -45,7 +45,7 @@
                     <div>
                       <div class="form-group">
                         <label for="menu_name">Role Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Role Name" value="{{$data['role_name']}}" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="role_name" name="role_name" placeholder="Role Name" value="{{$data['role_name']}}" required="true">
                       </div>
                     </div>
                   </div>

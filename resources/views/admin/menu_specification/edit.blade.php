@@ -43,7 +43,7 @@
                   <div class="col-md-4">
                       <div class="form-group">
                         <label for="name">Specification Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="specification_title" name="specification_title" placeholder="Specification Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the specification name." value="{{$data['specification_title']}}">
+                        <input type="text" class="form-control" id="specification_title" name="specification_title" placeholder="Specification Name" required="true" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the specification name." value="{{$data['specification_title']}}" autocomplete="off">
                          <div id="name_error" style="color:red;"></div>
                       </div>
                   </div>

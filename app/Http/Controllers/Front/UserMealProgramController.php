@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Arr;
-
+//use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 //use App\Http\Controllers\DateTime;
 use App\Http\Requests;
 use App\Providers\RouteServiceProvider;
-
-
-
 use App\Models\AssignNutritionist;
 use App\Models\Location;
 use App\Models\SubscriberMealPlan;
@@ -26,8 +23,7 @@ use App\Models\SpecificationModel;
 use App\Models\MealType;
 use App\Models\MenuModel;
 use App\Models\SubscriberDefaultMeal;
-
-
+use App\Models\SubscriberCompensetMeal;
 use Intervention\Image\ImageManager;
 use App\Models\Notification;
 use DateTime;
@@ -42,7 +38,7 @@ use DB;
 class UserMealProgramController extends Controller
 {
 
-    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType,Notification $Notification,MenuModel $MenuModel)
+    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,MenuCategoryModel $MenuCategoryModel,SpecificationModel $SpecificationModel,MealType $MealType,Notification $Notification,MenuModel $MenuModel,SubscriberCompensetMeal $SubscriberCompensetMeal)
     {
         $data                           = [];
         
@@ -54,6 +50,7 @@ class UserMealProgramController extends Controller
         $this->base_subscribermealplan  = $SubscriberMealPlan; 
         $this->base_subscriber_details  = $SubscriberDetails; 
         $this->base_notification        = $Notification; 
+        $this->base_compneset_meal      = $SubscriberCompensetMeal; 
 
         $this->title                    = "Subscriber";
         $this->url_slug                 = "subscriber_calender";
@@ -127,23 +124,30 @@ class UserMealProgramController extends Controller
 
             foreach ($program_data as $key => $value) {
              
-                $calender_data[$i][$key]['title']            = $value->meal_type_name;
+                  $calender_data[$i][$key]['title']            = $value->meal_type_name;
                 
-                if($i==1){
-                   
-                $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
-                }else{
+                if($i==1){ 
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
+                }elseif($value->skip_meal_flag=="y" && !empty($value->ref_program_id)){
+
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($value->meal_on_date));
+
+                }
+                else{
                     $d=$i-1;
                     
-                $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
+    
                 }
                
-              
+                $calender_data[$i][$key]['ref_program_id']    = $value->ref_program_id."#".$value->skip_meal_flag."#".$value->meal_on_date."#".lcfirst(date('D', strtotime($value->meal_on_date)));
                 $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title);
                 $calender_data[$i][$key]['backgroundColor']   = $colors[$key];
                 $calender_data[$i][$key]['borderColor']       = $colors[$key];  
            }  
         }
+
+
 
         $data['datacount']           = $cnt;
         $data['days']                = $days1;
@@ -168,11 +172,22 @@ class UserMealProgramController extends Controller
                             ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
                             ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
                             ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
-       
 
-        Arr::set($data,null,$get_default_menu);
-     
-        return view('user-edit-meal-program')->with(['data' => $data, 'seo_title' => "Edit Meal program", 'currentdate' => $currentdate]); 
+     /*$get_compenset_menu   =  \DB::table('nutri_subscriber_compenset_meal_program')
+                              ->join('meal_type','nutri_subscriber_compenset_meal_program.mealtype','=','meal_type.meal_type_id')
+                              ->join('nutri_mst_menu','nutri_subscriber_compenset_meal_program.menu_id','=','nutri_mst_menu.id')
+                              ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_compenset_meal_program.subcriber_id')
+                              ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                              ->where('nutri_subscriber_compenset_meal_program.subcriber_id','=',$request->id)
+                              ->orderby('nutri_subscriber_compenset_meal_program.program_id', 'ASC')
+                              ->select('nutri_subscriber_compenset_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
+       
+       $data = array_merge($get_default_menu->toArray(),$get_compenset_menu->toArray());*/
+       /* dd($data);*/
+        
+
+      Arr::set($data,null,$get_default_menu);
+      return view('user-edit-meal-program')->with(['data' => $data, 'seo_title' => "Edit Meal program", 'currentdate' => $currentdate]); 
     }
 
 
@@ -331,10 +346,12 @@ class UserMealProgramController extends Controller
       $program_id        = $request->input('program_id');
       $compensation_date = $request->input('compensation_date');
       $subscriber_dtl_id = $request->input('subscriber_dtl_id');
+      $meal_type = $request->input('meal_type');
     
         $is_exist =   \DB::table('nutri_subscriber_meal_program')
                         ->where('subcriber_id','=',$subscriber_dtl_id)
                         ->where('compenset_date','=',$compensation_date)
+                        ->where('mealtype','=',$meal_type)
                         ->count();
         if($is_exist)
         {
@@ -348,58 +365,97 @@ class UserMealProgramController extends Controller
       $menu_update      = \DB::table('nutri_subscriber_meal_program')
                           ->where(['program_id'=>$program_id])
                           ->update($arr_data);
+      //add compenset meal progarm entry                         
+      if($menu_update){
 
-      //Send Notification Admin / Operation / Nutrtionist
-       $subscriber_dtl_id = $request->input('subscriber_dtl_id');
-       //get subscriber info
-       $subscriber_data   =  \DB::table('nutri_dtl_subscriber')
-                             ->where('id','=',$subscriber_dtl_id)
-                             ->select('subscriber_name')
-                             ->first();     
-      //program info
-      $program_info       =  \DB::table('nutri_subscriber_meal_program')
-                             ->where('program_id','=',$program_id)
-                             ->select('nutritionist_id','day','meal_on_date','compenset_date')
-                             ->first();
-      //Nutrtionist info                        
-      $nutrtionist_info   =  \DB::table('users')
-                             ->where('id','=',$program_info->nutritionist_id)
-                            ->select('name','roles','city','area')
-                             ->first();
+            //get details mela_program
+            $get_meal_program = \DB::table('nutri_subscriber_meal_program')
+                                ->where(['program_id'=>$program_id])
+                                ->first();
+          
+           $is_exist2 =   \DB::table('nutri_subscriber_meal_program')
+                            ->where('ref_program_id','=',$get_meal_program->program_id)
+                            ->where('compenset_date','=',$get_meal_program->meal_on_date)
+                            ->count();
+            if($is_exist2)
+            {
+                $carr_data['meal_on_date']      = $get_meal_program->compenset_date; 
+                $carr_data['skip_meal_flag']    = 'y';
+                DB::table('nutri_subscriber_meal_program')->where(['ref_program_id'=>$program_id])->update($carr_data); 
+            }
+            else
+            {
+           
+            $carr_data["ref_program_id"]   =  $get_meal_program->program_id;        
+            $carr_data["subcriber_id"]     =  $get_meal_program->subcriber_id; 
+            $carr_data["nutritionist_id"]  =  $get_meal_program->nutritionist_id; 
+            $carr_data["sub_plan_id"]      =  $get_meal_program->sub_plan_id;   
+            $carr_data["duration_id"]      =  $get_meal_program->duration_id;   
+            $carr_data["day"]              =  $get_meal_program->day;   
+            $carr_data["mealtype"]         =  $get_meal_program->mealtype;   
+            $carr_data["menu_id"]          =  $get_meal_program->menu_id;   
+            $carr_data["is_active"]        =  $get_meal_program->is_active;   
+            $carr_data["meal_on_date"]     =  $get_meal_program->compenset_date;   
+            $carr_data["compenset_date"]   =  $get_meal_program->meal_on_date;   
+            $carr_data["skip_meal_flag"]   =  $get_meal_program->skip_meal_flag;   
+            $carr_data["is_deleted"]       =  $get_meal_program->is_deleted;   
+            \DB::table('nutri_subscriber_meal_program')->updateOrInsert($carr_data,['meal_on_date'=>$get_meal_program->compenset_date]); 
 
-      //operation manager Info                  
-      $operation_info   =  \DB::table('users')
-                             ->where('city','=',$nutrtionist_info->city)
-                             ->where('area','=',$nutrtionist_info->area)
-                              ->where('roles','=',2)
-                             ->select('name','roles','city','area','id')
-                             ->first();
- 
-      
-      //nutrtionist  notification
-      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
-      $notify_arr['users_role'] = 1; 
-      $notify_arr['user_id']    = $program_info->nutritionist_id; 
-      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+            }
 
-      //admin notification 
-      $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
-      $notify_arr['users_role'] = 'admin' ; 
-      $notify_arr['user_id']    = 1; 
-      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+          //Send Notification Admin / Operation / Nutrtionist
+           $subscriber_dtl_id = $request->input('subscriber_dtl_id');
+          //get subscriber info
+           $subscriber_data   =  \DB::table('nutri_dtl_subscriber')
+                                 ->where('id','=',$subscriber_dtl_id)
+                                 ->select('subscriber_name')
+                                 ->first();     
+          //program info
+           $program_info       =  \DB::table('nutri_subscriber_meal_program')
+                                 ->where('program_id','=',$program_id)
+                                 ->select('nutritionist_id','day','meal_on_date','compenset_date')
+                                 ->first();
+          //Nutrtionist info                        
+           $nutrtionist_info   =  \DB::table('users')
+                                 ->where('id','=',$program_info->nutritionist_id)
+                                ->select('name','roles','city','area')
+                                 ->first();
 
-      //operation manger notification
-      $notify_arr['message']    =  "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
-      $notify_arr['users_role'] = 2 ; 
-      $notify_arr['user_id']    = $operation_info->id; 
-      $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+          //operation manager Info                  
+           $operation_info   =  \DB::table('users')
+                                 ->where('city','=',$nutrtionist_info->city)
+                                 ->where('area','=',$nutrtionist_info->area)
+                                  ->where('roles','=',2)
+                                 ->select('name','roles','city','area','id')
+                                 ->first();
+     
+          
+          //nutrtionist  notification
+           $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
+           $notify_arr['users_role'] = 1; 
+           $notify_arr['user_id']    = $program_info->nutritionist_id; 
+           $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+          //admin notification 
+           $notify_arr['message']    = "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
+           $notify_arr['users_role'] = 'admin' ; 
+           $notify_arr['user_id']    = 1; 
+           $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+
+          //operation manger notification
+           $notify_arr['message']    =  "Subscriber <b>".$subscriber_data->subscriber_name."</b> has been changed meal program menu for <b>".$this->addOrdinalNumberSuffix($program_info->day)."</b> day and compensation date is <b>".date('d-m-Y',strtotime($program_info->compenset_date))."</b> !" ;
+           $notify_arr['users_role'] = 2 ; 
+           $notify_arr['user_id']    = $operation_info->id; 
+           $assign_nutritionist_notification = $this->base_notification->create($notify_arr);
+           Session::flash('success',"Meal skip successfully");
+     }
+     else
+     {
+          Session::flash('Error',"Sorry You can not skip a meal !!");
+     }
 
 
-      Session::flash('success',"Menu skip successfully");
       return \Redirect::back();
-
-
-
     }
 
     public  function addOrdinalNumberSuffix($num)

@@ -64,7 +64,7 @@
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="name">Title<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="menu_title" name="menu_title" placeholder="Enter Menu Title" required="true" data-parsley-errors-container="#title_error" data-parsley-error-message="Please enter title.">
+                        <input type="text" autocomplete="off" class="form-control" id="menu_title" name="menu_title" placeholder="Enter Menu Title" required="true" data-parsley-errors-container="#title_error" data-parsley-error-message="Please enter title.">
                          <div id="#title_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -132,7 +132,7 @@
                         <label for="name">Calories<span style="color:red;" >*</span></label>
                         <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
+                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
                        <div id="calories_error" style="color:red;"></div>
                       </div>
                   </div>
@@ -142,7 +142,7 @@
                         <div class="input-group">
                           <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins.">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins.">
                         </div>
                         <div id="proteins_error" style="color:red;"></div>
                       </div>
@@ -153,7 +153,7 @@
                         <div class="input-group">
                           <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates." >
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates." >
                         </div>
                         <div id="carbohydrates_error" style="color:red;"></div>
                       </div>
@@ -165,7 +165,7 @@
                           <div class="input-group-addon btn-default">
                             <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats.">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats.">
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                       </div>
@@ -224,7 +224,7 @@
                         <input type="hidden" id="int_flag" name="int_flag" value="1">
                           <tr class="tr_row_int1">
                             <td>
-                                <input type="text" class="form-control" id="int_title1" name="int_title1" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title.">
+                                <input type="text" autocomplete="off" class="form-control" id="int_title1" name="int_title1" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title.">
                                 <div id="#inttitle_error" style="color:red;"></div>
                             </td>
                             <td>

@@ -42,7 +42,7 @@
               <div class="box-body">
                 <div class="form-group">
                   <label for="oldpassword">Collection<span style="color:red;" >*</span></label>
-                  <input type="text" class="form-control" id="category" value="{{$data['category']}}" name="category" placeholder="Collection" required="true" >
+                  <input type="text" autocomplete="off" class="form-control" id="category" value="{{$data['category']}}" name="category" placeholder="Collection" required="true" >
                 </div>
               </div>
               <!-- /.box-body -->

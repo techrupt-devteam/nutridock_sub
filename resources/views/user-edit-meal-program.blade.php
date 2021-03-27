@@ -63,7 +63,7 @@
                                 <tbody> 
                              
                                 @foreach($data as $key=>$value) 
-                                    @if($value->skip_meal_flag=="y")
+                                    <!-- @if($value->skip_meal_flag=="y")
                                      @php $style="background-color:#ff000030 !important";
                                      $bgcolor = '#ff000030';
                                      @endphp
@@ -71,15 +71,41 @@
                                      @php $style=""; 
                                      $bgcolor = '#f5fcef';
                                      @endphp
-                                    @endif     
+                                    @endif -->     
+
+                                    @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                     @php $style="background-color:#cff40385 !important";
+                                     $bgcolor = '#cff40385';
+                                     @endphp
+                                      @elseif($value->skip_meal_flag=="y")
+                                     @php $style="background-color:#ff000030 !important";
+                                     $bgcolor = '#ff000030';
+                                     @endphp
+                                    @else
+                                     @php $style=""; 
+                                     $bgcolor = '#f5fcef';
+                                     @endphp
+                                    @endif  
                                     <tr style="{{$style}}">
                                     <td style="background:#e5e5e5; color:#000" class="pl-4">
-                                    {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
+                                    <!-- {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
                                     <small><b>[Day {{ $value->day }}</small>]</b><br/>
                                     @if($value->skip_meal_flag=="y")
                                     <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($value->compenset_date))}}</b></small>
+                                    @endif -->
+                                     @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                       <small  style="color:red"><b>Compensation Entry</b></small><br/>
+                                        <b style="color:red">{{ date('d-M-Y', strtotime($value->meal_on_date)) }} </b> 
+                                      @else
+                                        {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
+                                      @endif
+
+                                    <small><b>[Day {{ $value->day }}</small>]</b><br/>
+                                    @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                       <small><b style="color:red">compensated meal on date:    {{ date('d-M-Y', strtotime($value->compenset_date)) }}  </b></small>
+                                    @elseif($value->skip_meal_flag=="y")
+                                     <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($value->compenset_date))}}</b></small>
                                     @endif
-  
                                     </td>
                                     <td style="border-left: dashed 1px #588937;border-right: dashed 1px #588937; background:{{ $bgcolor }}" class="pl-3">{{ $value->meal_type_name }}</td>                     
                                     <td>{{ $value->menu_title }}</td>
@@ -92,10 +118,14 @@
                                       <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->fats }}</td>                   
                                     <td>  
                                      
-                                      @if(strtotime($value->meal_on_date." 20:00:00") >= strtotime($currentdate))                                                
+                                      @if(strtotime($value->meal_on_date." 20:00:00") >= strtotime($currentdate)) 
+
                                       <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details'  onclick='editMeal({{$value->program_id}})' title='Edit Meal'><i class="icon fa fa-pencil"></i></button>
+                                      @if(empty($value->ref_program_id)) 
                                       <button class="btn btn-sm btn-danger" itle='Skip Meal'  data-toggle='modal' data-target='#modal-details2' onclick="skip_meal({{$value->program_id}})">
-                                      <i class="fa fa-pause-circle" aria-hidden="true" style="font-size:16px"></i></button>
+                                      <i class="fa fa-pause-circle" aria-hidden="true" style="font-size:16px"></i></button> 
+                                      @endif
+
                                       @else
                                       <img src="{{url('/')}}/uploads/images/Prohibited-75-512.png" width="28" />
                                       <img src="{{url('/')}}/uploads/images/stop.svg" width="28" />

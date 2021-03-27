@@ -31,7 +31,7 @@
                     <div>
                       <div class="form-group">
                         <label for="nutritionsit_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control"  data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter nutritionsit name." id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
+                        <input type="text" autocomplete="off" class="form-control"  data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter nutritionsit name." id="nutritionsit_name" name="nutritionsit_name" placeholder="Nutritionsit Name"  value="{{$data['name']}}"required="true">
                             <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -44,7 +44,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email.">
+                        <input type="text" autocomplete="off" class="form-control" data-parsley-type="email" id="nutritionsit_email" name="nutritionsit_email" placeholder="Nutritionsit Email" required="true" value="{{$data['email']}}" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email.">
                       </div>
                         <div id="email_error" style="color:red;"></div>
                       </div>
@@ -58,7 +58,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}" data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no.">
+                             <input type="text" autocomplete="off"  class="form-control" data-parsley-type="integer"  maxlength="10" id="nutritionsit_mobile" name="nutritionsit_mobile" placeholder="Nutritionsit Mobile" required="true"  value="{{$data['mobile']}}" data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no.">
                           </div>
                         <div id="mobile_error" style="color:red;"></div>
                       </div>
@@ -138,7 +138,7 @@
                           <div class="form-group" style="max-width: 320px;">
                               <label><input type="checkbox" id="chkPassword" name="chkPassword">
                                 <label for="nutritionsit_update">&nbsp;  Update Passsword</label></label>
-                              <input type="text" class="form-control"  id="nutritionsit_password_new" name="nutritionsit_password_new" placeholder="New Password" style="display: none !important;">
+                              <input type="text" autocomplete="off" class="form-control"  id="nutritionsit_password_new" name="nutritionsit_password_new" placeholder="New Password" style="display: none !important;">
                               <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
                           </div>
                         </div>

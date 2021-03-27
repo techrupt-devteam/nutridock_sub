@@ -67,7 +67,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Area<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="area" name="area" placeholder="Area" data-parsley-errors-container="#area_error" data-parsley-error-message="Please enter area." required="true" value="{{$data['area']}}">
+                      <input type="text" autocomplete="off" class="form-control " id="area" name="area" placeholder="Area" data-parsley-errors-container="#area_error" data-parsley-error-message="Please enter area." required="true" value="{{$data['area']}}">
                            <div id="area_error" style="color:red;"></div>        
                     </div>
                   </div> 
@@ -76,7 +76,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">Pincode<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control " id="pincode" data-parsley-type="number" required="true" data-parsley-errors-container="#pincode_error"  name="pincode" data-parsley-type="number" placeholder="Pinocde" required="true" value="{{$data['pincode']}}">
+                      <input type="text" autocomplete="off" class="form-control " id="pincode" data-parsley-type="number" required="true" data-parsley-errors-container="#pincode_error"  name="pincode" data-parsley-type="number" placeholder="Pinocde" required="true" value="{{$data['pincode']}}">
                         <div id="pincode_error" style="color:red;"></div>                     
                     </div>
                   </div>   

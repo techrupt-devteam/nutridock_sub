@@ -44,7 +44,7 @@
                     <div>
                       <div class="form-group">
                         <label for="operation_manager_name">Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="operation_manager_name" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter name." name="operation_manager_name" placeholder="Name"  value="{{$data['name']}}"required="true" >
+                        <input type="text" autocomplete="off" class="form-control" id="operation_manager_name" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter name." name="operation_manager_name" placeholder="Name"  value="{{$data['name']}}"required="true" >
                            <div id="name_error" style="color:red;"></div>
                       </div>
                     </div>
@@ -57,7 +57,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-envelope"></i>
                             </div>
-                        <input type="text" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Email" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email." required="true" value="{{$data['email']}}">
+                        <input type="text" autocomplete="off" class="form-control" data-parsley-type="email" id="operation_manager_email" name="operation_manager_email" placeholder="Email" data-parsley-errors-container="#email_error" data-parsley-error-message="Please enter email." required="true" value="{{$data['email']}}">
                       </div>
                         <div id="email_error" style="color:red;"></div>
                       </div>
@@ -71,7 +71,7 @@
                             <div class="input-group-addon">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <input  type="text"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Mobile No" required="true"   data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no." value="{{$data['mobile']}}">
+                             <input type="text" autocomplete="off"  class="form-control" data-parsley-type="integer"  maxlength="10" id="operation_manager_mobile" name="operation_manager_mobile" placeholder="Mobile No" required="true"   data-parsley-errors-container="#mobile_error" data-parsley-error-message="Please enter mobile no." value="{{$data['mobile']}}">
                           </div>
                           <div id="mobile_error" style="color:red;"></div>
                       </div>
@@ -166,7 +166,7 @@
                         <div class="col-md-4" style="padding-left: 0px;">
                           <div class="form-group" >
                               <label><input type="checkbox" id="chkPassword" name="chkPassword"><label for="operation_manager_update">&nbsp;   Update Passsword</label></label>
-                              <input type="text" class="form-control"  id="operation_manager_password_new" name="operation_manager_password_new" placeholder="New Password" style="display: none !important;">
+                              <input type="text" autocomplete="off" class="form-control"  id="operation_manager_password_new" name="operation_manager_password_new" placeholder="New Password" style="display: none !important;">
                               <input type="hidden" class="form-control"  id="password" name="password" value="{{$data['password']}}">        
                           </div>
                         </div>

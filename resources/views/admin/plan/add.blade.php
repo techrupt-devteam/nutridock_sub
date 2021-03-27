@@ -32,7 +32,7 @@
                     <div class="box-body">
                       <div class="form-group">
                         <label for="Plan_name">Plan Name<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="plan_name" name="plan_name" placeholder="Plan Name" required="true">
+                        <input type="text" autocomplete="off" class="form-control" id="plan_name" name="plan_name" placeholder="Plan Name" required="true">
                       </div>
                     </div>
                   </div>

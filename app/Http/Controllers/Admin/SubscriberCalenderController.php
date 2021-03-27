@@ -104,13 +104,26 @@ class SubscriberCalenderController extends Controller
              
                 $calender_data[$i][$key]['title']            = $value->meal_type_name;
                 
-                if($i==1){
+                /*if($i==1){
                    
                 $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
                 }else{
                     $d=$i-1;
                     
                 $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
+                }*/
+                if($i==1){ 
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
+                }elseif($value->skip_meal_flag=="y" && !empty($value->ref_program_id)){
+
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($value->meal_on_date));
+
+                }
+                else{
+                    $d=$i-1;
+                    
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
+    
                 }
                
               
