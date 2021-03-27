@@ -23,7 +23,7 @@ Route::get('/test', function () {
     return view('admincontactmail');
 });
 
- Route::get('/', 'Front\SignUpController@index');
+ Route::get('/', 'SubscribeinfoController@index');
  
  Route::get('/order_index', function () {
     return view('ordernow/index');
