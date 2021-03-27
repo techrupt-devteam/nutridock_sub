@@ -2,66 +2,99 @@
 @section('content') 
 <link rel="stylesheet" href="{{url('')}}/public/front/css/subscribe.css" />
 <main>
-   <div id="demo" class="carousel slide" data-ride="carousel">
+   <!-- <div id="demo" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
          <div class="carousel-item active">
-            <img src="{{url('')}}/public/front/img/proper-nutrition.png" alt="Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness." style="max-height: 520px;width: 100%">
+            <img src="{{url('')}}/public/front/img/proper-nutrition.png" alt="Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness." style="width: 100%">
          </div>
          <div class="carousel-item">
-            <img src="{{url('')}}/public/front/img/Pre-workout.png" alt="Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress." style="max-height: 520px;width: 100%">
+            <img src="{{url('')}}/public/front/img/Pre-workout.png" alt="Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress." style="width: 100%">
          </div>
          <div class="carousel-item">
-            <img src="{{url('')}}/public/front/img/expert-nutritionist.png" alt="You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. " style="max-height: 520px;width: 100%">
+            <img src="{{url('')}}/public/front/img/expert-nutritionist.png" alt="You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. " style="width: 100%">
          </div>
          <div class="carousel-item">
-            <img src="{{url('')}}/public/front/img/group-woman.png" alt="Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. " style="max-height: 520px;width: 100%">    
+            <img src="{{url('')}}/public/front/img/group-woman.png" alt="Exercise is king. Nutrition is queen. Put them together and you have got a kingdom. Let us help you build your kingdom. " style="width: 100%">    
          </div>
          <div class="carousel-item">
-            <img src="{{url('')}}/public/front/img/eating-well.png" alt="Eating well is a habit. Cultivate it with our subscription plans customised as per your needs and loaded with flavours. " style="max-height: 520px;width: 100%">
+            <img src="{{url('')}}/public/front/img/eating-well.png" alt="Eating well is a habit. Cultivate it with our subscription plans customised as per your needs and loaded with flavours. " style="width: 100%">
          </div>
       </div>
-   </div>
-   <div class="select-our-plan-new">
-      <div class="align-self-center">
-         <div class="zig-zac-text-div">
-            <form  role="form" id="frm-subscribe-info" data-parsley-validate="parsley">
-               <div class="row">
-                  <div class="col-12">
-                     <span class="darkgrey light-weight text-transform-none">
-                        <h4 class="header mt-2 pt-2 text-center" style="color:#000">Pre-workout nutrition is necessary for performance, <br/>Post-workout nutrition is necessary for progress. <br/></h4>
-                     </span>
-                  </div>
-               </div>
-               <div class="form-group" data-parsley-validate="parsley">
-                  <div class="row">
-                    <div  class="col-12 pb-2">
-                    <a href="{{url('')}}/faq" style="color: #222;" class="d-block mt-2 text-center"> 
-                      <strong style="color: red;">*</strong> 
-                      Please find answers to all your subscription related queries
-                      </a>
-                    </div>                 
-                     <div class="col-12">                    
-                        <div class="input-group mx-auto" style="max-width: 460px;">
-                           <input type="number" class="form-control pincode" maxlength="6" placeholder="Pincode"  data-parsley-type="digits" data-parsley-length="[6,6]" data-parsley-zip="in" data-parsley-errors-container="#zip-errors" name="pincode" id="pincode" required="required" autocomplete="off" maxlength="6">
-                           <div class="input-group-append">
-                              <span class="input-group-text btn btn-darkblue">
-                              <button type="button" value="button" class="text-white btn get-start-btn" onclick="chkValidPin()">Get Started</button>
-                              </span>
-                           </div>                           
-                        </div>  
-                        <div id="errValidZip" style="color: red; font-size: 14px;" class="text-center" ></div>                     
-                     </div>                    
-                  </div>         
-                  <div class="row ml-4 pl-4">
-                     <div class="col-md-12">
-                        <span id="zip-errors" style="color: red; font-size: 14px;" ></span>                        
+   </div> -->
+   <section class="banner-section-top">
+      <div  class="banner-shape">
+         <img  src="{{url('')}}/public/front/img/shape/shape1.png" alt="Shape">
+         <img  src="{{url('')}}/public/front/img/shape/shape2.png" alt="Shape">
+         <img  src="{{url('')}}/public/front/img/shape/shape3.png" alt="Shape">
+         <img  src="{{url('')}}/public/front/img/shape/banner-shape.png" alt="Shape">
+      </div>
+      <div class="container">
+         <div class="row">
+            <div class="col-md-6 align-self-center">
+               <div class="">
+                  <div class="select-our-plan-new">
+                     <div class="align-self-center">
+                        <div class="zig-zac-text-div">
+                           <form  role="form" id="frm-subscribe-info" data-parsley-validate="parsley">
+                              <div class="row">
+                                 <div class="col-12">
+                                    <span class="darkgrey light-weight text-transform-none">
+                                       <h1 class="header mt-2 pt-2 mb-4"> Pre-workout nutrition is necessary for performance, Post-workout nutrition is necessary for progress. </h1>
+                                    </span>
+                                 </div>
+                              </div>
+                              <div class="form-group" data-parsley-validate="parsley">
+                                 <div class="row">
+                                   <div  class="col-12 pb-2">
+                                   <a href="{{url('')}}/faq" class="d-block text-dark my-2"> 
+                                     <strong style="color: red;">*</strong> 
+                                     Please find answers to all your subscription related queries
+                                     </a>
+                                   </div>                 
+                                    <div class="col-12 col-md-9">                    
+                                       <div class="input-group mx-auto">
+                                          <input type="number" class="form-control pincode" maxlength="6" placeholder="Pincode"  data-parsley-type="digits" data-parsley-length="[6,6]" data-parsley-zip="in" data-parsley-errors-container="#zip-errors" name="pincode" id="pincode" required="required" autocomplete="off" maxlength="6">
+                                          <div class="input-group-append">
+                                             <button type="button" value="button" class="text-white btn get-start-btn btn btn-darkblue" onclick="chkValidPin()">Get Started</button>
+                                          </div>                           
+                                       </div>  
+                                       <div id="errValidZip" style="color: red; font-size: 14px;" class="text-center" ></div>                     
+                                    </div>                    
+                                 </div>         
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                       <span id="zip-errors" style="color: red; font-size: 14px;" ></span>                        
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>           
+                        </div>
                      </div>
                   </div>
                </div>
-            </form>           
+            </div>
+            <div class="col-md-6">
+               <!-- <div class="bg-gradient-img">
+                  <img src="{{url('')}}/public/front/img/foodNew.png" class="right-sideBanner img-fluid"/>
+            </div> -->
+            <div id="demo" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                  <div class="carousel-item active">
+                     <img src="{{url('')}}/public/front/img/banner-1.png" alt="Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness." style="width: 100%">
+                  </div>
+                  <div class="carousel-item">
+                     <img src="{{url('')}}/public/front/img/banner-2.png" alt="Pre-workout nutrition is necessary for performance and post-workout nutrition is necessary for progress." style="width: 100%">
+                  </div>
+                  <div class="carousel-item">
+                     <img src="{{url('')}}/public/front/img/banner-3.png" alt="You can’t fix your health, until you fix your diet. Reach your health goals with personalised meal plans by our expert nutritionist. " style="width: 100%">
+                  </div>
+               </div>
+            </div>
+         </div>
          </div>
       </div>
-   </div>
+   </section>
+  
    <section class="how-to-work">
       <h2>How does it work?</h2>
       <p class="ff-paragraph text-center mx-auto mb-4" style="max-width: 700px;">
