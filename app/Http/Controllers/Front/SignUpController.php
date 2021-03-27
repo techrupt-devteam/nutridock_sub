@@ -237,6 +237,7 @@ class SignUpController extends Controller
             $getSubscriberMst = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])->first();
             
             if($getSubscriberMst) {
+
                 Session::put('subscriber_email', $getSubscriberMst['email']);
                 Session::put('subscriber_mobile', $getSubscriberMst['mobile']); 
 
@@ -254,7 +255,6 @@ class SignUpController extends Controller
                 {
                     $updateSubscriberPassword = SubscriberMaster::where('id', $getSubscriberDtl['subscriber_id'])
                     ->update(['password'=>bcrypt($randstring)]);
-
                     Session::put('subscriber_otp', $randstring);  
                 }
             }

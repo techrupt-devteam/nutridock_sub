@@ -42,7 +42,17 @@
                     </div>                 
                      <div class="col-12">                    
                         <div class="input-group mx-auto" style="max-width: 460px;">
-                           <input type="number" class="form-control pincode" maxlength="6" placeholder="Pincode"  data-parsley-type="digits" data-parsley-length="[6,6]" data-parsley-zip="in" data-parsley-errors-container="#zip-errors" name="pincode" id="pincode" required="required" autocomplete="off" maxlength="6">
+                           <input type="text" 
+                           class="form-control pincode" 
+                           maxlength="6" 
+                           placeholder="Pincode"  
+                           data-parsley-type="digits" 
+                           data-parsley-pattern="^[0-9]*$" 
+                           data-parsley-trigger="keyup" 
+                           maxlength="6"
+                           data-parsley-zip="in" 
+                           data-parsley-errors-container="#zip-errors" 
+                           name="pincode" id="pincode" required="required" autocomplete="off" maxlength="6">
                            <div class="input-group-append">
                               <span class="input-group-text btn btn-darkblue">
                               <button type="button" value="button" class="text-white btn get-start-btn" onclick="chkValidPin()">Get Started</button>
