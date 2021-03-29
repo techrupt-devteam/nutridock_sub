@@ -77,7 +77,7 @@
                         </div> -->
                      </div>
                         <div class="row ">
-                          <div class="col-sm-6 mx-auto">
+                          <div class="col-sm-6 mx-auto mt-4">
                             <div class="position-relative width-120 mr-15">
 
                                <button type="button" name="btnSignIn" id="btnSignIn" class="btn btn-dark btn-block"><i class="fa fa-spinner fa-spin" id="loginspinner"></i> Send OTP</button>
@@ -88,7 +88,7 @@
                           
                           </div>
 
-                          <div class="col-sm-12 pt-4 text-left">
+                          <div class="col-sm-12 pt-4 text-left ">
                            <div class="alert alert-success" id="signin-alert-success" role="alert" style="font-size:13px" >
                           
                            </div>

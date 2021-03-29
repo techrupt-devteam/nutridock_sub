@@ -2,23 +2,23 @@
 @section('content')
 <main>
     <section class="user-panel">
-      <div class="container">
+      <div class="container mt-3">
           @php $title ="Subscription"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account" >
-
-                <div class="profile-container">
-                                      @include('layouts._status_msg')  
-                    <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20">
-                        <i class="fa fa-shopping-basket"></i>
-                            MY SUBSCRIPTION     
-                        </div>
-                        <div class="box-body">
-                            <div class="table-responsive"  style="font-size: 14px;">
-                            <table id="dtable" class="ui celled table table-responsive-sm" style="width:100%">
+               
+                <div class="profile-container box box-success">
+                       @include('layouts._status_msg')  
+                    <div class="box-header with-border">
+                         <!-- <i class="fa fa-shopping-basket"></i> -->
+                          My Subscription     
+                    </div>
+                    <div class="box-body no-padding">
+                    <div class="address-coupon-container">                       
+                        <div class="table-responsive">
+                            <table id="dtable" class="ui celled table table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>Susbscriber Name</th>
@@ -36,7 +36,7 @@
                                     <td>{{ date('d-M-Y', strtotime($value->start_date)) }}</td>
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
-                                    <button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
+                                    <button type='button' class='btn btn-info btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Subscriber Details'><i class='fa fa-info-circle'></i></button>
                                     <!-- <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button> -->
                                     <button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#modal-details' onclick='changeAddress({{$value->id}})' title='Edit Subscriber Details'><i class="icon fa fa-pencil"></i></button>
                                     </td>

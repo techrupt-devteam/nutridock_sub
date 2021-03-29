@@ -78,6 +78,11 @@
                   <img src="{{url('')}}/public/front/img/foodNew.png" class="right-sideBanner img-fluid"/>
             </div> -->
             <div id="demo" class="carousel slide" data-ride="carousel">
+               <ul class="carousel-indicators" style="bottom: -3rem;">
+                  <li data-target="#demo" data-slide-to="0" class="active"></li>
+                  <li data-target="#demo" data-slide-to="1"></li>
+                  <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
                <div class="carousel-inner">
                   <div class="carousel-item active">
                      <img src="{{url('')}}/public/front/img/banner-1.png" alt="Proper nutrition is the key to unlock your full potential. Subscribe to our meals daily and enjoy abundant health and deliciousness." style="width: 100%">
@@ -96,6 +101,7 @@
    </section>
   
    <section class="how-to-work">
+     <div class="container"> 
       <h2>How does it work?</h2>
       <p class="ff-paragraph text-center mx-auto mb-4" style="max-width: 700px;">
          The aim of Nutridock’s subscription plan is to solve your everyday problem of cooking something tasty and filling. Here is how our subscription-based meal delivery service works.
@@ -145,6 +151,7 @@
             </div>
          </div>
       </div>
+   </div>
    </section>
    <section class="section bg-green">
       <!-- bg-default -->

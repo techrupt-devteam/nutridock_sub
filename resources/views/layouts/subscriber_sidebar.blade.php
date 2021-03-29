@@ -1,36 +1,36 @@
 <div class="col-md-4 col-lg-3">
 	<div class="user-left-nav">
 		<ul class="list-unstyled user-nav-list">
-            <li class="list-item {{ Request::is('notification_sub') ? 'active' : '' }}" style=" background:#cef298;">
+            <li class="list-item {{ Request::is('notification_sub') ? 'active' : '' }}" style=" background:#8bc34a;">
 				<a href="{{ url('/')}}/purchase_new_subscription" class="link" style="color: #000 !important; font-weight:600">
-                <img src="{{url('/')}}/uploads/images/purchasing.png" style="width:32px;">  Purchase New Subscription </a>
+                <img src="{{url('/')}}/uploads/images/purchasing.png" style="width:32px;">  New Subscription </a>
 			</li>
 			<li class="list-item {{ Request::is('notification_sub') ? 'active' : '' }}">
 				<a href="{{ url('/')}}/notification_sub" class="link">
-                <i class="icon fa icon fa-bell"></i> Notification 
+                <i class="icon fa icon fa-bell mr-2"></i> Notification 
                 <span class="notif-count circle_notification"></span></a>
 			</li>
 			<li class="list-item {{ Request::is('profile') ? 'active' : '' }}">
 				<a href="{{ url('/')}}/profile" class="link"> 
-                <i class="fa fa-bar-chart"></i> Dashboard</a>
+                <i class="fa fa-th-large mr-2"></i> Dashboard</a>
 			</li>
 			<li class="list-item {{ Request::is('mysubscription') ? 'active' : '' }}" >
                 <a href="{{ url('/')}}/mysubscription" class="link">
-                <i class="fa fa-shopping-basket"></i> My Subscriptions</a> 
+                <i class="fa fa-shopping-basket mr-2"></i> My Subscriptions</a> 
             </li>
 			<li class="list-item {{ Request::is('mealprogram') ? 'active' : '' }}">
 				<a href="{{ url('/')}}/mealprogram" class="link">
-                <i class="icon fa icon fa-cutlery"></i>Meal Prograram </a>
+                <i class="icon fa icon fa-cutlery mr-2"></i>Meal Prograram </a>
 			</li>
             <li class="list-item {{ Request::is('health-history') ? 'active' : '' }}">
-                <a href="{{ url('/')}}/health-history" class="link"><i class="fa fa-user-md"></i> My Health History</a>
+                <a href="{{ url('/')}}/health-history " class="link"><i class="fa fa-user-md mr-2"></i> My Health History</a>
             </li>
 			<li class="list-item {{ Request::is('chat') ? 'active' : '' }}">
                 <a href="{{ URL('') }}/chat" class="link">
-				<i class="fa fa-weixin"></i> Chat with Nutrionist</a> 
+				<i class="fa fa-weixin mr-2"></i> Chat with Nutrionist</a> 
             </li>            	
 			<li class="list-item"><span class="link">
-                    <i class="icon fa icon fa-sign-out"></i>
+                    <i class="icon fa icon fa-sign-out mr-2"></i>
                     <a class="dropdown-action-item" href="{{ URL('') }}/logout">
                     <i class="nav_icon logout menu-icon nk-sprite-global nk-sprite-global-log-out"></i> 
                     Log Out</a>
@@ -39,18 +39,3 @@
 		</ul>
 	</div>
 </div>
-<style>
-.circle_notification {
-    width: 20px  !important;
-    height: 20px !important;
-    position: absolute !important;
-    background-color: #8bc34a !important;
-    font-size: 12px !important;
-    border-radius: 50% !important;
-    text-align: center !important;
-    line-height: 1.8 !important;
-    font-weight: 600 !important;
-    margin-left: 11px !important;
-    margin-top: 1px !important;   
-}
-</style>

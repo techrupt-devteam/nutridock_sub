@@ -107,7 +107,7 @@
     <header class="fixed-top"id="header">
     <div class="align-items-center container d-flex">
     <a href="{{url('')}}/subscribe-info"class="logo mobile-logo">
-      <img alt="nutridock"src="{{url('')}}/public/front/img/nutridock-black-logo.svg"> 
+      <img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> 
     </a>
     <nav class="d-none d-lg-block ml-auto nav-menu">
         <ul class="nav">

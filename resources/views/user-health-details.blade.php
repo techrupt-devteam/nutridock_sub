@@ -2,20 +2,21 @@
 @section('content')
 <main>
    <section class="user-panel">
-      <div class="container">
+      <div class="container mt-3">
          @php $title ="My Health History"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
                @include('layouts.subscriber_sidebar')
-              <div class="col-md-8 col-lg-9  my-account" >
+              <div class="col-md-8 col-lg-9  my-account">
+               <div class="box box-success">   
+                <div class="box-header with-border">
+                    My Health History
+                </div>
+                <div class="box-body">
                 <div class="profile-container">
-                    <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20"><i class="fa fa-stethoscope"></i>
-                         My Health History
-                        </div>
-                        <div class="box-body">
-                            <div class="table-responsive"  style="font-size: 14px;">
-                            <table id="dtable" class="ui celled table table-responsive-sm" style="width:100%">
+                    <div class="address-coupon-container">                       
+                            <div class="table-responsive">
+                            <table id="dtable" class="ui celled table table-responsive-sm">
                                 <thead>
                                     <tr>
                                         <th>Susbscriber Name</th>
@@ -44,6 +45,7 @@
                         </div>                  
                     </div>
                 </div>
+            </div>
            </div> 
       </div>
    </section>
