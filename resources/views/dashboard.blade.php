@@ -4,17 +4,17 @@
    <section class="user-panel">
       <div class="container">
           @php $title ="Profile"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
                @include('layouts.subscriber_sidebar')
               <div class="col-md-8 col-lg-9  my-account">
                <div class="profile-container">
                   <div class="mobile-mapping-status">
-                     <div class="alert-bar">
-                        <div class="icon-wrap">
+                     <div class="alert alert-info">
+                        <div class="icon-wrap float-left">
                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                         </div>
-                        <div class="message"> 
+                        <div class="message" style="width: calc(100% - 28px);display: inline-block;"> 
                            Your phone number is still verified! For security reasons, we recommend you to verify  your mobile number now! 
                         </div>
                      </div>
@@ -41,9 +41,9 @@
                           <a href="" data-toggle="modal" data-target="#edit-profile"> <span class="edit-link"><i class="icon fa fa-pencil"></i> EDIT </span> </a>
                         </div>
                      </div> 
-                    <div class="address-coupon-container clearfix"><div>
-                       <div class="heading pt20"><i class="fa fa-home"></i> MY ADDRESSES 
-                        <span class="add-address"><i class="icon fa fa-pencil"></i> Add New Address </span>
+                    <div class="address-coupon-container clearfix mt-3"><div>
+                       <div class="heading pt20"> My Address 
+                        <span class="add-address">Add New Address </span>
                       </div>
                       <div class="card-view">
                         <div class="row">

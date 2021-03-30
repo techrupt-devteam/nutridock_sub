@@ -2,19 +2,20 @@
 @section('content')
 <main>
    <section class="user-panel">
-      <div class="container">
+      <div class="container mt-3">
          @php $title ="Meal Program"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
                @include('layouts.subscriber_sidebar')
-              <div class="col-md-8 col-lg-9  my-account" >
-                <div class="profile-container">
-                    <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
-                            MEAL PROGRAM
-                        </div>
-                        <div class="box-body">
-                            <div class="table-responsive"  style="font-size: 14px;">
+              <div class="col-md-8 col-lg-9  my-account">
+
+                <div class="profile-container box box-success">
+                    <div class="box-header with-border">
+                       Meal Program
+                    </div>
+                    <div class="box-body">
+                    <div class="address-coupon-container">                       
+                        <div class="table-responsive"  style="font-size: 14px;">
                             <table id="dtable" class="ui celled table table-responsive-sm" style="width:100%">
                                 <thead>
                                     <tr>

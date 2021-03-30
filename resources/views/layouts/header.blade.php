@@ -62,9 +62,11 @@
   
 
       
-      <header class="fixed-top"id="header">
+      <header class="fixed-top" id="header">
          <div class="align-items-center container d-flex">
-            <a href="{{url('')}}/subscribe-info"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> </a>
+            <a href="{{url('')}}/subscribe-info"class="logo mobile-logo">
+               <img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> 
+            </a>
             <nav class="d-none d-lg-block ml-auto nav-menu">
                <ul class="nav">
                   <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
@@ -77,12 +79,12 @@
                   <li><a href="{{url('')}}/faq">FAQ</a></li> -->
                   <li><a href="{{url('')}}/contact">Contact</a></li>
                   
-                  <li class="under-line-none">
+                  <li class="under-line-none" style="margin-top: 2px !important;">
                   <a 
                   id="signIn"
                   data-toggle="modal" 
                   data-target="#login" 
-                  data-url="{{ route('signinModal')}}" class="btn btn-outline-success text-white mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none">                       
+                  data-url="{{ route('signinModal')}}" class="btn btn-outline-success mt-0 under-line-none" style="padding: 5px 13px !important;">                       
                   Login</a></li>
                  
                   <!-- <li class="under-line-none"><a href="http://order.nutridock.com/"class="btn btn-success mt-0 pb-2 pl-3 pr-3 pt-2 under-line-none text-white"target="_tab">Order Now</a></li> -->

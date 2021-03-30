@@ -106,7 +106,9 @@
    <body> 
     <header class="fixed-top"id="header">
     <div class="align-items-center container d-flex">
-    <a href="{{url('')}}/subscribe-info"class="logo mobile-logo"><img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> </a>
+    <a href="{{url('')}}/subscribe-info"class="logo mobile-logo">
+      <img alt="nutridock"src="{{url('')}}/public/front/img/logo-white.svg"> 
+    </a>
     <nav class="d-none d-lg-block ml-auto nav-menu">
         <ul class="nav">
             <!-- <li id="home"><a href="{{url('')}}">Home</a></li> -->
@@ -143,7 +145,7 @@
                 </ul>
               </li> 
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account <b class="caret"></b></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account </a>
                     <ul class="dropdown-menu account-Modal__inner">
                         <li class="media ">
                           <div class="media-left">
@@ -188,9 +190,9 @@
     </nav>
     </div>
     <!--<script src="{{url('')}}/public/front/vendor/jquery/jquery.min.js"></script>-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
-<script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
+    <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
 <script type="text/javascript">
     function notification() 
     { 
