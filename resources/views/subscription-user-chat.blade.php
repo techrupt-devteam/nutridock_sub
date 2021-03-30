@@ -1,21 +1,27 @@
 @extends('layouts.subscriber_master')
 @section('content')
+<style>
+    .user-panel {
+        margin-top: 5rem;
+    }
+</style>
 <main>
    <section class="user-panel">
-      <div class="container">
+      <div class="container mt-3">
           @php $title ="Chat with nutritionist"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
                @include('layouts.subscriber_sidebar')
-              <div class="col-md-8 col-lg-9  my-account" >
-                <div class="profile-container">
-                    <div class="address-coupon-container clearfix pt-4">                       
-                        <div class="heading pt20"><i class="fa fa-weixin" aria-hidden="true"></i> 
-                           CHAT WITH NUTRIONIST<br />
-                           <small style="color:#dd200b"><i>[<b>Note</b>: Here is list of Subscriber, approved by admin & assigned Nutrionist]</i></small>
-                        </div>
-                        <div class="box-body">
-                            <div class="table-responsive"  style="font-size: 14px;">
+              <div class="col-md-8 col-lg-9  my-account">
+                <div class="profile-container box box-success">
+                    <div class="address-coupon-container">    
+                        <div class="box-header with-border">
+                            <!-- <i class="fa fa-weixin" aria-hidden="true"></i>  -->
+                            Chat with Nutrionist 
+                            <small class="d-block"><i><b style="color:#8bc34a">Note</b>: Here is list of Subscriber, approved by admin & assigned Nutrionist</i></small>
+                        </div>                   
+                        <div class="box-body p-3">
+                            <div class="table-responsive">
                             <table id="dtable" class="ui celled table table-responsive-sm" style="width:100%">
                                 <thead>
                                     <tr>

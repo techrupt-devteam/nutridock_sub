@@ -1,24 +1,32 @@
 @extends('layouts.subscriber_master')
 @section('content')
-
+<style>
+  .user-panel{
+    margin-top: 4.3rem;
+  }
+</style>
 <main>
    <section class="user-panel">
-      <div class="container">
+      <div class="container mt-3">
           @php $title ="Edit Meal Program"; @endphp 
-          @include('layouts.bread_crum')
+          <!-- @include('layouts.bread_crum') -->
            <div class="row">
            
                @include('layouts.subscriber_sidebar')      
               <div class="col-md-8 col-lg-9  my-account" > 
-                <div class="profile-container">
+                <div class="profile-container box box-success">
                   @include('layouts._status_msg')  
+                    <div class="box-header with-border">
+                        Edit Meal Program
+                    </div>
+                    <div class="box-body">
                     <div class="address-coupon-container clearfix pt-4">  
-                        <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
+                        <!-- <div class="heading pt20"><i class="icon fa icon fa-cutlery"></i> 
                            EDIT MEAL PROGRAM  
                            <button class="btn btn-sm btn-primary pull-right" onclick="location.href='{{ URL('') }}/mealprogram'">
                            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i></button>
-                        </div>
-                        <div class="box-body">
+                        </div> -->
+                       
                             <div class="col-md-12">
                             <table class="table table-sm" style="font-size: 14px;">
                                 <tbody>

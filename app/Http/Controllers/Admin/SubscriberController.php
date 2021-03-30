@@ -375,9 +375,9 @@ class SubscriberController extends Controller
                        } 
                        
                     }
-                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
+                    /*$nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
                         <i class="glyphicon glyphicon-open-file"></i>
-                        </a>';
+                        </a>';*/
                     if($login_user_details->roles=="admin"){
                         $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_bill_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Invoice" >
                         Bill <i class="glyphicon glyphicon-open-file"></i>
@@ -480,7 +480,7 @@ class SubscriberController extends Controller
         }
 
 
-        $html='<div class="modal-header" >
+        /*$html='<div class="modal-header" >
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
                  <div class="col-md-12"><h4 class="modal-title"><b>Subscriber Name:</b> '.$value->subscriber_name.'</h4></div>
@@ -607,9 +607,150 @@ class SubscriberController extends Controller
 
         $html.='</div>
                 <div class="modal-footer">
-              
+           
+           
                 </div>';
-              return $html;
+              return $html;*/
+               $html='<div class="modal-header" style="font-size:14px;">
+        <!---<div class="col-md-12">
+            <h3 class="text-center d-none d-md-block">Subscription Details</h3></div>
+          <button type="button" style="right: 20px;" class="close position-absolute" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+        </div>--->
+        <div class="modal-body details" style="margin: 21px;">
+           <div class="row " style="border-top: 2px solid #2d2c2c">
+                <br/>
+           <div class="heading pt20 pb-2"><i class="fa fa-user"></i><strong> BASIC DETAILS </strong></div>
+          <div class="row content">
+            <div class="col-md-5">
+              <h4 style="color: #64BB2C;">'.$value->subscriber_name.'</h4>
+              <div>
+                <table class="table table-sm" style="font-size: 14px;">
+                  <tr>
+                    <td style="border-top: 1px dashed #292828;"><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;<span>'.$value->mobile.'</span></td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: 1px dashed #292828;"> <i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;<span>'.$value->email.'</span></td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: 1px dashed #292828;"><i class="fa fa-child" aria-hidden="true"></i>&nbsp; <span>'.$value->subscriber_age.' <small>Yrs Old</small> </span></td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: 1px dashed #292828;"><b>Transaction ID: </b>&nbsp; <span>'.$value->transaction_id.'  </span></td>
+                  </tr>
+                  <tr>
+                    <td style="border-top: 1px dashed #292828;"><b>Payment Status: </b>&nbsp; <span style="text-transform: capitalize;">'.$value->payment_status.'  </span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-7">
+            <br/>
+              <table class="table table-bordered" style="font-size: 14px;">
+                <tr>
+                  <th style="background-color:#e9ecef"><span>Plan </span></th>
+                  <td><span>'.$value->sub_name.'</span></td>
+                </tr>
+                <tr>
+                  <th style="background-color:#e9ecef"><span>Duration</span></th>
+                  <td style="border-top: 1px dashed #292828;">
+                    <div><small><b>FROM:</b> </small>'.date('d-M-Y',strtotime($value->start_date)).' <small></div><div ><b>TO:</b></small> '.date('d-M-Y',strtotime($value->expiry_date)).'</div>
+                    <div> <small>('.$value->no_of_days.' Days)</small></div>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="background-color:#e9ecef"><span>Meal Type</span></th>
+                  <td style="border-top: 1px dashed #292828;">'; foreach ($get_meal_type as $mvalue) { $html .="<span class='btn-sm btn-warning'>".$mvalue->meal_type_name."</span>&nbsp;&nbsp;"; } $html .='</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="border-top: 2px solid #2d2c2c"><br/>
+              <span class="heading"><i class="fa fa-heartbeat" aria-hidden="true"></i><strong> HEALTH DETAILS</strong></span>
+              <div class="row content">
+                <table class="table table-sm" style="font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="border-top: 1px dashed #292828;" width="30%">Weight:</td>
+                      <td style="border-top: 1px dashed #292828;">'.$value->subscriber_weight.'</td>
+                      <td style="border-top: 1px dashed #292828;">Height:</td>
+                      <td style="border-top: 1px dashed #292828;">'.$value->subscriber_height_in_feet." <i>Feets </i>".$value->subscriber_height_in_inches.' <i>Inches</i></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">Avoid / Dislike Food:</td>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">
+                        <p>'; foreach ($get_food_avoid as $advalue) { $html .="<span class='btn-sm btn-danger'>".$advalue->food_avoid_name."</span>&nbsp;&nbsp;"; } $html .='</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" width="40%" style="border-top: 1px dashed #292828;">Other Food:</td>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">'.$value->other_food.'</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">Any lifestyle disease:</td>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">'.$value->lifestyle_disease.'</td>
+                    </tr>
+                    <tr class="pb-2">
+                      <td colspan="2" style="border-top: 1px dashed #292828;">Any food preparation instructions:</td>
+                      <td colspan="2" style="border-top: 1px dashed #292828;">'.$value->food_precautions.'</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row " style="border-top: 2px solid #2d2c2c">
+                <br/>
+                <div class="heading pt20 pb-2"><i class="fa fa-home"></i><strong> ADDRESSES FOR MEAL DELIVERY </strong></div><br/>
+                <div class="card-view">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="content p-2" style="border: 1px dashed #2d2c2c; background-color: #e9ecef; font-size: 14px;">
+                        <div class="description   pb-3 pl-3 pr-3"  style="border-bottom: 1px solid #2d2c2c;"><h5 class="modal-title"><small><b>Delivery Address 1</b> </small></h5> '.$address1.'<div class="contact"> '.$value->pincode1.' </div></div>
+                        <div class="col-md-12">
+                          <h5 class="modal-title"><small><b>Deliver Meal on above address</b> </small></h5>
+                          <br/>
+                          <p>'; 
+                            $get_meal_type2 = \DB::table('meal_type')->whereIn('meal_type_id',explode(",",$value->address1_deliver_mealtype))->select('meal_type_name')->get(); 
+                            foreach ($get_meal_type2 as $m2value) { 
+                              $html .="<span class='btn-sm btn-warning'>".$m2value->meal_type_name."</span>&nbsp;&nbsp;"; 
+                            } 
+                            $html .='</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="content p-2" style="border: 1px dashed #2d2c2c; background-color: #e9ecef; font-size: 14px;"> 
+                        <div class="description pb-3 pl-3 pr-3" style="border-bottom: 1px solid #2d2c2c;"> <h5 class="modal-title"><small><b>Delivery Address 2</b> </small></h5>'.$address2.'
+                          <div class="contact"> '.$value->pincode2.' </div>
+                        </div>
+                          <div class="col-md-12">
+                            <h5 class="modal-title"><small><b>Deliver Meal on above address</b> </small></h5><br/>
+                            <p>'; 
+                              $get_meal_type3 = \DB::table('meal_type')->whereIn('meal_type_id',explode(",",$value->address2_deliver_mealtype))->select('meal_type_name')->get(); 
+                              if(count($get_meal_type3) > 0)
+                              {
+                                 foreach ($get_meal_type3 as $m3value) { 
+                                  $html .="<span class='btn-sm btn-warning'>".$m3value->meal_type_name."</span>&nbsp;&nbsp;"; 
+                                }
+                              } else {
+                                $html .='NA';
+                              }
+                              $html .='</p>
+                          </div>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>         
+          </div>
+        </div></div>
+        <div class="modal-footer"> </div>';
+        
+        return $html;
     } 
 
    
@@ -728,8 +869,6 @@ class SubscriberController extends Controller
             $pdf->SetProtection(['copy', 'print'], '', 'pass');
             $pdf->stream('sub_'.$id.'billpdf.pdf');
      
-           
-           //return view('admin/subscriber/billpdf');
          
     }
 
