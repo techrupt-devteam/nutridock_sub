@@ -26,8 +26,14 @@
           @endif
         </div>
         <div class="pull-left info">
-          <h4>{{ucfirst($session_user->name)}}</h4>
-         <!--  <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
+          <h4 style="margin-bottom: 2px;">{{ucfirst($session_user->name)}}</h4>
+           @if($session_user->roles=='admin')
+          <small style="color:#8bc34a;">Adminstrator</small>
+          @elseif($session_user->roles==1)
+          <small style="color:#8bc34a;">Nutritionist</small>
+          @elseif($session_user->roles==2)
+          <small style="color:#8bc34a;">Operation Manager</small>
+          @endif
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -49,7 +55,7 @@
           </a>
         </li>
       
-      <li class="treeview ">
+      <!-- <li class="treeview ">
             <a href="#">
               <i class="fa fa-television"></i> <span>CMS</span>
               <span class="pull-right-container">
@@ -87,7 +93,7 @@
               </li> 
             </ul>
         </li> 
-     
+      -->
 
       <li class="treeview  @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber'||Request::segment(2)=='manage_assign_nutritionist' || Request::segment(2)=='add_assign_nutritionist' || Request::segment(2)=='edit_assign_nutritionist'||Request::segment(2)=='manage_subscriber_calender'||Request::segment(2)=='manage_new_subscriber'||Request::segment(2)=='manage_expire_subscriber' || Request::segment(2)=='add_calender' || Request::segment(2)=='edit_calender') active @endif ">
             <a href="#">

@@ -275,7 +275,7 @@ invoice table tfoot tr:first-child td {
                          <tr>
                             <td colspan="4"></td>
                             <td colspan=""><strong class="font">Gst Amt</strong></td>
-                            <td class="text-center"><strong class="font">  ₹ {{$value->sale_price}}</strong></td>
+                            <td class="text-center"><strong class="font">  ₹ {{$value->gst_price}}</strong></td>
                         </tr>
                         <tr>
                             <td colspan="4"></td>
