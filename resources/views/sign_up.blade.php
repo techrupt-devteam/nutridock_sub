@@ -85,7 +85,7 @@
                               autocomplete="nope"
                               data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
-                             <div id="firstname-errors"></div>
+                             <div id="firstname-errors" style="margin-left:0px !important;"></div>
                              </div>
                         </div>
                       </div>
@@ -177,7 +177,12 @@
                        <div class="col-5">
                         <div class="form-group label-floating">
                           <label class="control-label">Weight <span class="text-danger">*</span></label>
-                          <input name="weight" type="text" class="form-control" placeholder="Kgs" required="required" data-parsley-errors-container="#weight-errors" data-parsley-error-message="Weight required" data-parsley-group="step-2">  
+                          <input name="weight" type="text" class="form-control" placeholder="Kgs" 
+                          autocomplete="nope"
+                          required="required"  
+                          data-parsley-errors-container="#weight-errors" 
+                          data-parsley-error-message="Weight required" 
+                          data-parsley-group="step-2">  
                           <div id="weight-errors"></div>                        
                         </div>
                        </div>
@@ -186,11 +191,16 @@
                         <div  class="form-group label-floating">
                           <div class="row">
                             <div class="col-6 pr-1">
-                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required" data-parsley-group="step-2">
+                              <input type="text" name="height_in_feet" class="form-control" placeholder="Feet" required="required" 
+                              autocomplete="nope"
+                              data-parsley-errors-container="#height-in-feet-errors" data-parsley-error-message="Feet required" 
+                              data-parsley-group="step-2">
                               <div id="height-in-feet-errors" ></div>   
                             </div>
                             <div class="col-6 pl-1">
-                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required" data-parsley-group="step-2">
+                              <input type="text" name="height_in_inches" class="form-control" placeholder="Inch" required="required" 
+                              autocomplete="nope"
+                              data-parsley-errors-container="#height-in-inches-errors"  data-parsley-error-message="Inch required" data-parsley-group="step-2">
                               <div id="height-in-inches-errors"></div> 
                             </div>
                           </div>
@@ -203,7 +213,10 @@
                    <div class="col-sm-6">
                     <div class="form-group">
                       <label class="control-label">Physical Activity <span class="text-danger">*</span></label>
-                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" data-parsley-group="step-2" style="min-height: 45px;">
+                        <select class="form-control" name="physical_activity_id" id="physical_activity_id" required="required" 
+                        autocomplete="nope"
+                        data-parsley-errors-container="#physical-activity-errors"  data-parsley-error-message="Physical activity required" 
+                        data-parsley-group="step-2" style="min-height: 45px;">
                           <option selected="selected" value=" " >Select an option</option>
                            @foreach($data['getPhysicalActivityData'] as $getPhysicalActivity)
                           <option value="{{ $getPhysicalActivity['physical_activity_id'] }}">
@@ -232,7 +245,7 @@
                     <div class="form-group" style="z-index: unset;">
                         <div id="other_food_div">
                           <label class="control-label">Other Food</label>
-                          <input name="other_food" type="text" class="form-control" placeholder="Other">
+                          <input name="other_food" type="text" class="form-control" placeholder="Other" autocomplete="nope">
                         </div>
                     </div>
                    </div>
@@ -312,7 +325,7 @@
                             <i class="fa fa-calendar" aria-hidden="true"></i>
                             </span> 
                           </div>
-                          <input type="text" data-provide="datepicker" class="form-control" name="start_date" id="start_date" required="required" data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" data-parsley-group="step-3" autocomplete="off" value="<?php echo date("Y-m-d", strtotime("+ 2 day")) ?>">
+                          <input type="text" data-provide="datepicker" class="form-control" name="start_date" id="start_date" required="required" data-parsley-errors-container="#start-date-errors" data-parsley-error-message="Date required" data-parsley-group="step-3" autocomplete="nope" value="<?php echo date("Y-m-d", strtotime("+ 2 day")) ?>">
                         </div>
                       
                         <div id="start-date-errors"></div>
@@ -322,8 +335,7 @@
                 </div>
                 
                 <div class="col-sm-12 mb-3" id="plandetails" style="display: none;">
-                  <div class="row">
-                    
+                  <div class="row">                    
                     <div class="col-sm-12 mb-1">
                       <label class="control-label"> Type of meals <span style="color:red;">*</span></label>
                       <div id="meals">
@@ -336,6 +348,7 @@
                             class="meal_type_id" 
                             value="{{ $getMealTypeData['meal_type_id'] }}" 
                             required="required" 
+                            autocomplete="nope"
                             data-parsley-errors-container="#meal-type-errors" 
                             data-parsley-error-message="Please select Type of meals" 
                             data-parsley-group="step-3" 
@@ -348,10 +361,8 @@
                           <div id="meal-type-errors"></div>
                           <input type="hidden" id="meal_type" name="meal_type" />
                         </div>
-                      </div>
-                      
-                      </div>
-                   
+                      </div>                      
+                    </div>                   
                     <div class="col-sm-12 mb-1">
                       <div class="">
                         <label class="control-label">Price</label>
@@ -360,15 +371,15 @@
                         </div>
                       </div>
                     </div> 
-                    <span style="font-size: 12px;" class="ml-3 mt-2 p-2 alert-info"><span style="color: #e81212;">*</span> 5% GST applicable</span>
+                    <span style="font-size: 12px;" class="ml-3 mt-2 p-2 alert-info">
+                    <span style="color: #e81212;">*</span> 5% GST applicable</span>
                   </div>
                 </div>
                 <div class="wizgard-footer">
                   <button class="btn btn-secondary pb-1 pt-1 prevBtn" type="button" ><i class="fa fa-angle-left" aria-hidden="true"></i> Previous &nbsp;
                   </button>
                   <span class="nextBtn btn btn-dark pull-right" data-current-block="3" data-next-block="4">Next 
-                  </span> 
-                 
+                  </span>                 
                 </div>
               </div>
               <!-- @END: Plan details tab -->
@@ -385,7 +396,7 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label class="control-label">Address <span style="color: red;">*</span></label>
-                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="2" required="required"   data-parsley-group="step-4"></textarea>
+                          <textarea class="form-control" placeholder="Address" name="address1" id="address1" rows="2" required="required" data-parsley-group="step-4"></textarea>
                           <span id="err_address1" class="text-danger"></span>
                         </div>  
                       </div>
@@ -402,8 +413,7 @@
                             <div class="form-group" id="mealtype_div">
                                 <label class="control-label">Select meal type</label>
                                 <select multiple id="mealtype1" class="form-control" name="address1_meal[]" >
-                                <option value="None">None</option>
-                                
+                                <option value="None">None</option>                                
                                 </select>
                               <input type="hidden" name="" id="checkout_address1_meal1">
                             </div>
@@ -425,7 +435,7 @@
                           <div class="col-sm-6">
                             <div class="form-group">
                               <label class="control-label">Pincode <span style="color: red;">*</span></label>
-                              <input type="text" placeholder="Pincode" name="pincode2" id="pincode2"  class="form-control" required="required" minlength="6" maxlength="6">
+                              <input type="text" placeholder="Pincode" name="pincode2" id="pincode2"  class="form-control" required="required" minlength="6" maxlength="6" autocomplete="nope">
                               <span id="err_pincode1" class="text-danger"></span>
                             </div>
                           </div>
@@ -451,11 +461,15 @@
                       <div class="col-md-12">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value="1" name="termsConditions" class="showDive" id="termsConditions" required="required" data-parsley-group="step-4">
+                            <input type="checkbox" value="1" name="termsConditions" class="showDive" id="termsConditions" required="required"
+                            data-parsley-errors-container="#err_termsConditions" 
+                            data-parsley-error-message="Please select Type of meals"  
+                            data-parsley-group="step-4">
                           </label>
                           <a href="{{url('')}}/terms_conditions">I Agree With Terms & Conditions? <span style="color: red;">*</span></a><br>
-                          <span id="err_termsConditions" style="color: red;font-size: 13px;"></span> </div>
+                         </div>                         
                       </div>
+                      <div id="err_termsConditions" style="color: red;font-size: 13px;"></div> 
                     </div>
                   </div>
                   <div class="wizgard-footer">

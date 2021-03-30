@@ -209,9 +209,63 @@ class SignUpController extends Controller
             $get_subscriber_details  = \DB::table('nutri_dtl_subscriber')
             ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
             ->join('nutri_mst_subscription_plan','nutri_dtl_subscriber.sub_plan_id','=','nutri_mst_subscription_plan.sub_plan_id')
+            ->join('city','nutri_dtl_subscriber.city','=','city.id')
+            ->join('state','nutri_dtl_subscriber.state','=','state.id')
+            ->join('nutri_dtl_subscription_duration','nutri_dtl_subscriber.duration_id','=','nutri_dtl_subscription_duration.duration_id')
+            ->join('physical_activity','nutri_dtl_subscriber.physical_activity_id','=','physical_activity.physical_activity_id')
             ->where('nutri_dtl_subscriber.id','=',Session::get('subscriber_id'))
-            ->select('nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.no_of_days','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.expiry_date')
+            ->select('physical_activity.physical_activity','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_dtl_subscription_duration.duration','nutri_mst_subscriber.mobile','nutri_mst_subscriber.email')
             ->first();
+
+
+            //getmeal type 
+            $get_meal_type = \DB::table('meal_type')
+                            ->whereIn('meal_type_id',explode(",",$get_subscriber_details->meal_type_id))
+                            ->select('meal_type_name')
+                            ->get();
+
+            $get_food_avoid = \DB::table('food_avoid')
+                    ->whereIn('food_avoid_id',explode(",",$get_subscriber_details->avoid_or_dislike_food_id))
+                    ->select('food_avoid_name')
+                    ->get();
+                            
+            $get_meal_type2 = \DB::table('meal_type')
+                    ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address1_deliver_mealtype))
+                    ->select('meal_type_name')
+                            ->get();  
+
+            $get_meal_type3 = \DB::table('meal_type')
+                                ->whereIn('meal_type_id',explode(",",$get_subscriber_details->address2_deliver_mealtype))
+                                ->select('meal_type_name')
+                                ->get();
+
+            $data =[] ;
+            $data['get_subscriber_details'] = $get_subscriber_details;
+            
+            $data['get_meal_type']  = $get_meal_type;
+            $data['get_food_avoid'] = $get_food_avoid;
+            $data['get_meal_type2'] = $get_meal_type2;
+            $data['get_meal_type3'] = $get_meal_type3;
+            $data['inword']         = $this->number_to_words(round($get_subscriber_details->total_amount));  
+
+            Arr::set($data, 'subscriber_details', $data);
+      
+        
+            
+            /* @Start: code to send email through smtp */
+                     
+            $to = 'developer@techrupt.in';
+            $cc = 'developer@techrupt.in';
+            //$bcc = array('it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
+            $subject = 'Nutridock Fit - Thank you for Subscribing';
+            $customer_mail = Mail::send('signupmail', $data, function($message) use($to, $subject) {
+                 $message->to($to);
+                 //$message->cc($cc);
+                 //$message->bcc($bcc);
+                 $message->subject($subject);
+                 $message->from('admin@nutridock.com','Nutridock Fit');
+             });
+
 
             $addNotification =  Notification::create(
                 ['message' =>  "<b>".ucfirst($getSubscriberDtl['subscriber_name'])."</b> has been subscribed plan ".$getSubscriberDtl['sub_name']." for duration of ".$getSubscriberDtl['no_of_days']." From: ".$getSubscriberDtl['start_date']." To: ".$getSubscriberDtl['expiry_date'],
@@ -258,15 +312,7 @@ class SignUpController extends Controller
                     Session::put('subscriber_otp', $randstring);  
                 }
             }
-
-            
-
-
         }
-
-
-
-      
 
         return $update;    
 	}
@@ -349,5 +395,57 @@ class SignUpController extends Controller
     public function signinModal() {      
         return view('sign_in');
     }
+
+
+    public function number_to_words($num)
+    {
+            $number   = $num;
+            $no       = floor($number);
+            $point    = round($number - $no, 2) * 100;
+            $hundred  = null;
+            $digits_1 = strlen($no);
+            
+            $i = 0;
+            
+            $str = array();
+
+            $words = array('0' => '', '1' => 'one', '2' => 'two',
+            '3' => 'three', '4' => 'four', '5' => 'five', '6' => 'six',
+            '7' => 'seven', '8' => 'eight', '9' => 'nine',
+            '10' => 'ten', '11' => 'eleven', '12' => 'twelve',
+            '13' => 'thirteen', '14' => 'fourteen',
+            '15' => 'fifteen', '16' => 'sixteen', '17' => 'seventeen',
+            '18' => 'eighteen', '19' =>'nineteen', '20' => 'twenty',
+            '30' => 'thirty', '40' => 'forty', '50' => 'fifty',
+            '60' => 'sixty', '70' => 'seventy',
+            '80' => 'eighty', '90' => 'ninety');
+            
+            $digits = array('', 'hundred', 'thousand', 'lakh', 'crore');
+            
+            while ($i < $digits_1) {
+            $divider = ($i == 2) ? 10 : 100;
+            $number = floor($no % $divider);
+            $no = floor($no / $divider);
+            $i += ($divider == 10) ? 1 : 2;
+            if ($number) {
+            $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+            $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+            $str [] = ($number < 21) ? $words[$number] .
+            " " . $digits[$counter] . $plural . " " . $hundred
+            :
+            $words[floor($number / 10) * 10]
+            . " " . $words[$number % 10] . " "
+            . $digits[$counter] . $plural . " " . $hundred;
+            } else $str[] = null;
+            }
+            $str = array_reverse($str);
+            $result = implode('', $str);
+            $points = ($point) ?
+            "." . $words[$point / 10] . " " . 
+            $words[$point = $point % 10] : '';
+            // return $result . "Rupees ". $points ." Paise";
+            return $result . "Rupees ";
+    }
+
 }
 ?>

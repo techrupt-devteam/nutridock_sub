@@ -5142,7 +5142,8 @@ input[type=number] {
 }
 .parsley-errors-list ul
 {
-	padding-left:0px;
+	padding-left:0px !important;
+	margin-left:0px !important;
 }
 .parsley-errors-list li
 {
@@ -5151,6 +5152,8 @@ input[type=number] {
     font-size: 13px;
     list-style: none;
     padding: 0px !important;
+	margin-left:0px !important;
+	text-align:left;
 }
 .account-Modal__inner.show {
     max-width: 250px;
