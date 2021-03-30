@@ -88,11 +88,19 @@
     </section>
     <!-- /.content -->
   </div>
-  <div class="modal fade" id="modal-details" data-backdrop="static">
+<!--   <div class="modal fade" id="modal-details" data-backdrop="static">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div id="content">
           
+        </div>
+      </div>
+    </div>
+  </div> -->
+   <div class="modal fade" id="modal-details" role="dialog" >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div id="content"  style="background-color: #cff9c41f">          
         </div>
       </div>
     </div>

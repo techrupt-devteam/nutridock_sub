@@ -235,7 +235,7 @@ table.sign tr td {
                     </tr>
                     <tr>
                         <td colspan="6">
-                            Inwards :
+                            Inwords :
                             <b>{{ucfirst($data['inword'])}} only/- </b>
                         </td>
                     </tr>
