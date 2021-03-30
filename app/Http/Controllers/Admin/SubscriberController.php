@@ -375,9 +375,9 @@ class SubscriberController extends Controller
                        } 
                        
                     }
-                    $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
+                    /*$nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Details" >
                         <i class="glyphicon glyphicon-open-file"></i>
-                        </a>';
+                        </a>';*/
                     if($login_user_details->roles=="admin"){
                         $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_bill_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Invoice" >
                         Bill <i class="glyphicon glyphicon-open-file"></i>
@@ -728,8 +728,6 @@ class SubscriberController extends Controller
             $pdf->SetProtection(['copy', 'print'], '', 'pass');
             $pdf->stream('sub_'.$id.'billpdf.pdf');
      
-           
-           //return view('admin/subscriber/billpdf');
          
     }
 
