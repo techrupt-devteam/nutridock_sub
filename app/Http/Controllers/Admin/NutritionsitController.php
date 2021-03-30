@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Models\USer;
+use App\Models\User;
 use App\Models\Location;
 use App\Models\city;
 use App\Models\Role;
@@ -21,7 +21,7 @@ use DB;
 use Config;
 class NutritionsitController extends Controller
 {
-    public function __construct(USer $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
+    public function __construct(User $Nutritionsit,Location $Location,City $City,Role $Role,State $State)
     {
         $data                = [];
         $this->email         =  Config::get('constants.mail.email');

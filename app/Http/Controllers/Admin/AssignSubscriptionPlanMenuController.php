@@ -9,7 +9,7 @@ use App\Models\MenuModel;
 use App\Models\AssignSubcriptionplanMenu;
 use App\Models\SubscriptionPlan;
 use App\Models\SubscriptionPlanDetails;
-use App\Models\city;
+use App\Models\City;
 use App\Models\DefaultMeal;
 use App\Models\State;
 use App\Models\MealType;

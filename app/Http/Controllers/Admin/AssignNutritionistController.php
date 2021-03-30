@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignNutritionist;
 use App\Models\Location;
 use App\Models\User;
-use App\Models\city;
+use App\Models\City;
 use App\Models\State;
 use Pusher\Pusher;
 use App\Models\Notification;

@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Location;
-use App\Models\city;
+use App\Models\City;
 use App\Models\Role;
 use App\Models\State;
 use App\Models\SubscriberDetails;

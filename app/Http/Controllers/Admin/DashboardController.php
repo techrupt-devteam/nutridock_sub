@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use App\Models\SubscriberDetails;
 use App\Models\State;
-use App\Models\city;
+use App\Models\City;
 use App\Models\Location;
 use App\Models\User;
 use App\Models\Kitchen;

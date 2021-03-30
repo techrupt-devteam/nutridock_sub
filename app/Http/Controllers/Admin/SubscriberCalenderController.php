@@ -9,7 +9,7 @@ use App\Models\Location;
 use App\Models\SubscriberMealPlan;
 use App\Models\SubscriberDetails;
 use App\Models\User;
-use App\Models\city;
+use App\Models\City;
 use App\Models\State;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
