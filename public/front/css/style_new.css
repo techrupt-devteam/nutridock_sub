@@ -155,7 +155,7 @@ margin:1.5rem .5rem!important
 }
 #header.header-scrolled {
 	top:0;
-	padding: 3px 0 5px;
+	padding: 6px 5px;
 	background: #000;
 	box-shadow:0 2px 15px rgba(0, 0, 0, 0.2)
 }
@@ -188,7 +188,7 @@ margin:1.5rem .5rem!important
 	color:#106eea
 }
 #header .logo img {
-	max-height:70px;
+	height: 70px;
 	transition:all .5s
 }
 .header-scrolled a img {
@@ -196,7 +196,7 @@ margin:1.5rem .5rem!important
 }
 @media(max-width:992px) {
 #header {
-	padding:15px 5px;
+	padding:6px 5px;
 	top:0
 }
 #header .logo {
@@ -383,7 +383,7 @@ margin:1.5rem .5rem!important
 	text-align:right
 }
 .mobile-nav-toggle i {
-	color:#222
+	color:#FFF
 }
 .mobile-nav {
 	position:fixed;
@@ -544,14 +544,14 @@ padding:0 .8rem
 	height:120vh
 }
 #header .logo img {
-	max-height:40px
+	max-height:50px
 }
 #carouselExampleIndicators {
 	margin-top:70px;
 	z-index:99
 }
 .header-scrolled a img {
-	max-height:35px!important
+	max-height:50px!important
 }
 .slider-containt {
 	font-size:34px;
@@ -778,6 +778,9 @@ section {
 @media(max-width:768px) {
 .breadcrumbs .d-flex {
 	display:block!important
+}
+.banner-section-top{
+	padding: 75px 0px 0px 0px;
 }
 .breadcrumbs ol {
 	display:block
@@ -3752,7 +3755,7 @@ textarea.form-control {
 	line-height:1.6;
 	font-weight:400;
 	letter-spacing:.05em;
-	color:#666;
+	color:#444;
 	-webkit-text-size-adjust:none;
 	padding:5px
 }
@@ -3839,9 +3842,9 @@ padding-left:.75rem
 	margin-bottom:2rem!important
 }
 .fbox-content p {
-margin-top:.5rem;
+	margin-top:.5rem;
 	margin-bottom:0;
-	color:#666
+	color:#444
 }
 .team-image img, .team-image>a {
 	display:block;
@@ -5039,6 +5042,9 @@ font-size:.9375rem;
 	.item_content h3{
 		font-size: 13px;
 		line-height: normal;
+	}
+	.social-links {
+		display: block;
 	}
 	.left_list h2{
 		font-size: 15px;

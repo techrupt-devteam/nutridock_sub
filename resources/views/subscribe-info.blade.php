@@ -22,13 +22,13 @@
       </div>
    </div> -->
    <section class="banner-section-top">
-      <div  class="banner-shape">
+      <div  class="banner-shape d-none d-md-block">
          <img  src="{{url('')}}/public/front/img/shape/shape1.png" alt="Shape">
          <img  src="{{url('')}}/public/front/img/shape/shape2.png" alt="Shape">
          <img  src="{{url('')}}/public/front/img/shape/shape3.png" alt="Shape">
          <img  src="{{url('')}}/public/front/img/shape/banner-shape.png" alt="Shape">
       </div>
-      <div class="container">
+      <div class="container" style="max-width: 1140px;">
          <div class="row">
             <div class="col-md-6 align-self-center">
                <div class="">
@@ -73,7 +73,7 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 d-none d-md-block">
                <!-- <div class="bg-gradient-img">
                   <img src="{{url('')}}/public/front/img/foodNew.png" class="right-sideBanner img-fluid"/>
             </div> -->
