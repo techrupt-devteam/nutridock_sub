@@ -158,6 +158,9 @@ class MenuController extends Controller
                 if(!empty($menu->id))
                 {
                     $menu_multi_img        = Input::file('img'.$d);
+                    
+                  if(isset($_FILES['img'.$d]["name"]) && !empty($_FILES['img'.$d]["name"]))
+                  {
                     $characters            = '0123456789abcdefghijklmnopqrstuvwxyz';
                     $charactersLength      = strlen($characters);
                     $randomStringMulti = '';
@@ -188,6 +191,7 @@ class MenuController extends Controller
                       {
                         $failed++;
                       }
+                   }
                 }
             }
             //Multiple ingrediant save   
@@ -199,6 +203,8 @@ class MenuController extends Controller
                 if(!empty($menu->id))
                 {
                     $menu_ingrediant_img        = Input::file('int_img'.$int);
+                    if(isset($_FILES['int_img'.$int]["name"]) && !empty($_FILES['int_img'.$int]["name"]))
+                    {
                     $characters                 = '0123456789abcdefghijklmnopqrstuvwxyz';
                     $charactersLength           = strlen($characters);
                     $randomStringMulti_int      = '';
@@ -232,6 +238,7 @@ class MenuController extends Controller
                       {
                         $failed++;
                       }
+                  }
                 }
             }
             
@@ -268,7 +275,7 @@ class MenuController extends Controller
         $menu_type          = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
         $category          = $this->base_menucatgorymodel->orderby('id','DESC')->get();
         $specification     = $this->base_specificationmodel->orderby('id','DESC')->get();
-        $ingrediants       = $this->base_ingredientsmodel->where(['menu_id'=>$id])->orderby('id','DESC')->get()->toArray();
+        $ingrediants       = $this->base_ingredientsmodel->where(['menu_id'=>$id])->orderby('id','ASC')->get()->toArray();
         $menu_images       = \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->get()->toArray();
 
         $data['menu_type']      = $menu_type;
@@ -523,29 +530,46 @@ class MenuController extends Controller
         $img            = $this->base_model->where(['id'=>$id])->select('image')->first();
         $multi_img      = \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->select('img_path')->get()->toArray();
         $ingrediant_img = \DB::table('ingredients')->where(['menu_id'=>$id])->select('image')->get()->toArray();
+      //  dd($ingrediant_img);
         //delete menu  iamage
-        unlink("uploads/menu/".$img->image);
-        unlink("uploads/menu/thumb/".$img->image);
-        
+        if(!empty($img))
+        {
+            if(file_exists("uploads/menu/".$img->image)){
+              unlink("uploads/menu/".$img->image);
+              unlink("uploads/menu/thumb/".$img->image); 
+            }
+        }
         //deklete menu ingrediant images 
-        foreach ($ingrediant_img as $key => $value) 
-        {    
-           unlink("uploads/menu/menu_ingrediants/".$value->image);
-           unlink("uploads/menu/menu_ingrediants//thumb/".$value->image);
+        if(count($ingrediant_img)>0 && !empty($ingrediant_img))
+        {
+            foreach ($ingrediant_img as $key => $value) 
+            { 
+               if(file_exists("uploads/menu/menu_ingrediants/".$value->image))
+               {   
+                 unlink("uploads/menu/menu_ingrediants/".$value->image);
+                 unlink("uploads/menu/menu_ingrediants/thumb/".$value->image);
+               }
+            }
         }
         
         //delete menu mutliple images
-        foreach ($multi_img as $key => $mvalue) 
+        if(count($multi_img)>0 && !empty($multi_img))
         {
-           unlink("uploads/menu/".$mvalue->img_path);
-           unlink("uploads/menu/thumb/".$mvalue->img_path);
+            foreach ($multi_img as $key => $mvalue) 
+            {
+              if(file_exists("uploads/menu/".$mvalue->img_path))
+              {   
+                 unlink("uploads/menu/".$mvalue->img_path);
+                 unlink("uploads/menu/thumb/".$mvalue->img_path);
+              }
+            }
         }
 
         //delete db entry 
-        $this->base_model->where(['id'=>$id])->delete();
+       
         \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->delete();
         \DB::table('ingredients')->where(['menu_id'=>$id])->delete();
-
+        $this->base_model->where(['id'=>$id])->delete();
 
 
         Session::flash('success', $this->Delete);

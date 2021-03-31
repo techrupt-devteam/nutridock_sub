@@ -192,7 +192,7 @@
                         <input type="hidden" id="img_flag" name="img_flag" value="1">
                           <tr class="tr_row_duration1">
                             <td>
-                              <input type="file" class="form-control"  id="img1" name="img1" required="true" data-parsley-errors-container="#img" data-parsley-error-message="Please Upload Image">
+                              <input type="file" class="form-control"  id="img1" name="img1">
                               <span id="img_msg1" style="color:red;"></span>
                             </td>
                              <td style="text-align: right;vertical-align: middle;padding-right: 0;width: 61px;"  width="10%">
@@ -224,11 +224,11 @@
                         <input type="hidden" id="int_flag" name="int_flag" value="1">
                           <tr class="tr_row_int1">
                             <td>
-                                <input type="text" autocomplete="off" class="form-control" id="int_title1" name="int_title1" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title.">
+                                <input type="text" autocomplete="off" class="form-control" id="int_title1" name="int_title1" placeholder="Enter Ingrediants Name">
                                 <div id="#inttitle_error" style="color:red;"></div>
                             </td>
                             <td>
-                              <input type="file" class="form-control"  id="int_img1" name="int_img1" required="true" data-parsley-errors-container="#int_img_msg1" data-parsley-error-message="Please upload image.">
+                              <input type="file" class="form-control"  id="int_img1" name="int_img1" >
                               <span id="int_img_msg1" style="color:red;"></span>
                             </td>
                              <td style="text-align: right;padding-right: 0px;width: 61px;">
@@ -299,7 +299,7 @@
       var img_flag = $('#img_flag').val();
       img_flag = parseInt(img_flag)+parseInt(1); 
       $('#img_flag').val(img_flag);
-       var tr = '<tr class="tr_row_duration' + img_flag + '"><td><input type="file" class="form-control"  id="img'+img_flag+'" name="img'+img_flag+'" required="true" data-parsley-errors-container="#img" data-parsley-error-message="Please upload image"><span id="img_msg1" style="color:red;"></span></td><td style="text-align: right;vertical-align: middle;padding-right: 0;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removedurationRow_ajax(' + img_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_duration' + img_flag + '"><td><input type="file" class="form-control"  id="img'+img_flag+'" name="img'+img_flag+'" ><span id="img_msg1" style="color:red;"></span></td><td style="text-align: right;vertical-align: middle;padding-right: 0;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removedurationRow_ajax(' + img_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#img_body').append(tr);
   }
 
@@ -322,7 +322,7 @@
       var int_flag = $('#int_flag').val();
       int_flag = parseInt(int_flag)+parseInt(1); 
       $('#int_flag').val(int_flag);
-       var tr = '<tr class="tr_row_int' + int_flag + '"><td><input type="text" class="form-control" id="int_title'+int_flag+'" name="int_title'+int_flag+'" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title"> <div id="#inttitle_error" style="color:red;"></div></td><td><input type="file" class="form-control"  id="int_img'+int_flag+'" name="int_img'+int_flag+'" required="true" data-parsley-errors-container="#int_img_msg'+int_flag+'" data-parsley-error-message="Please upload image"><span id="int_img_msg'+int_flag+'" style="color:red;"></span></td><td style="text-align:right;padding-right: 0px;vertical-align: middle;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removeintRow_ajax(' + int_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_int' + int_flag + '"><td><input type="text" class="form-control" id="int_title'+int_flag+'" name="int_title'+int_flag+'" placeholder="Enter Ingrediants Name" > <div id="#inttitle_error" style="color:red;"></div></td><td><input type="file" class="form-control"  id="int_img'+int_flag+'" name="int_img'+int_flag+'"><span id="int_img_msg'+int_flag+'" style="color:red;"></span></td><td style="text-align:right;padding-right: 0px;vertical-align: middle;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removeintRow_ajax(' + int_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#int_body').append(tr);
   }
 

@@ -73,7 +73,7 @@
     <form action="{{ url('/admin')}}/forget_password_process" method="post" data-parsley-validate="parsley">
        {!! csrf_field() !!}
       <div class="form-group has-feedback">
-        <input type="text" name="email" class="form-control" placeholder="Please enter email" {{-- data-parsley-type="email"  --}}required="true">
+        <input type="text" name="email"  autocomplete="off" class="form-control" placeholder="Please enter email" {{-- data-parsley-type="email"  --}}required="true">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
     <!--   <div class="form-group has-feedback">

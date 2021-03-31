@@ -58,15 +58,15 @@
     <form action="{{ url('/admin')}}/login_process" method="post" data-parsley-validate="parsley">
       {!! csrf_field() !!}
       <div class="form-group has-feedback">
-        <input type="text" name="email" id="email" class="form-control" placeholder="Username" {{-- value="{{$_COOKIE["adminemail"] or ''}}" --}} {{-- data-parsley-type="email" --}} required="true" style="height: 40px;" onchange="getcity_dropdown();">
+        <input type="text"  autocomplete="off" name="email" id="email" class="form-control" placeholder="Username" {{-- value="{{$_COOKIE["adminemail"] or ''}}" --}} {{-- data-parsley-type="email" --}} required="true" style="height: 40px;" onchange="getcity_dropdown();">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password" {{-- value="{{$_COOKIE["adminpassword"] or ''}}"  --}}{{-- data-parsley-minlength="6" --}} required="true" style="height: 40px;">
+        <input type="password"  autocomplete="off" name="password" class="form-control" placeholder="Password" {{-- value="{{$_COOKIE["adminpassword"] or ''}}"  --}}{{-- data-parsley-minlength="6" --}} required="true" style="height: 40px;">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback " id="city_select" style="display: none !important;">
-        <select name="city" id="city" class="form-control select2"  required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
+        <select name="city"  autocomplete="off" id="city" class="form-control select2"  required="true" data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city.">
           <option value=" ">-Select City-</option>
         </select>
           <div id="city_error" style="color:red;"></div>
