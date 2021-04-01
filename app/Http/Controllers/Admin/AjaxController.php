@@ -50,16 +50,16 @@ class AjaxController extends Controller
     public function getArea(Request $request)
     {//dd($request);
         $city_id = $request->city;
-        $location_data = $this->base_location->where(['city'=>$city_id])->get();
+        $location_data = $this->base_location->where(['city'=>$city_id])->where('is_active','=',1)->get();
         $html = "";
         $html .= "<option value=''>-Select-</option>";
         foreach ($location_data as $key => $value) 
         {
 
         if(!empty($request->area) && $request->area == $value->id) 
-             $html.="<option value=".$value->id." selected>".$value->area."</option>";     
+             $html.="<option value=".$value->id." selected>".$value->area.''.(!empty($value->pincode)?"-".$value->pincode:"")."</option>";     
          else  
-          $html.="<option value=".$value->id.">".$value->area."</option>";                
+          $html.="<option value=".$value->id.">".$value->area.''.(!empty($value->pincode)?"-".$value->pincode:"")."</option>";                
         }         
 
         return $html;
@@ -69,16 +69,16 @@ class AjaxController extends Controller
     {   
         //dd($request);
         $city_id = $request->city;
-        $location_data = $this->base_location->where(['city'=>$city_id])->get();
+        $location_data = $this->base_location->where(['city'=>$city_id])->where('is_active','=',1)->get();
         $html = "";
         $html .= "<option value=''>-Select-</option>";
         foreach ($location_data as $key => $value) 
         {
 
          if(in_array($value->id,explode(",",$request->area))) 
-             $html.="<option value=".$value->id." selected>".$value->area."</option>";     
+             $html.="<option value=".$value->id." selected>".$value->area.''.(!empty($value->pincode)?"-".$value->pincode:"")."</option>";     
          else  
-          $html.="<option value=".$value->id.">".$value->area."</option>";                
+          $html.="<option value=".$value->id.">".$value->area.''.(!empty($value->pincode)?"-".$value->pincode:"")."</option>";                
         }         
 
         return $html;

@@ -20,7 +20,8 @@ class MenuModel extends Model
                             'calories',
                             'proteins',
                             'fats',
-                            'carbohydrates'
+                            'carbohydrates',
+                            'is_active'
                         ];
 }
 	

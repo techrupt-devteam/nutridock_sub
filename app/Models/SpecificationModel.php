@@ -9,7 +9,8 @@ class SpecificationModel extends Model
     protected $primaryKey  = "id";
     protected $fillable = [
                             'specification_title',
-                            'icon_image'
+                            'icon_image',
+                            'is_active'
                           ];
 }
 	

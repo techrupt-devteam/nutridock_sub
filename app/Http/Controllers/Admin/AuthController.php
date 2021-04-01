@@ -12,6 +12,7 @@ use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 //use Session;
+use Carbon\Carbon;
 use Config;
 class AuthController extends Controller
 {

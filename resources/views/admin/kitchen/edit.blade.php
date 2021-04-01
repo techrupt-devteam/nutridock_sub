@@ -143,9 +143,10 @@
                     <?php $subscription_data = explode(",",$data['sub_plan_id']); ?>
                     <div class="form-group">
                       <label for="area_id">Assign User To Kitchen </label>
+                      <div id="checkbox_error" style="color:red;"></div>
                       <table id="user-item"  class="table table-striped table-bordered ">
                         <thead class="btn-default">
-                               <tr><td colspan="4">  <div id="checkbox_error" style="color:red;"></div></td></tr>  
+                             <!--   <tr><td colspan="4">  </td></tr>   -->
                         <th width="5%"></th>
                           <th>Menu Name</th>
                           <th>Role</th>
@@ -170,8 +171,9 @@
                     <div class="form-group">
                       <label for="area_id">Assign Subscription Plan</label>
                       <table id="sub-item"  class="table table-striped table-bordered ">
+                        <div id="plan_error" style="color:red;"></div>
                         <thead class="btn-default">
-                           <tr><td colspan="3">  <div id="plan_error" style="color:red;"></div></td></tr>  
+                         <!--   <tr><td colspan="3">  </td></tr>   -->
                         <th width="5%"></th>
                           <th>Subscription Plan</th>
                             </thead>
@@ -200,9 +202,10 @@
                 </div>
                 <div class="box-body">
                   <div class="form-group">
+                    <div id="menu_error" style="color:red;"></div>
                     <table id="menu-item"  class="table table-striped table-bordered ">
                       <thead class="btn-default">
-                               <tr><td colspan="3">  <div id="menu_error" style="color:red;"></div></td></tr>  
+                       <!--         <tr><td colspan="3">  </td></tr>   -->
                       <th width="5%"></th>
                         <th>Menu Name</th>
                           </thead>

@@ -10,7 +10,7 @@
         <div class="box">
           <div class="box-header">
             <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Cloude Kitchen</a> </div>
+            <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Cloud Kitchen</a> </div>
           <!-- /.box-header -->
           <div class="box-body"><div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
@@ -25,7 +25,6 @@
                 </tr>
               </thead>
               <tbody>
-              
               @foreach($data as $key=>$value)
               <tr>
                 <td>{{$key+1}}</td>

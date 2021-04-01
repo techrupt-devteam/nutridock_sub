@@ -69,8 +69,8 @@ class MenuController extends Controller
     public function add()
     {
         $menu_type         = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
-        $category          = $this->base_menucatgorymodel->orderby('id','DESC')->get();
-        $specification     = $this->base_specificationmodel->orderby('id','DESC')->get();
+        $category          = $this->base_menucatgorymodel->orderby('id','DESC')->where('is_active','=',1)->get();
+        $specification     = $this->base_specificationmodel->orderby('id','DESC')->where('is_active','=',1)->get();
         $data['page_name'] = "Add";
         $data['menu_type'] = $menu_type;
         $data['category']  = $category;
@@ -252,16 +252,6 @@ class MenuController extends Controller
         }
     }
 
-
-
-
-
-
-
-
-
-
-
     // Menu Edit Function
     public function edit($id)
     {
@@ -273,8 +263,8 @@ class MenuController extends Controller
             $arr_data = $data->toArray();
         }   
         $menu_type          = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
-        $category          = $this->base_menucatgorymodel->orderby('id','DESC')->get();
-        $specification     = $this->base_specificationmodel->orderby('id','DESC')->get();
+        $category          = $this->base_menucatgorymodel->orderby('id','DESC')->where('is_active','=',1)->get();
+        $specification     = $this->base_specificationmodel->orderby('id','DESC')->where('is_active','=',1)->get();
         $ingrediants       = $this->base_ingredientsmodel->where(['menu_id'=>$id])->orderby('id','ASC')->get()->toArray();
         $menu_images       = \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->get()->toArray();
 
@@ -575,7 +565,51 @@ class MenuController extends Controller
         Session::flash('success', $this->Delete);
         return \Redirect::back();
     }
+     
+    //change menu_status  
+    public function status(Request $request)
+    {
+        $status  = $request->status;
+        $plan_id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+         $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+         $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['id'=>$plan_id])->update($arr_data);
+        //return \Redirect::back();
+    }
 
+    //menu Details 
+    public function details (Request $request)
+    {
+
+        $id= $request->menu_id;
+        $arr_data = [];
+        $data     = $this->base_model->where(['id'=>$id])->first();
+        if(!empty($data))
+        {
+            $arr_data = $data->toArray();
+        }   
+
+        $menu_type             = $this->base_meal_type->orderby('meal_type_id','DESC')->get();
+        $category              = $this->base_menucatgorymodel->where('id','=',$data->menu_category_id)->first();
+        $specification         = $this->base_specificationmodel->orderby('id','DESC')->where('is_active','=',1)->get();
+        $ingrediants           = $this->base_ingredientsmodel->where(['menu_id'=>$id])->orderby('id','ASC')->get()->toArray();
+        $menu_images           = \DB::table('nutri_dtl_menu_img')->where(['menu_id'=>$id])->get()->toArray();
+        $data['menu_type']     = $menu_type;
+        $data['category']      = $category;
+        $data['specification'] = $specification;
+        $data['ingrediants']   = $ingrediants;
+        $data['menu_img']      = $menu_images;
+        $data['data']          = $arr_data;
+        
+        return view($this->folder_path.'menu-details',$data);
+    }
 
    
 }

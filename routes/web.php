@@ -296,12 +296,13 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	 Route::post('/status_location',	  'Admin\LocationsController@status');
 
 	// Menu category routes
-	 Route::get('/manage_menucategory',		 'Admin\MenuCategoryController@index');
-	 Route::get('/add_menucategory',		 'Admin\MenuCategoryController@add');
-	 Route::post('/store_menucategory',		 'Admin\MenuCategoryController@store');
-	 Route::get('/edit_menucategory/{id}',	 'Admin\MenuCategoryController@edit');
-	 Route::post('/update_menucategory/{id}','Admin\MenuCategoryController@update');
-	 Route::get('/delete_menucategory/{id}', 'Admin\MenuCategoryController@delete');
+	 Route::get('/manage_menucategory',		  'Admin\MenuCategoryController@index');
+	 Route::get('/add_menucategory',		  'Admin\MenuCategoryController@add');
+	 Route::post('/store_menucategory',		  'Admin\MenuCategoryController@store');
+	 Route::get('/edit_menucategory/{id}',	  'Admin\MenuCategoryController@edit');
+	 Route::post('/update_menucategory/{id}', 'Admin\MenuCategoryController@update');
+	 Route::get('/delete_menucategory/{id}',  'Admin\MenuCategoryController@delete');
+	 Route::post('/status_menu_category',	  'Admin\MenuCategoryController@status');
 	
 	// Menu Specification routes
 	 Route::get('/manage_menu_specification', 		'Admin\MenuSpecificationController@index');
@@ -310,6 +311,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	 Route::get('/edit_menu_specification/{id}',	'Admin\MenuSpecificationController@edit');
 	 Route::post('/update_menu_specification/{id}',	'Admin\MenuSpecificationController@update');
 	 Route::get('/delete_menu_specification/{id}', 	'Admin\MenuSpecificationController@delete');
+	 Route::post('/status_menu_specification',	     'Admin\MenuSpecificationController@status');
 
 	// Menu Routes
 	 Route::get('/manage_menu', 		'Admin\MenuController@index');
@@ -318,7 +320,8 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
  	 Route::get('/edit_menu/{id}',		'Admin\MenuController@edit');
  	 Route::post('/update_menu/{id}',	'Admin\MenuController@update');
 	 Route::get('/delete_menu/{id}', 	'Admin\MenuController@delete');
-
+     Route::post('/status_menu',	    'Admin\MenuController@status');
+     Route::post('/menu_details',	    'Admin\MenuController@details');
 
 	 //Assign Menu To subscription Plan Routes
 	 Route::get('/manage_assign_sub_plan_menu', 		'Admin\AssignSubscriptionPlanMenuController@index');

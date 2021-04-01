@@ -32,22 +32,22 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Sr.No.</th>
+                  <th width="10%">Sr.No.</th>
                   <th>Name</th>
                   <th>URL</th>
                  <!--  <th>Type</th> -->
-                  <th>Action</th>
+                  <th class="text-center" width="20%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 
                   @foreach($data as $key=>$value)
                     <tr>
-                      <td>{{$key+1}}</td>
+                      <td width="10%">{{$key+1}}</td>
                       <td>{{$value['module_name']}}</td>
-                      <td>{{$value['module_url']}}</td>
+                      <td>{{!empty($value['module_url'])?$value['module_url']:"-"}}</td>
              
-                      <td>
+                      <td class="text-center" width="20%">
                         <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value['module_id']}}"  class="btn btn-primary btn-sm"  title="Edit">
                           <i class="fa fa-edit"></i>
                         </a>

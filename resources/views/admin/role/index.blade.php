@@ -32,18 +32,18 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Sr.No.</th>
+                  <th width="10%">Sr.No.</th>
                   <th>Name</th>
-                  <th>Action</th>
+                  <th class="text-center" width="30%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 
                   @foreach($data as $key=>$value)
                     <tr>
-                      <td>{{$key+1}}</td>
+                      <td width="10%">{{$key+1}}</td>
                       <td>{{$value['role_name']}}</td>
-                      <td>
+                      <td  class="text-center" width="30%">
                         @if($value['is_active']==1)
                            @php $checked="checked"; $style="success"; @endphp 
                         @else

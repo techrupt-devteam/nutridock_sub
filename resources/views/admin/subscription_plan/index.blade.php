@@ -33,19 +33,19 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Sr.No.</th>
+                  <th width="10%">Sr.No.</th>
                   <th>Subscription Plan Name</th>
                 
                   <th>City</th>
                   <!-- <th>Area</th> -->
-                  <th>Action</th>
+                  <th class="text-center" width="30%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                
                   @foreach($data as $key=>$value)
                     <tr>
-                      <td>{{$key+1}}</td>
+                      <td width="10%">{{$key+1}}</td>
                       <td>{{ucfirst($value->sub_name)}}</td>
                      
                       <td>{{ucfirst($value->city_name)}}</td>
@@ -53,7 +53,7 @@
                      
                       </td>
                     -->
-                      <td>
+                      <td class="text-center" width="30%">
                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->sub_plan_id;?>);">
                            <i class="fa fa-info-circle"></i> Plan Details</button>
                          @if($value->is_active==1)

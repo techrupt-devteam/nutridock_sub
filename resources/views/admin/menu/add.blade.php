@@ -85,13 +85,13 @@
                     <div class="col-sm-6 col-md-6">
                        <div class="form-group">
                           <label for="name">Short Description <span style="color:red;" >*</span></label>
-                          <textarea class="form-control" name="menu_description" id="menu_description" data-parsley-errors-container="#name_error"  data-parsley-error-message="Please enter the short description." required="true" rows="3" style="resize: none;"> </textarea>
+                          <textarea class="form-control" resize="false" name="menu_description" id="menu_description" data-parsley-errors-container="#name_error"  data-parsley-error-message="Please enter the short description." required="true" rows="3" style="resize: none;"> </textarea>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-6">
                         <div class="form-group">
                           <label for="name">Ingredients<span style="color:red;" >*</span></label>
-                          <textarea class="form-control" name="ingredients_desc" id="ingredients_desc" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the ingredients." required="true" rows="3" style="resize: none;"> </textarea>
+                          <textarea class="form-control" resize="false" name="ingredients_desc" id="ingredients_desc" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the ingredients." required="true" rows="3" style="resize: none;"> </textarea>
                         </div>
                     </div>
                   </div>
@@ -132,7 +132,8 @@
                         <label for="name">Calories<span style="color:red;" >*</span></label>
                         <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" autocomplete="off" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
+                        <input type="text" autocomplete="off" data-parsley-trigger="keyup" 
+    data-parsley-type="number" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories."></div>
                        <div id="calories_error" style="color:red;"></div>
                       </div>
                   </div>
@@ -142,7 +143,8 @@
                         <div class="input-group">
                           <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins.">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" data-parsley-trigger="keyup" 
+    data-parsley-type="number" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins.">
                         </div>
                         <div id="proteins_error" style="color:red;"></div>
                       </div>
@@ -153,7 +155,8 @@
                         <div class="input-group">
                           <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates." >
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" data-parsley-trigger="keyup" 
+    data-parsley-type="number" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates." >
                         </div>
                         <div id="carbohydrates_error" style="color:red;"></div>
                       </div>
@@ -165,7 +168,8 @@
                           <div class="input-group-addon btn-default">
                             <img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats.">
+                          <input type="text" autocomplete="off" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-trigger="keyup" 
+    data-parsley-type="number" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats.">
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                       </div>

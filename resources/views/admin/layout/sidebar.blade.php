@@ -120,8 +120,22 @@
                   </a>
               </li>
             </ul>
-        </li> 
-       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'|| Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen'||Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') active @endif ">
+      </li>
+      <li @if(Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') class="active"@endif>
+        <a href="{{url('/admin')}}/manage_assign_sub_plan_menu">
+          <i class="fa fa-check-square-o" aria-hidden="true"></i><span>Assign Menu Subscription Plan</span>
+          <span class="pull-right-container">
+          </span>
+        </a>
+      </li>
+        <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
+          <a href="{{url('/admin')}}/manage_kitchen">
+          <i class="fa fa-location-arrow"></i><span>Cloud Kitchen</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+       <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'|| Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen1' || Request::segment(2)=='add_kitchen1' || Request::segment(2)=='edit_kitchen1'||Request::segment(2)=='manage_assign_sub_plan_menu1' || Request::segment(2)=='add_assign_sub_plan_menu1' || Request::segment(2)=='edit_assign_sub_plan_menu1') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>
               <span class="pull-right-container">
@@ -150,20 +164,8 @@
                   </span>
                 </a>
               </li>
-              <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
-                <a href="{{url('/admin')}}/manage_kitchen">
-                  <i class="fa fa-circle-o"></i> <span>Cloude Kitchens</span>
-                  <span class="pull-right-container">
-                  </span>
-                </a>
-              </li>
-              <li @if(Request::segment(2)=='manage_assign_sub_plan_menu' || Request::segment(2)=='add_assign_sub_plan_menu' || Request::segment(2)=='edit_assign_sub_plan_menu') class="active"@endif>
-                <a href="{{url('/admin')}}/manage_assign_sub_plan_menu">
-                  <i class="fa fa-circle-o"></i> <span>Assign Menu Subscription Plan</span>
-                  <span class="pull-right-container">
-                  </span>
-                </a>
-              </li>
+              
+             
              
               <!-- <li @if(Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_assign_location_menu">
@@ -175,6 +177,7 @@
             </ul>
         </li>  
 
+       
         <li class="treeview  @if(Request::segment(2)=='manage_nutritionsit' || Request::segment(2)=='add_nutritionsit' || Request::segment(2)=='edit_nutritionsit'||Request::segment(2)=='manage_operation_manager' || Request::segment(2)=='add_operation_manager' || Request::segment(2)=='edit_operation_manager'||Request::segment(2)=='manage_subscription_plan' || Request::segment(2)=='add_subscription_plan' || Request::segment(2)=='edit_subscription_plan'||Request::segment(2)=='manage_location' || Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'||Request::segment(2)=='manage_user_manager' || Request::segment(2)=='add_user_manager' || Request::segment(2)=='edit_user_manager') active @endif ">
             <a href="#">
               <i class="fa fa-cubes"></i> <span>Master</span>
