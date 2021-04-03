@@ -335,7 +335,7 @@
     @endif
         <li>
           <a href="{{url('/admin')}}/chatify" target="_blank">
-            <i class="glyphicon glyphicon-comment"></i><span>Messager</span>
+            <i class="glyphicon glyphicon-comment"></i><span>Messager</span>  <small class="label pull-right bg-yellow msg-count">0</small>
           </a>
         </li>
 

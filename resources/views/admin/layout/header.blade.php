@@ -112,12 +112,12 @@
         <ul class="nav navbar-nav">
           
       
-<!-- <li class="dropdown messages-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+         <li class="dropdown messages-menu">
+            <a href="{{url('/admin')}}/chatify" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">{{ (!empty($session_message_counter))?$session_message_counter:0}}</span>
+              <span class="label label-success"><span class="msg-count">0</span><!-- {{ (!empty($session_message_counter))?$session_message_counter:0}} --></span>
             </a>
-          </li> -->
+          </li> 
 
 
           <!-- Notifications: style can be found in dropdown.less -->
@@ -207,12 +207,13 @@
                    $('#notification_count_span').html(old_notification);
                    $('.notif-count').html(old_notification);
                    $('.menu').html(result[0]);
+                   $('.msg-count').html(result[2]);
               }
           });
       }
-        notification();   
+      notification();   
       var timerID = setInterval(function() {
         notification(); 
-      }, 3000);
+      }, 5000);
     </script>
   </header>

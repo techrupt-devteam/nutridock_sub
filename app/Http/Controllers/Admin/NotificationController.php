@@ -102,6 +102,11 @@ class NotificationController extends Controller
                                   ->where('users_role','=',$user_role)
                                   ->where('user_id','=',$login_user_details->id)
                                   ->where('is_active','=',1)
+                                  ->get()->count(); 
+
+        $message_count          = \DB::table('messages')
+                                  ->where('seen','=',0)
+                                  ->where('to_id','=',$login_user_details->id)
                                   ->get()->count();
 
 
@@ -112,7 +117,7 @@ class NotificationController extends Controller
            $html .= "<li > <a href='".url('/admin').'/notification/'.$value->notification_id."'><i class='fa fa-bell'
            ></i>".ucfirst(html_entity_decode($value->message))."</a></li>";         
         }        
-        return $html."#".$count;
+        return $html."#".$count.'#'.$message_count;
 
         
         /*$data['message'] = $login_city_id;
