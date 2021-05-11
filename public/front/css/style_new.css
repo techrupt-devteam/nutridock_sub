@@ -156,7 +156,7 @@ margin:1.5rem .5rem!important
 #header.header-scrolled {
 	top:0;
 	padding: 6px 5px;
-	background: #000;
+	background: #1c2a39;
 	box-shadow:0 2px 15px rgba(0, 0, 0, 0.2)
 }
 
@@ -204,18 +204,20 @@ margin:1.5rem .5rem!important
 }
 }
 .carousel-caption {
-	position: absolute;
 	padding-top: 1.25rem;
-	padding-bottom: 1.25rem;
-	color: #222;
-	z-index: 99;
-	font-family: "Prata", Arial, Helvetica, sans-serif;
-	font-size: 30px;
-	text-align: left;
-	top: 50%;
-	transform: translate(-0%, -25%);
-	bottom: auto;	
-	max-width: 600px;
+    padding-bottom: 1.25rem;
+    color: #222;
+    z-index: 99;
+    font-family: "Prata", Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    top: 50%;
+    transform: translate(-50%, -45%);
+    bottom: auto;
+    max-width: 700px;
+    left: 50%;
+    right: 50%;
+    width: 100%;
+    text-align: center;
 }
 .home-slider h3 {
     font-size: 45px;
@@ -584,7 +586,7 @@ padding:0 .8rem
 	display:block
 }
 .carousel-item img {
-	min-height:200px
+	min-height:300px
 }
 .m-order-btn {
 	position:absolute;
@@ -2006,7 +2008,11 @@ color:#666
 	background-attachment:fixed
 }
 #footer-wrapper img {
-	display:inline-block
+	display:inline-block;
+	
+}
+.meal-plan-d {
+    padding-top: 0px;
 }
 #footer-wrapper .contact-info-list {
 	margin-top:10px
@@ -2982,7 +2988,7 @@ opacity:.25
 	padding:40px 0 0;
 	background-color:transparent;
 	background-position:center;
-	margin-top:30px
+	margin-top:25px
 }
 .context-dark h2 {
 	color:#fff;
@@ -3080,6 +3086,35 @@ opacity:.25
 	transition:inherit;
 	z-index:-1
 }
+/*about us new*/
+.section-how_we_work {
+background: url(../img/bg-patern.jpg);
+background-repeat: repeat, repeat, repeat, repeat;
+padding: 100px 0 70px;
+position: relative;
+}
+
+.gap-up-2::after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 70px;
+    background: url(../img/gap-up-2.png);
+    bottom: 0px;
+    left: 0;
+}
+.gap-up-2::before {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 75px;
+    background: url(../img/gap-down-2.png);
+    top: -9px;
+    left: 0;
+}
+
 .post-modern-panel>*+* {
 	border-left:1px solid #e1e1e1
 }
@@ -3646,8 +3681,8 @@ textarea.form-control {
 	transform:translate3d(-50%, 0, 0);
 	background-image:url('../img/left-quote.svg');
 	background-size:100%;
-	height:50px;
-	width:50px;
+	height:35px;
+	width:35px;
 	color:transparent;
 	font-size:0
 }
@@ -3751,11 +3786,11 @@ textarea.form-control {
 	opacity:1
 }
 .tab-content p {
-	font-size:15px;
+	font-size:14px;
 	line-height:1.6;
 	font-weight:400;
 	letter-spacing:.05em;
-	color:#444;
+	color:#222;
 	-webkit-text-size-adjust:none;
 	padding:5px
 }
@@ -3775,11 +3810,11 @@ textarea.form-control {
 	border:12px solid #FFF
 }
 .quote-classic-big-text .q {
-	font-size:40px;
+	font-size:31px;
 	font-weight:600;
-	text-transform:uppercase;
-	color:#151515;
-	font-family:'Ruda', sans-serif
+	/*text-transform:uppercase;*/
+	color:#1c2a39;
+	font-family: "Prata", Arial, Helvetica, sans-serif;
 }
 .heading-block>span:not(.before-heading) {
 	display:block;
@@ -3812,10 +3847,11 @@ padding-right:.75rem;
 padding-left:.75rem
 }
 .fbox-content h3 {
-	font-size:1.2rem;
-	font-weight:600;
-	margin-bottom:0;
-	color:#222
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0;
+    color: #40ab09;
+    text-align:center;
 }
 #content p {
 	line-height:1.8
@@ -3839,12 +3875,13 @@ padding-left:.75rem
 	margin:30px auto 0
 }
 .bottommargin-sm {
-	margin-bottom:2rem!important
+	margin-bottom:1rem!important
 }
 .fbox-content p {
 	margin-top:.5rem;
 	margin-bottom:0;
-	color:#444
+	color:#333;
+	font-size:14px;
 }
 .team-image img, .team-image>a {
 	display:block;
@@ -4006,7 +4043,7 @@ padding-left:.75rem
 	background-size:20px 20PX;
 	background-color:#85d12f;
 	border-radius:0 12px;
-	margin-top:100px
+
 }
 .carousel-control-next, .carousel-control-prev {
 	max-width:100px
@@ -4140,7 +4177,10 @@ font-size:.9375rem;
 	color:#53585c
 }
 .col-md-4 .feature-box.media-box {
-	padding:0 1rem
+	padding:1.2rem 1rem;
+	background-color: #fff;
+    height: 100%;
+    border-radius: 6px;
 }
 .heading-block.text-center.mx-auto {
 	padding-top:2rem
@@ -5095,6 +5135,7 @@ font-size:.9375rem;
 	color:#1c2a39;
 	font-weight: 600 !important;
 	padding: .75rem !important;
+    font-size: 14px;
 }
 
 .error-notice {
@@ -5242,3 +5283,6 @@ input[type=number] {
 	.nav > li > a:focus, .nav > li > a:hover{
 		background-color: transparent !important;
 	}
+	.dataTables_wrapper {
+    padding: 10px;
+}

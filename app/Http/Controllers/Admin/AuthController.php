@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -12,9 +10,8 @@ use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 //use Session;
-use Config;
 use Carbon\Carbon;
-
+use Config;
 use DB;
 class AuthController extends Controller
 {
@@ -28,7 +25,7 @@ class AuthController extends Controller
         $this->Password      =  Config::get('constants.mail.password');
       
     }
-
+    
 
     public function login()
     {
@@ -254,54 +251,12 @@ class AuthController extends Controller
                 $mobile_no = $request->input('email');
                 $msg='You system generated password is '.$randstring.'.';
                 
-                /*if(strlen($mobile_no)>10)
-                {
-                $keycount=strlen($mobile_no)-10;
-                $mobile_no = substr($mobile_no,$keycount);
-                }*/
-
-                /*$url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
-                $ch = curl_init();
-                curl_setopt( $ch,CURLOPT_URL, $url);
-                curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-                curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-                curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-                $result = curl_exec($ch );
-                curl_close( $ch );*/
-
-               /* $mail = new PHPMailer(true); 
-                try {
-                    $mail->isSMTP(); 
-                    $mail->CharSet    = "utf-8"; 
-                    $mail->SMTPAuth   = true;  
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Host       = $this->Host;
-                    $mail->Port       = $this->Port;
-                    $mail->Username   = $this->email;
-                    $mail->Password   = $this->Password;
-                    $mail->Subject = "Forget Password";
-                    $mail->MsgHTML("Your system generated password is ".$randstring.".");
-                    $mail->addAddress($request->input('email'), "Nutridock-Admin");
-                    $mail->send();
-
-                } 
-                catch (phpmailerException $e) 
-                {
-                    //dd($e);
-                    Session::flash('error', $e);
-                } 
-                catch (Exception $e) 
-                {
-                    //dd($e);
-                    Session::flash('error', $e);
-                }
-                Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
-                return redirect('admin/login');*/
-
+                
+                //dd($this->Host);
                 $mail = new PHPMailer(true); 
                 try 
                 {
-                    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;     
+                    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;     
                     $mail->isSMTP(); 
                     $mail->CharSet    = "utf-8";
                     $mail->SMTPAuth   = true;
@@ -314,7 +269,7 @@ class AuthController extends Controller
                     $mail->Subject    = "Forget Password";
                     $mail->setFrom($this->email,'Nutridock-Admin'); //sender
                     $mail->MsgHTML("Your system generated password is <b>".$randstring."</b>.");
-                    $mail->addAddress($request->input('email')); // reciviwer
+                    $mail->addAddress($request->input('email')); // receive
                     $mail->send();
                     Session::flash('success', 'Success! please check your registered email id for temporary password. Please login again.');
                     return redirect('admin/login');
@@ -397,7 +352,8 @@ class AuthController extends Controller
         $user_name = $request->email;
         
         $user      =  \DB::table('users')->where(['email'=>$request->email])->get()->first(); 
-        if(count($user)>0)
+        //dd($user);
+        if(!empty($user))
         {
 
             if($user->roles =='admin')

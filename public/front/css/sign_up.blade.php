@@ -85,7 +85,7 @@
                               autocomplete="nope"
                               data-parsley-errors-container="#firstname-errors" data-parsley-group="step-1">
                             </div>
-                             <div id="firstname-errors" style="margin-left:0px !important;margin-top: -11px!important;"></div>
+                             <div id="firstname-errors" style="margin-left:0px !important;"></div>
                              </div>
                         </div>
                       </div>
@@ -100,7 +100,7 @@
                             data-parsley-group="step-1" value="{{ Session::get('subscriber_email') }}" 
                             {{ Session::get('subscriber_email') ? 'readonly' : ''}}>
                           </div>
-                          <div id="email-errors" style="margin-top: -11px!important;"></div>
+                          <div id="email-errors"></div>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -108,7 +108,7 @@
                           <label class="control-label">Mobile <span class="text-danger">*</span></label>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend"> <span class="input-group-text" id="basic-addon3"><i class="fa fa-phone" aria-hidden="true"></i></span> </div>
-                            <input type="number" class="form-control" id="mobile_no" 
+                            <input type="text" class="form-control" id="mobile_no" 
                             autocomplete="nope"
                             aria-describedby="basic-addon3" placeholder="Mobile" name="mobile_no" required="required" maxlength="10"
                             data-parsley-pattern="^[0-9]*$" 
@@ -120,7 +120,7 @@
                             {{ Session::get('subscriber_mobile') ? 'readonly' : ''}}
                             >
                           </div>
-                          <div id="mobile-errors"  style="margin-top: -11px!important;"></div>
+                          <div id="mobile-errors"></div>
                         </div>
                       </div>
                     </div>
@@ -146,7 +146,6 @@
                             <label class="control-label">Age <span class="text-danger">*</span></label>
                             <input name="age" 
                             type="text" 
-                            data-parsley-pattern="^[0-9]*$" 
                             autocomplete="nope"
                             class="form-control" 
                             placeholder="Age" 
@@ -651,7 +650,7 @@ function paySuccess(total_amount,subscriber_id)
   var totalAmount = total_amount;
   var order_id  = subscriber_id;
   var options = {          
-  "key": "rzp_test_FAOwAt8dn2RVxn",
+  "key": "rzp_test_qFqkHvt9YysTYc",
   "amount": (totalAmount*100), // 2000 paise = INR 20
   "name": "Nutridock",
   "description": "Payment",
@@ -796,7 +795,8 @@ function getPlan(radioSubscriptionPlanVal) {
                   } else {
                     var checked_duration = "";
                   }
-                  plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="'+val.duration+'" name="radioDuration" value="'+val.duration_id+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="'+val.duration+'">'+val.duration+'</label></div>';      
+
+                    plan_details_html += '<div class="chk-toolbar pr-2"><input type="radio" id="'+val.duration+'" name="radioDuration" value="'+val.duration_id+'" onchange="getPlanPrice();" required="" data-parsley-errors-container="#duration-errors" data-parsley-error-message="Please select duration" data-parsley-group="step-3" '+ checked_duration +'> <label for="'+val.duration+'">'+val.duration+'</label></div>';      
                                                 
                   });                  
                   
@@ -915,17 +915,5 @@ function getData() {
   $("#checkout_total_amount").html(formatCurrency(total_price)); 
 }
 /************* @END: CODE FOR GET PLAN PRICE  *************/
-
-function showAddress()
-{
-
-  var address1 = $('#address1').val();
-  var pincode1 = $('#pincode1').val();
-  var mealtype1 = $('#mealtype1').val();
-  $('#address2').val(address1);
-  $('#pincode2').val(pincode1);
-
-}
-
 </script>
 @endsection 
