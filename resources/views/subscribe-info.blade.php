@@ -108,28 +108,28 @@
       </p>
       <div class="container-fluid ">
          <div class="row">
-            <div class="col-lg-3 col-sm-6 mt-3">
+            <div class="col-lg-4 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
                      <img src="{{url('')}}/public/front/img/Health-Profile.svg" class="ltx-icon bg-main">
                      <!-- <span class="ltx-icon fa fa-cutlery bg-main"></span> -->
-                     <h2 class="header"> Give your Health Profile </h2>
-                     <div class="descr">Once you sign up, the first step is letting us know details about your health such as height and weight, lifestyle, medical condition, and personal food choices.</div>
+                     <h2 class="header" > Give your Health Profile </h2>
+                     <div class="descr" style="text-align:justify">Once you sign up, the first step is letting us know details about your health such as height and weight, lifestyle, medical condition, and personal food choices.</div>
                   </div>
                </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
+            <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
                      <img src="{{url('')}}/public/front/img/Personal-Nutritionist.svg" class="ltx-icon bg-main">
                      <h2 class="header"> Get a Personal Nutritionist </h2>
-                     <div class="descr">
+                     <div class="descr" style="text-align:justify">
                         Based on your health details, we will match you with one of our experienced nutritionists. The nutritionist will study your overall health and preferences in detail.
                      </div>
                   </div>
                </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
+            <!-- <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon">
                   <div class="in">
                      <img src="{{url('')}}/public/front/img/meal-plan.svg" class="ltx-icon bg-main">
@@ -139,13 +139,13 @@
                      </div>
                   </div>
                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 mt-3">
+            </div> -->
+            <div class="col-lg-4 col-md-6 col-sm-6 mt-3">
                <div class="ltx-block-icon remove-after">
                   <div class="in">
                      <img src="{{url('')}}/public/front/img/Doorstep-Delivery.svg" class="ltx-icon bg-main">
                      <h2 class="header"> Contactless Doorstep Delivery</h2>
-                     <div class="descr">Get your breakfast, lunch and dinner daily delivered to you fresh at your doorstep. Your meals will be delivered with all the Covid safety guidelines in place.</div>
+                     <div class="descr" style="text-align:justify">Get your breakfast, lunch and dinner daily delivered to you fresh at your doorstep. Your meals will be delivered with all the Covid safety guidelines in place.</div>
                   </div>
                </div>
             </div>
@@ -347,12 +347,13 @@
                <div class="row row-30 row-md-40 row-lg-50 bordered-2">
                   <div class="col-sm-6 col-md-12">
                      <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right">
+                        <div class="unit-left pb-2">
+                           <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/tailor-made-nutrition.svg" /> </div>
+                        </div>
                         <div class="unit flex-column flex-lg-row-reverse">
-                           <div class="unit-left">
-                              <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/tailor-made-nutrition.svg" /> </div>
-                           </div>
+                         
                            <div class="unit-body">
-                              <h4 class="box-icon-classic-title"><a href="#">Tailor Made Nutrition</a></h4>
+                              <h4 class="box-icon-classic-title" style="color:#f4c901">Tailor Made Nutrition</h4>
                               <p class="box-icon-classic-text">
                                  Our nutritionists create meal plans that are centered around your preferences, body type and medical conditions. The meals are, thus, customized to suit you.
                               </p>
@@ -362,12 +363,13 @@
                   </div>
                   <div class="col-sm-6 col-md-12">
                      <article class="box-icon-classic box-icon-nancy-right text-center text-lg-right wow fadeInLeft">
+                        <div class="unit-left pb-2">
+                           <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/delicious-meals.svg" /> </div>
+                        </div>
                         <div class="unit flex-column flex-lg-row-reverse">
-                           <div class="unit-left">
-                              <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/delicious-meals.svg" /> </div>
-                           </div>
+                           
                            <div class="unit-body">
-                              <h4 class="box-icon-classic-title"><a href="#">Flavoursome Food</a></h4>
+                              <h4 class="box-icon-classic-title" style="color:#f4c901">Flavoursome Food</h4>
                               <p class="box-icon-classic-text">
                                  Nutridock is here to bust the myth of ‘healthy food can’t be tasty’. Our food, created by professional chefs, is always a delight for the senses.
                               </p>
@@ -382,12 +384,12 @@
                <div class="row row-30 row-md-40 row-lg-50 bordered-2">
                   <div class="col-sm-6 col-md-12">
                      <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
-                        <div class="unit flex-column flex-lg-row">
-                           <div class="unit-left">
-                              <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/sustainable-plans.svg" /> </div>
-                           </div>
+                        <div class="unit-left pb-2">
+                           <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/sustainable-plans.svg" /> </div>
+                        </div>
+                        <div class="unit flex-column flex-lg-row">                         
                            <div class="unit-body">
-                              <h4 class="box-icon-classic-title"><a href="#">Sustainable Plan</a></h4>
+                              <h4 class="box-icon-classic-title" style="color:#f4c901">Sustainable Plan</h4>
                               <p class="box-icon-classic-text">
                                  Our healthy meal plans are unlike those diets that stay in and out of fashion. Our meal plans have a long-term impact on your overall health. Nothing fad about them, they are here to stay for long!
                               </p>
@@ -397,12 +399,13 @@
                   </div>
                   <div class="col-sm-6 col-md-12">
                      <article class="box-icon-classic box-icon-nancy-left text-center text-lg-left">
+                        <div class="unit-left pb-2">
+                           <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/personalised-nutritionist.svg" /> </div>
+                        </div>
                         <div class="unit flex-column flex-lg-row">
-                           <div class="unit-left">
-                              <div class="box-icon-classic-svg"> <img src="{{url('')}}/public/front/img/personalised-nutritionist.svg" /> </div>
-                           </div>
+                          
                            <div class="unit-body">
-                              <h4 class="box-icon-classic-title"><a href="#">Personalised nutritionist</a></h4>
+                              <h4 class="box-icon-classic-title" style="color:#f4c901">Personalised Nutritionist</h4>
                               <p class="box-icon-classic-text">A personal nutritionist will be assigned to you to create your meal plans, monitor your health, tweak and tailor your diet, and undertake weekly checkups</p>
                            </div>
                         </div>

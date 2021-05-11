@@ -103,6 +103,20 @@ class MenuController extends Controller
                         <div class="position-relative">
                             <img class="mb-3 w-100" src="'.$menu_main_img.'">
                         </div>
+
+                        <div class="heading-title- p-4" style="border: dashed 2px #64bb2c; background-color: #d5f2c1;font-size:14px">
+                            <h2 class="pl-1 text-center">Nutrition Values</h2>';
+                            foreach($getWhatsInside as $getWhatsInside_val)
+                            {
+                            $htmlData .= '
+                            <div class="row">
+                                <div class="col-md-6">'.$getWhatsInside_val->title.'</div>
+                                <div class="col-md-6 text-lg-right" style="color: #000;">'.$getWhatsInside_val->unit.'</div>
+                            </div>';
+                            }
+                            
+                            
+                            $htmlData .= '</div>
                     </div>
                     <div class="col-md-7">
                         <section class="title-wrap" style="padding:11px">
@@ -129,7 +143,7 @@ class MenuController extends Controller
                                     
                                 $htmlData .= '</div>
                             </div>
-                             <button class="show-all-ingredients" data-toggle="collapse" data-target="#demo">
+                             <button class="show-all-ingredients" data-toggle="collapse" data-target="#demo" style="cursor: pointer !important;">
                               Show all ingredients
                             </button>
                             <div id="demo" class="collapse">
@@ -141,26 +155,7 @@ class MenuController extends Controller
                               </div>
                             </div>
                             </section>
-                            <section class="title-wrap">
-                            <div class="px-3">
-                                <div class="heading-title-">
-                                    <h2 class="pl-1">What’s inside</h2>
-                                </div>
-                                <div class="row">';
-                                    foreach($getWhatsInside as $getWhatsInside_val)
-                                    {
-                                    $htmlData .= '<div class="col-md-6 col-6">
-                                                    <div class="Featured-Nutridock-module">
-                                                    <span class="Calories-name">'.$getWhatsInside_val->title.'</span>
-                                                    <strong class="d-block">'.$getWhatsInside_val->unit.'</strong>
-                                                    <hr>
-                                                    </div>
-                                                </div>';
-                                    }
-                                    
-                                    $htmlData .='</div>
-                            </div>
-                        </section>
+                           
                     </div>
                 </div>
             </article>

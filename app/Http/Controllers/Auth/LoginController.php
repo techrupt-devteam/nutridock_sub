@@ -44,13 +44,10 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct() {
-       // $this->middleware('guest')->except('logout');
-
-
-        $this->email         = "bhushantechrupt@gmail.com";
-        $this->Host          = "smtp.gmail.com";
-        $this->Port          = 587;
-        $this->Password      = "bhushan@9912";
+      $this->email         =  Config::get('constants.mail.email');
+      $this->Host          =  Config::get('constants.mail.host');
+      $this->Port          =  Config::get('constants.mail.port');
+      $this->Password      =  Config::get('constants.mail.password');
     }
 
 
