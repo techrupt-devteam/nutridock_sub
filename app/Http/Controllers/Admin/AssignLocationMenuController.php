@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignLocationMenu;
 use App\Models\Location;
 use App\Models\MenuModel;
-use App\Models\city;
+use App\Models\City;
 use App\Models\State;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;

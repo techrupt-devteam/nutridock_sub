@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Kitchen;
 use App\Models\Location;
-use App\Models\city;
+use App\Models\City;
 use App\Models\State;
 use App\Models\User;
 use App\Models\MenuModel;
@@ -32,9 +32,9 @@ class KitchenController extends Controller
         $this->base_menu_model = $MenuModel; 
         $this->base_role       = $Role; 
         $this->base_subscription_plan = $SubscriptionPlan; 
-        $this->title           = "Cloude Kitchen";
+        $this->title           = "Cloud Kitchen";
         $this->url_slug        = "kitchen";
-        $this->folder_path     = "admin/Kitchen/";
+        $this->folder_path     = "admin/kitchen/";
         //Message
         $this->Insert          = Config::get('constants.messages.Insert');
         $this->Update          = Config::get('constants.messages.Update');
@@ -91,7 +91,7 @@ class KitchenController extends Controller
     {
        
         $state              = $this->base_state->get();
-        $menu_model         = $this->base_menu_model->select('menu_title','id')->get();
+        $menu_model         = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
         $users              =  \DB::table('users')
                                 ->join('role','users.roles','=','role.role_id')
                                 ->join('state','users.state','=','state.id')
@@ -175,13 +175,12 @@ class KitchenController extends Controller
     // folder edit view call function for edit 
     public function edit($id)
     {
-        $id = base64_decode($id);
-        $arr_data = [];
-        $data     = $this->base_model->where(['kitchen_id'=>$id])->first();
-        $state             = $this->base_state->get();
-
-        $menu_model         = $this->base_menu_model->select('menu_title','id')->get();
-        $users              =  \DB::table('users')
+        $id             = base64_decode($id);
+        $arr_data       = [];
+        $data           = $this->base_model->where(['kitchen_id'=>$id])->first();
+        $state          = $this->base_state->get();
+        $menu_model     = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
+        $users          =  \DB::table('users')
                                 ->join('role','users.roles','=','role.role_id')
                                 ->join('state','users.state','=','state.id')
                                 ->join('city','users.city','=','city.id')

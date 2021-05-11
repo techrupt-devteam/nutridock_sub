@@ -35,28 +35,28 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Sr.No.</th>
+                  <th width="10%">Sr.No.</th>
                   <th>Name</th>
                   <th>Eamil</th>
                   <th>Mobile</th>
                   <th>state</th>
                   <th>City</th>
                   <th>Area</th>
-                  <th>Action</th>
+                  <th class="text-center" width="20%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
               
                   @foreach($data as $key=>$value)
                     <tr>
-                      <td>{{$key+1}}</td>
+                      <td width="10%">{{$key+1}}</td>
                       <td>{{ucfirst($value->name)}}</td>
                       <td>{{$value->email}}</td>
                       <td>{{$value->mobile}}</td>
                       <td>{{$value->state_name}}</td>
                       <td>{{$value->city_name}}</td>
                       <td>{{$value->area_name}}</td>
-                      <td>
+                      <td class="text-center" width="20%">
                         @if($value->is_active=='1')
                            @php $checked="checked"; $style="success"; @endphp 
                         @else

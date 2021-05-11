@@ -55,7 +55,7 @@
                   <div class="col-md-4">
                       <div class="form-group">
                         <label for="name">Title<span style="color:red;" >*</span></label>
-                        <input type="text" class="form-control" id="menu_title" name="menu_title" placeholder="Enter Menu Title" required="true" data-parsley-errors-container="#title_error" data-parsley-error-message="Please enter title." 
+                        <input type="text"  autocomplete="off" class="form-control" id="menu_title" name="menu_title" placeholder="Enter Menu Title" required="true" data-parsley-errors-container="#title_error" data-parsley-error-message="Please enter title." 
                         value="{{$data['menu_title']}}">
 
                          <div id="#title_error" style="color:red;"></div>
@@ -82,13 +82,13 @@
                  <div class="col-sm-6">
                   <div class="form-group">
                     <label for="name">Short Description <span style="color:red;" >*</span></label>
-                    <textarea class="form-control" name="menu_description" id="menu_description" rows ="3" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the short description." required="true">{{$data['menu_description']}}</textarea>
+                    <textarea class="form-control" resize="false"  name="menu_description" id="menu_description" rows ="3" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the short description." required="true">{{$data['menu_description']}}</textarea>
                   </div>
                  </div>
                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="name">Ingredients<span style="color:red;" >*</span></label>
-                      <textarea class="form-control" name="ingredients_desc" id="ingredients_desc" rows ="3" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the ingredients." required="true" >{{$data['ingredients']}}</textarea>
+                      <textarea class="form-control" resize="false"  name="ingredients_desc" id="ingredients_desc" rows ="3" data-parsley-errors-container="#name_error" data-parsley-error-message="Please enter the ingredients." required="true" >{{$data['ingredients']}}</textarea>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -139,44 +139,52 @@
                <hr/>
 
                <div class="row">
-                   <div class="col-md-3">
+                  
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="name">Calories<span style="color:red;" >*</span></label>
                         <div class="input-group">
                         <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/calories.svg" alt="your image" width="20" height="20"/></div>
-                        <input type="text" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{$data['calories']}}"></div>
+                        <input type="text" data-parsley-trigger="keyup" 
+                          data-parsley-type="number" autocomplete="off" class="form-control" placeholder="Enter Calories" id="calories" name="calories" required="true" data-parsley-errors-container="#calories_error" data-parsley-error-message="Please enter calories." value="{{$data['calories']}}"></div>
                        <div id="calories_error" style="color:red;"></div>
                       </div>
                   </div>
-                    <div class="col-md-3">
+                  
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="name">Proteins<span style="color:red;" >*</span></label>
                         <div class="input-group">
                           <div class="input-group-addon btn-default"> <img  src="{{ url('/')}}/uploads/images/protein.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins."  value="{{$data['proteins']}}">
+                          <input type="text" data-parsley-trigger="keyup" 
+                          data-parsley-type="number" autocomplete="off" class="form-control" placeholder="Enter Proteins" id="proteins" name="proteins" required="true" data-parsley-errors-container="#proteins_error" data-parsley-error-message="please enter Proteins."  value="{{$data['proteins']}}">
                         </div>
                         <div id="proteins_error" style="color:red;"></div>
                     </div>
                   </div>
-                   <div class="col-md-3">
+                  
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="name">Carbohydrates<span style="color:red;" >*</span></label>
                         <div class="input-group">
                           <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates."   value="{{$data['carbohydrates']}}">
+                          <input type="text" data-parsley-trigger="keyup" 
+                          data-parsley-type="number" autocomplete="off" class="form-control" placeholder="Enter Carbohydrates" id="carbohydrates" name="carbohydrates" required="true" data-parsley-errors-container="#carbohydrates_error" data-parsley-error-message="Please enter carbohydrates."   value="{{$data['carbohydrates']}}">
                         </div>
                         <div id="carbohydrates_error" style="color:red;"></div>
                       </div>
                   </div>
-                   <div class="col-md-3">
+                  
+                  <div class="col-md-3">
                       <div class="form-group">
                         <label for="name">Fats<span style="color:red;" >*</span></label>
                          <div class="input-group">
                           <div class="input-group-addon btn-default"><img  src="{{ url('/')}}/uploads/images/fat.png" alt="your image" width="20" height="20"/>
                           </div>
-                          <input type="text" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats."  value="{{$data['fats']}}">
+                          <input type="text"  data-parsley-trigger="keyup" 
+                          data-parsley-type="number" autocomplete="off" class="form-control" placeholder="Enter Fats" id="fats" name="fats" required="true" data-parsley-errors-container="#fats_error" data-parsley-error-message="Please enter fats."  value="{{$data['fats']}}">
                         </div>
                         <div id="fats_error" style="color:red;"></div>
                       </div>
@@ -188,7 +196,7 @@
                 <div class="col-md-6">
                   <div class="box">
                     <h5 class="box-header" style="font-weight: 600;line-height: 2;">Mutiple File Upload
-                      <a href="javascript:void(0);" class="btn btn-primary btn-sm addRow pull-right" onclick="addDurationRow()">
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm addRow pull-right" onclick="addDurationRow()">
                         <i class="fa fa-plus"></i></a>
                     </h5>
                   
@@ -202,7 +210,7 @@
                         </tr>
                       </thead>
                       <tbody id="img_body">
-                      
+                        @if(!empty($menu_img))
                          @foreach($menu_img as $key => $nmivalue)
                           <tr class="tr_row_duration{{$key+1}}">
                             <td>
@@ -221,6 +229,9 @@
                           </tr>
                           @endforeach
                           <input type="hidden" id="img_flag" name="img_flag" value="{{$key+1}}">
+                        @else
+                          <input type="hidden" id="img_flag" name="img_flag" value="0">
+                        @endif
                       </tbody>
                     </table>
                     </div>
@@ -246,10 +257,11 @@
                         </tr>
                       </thead>
                       <tbody id="int_body">
+                         @if(!empty($ingrediants))
                          @foreach($ingrediants as $ikey => $ingvalue)
                           <tr class="tr_row_int{{$ikey+1}}">
                             <td>
-                                <input type="text" class="form-control" id="int_title{{$ikey+1}}" name="int_title{{$ikey+1}}" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title." value="{{$ingvalue['name']}}">
+                                <input type="text"  autocomplete="off" class="form-control" id="int_title{{$ikey+1}}" name="int_title{{$ikey+1}}" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title." value="{{$ingvalue['name']}}">
                                 <div id="#inttitle_error" style="color:red;"></div>
                             </td>
                             <td>
@@ -270,6 +282,9 @@
                           </tr>
                           @endforeach
                             <input type="hidden" id="int_flag" name="int_flag" value="{{$ikey+1}}">
+                        @else
+                          <input type="hidden" id="int_flag" name="int_flag" value="0">
+                        @endif
 
                       </tbody>
                     </table>
@@ -289,7 +304,6 @@
               </div> 
               <!-- /.box-body -->
               <div class="box-footer">
-              
                 <button type="submit" class="btn btn-primary ">Update</button> 
                  <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
               </div>
@@ -333,7 +347,7 @@
       var img_flag = $('#img_flag').val();
       img_flag = parseInt(img_flag)+parseInt(1); 
       $('#img_flag').val(img_flag);
-       var tr = '<tr class="tr_row_duration' + img_flag + '"><td><input type="file" class="form-control"  id="img'+img_flag+'" name="img'+img_flag+'" required="true" data-parsley-errors-container="#img" data-parsley-error-message="Please upload image"><span id="img_msg1" style="color:red;"></span></td><td style="text-align: right;padding-right: 0px;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removedurationRow_ajax(' + img_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_duration' + img_flag + '"><td><input type="file" class="form-control"  id="img'+img_flag+'" name="img'+img_flag+'" ></span></td><td style="text-align: right;padding-right: 0px;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removedurationRow_ajax(' + img_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#img_body').append(tr);
   }
 
@@ -346,7 +360,7 @@
       {
         $('.tr_row_duration'+div_id).remove();
         var img_flagv = parseInt(img_flag)-1;
-        $('#img_flag').val(img_flagv);
+      //  $('#img_flag').val(img_flagv);
       }
 
       
@@ -359,7 +373,7 @@
       var int_flag = $('#int_flag').val();
       int_flag = parseInt(int_flag)+parseInt(1); 
       $('#int_flag').val(int_flag);
-       var tr = '<tr class="tr_row_int' + int_flag + '"><td><input type="text" class="form-control" id="int_title'+int_flag+'" name="int_title'+int_flag+'" placeholder="Enter Ingrediants Name" required="true" data-parsley-errors-container="#inttitle_error" data-parsley-error-message="Please enter title"> <div id="#inttitle_error" style="color:red;"></div></td><td><input type="file" class="form-control"  id="int_img'+int_flag+'" name="int_img'+int_flag+'" required="true" data-parsley-errors-container="#int_img_msg'+int_flag+'" data-parsley-error-message="Please upload image"><span id="int_img_msg'+int_flag+'" style="color:red;"></span></td><td style="text-align: right;padding-right: 0px;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removeintRow_ajax(' + int_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_int' + int_flag + '"><td><input type="text"  autocomplete="off" class="form-control" id="int_title'+int_flag+'" name="int_title'+int_flag+'" placeholder="Enter Ingrediants Name" > <div id="#inttitle_error" style="color:red;"></div></td><td><input type="file" class="form-control"  id="int_img'+int_flag+'" name="int_img'+int_flag+'"><span id="int_img_msg'+int_flag+'" style="color:red;"></span></td><td style="text-align: right;padding-right: 0px;width: 61px;"><a href="javascript:void(0);" class="btn btn-danger btn-sm remove"  onclick="removeintRow_ajax(' + int_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#int_body').append(tr);
   }
 
@@ -370,7 +384,7 @@
       {
         $('.tr_row_int'+div_id).remove();
         var int_flagv = parseInt(int_flag)-1;
-        $('#int_flag').val(int_flagv);        
+       // $('#int_flag').val(int_flagv);        
       }
   }
 </script>

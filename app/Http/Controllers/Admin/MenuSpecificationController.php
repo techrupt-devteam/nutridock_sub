@@ -181,6 +181,25 @@ class MenuSpecificationController extends Controller
         return \Redirect::back();
     }
 
+    //menu status set 
+    public function status(Request $request)
+    {
+
+        $status  = $request->status;
+        $plan_id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+         $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+         $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['id'=>$plan_id])->update($arr_data);
+        //return \Redirect::back();
+    }
+
     //File Upload Function
     public function file_upload($name_input,$path)
     {

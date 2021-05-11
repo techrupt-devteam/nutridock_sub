@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\Location;
-use App\Models\city;
+use App\Models\City;
 use App\Models\DeliveryLocation;
 use Session;
 use Sentinel;
@@ -162,10 +162,28 @@ class LocationsController extends Controller
         
     }
 
-    public function delete($id)
+    // public function delete($id)
+    // {
+    //     $this->base_model->where(['id'=>$id])->delete();
+    //     Session::flash('success', 'Success! Record deleted successfully.');
+    //     return \Redirect::back();
+    // }
+
+     //change menu_status  
+    public function status(Request $request)
     {
-        $this->base_model->where(['id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();
+        $status  = $request->status;
+        $plan_id = $request->plan_ids;
+        $arr_data               = [];
+        if($status=="true")
+        {
+         $arr_data['is_active'] = '1';
+        }
+        if($status=="false")
+        {
+         $arr_data['is_active'] = '0';
+        }   
+        $this->base_model->where(['id'=>$plan_id])->update($arr_data);
+        //return \Redirect::back();
     }
 }

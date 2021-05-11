@@ -128,6 +128,14 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <div class="alert alert-warning col-md-12 mt-4 text-left" style="margin-top: 13px;color:#000000!important;background-color: #f39c1229 !important;">
+                  <strong ><i class="glyphicon glyphicon-warning"></i> Note!</strong>
+                 To add Cloud Kitchen, Please make sure you have <strong>"Assign User to Kitchen", "Add Subscription plan" and "Assign Menu To Kitchen".</strong>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title"><i class="fa fa-gear"></i> Kitchen settings</h3>
@@ -136,10 +144,10 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="area_id">Assign User To Kitchen </label>
-                      
+                      <div id="checkbox_error" style="color:red;"></div>
                       <table id="user-item"  class="table table-striped table-bordered ">
                         <thead class="btn-default">
-                        <tr><td colspan="4">  <div id="checkbox_error" style="color:red;"></div></td></tr>  
+                      <!--   <tr><td colspan="4">  </td></tr>   -->
                         <th width="5%"></th>
                           <th>Menu Name</th>
                           <th>Role</th>
@@ -164,10 +172,10 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="area_id">Assign Subscription Plan</label>
-                  
+                  <div id="plan_error" style="color:red;"></div>
                       <table id="sub-item"  class="table table-striped table-bordered ">
                         <thead class="btn-default">
-                        <tr><td colspan="3">  <div id="plan_error" style="color:red;"></div></td></tr>  
+                       <!--  <tr><td colspan="3">  </td></tr>   -->
                         <th width="5%"></th>
                           <th>Subscription Plan</th>
                             </thead>
@@ -197,10 +205,10 @@
                 </div>
                 <div class="box-body">
                   <div class="form-group">
-                    
+                     <div id="menu_error" style="color:red;"></div>  
+                     
                     <table id="menu-item"  class="table table-striped table-bordered ">
-                      <thead class="btn-default">
-                      <tr><td colspan="3">  <div id="menu_error" style="color:red;"></div></td></tr>  
+                      <thead >
                       <th width="5%"></th>
                         <th>Menu Name</th>
                           </thead>
@@ -225,7 +233,11 @@
           <div class="box-footer">
             <div class="row">
               <div class="col-md-12">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                @php $disabled =""; @endphp
+                @if(count($users)==0 || count($subscriptionplan) == 0 || count($menu)==0)
+                  @php $disabled = "disabled"; @endphp 
+                @endif
+                <button type="submit" class="btn btn-primary" <?php echo $disabled; ?>>Submit</button>
                 <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a> </div>
             </div>
           </div>

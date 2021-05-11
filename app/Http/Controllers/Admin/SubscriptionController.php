@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\Location;
-use App\Models\city;
+use App\Models\City;
 use App\Models\Plan;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
