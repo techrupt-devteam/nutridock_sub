@@ -13,7 +13,11 @@
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css"> -->
 <script type="text/javascript" src="{{url('')}}/public/front/dist/date-time-picker.min.js"></script>
 <script type="text/javascript" src="{{url('')}}/public/front/js/settings.js"></script>
+<<<<<<< HEAD
 <section class="pb-0 pt-5" style="margin-top: 1.8rem">
+=======
+<section class="pb-0 pt-0" style="margin-top: 2.3rem">
+>>>>>>> de70bdd31732d96fdfb8ca747fd78b1ec51950e3
   <div class="">
     <div class="image-container set-full-height pb-5" 
     style="background-image: url('{{url('')}}/uploads/images/bg-img.jpg')"> 

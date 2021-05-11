@@ -78,7 +78,7 @@
                   <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
                   <li><a href="{{url('')}}/faq">FAQ</a></li> -->
                   <li><a href="{{url('')}}/contact">Contact</a></li>
-                  
+                  <li><a href="{{url('')}}/faq">Help</a></li>
                   <li class="under-line-none" style="margin-top: 2px !important;">
                   <a 
                   id="signIn"

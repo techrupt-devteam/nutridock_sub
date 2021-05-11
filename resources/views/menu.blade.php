@@ -1,4 +1,7 @@
 @extends('layouts.master')
+<style>
+  .pointer {cursor: pointer;}
+</style>
 @section('content')
 <section class="breadcrumbs-custom">
   <div class="parallax-container" data-parallax-img="{{url('')}}/public/front/img/faq-bg.jpg">
@@ -21,9 +24,7 @@
 <main>
    <section class="">
     <div class="container">
-      <div class="">
-        <h2 class="elementor-heading-title mb-3">Top Categories</h2>
-      </div>
+    
       <div class=""> <!-- data-aos="fade-up" data-aos-delay="100" -->
         <div class="w-100 d-flex justify-content-center mt-3"> 
           <!-- Nav pills -->
@@ -42,21 +43,26 @@
             <div id="tab{{$row->menu_category_id}}"  @if($count == 0) class="tab-pane active filter-active" @else class="tab-pane" @endif><br>
               <div class="row">
                  <?php $menu_data=\DB::table('menu')->where('menu_category_id',$row->menu_category_id)->get();foreach($menu_data as $menu_row):$menu_id=$menu_row->id; ?>
-                <div class="col-lg-4 col-xl-3 col-md-6">
-                  <div class="meal-card-wrapper">
-                    <div class="meal-card">
+                <div class="col-lg-4 col-xl-3 col-md-6 pb-4">
+                  <div class="meal-card-wrapper"  >
+                    <div class="meal-card" style="border: solid 2px #ededed; border-radius: 5px;
+                    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);">
                       <div class="meal-img"> 
                         <a data-toggle="modal" data-target="#myModal" 
                                 id="getMenu" 
-                                data-url="{{ route('dynamicMenuModal',['id'=>$menu_row->id])}}" border="0">
+                                data-url="{{ route('dynamicMenuModal',['id'=>$menu_row->id])}}" border="0" class="pointer">
                         <!-- <a href="" data-toggle="modal" data-target="#myModal-{{$menu_row->id}}">  -->
                           <img src="{{url('')}}/uploads/images/{{$menu_row->image}}" class="img-fluid"> 
                         </a> 
                       </div>
                       <div>
                         <div class="nutridock-meal mt-2">
-                          <div class="nutridock-meal-name text-center"> <span title="{{$menu_row->menu_title}}"> {{$menu_row->menu_title}}</span> </div>
-                          <div class="nutridock-meal-ingredients text-center"> <span class="txt-side-dish-s" title="with Sautéed Carrots &amp; French Green Beans">{{$menu_row->menu_description}}</span> </div>
+                          <div class="nutridock-meal-name text-center"> <span title="{{$menu_row->menu_title}}"  style="font-size: 1.0rem !important; color:#000; font-weight:600"> 
+                            <a data-toggle="modal" data-target="#myModal" 
+                            id="getMenu" 
+                            data-url="{{ route('dynamicMenuModal',['id'=>$menu_row->id])}}" border="0" class="pointer">
+                            {{$menu_row->menu_title}}</a> </div>
+                          <div class="nutridock-meal-ingredients text-center"> <span class="txt-side-dish-s">{{$menu_row->menu_description}}</span> </div>
                           <div class="nutridock-icon over-xs-limit">
                             <?php $whats_inside_value=\DB::table('whats_inside')->where('menu_id',$menu_id)->orderBy('id','Asc')->limit('1')->get();foreach($whats_inside_value as $whats_inside_row); ?>
                             <div class="meal-icon">
@@ -75,7 +81,7 @@
                             <?php endforeach; ?>
                              <div class="meal-icon" >
                              <!-- <a href="" class="tooltip" data-toggle="modal" data-target="#myModal-{{$menu_row->id}}"> -->
-                              <a class="tooltip" data-toggle="modal" data-target="#myModal" 
+                              <a class="tooltip pointer" data-toggle="modal" data-target="#myModal" 
                                 id="getMenu" 
                                 data-url="{{ route('dynamicMenuModal',['id'=>$menu_row->id])}}" border="0">
                                <span class="tooltiptext">show more</span>  <img src="{{url('')}}/public/front/img/designs-menu.png" alt="show more"> </a>  </div>
