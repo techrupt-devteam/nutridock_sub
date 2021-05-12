@@ -11,10 +11,10 @@ return [
     ],
 
     'mail'=>[
-		'email'       	=> "bhushantechrupt@gmail.com",
+		'email'       	=> "nutridock.health@gmail.com",
 		'host'        	=> "smtp.gmail.com",
 		'port'        	=> 587,
-		'password'    	=> "bhushanraj@9912",
+		'password'    	=> "devtech@2021",
     ]
     
 ];
