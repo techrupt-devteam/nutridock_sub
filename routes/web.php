@@ -356,6 +356,17 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
 	Route::post('/kitchen_details',	      'Admin\KitchenController@detail');
 
+	//Referal Routes
+	Route::get('/manage_referal',	      'Admin\ReferalController@index');
+	Route::get('/add_referal',		      'Admin\ReferalController@add');
+	Route::post('/store_referal',	 	  'Admin\ReferalController@store');
+	Route::get('/edit_referal/{id}',	  'Admin\ReferalController@edit');
+	Route::post('/update_referal/{id}',   'Admin\ReferalController@update');
+	Route::get('/delete_referal/{id}',    'Admin\ReferalController@delete');
+	Route::post('/status_referal',	      'Admin\ReferalController@status');
+	Route::post('/referal_details',	      'Admin\ReferalController@detail');
+
+
 	//Assign Nutritionist Routes
 	Route::get('/manage_assign_nutritionist',	      'Admin\AssignNutritionistController@index');
 	Route::get('/add_assign_nutritionist',		      'Admin\AssignNutritionistController@add');

@@ -53,28 +53,28 @@
             <div class="box-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="example1">
-                    <thead>
-                       <th>Id</th>
-                       <th>Name</th>
-                       <th>Email</th>
-                       <th>Mobile</th>
-                       <th>City</th> 
-                       <th>Start Date</th>
-                       <th width="10%">Expire Date</th>
-                       <th>Payment Status</th>
-                       <th width="25%">Action</th>
-                    </thead>  
-                    <tfoot>
-                       <th>Id</th>
-                       <th>Name</th>
-                       <th>Email</th>
-                       <th>Mobile</th>
-                       <th>City</th> 
-                       <th>Start Date</th>
-                       <th>Expire Date</th>
-                       <th>Payment Status</th>
-                       <th >Action</th>
-                    </tfoot>        
+                  <thead>
+                     <th>Id</th>
+                     <th>Name</th>
+                     <th>Email</th>
+                     <th>Mobile</th>
+                     <th>City</th> 
+                     <th>Start Date</th>
+                     <th width="10%">Expire Date</th>
+                     <th>Payment Status</th>
+                     <th width="35%">Action</th>
+                  </thead>  
+                  <tfoot>
+                     <th>Id</th>
+                     <th>Name</th>
+                     <th>Email</th>
+                     <th>Mobile</th>
+                     <th>City</th> 
+                     <th>Start Date</th>
+                     <th>Expire Date</th>
+                     <th>Payment Status</th>
+                     <th width="35%">Action</th>
+                  </tfoot>        
                </table>
              </div>
             </div>

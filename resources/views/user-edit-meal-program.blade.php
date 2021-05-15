@@ -103,7 +103,8 @@
                                     @endif -->
                                      @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
                                        <small  style="color:red"><b>Compensation Entry</b></small><br/>
-                                        <b style="color:red">{{ date('d-M-Y', strtotime($value->meal_on_date)) }} </b> 
+                                        <!-- <b style="color:red"> -->
+                                        <b>{{ date('d-M-Y', strtotime($value->meal_on_date)) }} </b> 
                                       @else
                                         {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
                                       @endif

@@ -68,9 +68,9 @@ class SubscriberCalenderController extends Controller
         $login_city_id       = Session::get('login_city_id'); 
         $login_user_details  = Session::get('user');    
         $subscriber_id       = $request->subscriber_id; 
-        
+       // dd($subscriber_id);
         $subscriber_details  = $this->base_subscriber_details->where('id','=',$subscriber_id)->select('start_date','expiry_date')->first();
-//dd($subscriber_details);
+
         $date  = Carbon::parse($subscriber_details->start_date);
         $now   = Carbon::parse($subscriber_details->expiry_date);
         $days  = $date->diffInDays($now);

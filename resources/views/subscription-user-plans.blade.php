@@ -32,7 +32,7 @@
                                 @foreach($data as $key=>$value)
                                     <tr>
                                     <td>{{ $value->subscriber_name }}</td>
-                                    <td>{{ $value->sub_name }}<br /><small><b>Duration: {{ $value->no_of_days }}</small></b></td>                     
+                                    <td>{{ $value->sub_name }}<br /><small><b>Duration: {{ $value->no_of_days }} days</small></b></td>                     
                                     <td>{{ date('d-M-Y', strtotime($value->start_date)) }}</td>
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>

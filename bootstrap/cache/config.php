@@ -264,11 +264,18 @@
       'Error' => 'Error! Oop\'s something went wrong.',
       'Is_exists' => 'Error! Record already exist!',
     ),
+    'mail' => 
+    array (
+      'email' => 'nutridock.health@gmail.com',
+      'host' => 'smtp.gmail.com',
+      'port' => 587,
+      'password' => 'devtech@2021',
+    ),
   ),
   'custom' => 
   array (
-    'razor_key' => 'rzp_test_qFqkHvt9YysTYc',
-    'razor_secret' => 'DHxR3LwmSImw39bwbQMojPB2',
+    'razor_key' => 'rzp_test_l0k2WKd4DEWBUI',
+    'razor_secret' => '8nnwqvfdy6lgxuFZ2kDpoPpH',
   ),
   'database' => 
   array (
@@ -477,16 +484,16 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.mailtrap.io',
-    'port' => '2525',
+    'host' => 'smtp.gmail.com',
+    'port' => '587',
     'from' => 
     array (
       'address' => 'hello@example.com',
       'name' => 'Example',
     ),
-    'encryption' => NULL,
-    'username' => NULL,
-    'password' => NULL,
+    'encryption' => 'tls',
+    'username' => 'nutridock.health@gmail.com',
+    'password' => 'devtech@2021',
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (

@@ -256,6 +256,9 @@ class SignUpController extends Controller
                      
             $to = 'developer@techrupt.in';
             $cc = 'developer@techrupt.in';
+
+            //$to = 'developer@techrupt.in';
+            //$cc = 'developer@techrupt.in';
             //$bcc = array('it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
             $subject = 'Nutridock Fit - Thank you for Subscribing';
             $customer_mail = Mail::send('signupmail', $data, function($message) use($to, $subject) {

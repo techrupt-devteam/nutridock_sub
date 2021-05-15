@@ -43,18 +43,43 @@ class SubscriptionUserController extends Controller
         // $this->PhysicalActivity = new PhysicalActivity();
     }
     
-    public function index() {  
+    public function index() 
+    {  
+        $getSubscriberData = DB::table('nutri_mst_subscriber')
+                              ->join('nutri_dtl_subscriber','nutri_mst_subscriber.id', '=', 'nutri_dtl_subscriber.subscriber_id')
+                              ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                              ->where('nutri_mst_subscriber.id', '=', Session::get('subscriber_id'))
+                              ->where('nutri_dtl_subscriber.expiry_date', '>=',date('Y-m-d'))
+                              ->select('nutri_dtl_subscriber.id as dll_s_id','nutri_dtl_subscriber.*','nutri_mst_subscription_plan.sub_name')
+                              ->get()->toArray();  
+        $su_dtl_array = [];
+        foreach($getSubscriberData as $key => $sdvaleue)
+        {
+            $su_dtl_array[] = $sdvaleue->dll_s_id;
+        }
+                              
+         $date = date('Y-m-d');
+         //$date = '2021-05-18';
+         $todays_meal_plan =  \DB::table('nutri_subscriber_meal_program')
+                              ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
+                              ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                              //->whereIn('nutri_subscriber_meal_program.subcriber_id','=',Session::get('subscriber_id'))
+                              ->whereIn('nutri_subscriber_meal_program.subcriber_id',$su_dtl_array)
+                              ->where('nutri_subscriber_meal_program.meal_on_date','=',$date)
+                              ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','nutri_mst_menu.image','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->get();
+        //dd($todays_meal_plan);
 
-        $recent_data = [];       
+         //dd($data); 
+           //Arr::set($data,NULL, $getSubscriberData);   
+           //Arr::set($data,NULL, $todays_meal_plan);   
+           $data                 =[];
+           $data['data']         = $getSubscriberData;
+           $data['todays_menu']  = $todays_meal_plan;
+           $data['seo_title']    = "Dashboard";
 
-        /* Start: get data for subscription plan */
-        //Arr::set($data, 'getSubscriptionPlan', SubscriptionPlan::getData());
-        /* End: get data for subscription plan */     
+            return view('dashboard',$data);
 
-      
-       
-        $data = '';
-        return view('dashboard')->with(['data' => $data, 'seo_title' => "Dashboard"]); 
+        //  return view('dashboard')->with(['data' => $data, 'seo_title' => "Dashboard"]); 
     }  
 
 
