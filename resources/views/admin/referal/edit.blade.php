@@ -47,12 +47,18 @@
                           <!-- <input type="text" class="form-control" id="discount_type" name="discount_type" placeholder="Discount Percent" required="true" data-parsley-errors-container="#namel_error" data-parsley-error-message="Enter the layered discount" autocomplete="off" value="{{$data['discount_type']}}"> -->
                            <select  class="form-control" id="discount_type" name="discount_type" placeholder="Discount Percent" required="true" data-parsley-errors-container="#namel_error" data-parsley-error-message="Select Type" autocomplete="off">
                              <option value=''>-Select Type-</option>
+                             @if($data['discount_type']=="Initial")
                              <option value='Initial'<?php if($data['discount_type']=="Initial"){echo "selected";}?>>Initial</option>
+                             @endif
+                             @if($data['discount_type']=="Layered")
                              <option value='Layered'<?php if($data['discount_type']=="Layered"){echo "selected";}?>>Layered</option>
+                             @endif
+
                            </select>
                            <div id="namel_error" style="color:red;"></div>
                         </div>
                       </div>
+                       @if($data['discount_type']=="Initial")
                        <div class="col-md-6 col-lg-4">
                         <div class="form-group">
                           <label for="name">Discount Percent To Refferee<span style="color:red;" >*</span></label>
@@ -67,14 +73,9 @@
                            <div id="dis_per_affr" style="color:red;"></div>
                         </div>
                       </div>
-                  </div>
-                </div>
-                  <div class="row">
-                  <hr/>
-                 
-
-                  <div class="col-md-12">
-                    <div class="col-md-6 col-lg-4">
+                      @endif
+                      @if($data['discount_type']=="Layered")
+                      <div class="col-md-6 col-lg-4">
                         <div class="form-group">
                           <label for="name">Min<span style="color:red;" >*</span></label>
                           <input type="text" class="form-control" id="min" name="min" placeholder="Min Reffered" required="true" data-parsley-errors-container="#min_error" data-parsley-error-message="Enter the min reffered." autocomplete="off" value="{{$data['min']}}">
@@ -90,6 +91,27 @@
                            <div id="max_error" style="color:red;"></div>
                         </div>
                       </div>
+                      @endif
+                </div>
+                 
+
+                  <div class="col-md-12">
+                    <!-- <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <label for="name">Min<span style="color:red;" >*</span></label>
+                          <input type="text" class="form-control" id="min" name="min" placeholder="Min Reffered" required="true" data-parsley-errors-container="#min_error" data-parsley-error-message="Enter the min reffered." autocomplete="off" value="{{$data['min']}}">
+                           <div id="min_error" style="color:red;"></div>
+                        </div>
+                      </div>
+                       <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                          <label for="name">Max<span style="color:red;" >*</span></label>
+                          <input type="text" class="form-control" id="max" name="max" placeholder="Max Reffered" required="true" data-parsley-errors-container="#max_error" 
+                          data-parsley-error-message="Enter the max reffered." 
+                          autocomplete="off" value="{{$data['max']}}">
+                           <div id="max_error" style="color:red;"></div>
+                        </div>
+                      </div> -->
                   </div>
                 </div>
               </div>  
