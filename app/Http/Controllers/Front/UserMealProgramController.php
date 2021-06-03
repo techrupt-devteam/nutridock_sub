@@ -361,7 +361,8 @@ class UserMealProgramController extends Controller
 
 
       $arr_data['compenset_date'] = $compensation_date;
-      $arr_data['skip_meal_flag']    = 'y';
+      $arr_data['skip_meal_flag'] = 'y';
+      $carr_data["comsetflaf"]    = 'y';   
       $menu_update      = \DB::table('nutri_subscriber_meal_program')
                           ->where(['program_id'=>$program_id])
                           ->update($arr_data);
@@ -397,7 +398,9 @@ class UserMealProgramController extends Controller
             $carr_data["is_active"]        =  $get_meal_program->is_active;   
             $carr_data["meal_on_date"]     =  $get_meal_program->compenset_date;   
             $carr_data["compenset_date"]   =  $get_meal_program->meal_on_date;   
-            $carr_data["skip_meal_flag"]   =  $get_meal_program->skip_meal_flag;   
+            //$carr_data["skip_meal_flag"]   =  $get_meal_program->skip_meal_flag;   
+            $carr_data["skip_meal_flag"]   =  'n';   
+            $carr_data["comsetflaf"]       =  'y';   
             $carr_data["is_deleted"]       =  $get_meal_program->is_deleted;   
             \DB::table('nutri_subscriber_meal_program')->updateOrInsert($carr_data,['meal_on_date'=>$get_meal_program->compenset_date]); 
 

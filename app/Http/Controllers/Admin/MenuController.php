@@ -93,6 +93,7 @@ class MenuController extends Controller
                 'menu_description'        =>'required',
                 'ingredients_desc'        =>'required',
                 'calories'                =>'required',
+                'item_id'                 =>'required',
                 'proteins'                =>'required',
                 'fats'                    =>'required',
                 'carbohydrates'           =>'required',
@@ -125,6 +126,7 @@ class MenuController extends Controller
         $arr_data                              = [];
         $arr_data['menu_category_id']          = $request->input('category_id');
         $arr_data['menu_title']                = $request->input('menu_title');
+        $arr_data['item_id']                   = $request->input('item_id');
         $arr_data['menu_description']          = $request->input('menu_description');
         $arr_data['what_makes_dish_special']   = $request->input('what_makes_dish_special');
         $arr_data['specification_id']          = implode(",",$request->input('specification_id'));
@@ -286,17 +288,18 @@ class MenuController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-                'category_id'      => 'required',
-                'menu_title'         => 'required',
-                'menu_type'         => 'required',
-                'specification_id'=> 'required',
-                'menu_description'   => 'required',
-                'ingredients_desc'   => 'required',
-                'calories'           => 'required',
-                'proteins'           => 'required',
-                'fats'               => 'required',
-                'carbohydrates'      => 'required',
-                'what_makes_dish_special'  => 'required',
+                'category_id'               => 'required',
+                'menu_title'                => 'required',
+                'menu_type'                 => 'required',
+                'item_id'                   => 'required',
+                'specification_id'          => 'required',
+                'menu_description'          => 'required',
+                'ingredients_desc'          => 'required',
+                'calories'                  => 'required',
+                'proteins'                  => 'required',
+                'fats'                      => 'required',
+                'carbohydrates'             => 'required',
+                'what_makes_dish_special'   => 'required',
             ]);
         if ($validator->fails()) 
         {
@@ -329,6 +332,7 @@ class MenuController extends Controller
         $arr_data                              = [];
         $arr_data['menu_category_id']          = $request->input('category_id');
         $arr_data['menu_title']                = $request->input('menu_title');
+        $arr_data['item_id']                   = $request->input('item_id');
         $arr_data['menu_description']          = $request->input('menu_description');
         $arr_data['what_makes_dish_special']   = $request->input('what_makes_dish_special');
         $arr_data['specification_id']          = $specification_data;

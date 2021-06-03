@@ -14,6 +14,7 @@ class MenuModel extends Model
     	                    'menu_description',
     	                    'what_makes_dish_special',
                             'image',
+                            'item_id',
                             'specification_id',
                             'multiple_image',
                             'ingredients',

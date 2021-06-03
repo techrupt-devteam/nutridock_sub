@@ -18,21 +18,21 @@ Route::get('/clear', function() {
  	return "Cleared!";
  });
 
-
 Route::get('/test', function () {
     return view('admincontactmail');
 });
 
- Route::get('/', 'SubscribeinfoController@index');
- 
- Route::get('/order_index', function () {
+
+Route::get('/', 'SubscribeinfoController@index');
+
+Route::get('/order_index', function () {
     return view('ordernow/index');
 });
 
- Route::get('dynamicModal/{id}',[
-	 'as'=>'dynamicModal',
-	 'uses'=> 'HomeController@loadModal'
- ]);
+Route::get('dynamicModal/{id}',[
+  'as'=>'dynamicModal',
+  'uses'=> 'HomeController@loadModal'
+]);
  
  Route::get('dynamicMenuModal/{id}',[
 	 'as'=>'dynamicMenuModal',
@@ -124,6 +124,9 @@ Route::get('/thankyou', 						'Front\SignUpController@thankyou');
 Route::get('/sign-in',	['as'=>'signinModal','uses'=> 'Front\SignUpController@signinModal']);
 Route::post('/check-login', 'Auth\LoginController@checkLogin');
 Route::post('/check-otp', 'Auth\LoginController@checkOtp');
+/**********************************************************************************************/
+Route::get('/cron_schedule', 'Cron\ScheduleController@meal');
+
 
 
 
@@ -413,7 +416,14 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/getMealDetails',			  'Admin\SubscriberCalenderController@getMealDetails');
     Route::get('/traits', 'Admin\DashboardController@traits');
 
+    //Order History 
+    Route::get('/manage_order',   'Admin\OrderHistoryController@index');
+	Route::post('/order_details', 'Admin\OrderHistoryController@details');
+	Route::post('/order_resend',  'Admin\OrderHistoryController@order_resend');
+
+
+
+
+
 });
-
-
 /**********************************************************************************************/

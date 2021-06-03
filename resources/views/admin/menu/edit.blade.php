@@ -108,6 +108,13 @@
                          <div id="specificationdrp_error" style="color:red;"></div>
                        </div>
                    </div>
+                   <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                          <label for="name" class="label-control">Menu Item Id<span style="color:red;" >*</span></label>
+                          <input type="text" class="form-control" name="item_id" id="item_id" data-parsley-errors-container="#item_id_error" data-parsley-error-message="Please enter item id." required="true" value="{{$data['item_id']}}">
+                          <div id="item_id_error" style="color:red;"></div>
+                        </div>
+                      </div>
                 </div>
                 </div>
                 <div class="col-md-4 col-lg-3">

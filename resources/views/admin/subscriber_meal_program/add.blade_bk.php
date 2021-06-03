@@ -229,17 +229,17 @@
                             @endphp
 
                           @endif
-                          <!--  @if($gdmvalue->comsetflaf=="y")
+                          <!--  @if($gdmvalue->skip_meal_flag=="y")
                              @php $style="background-color:#ff000030 !important";@endphp
                             @else
                              @php $style=""; @endphp
                             @endif -->
 
-                            @if($gdmvalue->comsetflaf=="y" && isset($gdmvalue->ref_program_id))
+                            @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
                                      @php $style="background-color:#cff40385 !important";
                                      $bgcolor = '#cff40385';
                                      @endphp
-                                      @elseif($gdmvalue->comsetflaf=="y" || $gdmvalue->skip_meal_flag=="y")
+                                      @elseif($gdmvalue->skip_meal_flag=="y")
                                      @php $style="background-color:#ff000030 !important";
                                      $bgcolor = '#ff000030';
                                      @endphp
@@ -251,7 +251,7 @@
                           <tr style="{{$style}}">
                               <td>
 
-                                @if($gdmvalue->comsetflaf=="y" && isset($gdmvalue->ref_program_id))
+                                @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
                                        <small  style="color:red"><b>Compensation Entry</b></small><br/>
                                         <b style="color:red">{{ date('d-M-Y', strtotime($gdmvalue->meal_on_date)) }} </b> 
                                       @else
@@ -259,12 +259,12 @@
                                       @endif
 
                                     <small><b>[Day {{ $gdmvalue->day }}</small>]</b><br/>
-                                    @if($gdmvalue->comsetflaf=="y" && isset($gdmvalue->ref_program_id))
+                                    @if($gdmvalue->skip_meal_flag=="y" && isset($gdmvalue->ref_program_id))
                                        <small><b style="color:red">compensated meal on date:    {{ date('d-M-Y', strtotime($gdmvalue->compenset_date)) }}  </b></small>
                                     @elseif($gdmvalue->skip_meal_flag=="y")
                                      <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($gdmvalue->compenset_date))}}</b></small>
                                     @endif
-                              <!-- <strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong><br/>@if($gdmvalue->comsetflaf=="y")
+                              <!-- <strong>{{ucfirst($gdmvalue->meal_type_name)}}</strong><br/>@if($gdmvalue->skip_meal_flag=="y")
                               <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($gdmvalue->compenset_date))}}</b></small>
                               @endif -->
 

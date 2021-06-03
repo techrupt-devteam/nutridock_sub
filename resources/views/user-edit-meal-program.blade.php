@@ -71,7 +71,7 @@
                                 <tbody> 
                              
                                 @foreach($data as $key=>$value) 
-                                    <!-- @if($value->skip_meal_flag=="y")
+                                    <!-- @if($value->comsetflaf=="y")
                                      @php $style="background-color:#ff000030 !important";
                                      $bgcolor = '#ff000030';
                                      @endphp
@@ -81,11 +81,11 @@
                                      @endphp
                                     @endif -->     
 
-                                    @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                    @if($value->comsetflaf=="y" && isset($value->ref_program_id))
                                      @php $style="background-color:#cff40385 !important";
                                      $bgcolor = '#cff40385';
                                      @endphp
-                                      @elseif($value->skip_meal_flag=="y")
+                                      @elseif($value->comsetflaf=="y" || $value->skip_meal_flag=="y" )
                                      @php $style="background-color:#ff000030 !important";
                                      $bgcolor = '#ff000030';
                                      @endphp
@@ -98,10 +98,10 @@
                                     <td style="background:#e5e5e5; color:#000" class="pl-4">
                                     <!-- {{ date('d-M-Y', strtotime($value->meal_on_date)) }}  
                                     <small><b>[Day {{ $value->day }}</small>]</b><br/>
-                                    @if($value->skip_meal_flag=="y")
+                                    @if($value->comsetflaf=="y")
                                     <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($value->compenset_date))}}</b></small>
                                     @endif -->
-                                     @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                     @if($value->comsetflaf=="y" && isset($value->ref_program_id))
                                        <small  style="color:red"><b>Compensation Entry</b></small><br/>
                                         <!-- <b style="color:red"> -->
                                         <b>{{ date('d-M-Y', strtotime($value->meal_on_date)) }} </b> 
@@ -110,7 +110,7 @@
                                       @endif
 
                                     <small><b>[Day {{ $value->day }}</small>]</b><br/>
-                                    @if($value->skip_meal_flag=="y" && isset($value->ref_program_id))
+                                    @if($value->comsetflaf=="y" && isset($value->ref_program_id))
                                        <small><b style="color:red">compensated meal on date:    {{ date('d-M-Y', strtotime($value->compenset_date)) }}  </b></small>
                                     @elseif($value->skip_meal_flag=="y")
                                      <small><b style="color:red">Compensation Date: {{date('d-m-Y',strtotime($value->compenset_date))}}</b></small>

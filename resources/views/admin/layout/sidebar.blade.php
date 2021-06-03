@@ -128,7 +128,13 @@
           </span>
         </a>
       </li>
-        <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
+        <li @if(Request::segment(2)=='manage_order') class="active"@endif>
+          <a href="{{url('/admin')}}/manage_order">
+          <i class="fa fa-file"></i><span>Order History</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+          <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
           <a href="{{url('/admin')}}/manage_kitchen">
           <i class="fa fa-location-arrow"></i><span>Cloud Kitchen</span>
             <span class="pull-right-container">
