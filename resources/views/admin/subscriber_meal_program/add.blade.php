@@ -216,6 +216,7 @@
                           @if($i!=$gdmvalue->day)
                           <tr style="background-color:#cacaca!important;">
                               <td><strong>{{date('d-M-Y',strtotime($gdmvalue->meal_on_date))}} [ Day {{$gdmvalue->day}}]</strong></td>
+
                               <td width="20%"><strong>Menu Name</strong></td>
                               <td width="10%"><strong>Calories</strong></td>
                               <td width="10%"><strong>Proteins</strong></td>
@@ -236,8 +237,8 @@
                             @endif -->
 
                             @if($gdmvalue->comsetflaf=="y" && isset($gdmvalue->ref_program_id))
-                                     @php $style="background-color:#cff40385 !important";
-                                     $bgcolor = '#cff40385';
+                                     @php $style="background-color:#03f40a14 !important";
+                                     $bgcolor = '#03f40a14';
                                      @endphp
                                       @elseif($gdmvalue->comsetflaf=="y" || $gdmvalue->skip_meal_flag=="y")
                                      @php $style="background-color:#ff000030 !important";
@@ -269,7 +270,8 @@
                               @endif -->
 
                              </td>
-                             <td><strong>{{$gdmvalue->menu_title}}</strong></td>
+                             
+                             <td><strong>{{$gdmvalue->menu_title}}</strong><br/><small><b>{{$gdmvalue->meal_type_name}}</b></small></td>
                            
                               <td>
                                    <img src="{{ URL('') }}/uploads/images/calories.svg"" alt="your image" width="15" height="15">  <strong>{{$gdmvalue->calories}}</strong> 

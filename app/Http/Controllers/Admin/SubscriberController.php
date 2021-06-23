@@ -6,6 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\State;
 use App\Models\City;
 use App\Models\Plan;
+use Illuminate\Support\Arr;
+use App\Models\PhysicalActivity;
+use App\Models\SubscribeNowPlan;
+use App\Models\FoodAvoid;
+use App\Models\MealType;
+use App\Models\SubscribeNow;
+use App\Models\SubscriptionPlan;
+use App\Models\SubscriberMaster;
+use App\Models\SubscriptionPlanDetails;
+use App\Models\DeliveryLocation;
+use App\Models\Notification;
+use App\Models\User;
+use App\Models\Kitchen;
+use App\Models\SubscriberDetails;
+use Carbon\Carbon;
 use Session;
 use Sentinel;
 use Validator;
@@ -16,22 +31,49 @@ use Illuminate\Contracts\View\View;
 
 class SubscriberController extends Controller
 {
-    public function __construct(State $State,City $City)
+    public function __construct(State $State,City $City,PhysicalActivity $PhysicalActivity,SubscribeNowPlan $SubscribeNowPlan,FoodAvoid $FoodAvoid,MealType $MealType,SubscriptionPlanDetails $SubscriptionPlanDetails,SubscriptionPlan $SubscriptionPlan,Kitchen $Kitchen,SubscriberMaster $SubscriberMaster,SubscriberDetails $SubscriberDetails)
     {
-        $data                = [];
+        $data                         = [];
         //$this->base_model    = $Subscription; 
-        $this->base_State    = $State; 
-        $this->base_city     = $City; 
-        $this->title         = "Subscriber";
-        $this->url_slug      = "subscriber";
-        $this->folder_path   = "admin/subscriber/";
+        $this->base_State                 = $State; 
+        $this->base_city                  = $City; 
+        $this->base_physical_activity     = $PhysicalActivity; 
+        $this->base_food_avoid            = $FoodAvoid; 
+        $this->base_subscription_plan     = $SubscriptionPlan; 
+        $this->base_subscription_duration = $SubscriptionPlanDetails; 
+        $this->base_meal_plan             = $MealType; 
+        $this->base_kitchen               = $Kitchen;
+        //subscriber mst
+        $this->base_subscriber_mst        = $SubscriberMaster;
+        //subscriber dtl
+        $this->base_subscriber_dtl        = $SubscriberDetails;
+
+
+
+        $this->title                  = "Subscriber";
+        $this->url_slug               = "subscriber";
+        $this->folder_path            = "admin/subscriber/";
                 //Message
-        $this->Insert       = Config::get('constants.messages.Insert');
-        $this->Update       = Config::get('constants.messages.Update');
-        $this->Delete       = Config::get('constants.messages.Delete');
-        $this->Error        = Config::get('constants.messages.Error');
-        $this->Is_exists    = Config::get('constants.messages.Is_exists');
+        $this->Insert                 = Config::get('constants.messages.Insert');
+        $this->Update                 = Config::get('constants.messages.Update');
+        $this->Delete                 = Config::get('constants.messages.Delete');
+        $this->Error                  = Config::get('constants.messages.Error');
+        $this->Is_exists              = Config::get('constants.messages.Is_exists');
     }
+
+
+    public function no_of_days(Request $request)
+    {
+        $sub_plan_id    = $request->plan_id;
+        $no_of_duration = $this->base_subscription_duration->where('sub_plan_id','=',$sub_plan_id)->get();
+        $html           = "<option value=''>-Select No Of Days-</option>";
+        foreach ($no_of_duration as $key => $value) {
+          $html         .='<option value='.$value->duration_id.'>'.$value->duration.' Days </option>';   
+        }
+        return $html;
+    }
+    
+
 
     public function index()
     {
@@ -41,6 +83,138 @@ class SubscriberController extends Controller
         return view($this->folder_path.'index',$data);
     }
 
+    public  function add()
+    {
+        
+       $subscription_plan               = $this->base_subscription_plan->where('is_active','=',1)->get();
+       $meal_plan                       = $this->base_meal_plan->get();
+       $state                           = $this->base_State->get();
+       $data['getSubscriptionPlan']     = SubscriptionPlan::getData();
+       $data['getPhysicalActivityData'] = PhysicalActivity::getData();
+       $data['getSubscribeNowPlan']     = SubscribeNowPlan::getData();
+       $data['getFoodAvoidData']        = FoodAvoid::getData();
+       $data['getMealTypeData']         = MealType::getData();
+       $data['getSubscribeNowData']     = SubscribeNow::getData();
+
+       $data['subscription_plan']       =  $subscription_plan;
+       $data['meal_plan']               =  $meal_plan;
+       $data['state']                   =  $state;
+       $data['page_name']               = "Add Subscriber";
+       $data['url_slug']                = $this->url_slug;
+       $data['title']                   = $this->title;
+       return view($this->folder_path.'add_new_subscriber',$data);
+    }
+
+    /*------------------------------Subcriber Store-------------------------------*/
+    public function store(Request $request)
+    {
+        /*$validator = Validator::make($request->all(), [
+                "kitchen_name" => 'required',
+                "customer_key" => 'required',
+                "state_id"     => 'required',
+                "city_id"      => 'required',
+                "area_id"      => 'required',
+                "pincode"      => 'required',
+                "address"      => 'required'
+            ]);
+
+        if ($validator->fails()) 
+        {
+            return $validator->errors()->all();
+        }*/
+      
+        $is_exist = $this->base_subscriber_mst->where(['mobile'=>$request->input('mobile_no')])->count();
+
+        if($is_exist)
+        {
+            Session::flash('error',  $this->Is_exists);
+            return \Redirect::back();
+        }
+
+        $no_of_duration = $this->base_subscription_duration
+                            ->where('sub_plan_id','=',$request->input('sub_plan_id'))
+                            ->where('duration_id','=',$request->input('no_of_days'))
+                            ->first();
+  
+        $date = Carbon::now();
+        $date = Carbon::parse($request->input('start_date'));
+        $expiryDate = $date->addDays($no_of_duration['duration']-1); 
+        /*  echo "<br/> expiryDate <br/>";
+            echo "<pre>";
+            print_r($expiryDate);
+            dd($no_of_duration->duration);
+        */
+        //$menu_data                 = implode(",",$request->input('menu'));
+        //$subscriptionplan_data     = implode(",",$request->input('subscription_plan'));
+        //$users_data                = implode(",",$request->input('users'));
+
+        $arr_data                    = [];
+        $arr_data['email']           = $request->input('email');
+        $arr_data['mobile']          = $request->input('mobile_no');
+        
+        $store_subscriber_mst        = $this->base_subscriber_mst->create($arr_data);
+       // dd($store_subscriber_mst->id);
+        if(!empty($store_subscriber_mst))
+        {
+            
+            $arr_data                                = [];
+            $arr_data['subscriber_id']               = $store_subscriber_mst->id;
+            $arr_data['skitchen_id']                 = $request->input('skitchen_id');
+            $arr_data['subscriber_name']             = $request->input('full_name');
+            $arr_data['subscriber_age']              = $request->input('age');
+            $arr_data['subscriber_gender']           = $request->input('gender');  
+            $arr_data['subscriber_weight']           = $request->input('weight');                 
+            $arr_data['subscriber_height_in_feet']   = $request->input('height_in_feet');  
+            $arr_data['subscriber_height_in_inches'] = $request->input('height_in_inches');  
+            $arr_data['physical_activity_id']        = $request->input('physical_activity_id');  
+            $arr_data['avoid_or_dislike_food_id']    = implode(",",$request->input('avoid_or_dislike_food_id'));  
+            $arr_data['other_food']                  = $request->input('other_food');  
+            $arr_data['lifestyle_disease']           = $request->input('lifestyle_disease');  
+            $arr_data['food_precautions']            = $request->input('food_precautions');  
+            $arr_data['coupon_code_id']              = '';  
+            $arr_data['price_per_meal']              = $request->input('price_per_meal');
+            $arr_data['discount_price']              = $request->input('discount_price');
+            $arr_data['mrp']                         = $request->input('mrp');
+            $arr_data['sale_price']                  = $request->input('salePrice');
+            //gst price = sales price var gst percent 
+            $gst_price                               =  ($request->input('salePrice') * 5)/100;          
+            $total_amount                            =  $gst_price + $request->input('salePrice');
+            $arr_data['gst_price']                   = $gst_price;  
+            $arr_data['gst_percentage']              = 5;
+            $arr_data['total_amount']                = $total_amount;
+
+            $arr_data['start_date']                   = date('Y-m-d',strtotime($request->input('start_date')));  
+            $arr_data['expiry_date']                 = $expiryDate;
+            $arr_data['sub_plan_id']                 = $request->input('sub_plan_id');  
+            $arr_data['duration_id']                 = $request->input('no_of_days');  
+            $arr_data['meal_type_id']                = implode(",",$request->input('meal_type_id'));  
+            $arr_data['address1']                    = $request->input('address1');  
+            $arr_data['pincode1']                    = $request->input('pincode1');  
+            $arr_data['address1_deliver_mealtype']   = implode(",",$request->input('address1_meal'));  
+            $arr_data['address2']                    = $request->input('address2');  
+            $arr_data['pincode2']                    = $request->input('pincode2'); 
+            $arr_data['address2_deliver_mealtype']   = implode(",",$request->input('address2_meal'));
+            $arr_data['state']                       = $request->input('state_id');  
+            $arr_data['city']                        = $request->input('city_id');
+            $arr_data['area_id']                     = $request->input('area_id');
+            $arr_data['payment_status']              = "Cash"; 
+
+            $store_subscriber_dtl                    = $this->base_subscriber_dtl->create($arr_data);
+
+
+
+
+            Session::flash('success',  $this->Insert);
+            return \Redirect::to('admin/manage_subscriber');
+        }
+        else
+        {
+            Session::flash('error',  $this->Error);
+            return \Redirect::back();
+        }
+    }
+
+    /*---------------------------------------------------------------------------------*/
     public function newindex()
     {
         $data['page_name'] = "New ";
@@ -1558,5 +1732,62 @@ class SubscriberController extends Controller
         echo json_encode($json_data); 
         
     }
+   
+    public function getplan_price(Request $request) 
+    {                  
+        //dd($request->selectedMealType); 
+        if(isset($request->selectedMealType)){ 
+            $meal_type_cnt = count($request->selectedMealType); 
+        }
+        else{
+            $meal_type_cnt = 1;
+        }
+        
+        $getPriceDtl = SubscriptionPlanDetails::where('sub_plan_id', $request->subscription_plan_id)
+                        ->where('duration_id', $request->duration_id)->first();                                                               
+        Arr::set($data, 'duration', $getPriceDtl['duration']);
+        Arr::set($data, 'price_per_meal', $getPriceDtl['price_per_meal']);
+        Arr::set($data, 'discount_price', $getPriceDtl['discount_price']);        
+        Arr::set($data, 'selected_meal_type_length', $meal_type_cnt);
+        //Arr::set($data, 'selected_meal_type', $request['selectedMealType']);
 
+        if($getPriceDtl['discount_price']) {
+            $salePrice = $getPriceDtl['discount_price'] * $getPriceDtl['duration'] * $meal_type_cnt;
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = $getPriceDtl['price_per_meal'] * $getPriceDtl['duration'] * $meal_type_cnt; 
+            Arr::set($data, 'totalPrice', $totalPrice);
+
+        } else if($getPriceDtl['price_per_meal']) {
+            $salePrice = $getPriceDtl['price_per_meal'] * $getPriceDtl['duration'] * $meal_type_cnt; 
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = "";
+            Arr::set($data, 'totalPrice', $totalPrice);
+
+        } else if($getPriceDtl['price_per_pack']) {
+            $salePrice = $getPriceDtl['price_per_pack'];
+            Arr::set($data, 'salePrice', $salePrice);
+
+            $totalPrice = "";
+            Arr::set($data, 'totalPrice', $totalPrice);        
+        }
+
+        return $data;                                            
+    }
+
+    public function getKitchen(Request $request)
+    {
+        $area_id = $request->area;
+        $kitchen_data = $this->base_kitchen->where(['area_id'=>$area_id])->get();
+        $html = "";
+        $html .= "<option value=''>-Select Kitchen-</option>";
+        foreach ($kitchen_data as $key => $value) 
+        {
+          $html.="<option value=".$value->kitchen_id.">".$value->kitchen_name."</option>";                
+        }         
+
+        return $html;
+
+    }
 }

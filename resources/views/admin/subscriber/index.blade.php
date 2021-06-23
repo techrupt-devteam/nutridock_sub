@@ -34,7 +34,7 @@
                 <li><a href="{{url('/admin')}}/manage_{{$url_slug}}">Manage {{ $title }}</a></li>
                 <li class="active">{{ $page_name." ".$title }}</li>
               </ol>
-
+              
             </div>
             <div class="row"> <div class="box-body">
                 <div class="col-md-12">
@@ -48,9 +48,16 @@
                     </div>
                 </div></div>
             </div>
+            <div class="row"> <div class="box-body">
+              <div class="col-md-12">
+                 <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add {{ucfirst($url_slug)}}</a>
+              </div>
+            </div>
+            </div>
 
             <!-- /.box-header -->
             <div class="box-body">
+
             <div class="table-responsive">
               <table class="table table-bordered" id="example1">
                   <thead>

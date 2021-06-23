@@ -88,6 +88,7 @@ class SubscriberCalenderController extends Controller
                                 ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
                                 ->where('nutri_subscriber_meal_program.subcriber_id','=',$subscriber_id)
                                 ->where('nutri_subscriber_meal_program.day','=',$i)
+                                ->where('nutri_subscriber_meal_program.skip_meal_flag','=','n')
                                 ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->get();
             
             $count = $program_data->count();
@@ -98,7 +99,7 @@ class SubscriberCalenderController extends Controller
               $cnt = 0;
             }
 
-            $colors = array('#f39c12','#f56954','#00c0ef','#0073b7');
+            $colors = array('','#f39c12','#f56954','#00c0ef','#0073b7');
 
             foreach ($program_data as $key => $value) {
              
@@ -112,24 +113,28 @@ class SubscriberCalenderController extends Controller
                     
                 $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
                 }*/
-                if($i==1){ 
-                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
-                }elseif($value->skip_meal_flag=="y" && !empty($value->ref_program_id)){
 
+                /*if($i==1 && $value->skip_meal_flag=="n"){ 
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date));
+                }elseif($value->skip_meal_flag=="y"){ 
+                  $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($value->compenset_date));
+                }elseif($value->comsetflaf=="y" && !empty($value->ref_program_id)){
+*/
                   $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($value->meal_on_date));
 
-                }
+               /* }
                 else{
                     $d=$i-1;
-                    
+                   
                   $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
-    
-                }
+              
+                }*/
                
               
                 $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title);
-                $calender_data[$i][$key]['backgroundColor']   = $colors[$key];
-                $calender_data[$i][$key]['borderColor']       = $colors[$key];
+                $calender_data[$i][$key]['backgroundColor']   = $colors[$value->meal_type_id];
+                $calender_data[$i][$key]['borderColor']       = $colors[$value->meal_type_id];
+                $calender_data[$i][$key]['set_date']          = $value->compenset_date;
                
                
            }               

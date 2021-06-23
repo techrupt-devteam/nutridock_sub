@@ -95,6 +95,8 @@ class LoginController extends Controller
             //$message->bcc($bcc);
             $message->subject($subject);
             $message->from('admin@nutridock.com','Nutridock Fit');
+              /* $message->getHeaders()->addTextHeader(
+            'Custom-Header', 'Content-Type: image/jpeg');*/
         });   
 
         return "success";

@@ -142,7 +142,8 @@ class SubscriberMealProgramController extends Controller
                                           ->where('nutri_subscriber_meal_program.sub_plan_id','=',$sub_plan_id)
                                           ->where('nutri_subscriber_meal_program.duration_id','=',$duration_id)
                                           ->where('nutri_subscriber_meal_program.subcriber_id','=',$id)
-                                          ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id')->get();
+                                          ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id')
+                                          ->orderBy('nutri_subscriber_meal_program.program_id','ASC')->get();
                   //dd($get_default_menu);        
 
                   $health_details = $this->base_health->where('subcriber_id','=',$id)->where('nutritionist_id','=',$nutritionist_id)->orderBy('subscriber_health_id', 'DESC')->first();   

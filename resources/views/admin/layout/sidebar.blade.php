@@ -104,6 +104,7 @@
             </a>
             <ul class="treeview-menu">
               
+             
               <li @if(Request::segment(2)=='manage_subscriber' || Request::segment(2)=='add_subscriber' || Request::segment(2)=='edit_subscriber') class="active" @endif>
                   <a href="{{url('/admin')}}/manage_subscriber">
                      <i class="fa fa-users"></i><span>Subscribers</span>
@@ -144,6 +145,13 @@
           <li @if(Request::segment(2)=='manage_referal' || Request::segment(2)=='add_referal' || Request::segment(2)=='edit_referal') class="active"@endif>
           <a href="{{url('/admin')}}/manage_referal">
           <i class="fa fa-share"></i><span>Referal</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+         <li @if(Request::segment(2)=='manage_feedback' || Request::segment(2)=='add_referal' || Request::segment(2)=='edit_referal') class="active"@endif>
+          <a href="{{url('/admin')}}/manage_feedback">
+          <i class="fa fa-comments"></i><span>FeedBack</span>
             <span class="pull-right-container">
             </span>
           </a>

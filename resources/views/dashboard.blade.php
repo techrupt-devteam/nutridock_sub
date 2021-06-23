@@ -119,6 +119,7 @@
                             </table>
                      </div> <hr/> 
                      <div class="col-md-12 mb-5">
+                      <?php if(!empty($todays_menu)){?>
                         <h4>Today's Meal</h4>
                         <hr/>
                       
@@ -140,7 +141,7 @@
                                 </div>
                             </div>
                             @endforeach
-                         
+                         <?php } ?>
                       </div>
                       
 

@@ -12,6 +12,7 @@ use App\Models\State;
 use App\Models\Kitchen;
 use App\Models\Order;
 use Illuminate\Support\Facades\Input;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Response;
 use DateTime;
@@ -23,7 +24,7 @@ use DB;
 
 class ScheduleController extends Controller
 {
-    public function __construct(City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,Kitchen $Kitchen,Order $Order)
+    public function __construct(City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,Kitchen $Kitchen,Order $Order,Notification $Notification)
     {
         $data                           = [];
         $this->base_users               = $User; 
@@ -31,28 +32,31 @@ class ScheduleController extends Controller
         $this->base_state               = $State; 
         $this->base_kitchen             = $Kitchen; 
         $this->base_order               = $Order; 
+        $this->base_notification        = $Notification; 
         $this->base_subscribermealplan  = $SubscriberMealPlan; 
         $this->base_subscriber_details  = $SubscriberDetails; 
     }
  
     public function meal(Request $request)
     {
-        $date     = '2021-06-04';
+        $date     = '2021-06-07';
         $get_meal =  DB::table('nutri_subscriber_meal_program as mp')
-                       ->Join('nutri_dtl_subscriber as sub','mp.subcriber_id','=','sub.id')
-                       ->Join('city as city','sub.city','=','city.id')
-                       ->Join('nutri_mst_subscriber as suber','sub.subscriber_id','=','suber.id')
-                       ->Join('nutri_mst_menu as menu','mp.menu_id','=','menu.id')
-                       ->Join('meal_type as mealtp','mp.mealtype','=','mealtp.meal_type_id')
-                       ->where('mp.meal_on_date','=',$date)
-                       ->where('mp.skip_meal_flag','=','n')
-                       ->select('mp.*','city.city_name','sub.subscriber_name','suber.mobile','sub.subscriber_name','sub.address1','sub.address2','sub.id as subscriber_dtl_id','suber.id as subscriber_id','menu.item_id','menu.id as mid','mealtp.meal_type_name','sub.city','sub.state')
-                       ->get(); 
-  
+                     ->Join('nutri_dtl_subscriber as sub','mp.subcriber_id','=','sub.id')
+                     ->Join('nutri_mst_kitchen as kitchen','sub.skitchen_id','=','kitchen.kitchen_id')
+                     ->Join('city as city','sub.city','=','city.id')
+                     ->Join('nutri_mst_subscriber as suber','sub.subscriber_id','=','suber.id')
+                     ->Join('nutri_mst_menu as menu','mp.menu_id','=','menu.id')
+                     ->Join('meal_type as mealtp','mp.mealtype','=','mealtp.meal_type_id')
+                     ->where('mp.meal_on_date','=',$date)
+                     ->where('mp.skip_meal_flag','=','n')
+                     ->select('mp.*','city.city_name','sub.subscriber_name','suber.mobile','sub.subscriber_name','sub.address1','sub.address2','sub.id as subscriber_dtl_id','suber.id as subscriber_id','menu.item_id','menu.id as mid','mealtp.meal_type_name','sub.city','sub.state','kitchen.state_id','kitchen.city_id','kitchen.area_id')
+                     ->get(); 
+        //dd($get_meal);
         foreach ($get_meal as $key => $value) 
         {
+            
             $order_push = $this->order_push($value);
-           
+
             /*echo "<br/>===================================================";
             echo "<br/> Order_number = ".$order_push['source']['order_id'];
             echo "<br/>===================================================";
@@ -61,7 +65,6 @@ class ScheduleController extends Controller
             echo "<br/> Billid       = ".$order_push['_id'];
             echo "<br/>===================================================";*/
 
-            
             if(isset($order_push['source']['order_id']) && !empty($order_push['source']['order_id']))
             {
                 $arr_data                      = [];
@@ -80,7 +83,31 @@ class ScheduleController extends Controller
                 $arr_data['city']              = $value->city;
                 $arr_data['customer_key']      = "7c446cd81e807a77a9c3bf436f48d1aa722bf768f22a145c85aeb2ec416216d6a12a6bfecd0906b712bafb17ee16b9fc";
                 $arr_data['bill_date']         = date('y-m-d',strtotime($date));
-                $order_push                    = $this->base_order->create($arr_data);
+                $order_push1                    = $this->base_order->create($arr_data);
+
+                   
+                    //send notification 
+                    $subscriber_id     = $value->subscriber_dtl_id;
+                    $operation_details = \DB::table('users')->where('area','=',$value->area_id)->where('roles','=',2)->first();
+                 
+                    //admin send    
+                    /*$notify_arr2['message']            = "<strong>".ucfirst($value->subscriber_name)." </strong> Subscriber posist <strong>".$value->meal_type_name."</strong> order push successfully and <strong> Bill No is ".$order_push['billNumber']." & Bill date is ". date('d-m-Y',strtotime($date))."</strong>";*/ 
+
+                    $notify_arr2['message']            = "<strong>".$value->meal_type_name."</strong> Order pushed in POSist successfully, for the subscriber <strong>".ucfirst($value->subscriber_name)."</strong> for <strong>".date('jS M Y',strtotime($date))." [Bill No: ".$order_push['billNumber']."] </strong>";
+
+
+                    $notify_arr2['users_role']         = "admin" ; 
+                    $notify_arr2['user_id']            = 1; 
+                    $assign_subscriber_notification    = $this->base_notification->create($notify_arr2);
+
+                    //operation send      
+                    $notify_arr3['message']            = "<strong>".$value->meal_type_name."</strong> Order pushed in POSist successfully, for the subscriber <strong>".ucfirst($value->subscriber_name)."</strong> for <strong>".date('jS M Y',strtotime($date))." [Bill No: ".$order_push['billNumber']."] </strong>";
+
+                   
+                    $notify_arr3['users_role']         = 2 ; 
+                    $notify_arr3['user_id']            = $operation_details->id; 
+                    $assign_operation_notification     = $this->base_notification->create($notify_arr3);
+
             }
             else if(isset($order_push['status']) && $order_push['status']=="error")
             {
@@ -100,6 +127,9 @@ class ScheduleController extends Controller
                 $arr_data['customer_key']      = "7c446cd81e807a77a9c3bf436f48d1aa722bf768f22a145c85aeb2ec416216d6a12a6bfecd0906b712bafb17ee16b9fc";
                 $arr_data['bill_date']         = date('y-m-d',strtotime($date));
                 $order_push                    = $this->base_order->create($arr_data);
+
+
+
             }
 
         }      
@@ -143,7 +173,7 @@ class ScheduleController extends Controller
           return $err;
           //$msg ="fail"
         } else {    
-        echo $response;        
+          echo $response;        
           $result = json_decode($response,true);
 
 

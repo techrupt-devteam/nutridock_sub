@@ -99,7 +99,11 @@
 
               backgroundColor: '<?php echo $data['calender_data'][$i][$j]['backgroundColor'];?>', 
               tooltip        : '<?php echo $data['calender_data'][$i][$j]['ref_program_id'];?>',
-              description    : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?>',
+               <?php if(!is_null($data['calender_data'][$i][$j]['set_date'])){?>
+              description        : '<?php echo $data['calender_data'][$i][$j]['tooltip']." ( compensated from ".date('d-m-Y',strtotime($data['calender_data'][$i][$j]['set_date']));?> )',
+              <?php }else {?>
+              description        : '<?php echo $data['calender_data'][$i][$j]['tooltip'];?> ',
+              <?php }?>
               borderColor    : '<?php echo $data['calender_data'][$i][$j]['borderColor'];?>' 
             },
             
@@ -196,4 +200,7 @@
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
+.popover-content{
+      font-weight: bolder !important;
+ }
 </style>

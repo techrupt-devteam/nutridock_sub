@@ -41,6 +41,7 @@ Route::get('dynamicModal/{id}',[
  
  Route::post('/subscribe', 'HomeController@subscription');
  Route::get('/about', 'AboutController@index')->name('about');
+
  Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
  Route::get('/menu', 'MenuController@index')->name('menu');
  Route::get('/page-not-found', 'PageNotFoundController@index')->name('page-not-found');
@@ -128,8 +129,10 @@ Route::post('/check-otp', 'Auth\LoginController@checkOtp');
 Route::get('/cron_schedule', 'Cron\ScheduleController@meal');
 
 
-
-
+Route::get('/feedback', 'Admin\FeedbackController@add');
+Route::post('/store_feedback', 'Admin\FeedbackController@store');
+Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+	
 Route::group(['middleware' => 'subscriber'], function () {
 	// Only authenticated users may access this route...
 	Route::get('/dashboard', 					'Front\SubscriptionUserController@index');
@@ -385,18 +388,22 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	//subscriber Routes 
 	Route::get('/manage_subscriber',	    		  'Admin\SubscriberController@index');
 	Route::post('/getSubscriberData',	              'Admin\SubscriberController@getSubscriberData');
-
 	Route::get('/manage_new_subscriber',	    	  'Admin\SubscriberController@newindex');
 	Route::post('/getNewSubscriberData',	    	  'Admin\SubscriberController@getNewSubscriberData');
-
 	Route::get('/manage_expire_subscriber',	    	  'Admin\SubscriberController@expindex');
-	Route::post('/getExpireSubscriberData',	    	  'Admin\SubscriberController@getExpireSubscriberData');
+	Route::post('/getExpireSubscriberData',	  'Admin\SubscriberController@getExpireSubscriberData');
 
 	Route::get('/add_subscriber',		    'Admin\SubscriberController@add');
     Route::post('/store_subscriber',	    'Admin\SubscriberController@store');
 	Route::get('/edit_subscriber/{id}',	    'Admin\SubscriberController@edit');
     Route::post('/update_subscriber/{id}',  'Admin\SubscriberController@update');
 	Route::get('/delete_subscriber/{id}',   'Admin\SubscriberController@delete');
+	Route::post('/getDuration',             'Admin\SubscriberController@no_of_days');
+	Route::post('/getplan_price',           'Admin\SubscriberController@getplan_price');
+	Route::post('/getKitchen',              'Admin\SubscriberController@getKitchen');
+
+
+	
     Route::post('/verify_subscriber',	    'Admin\SubscriberController@verify_subscriber');
     Route::post('/subscriber_details',	    'Admin\SubscriberController@subscriber_details');
     Route::get('/subscriber_pdf/{id}',	    'Admin\SubscriberController@subscriber_pdf');
@@ -421,7 +428,9 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/order_details', 'Admin\OrderHistoryController@details');
 	Route::post('/order_resend',  'Admin\OrderHistoryController@order_resend');
 
+	//feedback module
 
+	Route::get('/manage_feedback', 'Admin\FeedbackController@index');
 
 
 

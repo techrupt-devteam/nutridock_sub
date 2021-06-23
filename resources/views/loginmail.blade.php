@@ -39,7 +39,7 @@
                                 <td valign="top" align="center" style="padding:0;Margin:0;width:560px"><table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-position:left top" width="100%" cellspacing="0" cellpadding="0" role="presentation">
                                     <tr style="border-collapse:collapse">
                                       <td style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0" align="center">
-                                          <img src="otpicon.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="175" height="208">
+                                          <img src="{{url('')}}/public/otpicon.png" alt style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" width="175" height="208">
                                            <h4>Verify your Login for Nutridock Fit</h4>
                                         </td>
                                     </tr>                                    
@@ -86,7 +86,7 @@
                                 <td valign="top" align="center" style="padding:0;Margin:0;width:560px"><table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">                                     
                                     <tr style="border-collapse:collapse">
                                       <td align="left" style="padding:0;Margin:0;padding-bottom:5px">  
-                                        © Nutridock Fit '.date('Y').' All rights reserved.
+                                        © Nutridock Fit {{date('Y')}} All rights reserved.
                                       </td>
                                      
                                       <td align="right"> <a href="mailto:customercare@nutridock.com">customercare@nutridock.com</a><br /> +91-7447725922</div></td>

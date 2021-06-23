@@ -56,7 +56,9 @@
                src="https://www.facebook.com/tr?id=787474255350064&ev=PageView&noscript=1"/>
         </noscript>
         <!-- End Facebook Pixel Code -->
-        
+        <link rel="stylesheet" type="text/css" href="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.css">
+  <script src="{{ url('/admin_css_js')}}/css_and_js/admin/toastr/toastr.min.js"></script>
+  
    </head>
    <body>
   
@@ -75,10 +77,11 @@
                   <li><a href="{{url('')}}/about">About</a></li>
                   <li><a href="{{url('')}}/menu">Menu</a></li>
                   
-                  <!-- <li><a href="{{url('')}}/blog">BLOG</a></li>
-                  <li><a href="{{url('')}}/faq">FAQ</a></li> -->
+                  <!-- <li><a href="{{url('')}}/blog">BLOG</a></li> 
+                  <li><a href="{{url('')}}/faq">FAQ</a></li>-->
                   <li><a href="{{url('')}}/contact">Contact</a></li>
                   <li><a href="{{url('')}}/faq">Help</a></li>
+                  <li><a href="{{url('')}}/feedback">FeedBack</a></li>
                   <li class="under-line-none" style="margin-top: 2px !important;">
                   <a 
                   id="signIn"
