@@ -211,6 +211,7 @@
                          $fats=[];
                          $total=0;
                          @endphp
+                         <?php //dd($get_default_menu);?>
                          @foreach($get_default_menu as $key => $gdmvalue)
                        
                           @if($i!=$gdmvalue->day)
@@ -271,7 +272,9 @@
 
                              </td>
                              
-                             <td><strong>{{$gdmvalue->menu_title}}</strong><br/><small><b>{{$gdmvalue->meal_type_name}}</b></small></td>
+                             <td><strong>{{$gdmvalue->menu_title}}</strong> @if(!empty($gdmvalue->additional_menu_title))<br/>
+                                      <span class="text-danger"><strong> + {{$gdmvalue->additional_menu_title}}</strong></span>
+                                      @endif<br/><small><b>{{$gdmvalue->meal_type_name}}</b></small></td>
                            
                               <td>
                                    <img src="{{ URL('') }}/uploads/images/calories.svg"" alt="your image" width="15" height="15">  <strong>{{$gdmvalue->calories}}</strong> 

@@ -69,7 +69,7 @@
                      <th>Start Date</th>
                      <th width="10%">Expire Date</th>
                      <th>Payment Status</th>
-                     <th width="35%">Action</th>
+                     <th style="min-width: 220px!important;">Action</th>
                   </thead>  
                   <tfoot>
                      <th>Id</th>
@@ -80,7 +80,7 @@
                      <th>Start Date</th>
                      <th>Expire Date</th>
                      <th>Payment Status</th>
-                     <th width="35%">Action</th>
+                     <th style="min-width: 220px!important;">Action</th>
                   </tfoot>        
                </table>
              </div>
@@ -112,6 +112,15 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="modal-additional-meal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div id="meal-content"  style="background-color: #cff9c41f">          
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- /.content-wrapper -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
@@ -125,9 +134,32 @@
    }
  </style>
 <script type="text/javascript">
+
+function additional_meal(start_date,expiry_date,subscriber_id,dll_s_id) { 
+  /*  var id  = id ;
+    var subscriber_id  = $('#subscriber_id').val();
+    var dll_s_id       = $('#subscriber_dtl_id').val();
+    var start_date     = $('#start_date').val();
+    var expiry_date    = $('#expiry_date').val();*/
+    $.ajax({
+        url: "{{url('/')}}/admin/set_additional_meal1",
+        type: 'post',
+        data: {
+          subscriber_id : subscriber_id, 
+          subscriber_dtl_id :dll_s_id, 
+          subscriber_start_date :start_date, 
+          subscriber_expiry_date :expiry_date, 
+          
+        },
+        success: function (data) {
+            $("#meal-content").html(data);
+        }
+    });
+  }
   $(document).ready(function () {
         $('#example1').DataTable({
             "processing": true,
+            "scrollX": true,
             "serverSide": true,
             "ajax":{
                      "url": "{{url('/admin')}}/getSubscriberData",

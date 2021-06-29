@@ -109,10 +109,11 @@ class UserMealProgramController extends Controller
              $program_data   = \DB::table('nutri_subscriber_meal_program')
                                 ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
                                 ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                                  ->leftJoin('nutri_mst_menu as a','nutri_subscriber_meal_program.addition_menu_id','=','a.id')
                                 ->where('nutri_subscriber_meal_program.subcriber_id','=',$subscriber_id)
                                 ->where('nutri_subscriber_meal_program.day','=',$i)
                                 ->where('nutri_subscriber_meal_program.skip_meal_flag','=','n')
-                                ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->get();
+                                ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id','a.menu_title as additional_menu_title')->get();
             
             $count = $program_data->count();
             if($count > 0){
@@ -156,11 +157,15 @@ class UserMealProgramController extends Controller
                   $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
               
                 }*/
-
+                $additional_meal = "";
+                if(!empty($value->additional_menu_title))
+                { 
+                  $additional_meal =" + ".$value->additional_menu_title; 
+                }
                    $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($value->meal_on_date));
                
                 $calender_data[$i][$key]['ref_program_id']    = $value->ref_program_id."#".$value->comsetflaf."#".$value->meal_on_date."#".lcfirst(date('D', strtotime($value->meal_on_date)));
-                $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title);
+                $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title)." ".$additional_meal;
                 $calender_data[$i][$key]['backgroundColor']   = $colors[$value->meal_type_id];
                 $calender_data[$i][$key]['borderColor']       = $colors[$value->meal_type_id];  
                  $calender_data[$i][$key]['set_date']          = $value->compenset_date;
@@ -187,12 +192,13 @@ class UserMealProgramController extends Controller
       $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
                             ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
                             ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                            ->leftJoin('nutri_mst_menu as a','nutri_subscriber_meal_program.addition_menu_id','=','a.id')
                             ->join('nutri_dtl_subscriber','nutri_dtl_subscriber.id','=','nutri_subscriber_meal_program.subcriber_id')
                             ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
                             ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
                             ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
-                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date')->get();
-
+                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date','a.menu_title as additional_menu_title')->get();
+      //dd($get_default_menu);
      /*$get_compenset_menu   =  \DB::table('nutri_subscriber_compenset_meal_program')
                               ->join('meal_type','nutri_subscriber_compenset_meal_program.mealtype','=','meal_type.meal_type_id')
                               ->join('nutri_mst_menu','nutri_subscriber_compenset_meal_program.menu_id','=','nutri_mst_menu.id')

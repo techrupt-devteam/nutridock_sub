@@ -14,6 +14,7 @@ use Session;
 use Sentinel;
 use Validator;
 
+use Mail;
 class FeedbackController extends Controller
 {
     public function __construct(Feedback $Feedback,City $City,Notification $Notification)
@@ -88,10 +89,10 @@ class FeedbackController extends Controller
         }
     }
 
-    public function view($id)
+    public function details(Request $request)
     {
         $arr_data = [];
-        $data     = $this->base_model->where(['id'=>$id])->first();
+        $data     = $this->base_model->where(['feedback_id'=>$request->id])->first();
 
         if(!empty($data))
         {
@@ -99,88 +100,41 @@ class FeedbackController extends Controller
         }
 
         $data['data']      = $arr_data;
-        $data['page_name'] = "View";
-        $data['url_slug']  = $this->url_slug;
-        $data['title']     = $this->title;
+    
         return view($this->folder_path.'view',$data);
-    }
-
-    public function edit($id)
+    } 
+   
+    public function replay(Request $request)
     {
         $arr_data = [];
-        $data     = $this->base_model->where(['id'=>$id])->first();
+        $data     = $this->base_model->where(['feedback_id'=>$request->id])->first();
 
         if(!empty($data))
         {
             $arr_data = $data->toArray();
         }
-
         $data['data']      = $arr_data;
-        $data['page_name'] = "Edit";
-        $data['url_slug']  = $this->url_slug;
-        $data['title']     = $this->title;
-        return view($this->folder_path.'edit',$data);
+        return view($this->folder_path.'sendmail',$data);
     }
 
-    public function update(Request $request, $id)
+    public function send_replay(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-                'category'     => 'required',
-            ]);
+            $data=[];
+            $data['name']            = $request->cust_name;
+            $data['feedback_mail']   = $request->feedback_mail;
+            $data['feedback_replay'] = $request->feedback_replay;
+            //dd($data['name']);
+            $to =  $request->feedback_mail;
+            $subject = 'Nutridock Fit - Feedback Reply';
+            $customer_mail = Mail::send($this->folder_path.'replaymail',$data, function($message) use($to, $subject) {
+                 $message->to($to);
+                 $message->subject($subject);
+                 $message->from('admin@nutridock.com','Nutridock Fit');
+             });
 
-        if ($validator->fails()) 
-        {
-            return $validator->errors()->all();
-        }
+            Session::flash('success', 'FeedBack reply Send successfully.');
 
-        $is_exist = $this->base_model->where('id','<>',$id)->where(['category'=>$request->input('category')])->count();
-
-        if($is_exist)
-        {
-            Session::flash('error', "Record already exist!");
-            return \Redirect::back();
-        }
-
-        $arr_data               = [];
-        $arr_data['category']     = $request->input('category');
-        if(isset($_FILES["image"]["name"]) && !empty($_FILES["image"]["name"]))
-        {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-            for ($i = 0; $i < 18; $i++) {
-                $randomString .= $characters[rand(0, $charactersLength - 1)];
-            }
-      
-            $file_name                         = $_FILES["image"]["name"];
-            $file_tmp                          = $_FILES["image"]["tmp_name"];
-            $ext                               = pathinfo($file_name,PATHINFO_EXTENSION);
-            $random_file_name                  = $randomString.'.'.$ext;
-            $latest_image                   = 'upload/category_image/'.$random_file_name;
-
-            if(move_uploaded_file($file_tmp,env('BASE_PATH').$latest_image))
-            {
-                $arr_data['category_image']      = $latest_image;
-            }
-        }   
-        
-        $category = $this->base_model->where(['id'=>$id])->update($arr_data);
-            Session::flash('success', 'Success! Record update successfully.');
-            return \Redirect::to('admin/manage_collection');
-        /*if (!empty($category))
-        {
-        }
-        else
-        {
-            Session::flash('error', "Error! Oop's something went wrong.");
-            return \Redirect::back();
-        }*/
+              return \Redirect::back();
     }
-
-    public function delete($id)
-    {
-        $this->base_model->where(['id'=>$id])->delete();
-        Session::flash('success', 'Success! Record deleted successfully.');
-        return \Redirect::back();
-    }
+    
 }

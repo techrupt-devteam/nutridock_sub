@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kitchen extends Model
 {
     protected $table 	   = "nutri_mst_kitchen";
-    protected $primaryKey  = "kitchen_id ";
+    protected $primaryKey  = "kitchen_id";
     protected $fillable    = 
     [
     	"kitchen_name",

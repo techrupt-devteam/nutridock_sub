@@ -22,11 +22,12 @@ use App\Models\SubscribeNow;
 use App\Models\SubscriptionPlan;
 use App\Models\SubscriberMaster;
 use App\Models\SubscriberDetails;
+use App\Models\SubscriberDefaultMeal;
 use App\Models\SubscriptionPlanDetails;
 use App\Models\DeliveryLocation;
 use App\Models\City;
 use App\Models\User;
-
+use App\Models\MenuModel;
 use Session;
 use Sentinel;
 use DB;
@@ -39,12 +40,28 @@ use Razorpay\Api\Api;
 
 class SubscriptionUserController extends Controller
 {
-    function __construct() {
+    function __construct(MenuModel $MenuModel,MealType $MealType,SubscriberDefaultMeal $SubscriberDefaultMeal,SubscriberDetails $SubscriberDetails) 
+    {
+         $this->base_menu_model      = $MenuModel; 
+         $this->base_meal_type       = $MealType; 
+         $this->base_default_meal    = $SubscriberDefaultMeal; 
+         $this->base_subscriber_dtl  = $SubscriberDetails; 
+
         // $this->PhysicalActivity = new PhysicalActivity();
     }
     
     public function index() 
     {  
+        $getadditionalData = DB::table('nutri_mst_subscriber')
+                              ->join('nutri_dtl_subscriber','nutri_mst_subscriber.id', '=', 'nutri_dtl_subscriber.subscriber_id')
+                              ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                              ->join('nutri_dtl_subscription_duration','nutri_dtl_subscriber.duration_id', '=', 'nutri_dtl_subscription_duration.duration_id')
+                              ->where('nutri_mst_subscriber.id', '=', Session::get('subscriber_id'))
+                              ->where('nutri_dtl_subscriber.expiry_date', '>=',date('Y-m-d'))
+                              ->select('nutri_dtl_subscription_duration.no_of_additional_meal as duration_additional_meal','nutri_dtl_subscriber.id as dll_s_id','nutri_dtl_subscriber.*','nutri_mst_subscription_plan.sub_name')
+                              ->get()->first(); 
+                               
+        //dd($getadditionalData);
         $getSubscriberData = DB::table('nutri_mst_subscriber')
                               ->join('nutri_dtl_subscriber','nutri_mst_subscriber.id', '=', 'nutri_dtl_subscriber.subscriber_id')
                               ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
@@ -72,10 +89,11 @@ class SubscriptionUserController extends Controller
          //dd($data); 
            //Arr::set($data,NULL, $getSubscriberData);   
            //Arr::set($data,NULL, $todays_meal_plan);   
-           $data                 =[];
-           $data['data']         = $getSubscriberData;
-           $data['todays_menu']  = $todays_meal_plan;
-           $data['seo_title']    = "Dashboard";
+           $data                      =[];
+           $data['data']              = $getSubscriberData;
+           $data['todays_menu']       = $todays_meal_plan;
+           $data['seo_title']         = "Dashboard";
+           $data['getadditionalData'] = $getadditionalData;
 
             return view('dashboard',$data);
 
@@ -502,5 +520,117 @@ class SubscriptionUserController extends Controller
      
       return $msg;
     }
+
+    //set additional meal function
+    public function set_additional_meal(Request $request)
+    {
+      $subscriber_id            = $request->subscriber_id; 
+      $subscriber_dtl_id        = $request->subscriber_dtl_id;  
+      $subscriber_start_date    = date('Y-m-d',strtotime($request->subscriber_start_date));  
+      $subscriber_expiry_date   = date('Y-m-d',strtotime($request->subscriber_expiry_date));  
+     // dd($request);
+      $aditional_menu           = $this->base_menu_model->where('menu_category_id','=',8)
+                                  ->where('is_active','=',1)
+                                  ->get();  
+      $meal_type                = $this->base_meal_type->get();  
+      $days                     = \DB::table('nutri_subscriber_meal_program')
+                                 ->where('nutri_subscriber_meal_program.meal_on_date','>=',$subscriber_start_date)   
+                                 ->where('nutri_subscriber_meal_program.meal_on_date','<=',$subscriber_expiry_date)  
+                                 ->where('nutri_subscriber_meal_program.subcriber_id','=',$subscriber_dtl_id)   
+                                 ->select('nutri_subscriber_meal_program.day','nutri_subscriber_meal_program.meal_on_date')
+                                 ->groupBy('nutri_subscriber_meal_program.day')
+                                 ->get();   
+
+      
+      $data                          =[];
+      $data['aditional_menu']        = $aditional_menu;
+      $data['meal_type']             = $meal_type;
+      $data['days']                  = $days->toArray();
+      $data['subscriber_dtl_id']     = $subscriber_dtl_id;
+      $data['subscriber_start_date']     = $subscriber_start_date;
+      $data['subscriber_expiry_date']     = $subscriber_expiry_date;
+     
+      return view('set-additional-menu-ajax',$data);                           
+
+    }
+
+    public function store_additional_menu(Request $request)
+    {
+
+        $day_array         = explode('#',$request->day);
+        $day               = $day_array[0];
+        $meal_on_date      = date('Y-m-d',strtotime($day_array[1]));
+        $meal_type         = $request->meal_type;
+        $additional_menu   = $request->menu_id; 
+        $subscriber_dtl_id = $request->subscriber_dtl_id; 
+        
+        $arr_data          = [];
+        $arr_data['addition_menu_id']   = $additional_menu;
+        
+        $additional_menu_set     = $this->base_default_meal
+                                   ->where('subcriber_id','=',$subscriber_dtl_id)
+                                   ->where('mealtype','=',$meal_type)
+                                   ->where('day','=',$day)
+                                   ->where('meal_on_date','=',$meal_on_date)
+                                   ->update($arr_data);
+
+        if(!empty($additional_menu_set)){
+        // set additional meal count  on subscriber dtl
+          $subscriber_dtl_meal_count = $this->base_subscriber_dtl
+                                     ->where('id','=',$subscriber_dtl_id)
+                                     ->select('no_of_additional_meal')
+                                     ->first();
+          $old_cnt =  $subscriber_dtl_meal_count['no_of_additional_meal'];
+
+          $arr_data1          = [];
+          $arr_data1['no_of_additional_meal']   = $old_cnt+1;
+          $update_meal_count  = $this->base_subscriber_dtl
+                                ->where('id','=',$subscriber_dtl_id)
+                                ->update($arr_data1);  
+          return "success"; 
+        }else
+        {
+          return "error"; 
+        }                        
+    }
+
+    public function cancel_additional_menu(Request $request)
+    {
+
+        $id                 = $request->id;
+        $subscriber_dtl_id  = $request->subcriber_id;
+        
+        $arr_data          = [];
+        $arr_data['addition_menu_id']   = NULL;
+        
+        $additional_menu_set     = $this->base_default_meal
+                                   ->where('program_id','=',$id)
+                                   ->update($arr_data);
+
+        if(!empty($additional_menu_set)){
+        // set additional meal count  on subscriber dtl
+          $subscriber_dtl_meal_count = $this->base_subscriber_dtl
+                                     ->where('id','=',$subscriber_dtl_id)
+                                     ->select('no_of_additional_meal')
+                                     ->first();
+          $old_cnt =  $subscriber_dtl_meal_count['no_of_additional_meal'];
+
+          $arr_data1          = [];
+          $arr_data1['no_of_additional_meal']   = $old_cnt-1;
+          $update_meal_count  = $this->base_subscriber_dtl
+                                ->where('id','=',$subscriber_dtl_id)
+                                ->update($arr_data1);  
+        
+          Session::flash('success',"Additional menu cancel successfully !!");
+          return \Redirect::back();
+
+        }else
+        {
+          Session::flash('Error',"Sorry You can not cancel a meal !!");
+          return \Redirect::back();
+        
+        }                        
+    }
+     
 }
 ?>

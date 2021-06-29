@@ -35,7 +35,7 @@
                       <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>
                     </div>
                 </div>
-                <div class="col-md-4">
+                 <div class="col-md-4">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="state_id">State<span style="color:red;" >*</span></label>
@@ -55,8 +55,7 @@
                       <div id="state_error" style="color:red;"></div>
                     </div>
                   </div>
-                </div>
-
+                </div> 
                 <div class="col-md-4">
                   <div class="box-body">
                     <div class="form-group">

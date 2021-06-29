@@ -138,7 +138,9 @@
                 </div>
                 <div class="box-body">
                   <div class="col-md-6">
-                    <?php $user_data         = explode(",",$data['user_id']); ?>
+                    <?php 
+                    //dd($user_data);
+                   // $user_data         = explode(",",$data['user_id']); ?>
                     <?php $menu_data         = explode(",",$data['menu_id']); ?>
                     <?php $subscription_data = explode(",",$data['sub_plan_id']); ?>
                     <div class="form-group">

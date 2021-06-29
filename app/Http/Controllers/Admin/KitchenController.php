@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Kitchen;
+use App\Models\KitchenTarget;
+use App\Models\KitchenUser;
 use App\Models\Location;
 use App\Models\City;
 use App\Models\State;
@@ -21,20 +23,22 @@ use DB;
 use Config;
 class KitchenController extends Controller
 {
-    public function __construct(Kitchen $Kitchen,Location $Location,City $City,State $State,SubscriptionPlan $SubscriptionPlan,User $User,MenuModel $MenuModel,Role $Role)
+    public function __construct(Kitchen $Kitchen,Location $Location,City $City,State $State,SubscriptionPlan $SubscriptionPlan,KitchenUser $KitchenUser,User $User,MenuModel $MenuModel,Role $Role,KitchenTarget $KitchenTarget)
     {
-        $data                  = [];
-        $this->base_model      = $Kitchen; 
-        $this->base_location   = $Location; 
-        $this->base_city       = $City; 
-        $this->base_state      = $State; 
-        $this->base_user       = $User; 
-        $this->base_menu_model = $MenuModel; 
-        $this->base_role       = $Role; 
+        $data                         = [];
+        $this->base_model             = $Kitchen; 
+        $this->base_kitchen_user      = $KitchenUser; 
+        $this->base_target            = $KitchenTarget; 
+        $this->base_location          = $Location; 
+        $this->base_city              = $City; 
+        $this->base_state             = $State; 
+        $this->base_user              = $User; 
+        $this->base_menu_model        = $MenuModel; 
+        $this->base_role              = $Role; 
         $this->base_subscription_plan = $SubscriptionPlan; 
-        $this->title           = "Cloud Kitchen";
-        $this->url_slug        = "kitchen";
-        $this->folder_path     = "admin/kitchen/";
+        $this->title                  = "Cloud Kitchen";
+        $this->url_slug               = "kitchen";
+        $this->folder_path            = "admin/kitchen/";
         //Message
         $this->Insert          = Config::get('constants.messages.Insert');
         $this->Update          = Config::get('constants.messages.Update');
@@ -156,12 +160,27 @@ class KitchenController extends Controller
         $arr_data['address']         = $request->input('address');
         $arr_data['menu_id']         = $menu_data;
         $arr_data['sub_plan_id']     = $subscriptionplan_data;
-        $arr_data['user_id']         = $users_data;
+        //$arr_data['user_id']         = $users_data;
 
         $store_kitchen = $this->base_model->create($arr_data);
       
         if(!empty($store_kitchen))
         {
+//dd($store_kitchen->kitchen_id);
+            $user = $request->input('users');
+            foreach($user as $uid){
+                
+                $arr_data1['kitchen_id'] =  $store_kitchen->kitchen_id;
+                $arr_data1['user_id']    =  $uid;
+                     $users              =  \DB::table('users')
+                                            ->where('id','=',$uid)
+                                            ->select('roles')
+                                            ->first();
+               $arr_data1['role_id']     =  $users->roles;  
+                
+                $this->base_kitchen_user->create($arr_data1);
+            }
+            
             Session::flash('success',  $this->Insert);
             return \Redirect::to('admin/manage_kitchen');
         }
@@ -178,6 +197,12 @@ class KitchenController extends Controller
         $id             = base64_decode($id);
         $arr_data       = [];
         $data           = $this->base_model->where(['kitchen_id'=>$id])->first();
+        $user_data      = $this->base_kitchen_user->where(['kitchen_id'=>$id])->select('user_id')->get();
+        $user_id_arr    = []; 
+        foreach ($user_data as $key => $uid) {
+           $user_id_arr[] = $uid->user_id;
+        }
+     
         $state          = $this->base_state->get();
         $menu_model     = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
         $users          =  \DB::table('users')
@@ -199,6 +224,7 @@ class KitchenController extends Controller
         }   
        
         $data['data']      = $arr_data;
+        $data['user_data'] = $user_id_arr;
         $data['page_name'] = "Edit";
         $data['subscriptionplan'] = $subscription_plan;
         $data['menu']       = $menu_model;
@@ -236,7 +262,7 @@ class KitchenController extends Controller
 
         $menu_data                   = implode(",",$request->input('menu'));
         $subscriptionplan_data       = implode(",",$request->input('subscription_plan'));
-        $users_data                  = implode(",",$request->input('users'));
+       // $users_data                  = implode(",",$request->input('users'));
 
         $arr_data                    = [];
         $arr_data['kitchen_name']    = $request->input('kitchen_name');
@@ -248,9 +274,27 @@ class KitchenController extends Controller
         $arr_data['address']         = $request->input('address');
          $arr_data['menu_id']        = $menu_data;
         $arr_data['sub_plan_id']     = $subscriptionplan_data;
-        $arr_data['user_id']         = $users_data;
+        //$arr_data['user_id']         = $users_data;
 
         $update_kitchen  = $this->base_model->where(['kitchen_id'=>$id])->update($arr_data);
+        if($update_kitchen){
+
+            $this->base_kitchen_user->where(['kitchen_id'=>$id])->delete();
+
+            $user = $request->input('users');
+            foreach($user as $uid){
+            
+                $arr_data1['kitchen_id'] =  $id;
+                $arr_data1['user_id']    =  $uid;
+                     $users              =  \DB::table('users')
+                                            ->where('id','=',$uid)
+                                            ->select('roles')
+                                            ->first();
+               $arr_data1['role_id']     =  $users->roles;  
+               $this->base_kitchen_user->create($arr_data1);
+            
+            }
+        }
 
         Session::flash('success', $this->Update);
         return \Redirect::to('admin/manage_kitchen');
@@ -293,7 +337,7 @@ class KitchenController extends Controller
         $kitchen            = $this->base_model->where(['kitchen_id'=>$kitchen_id])->first();
 
       
-        $user_data         = explode(",",  $kitchen->user_id); 
+       // $user_data         = explode(",",  $kitchen->user_id); 
         $menu_data         = explode(",",  $kitchen->menu_id); 
         $subscription_data = explode(",",  $kitchen->sub_plan_id); 
 
@@ -301,7 +345,12 @@ class KitchenController extends Controller
         $state              = $this->base_state->get();
         $menu_model         = $this->base_menu_model->select('menu_title','id')->whereIn('id', $menu_data)->get();
 
-
+         $user_data      = $this->base_kitchen_user->where(['kitchen_id'=>$kitchen_id])->select('user_id')->get();
+        $user_id_arr    = []; 
+        foreach ($user_data as $key => $uid) {
+           $user_id_arr[] = $uid->user_id;
+        }
+     
         $users              =   \DB::table('users')
                                 ->join('role','users.roles','=','role.role_id')
                                 ->join('state','users.state','=','state.id')
@@ -310,7 +359,7 @@ class KitchenController extends Controller
                                 ->select('role.role_name','users.*','state.name as state_name','city.city_name','locations.area as area_name')
                                 ->where('users.is_deleted','<>',1)
                                 ->where('users.is_active','=',1)
-                                ->whereIn('users.id', $user_data)
+                                ->whereIn('users.id', $user_id_arr)
                                 ->orderBy('users.id', 'DESC')
                                 ->get(); 
         //dd($users);
@@ -335,7 +384,7 @@ class KitchenController extends Controller
                           <div class="panel-heading"><b>Assign User</b></div>
                           <div class="panel-body"><ul>';
                             foreach ($users as $key => $uvalue) {
-                                 $html .= '<li>'.$uvalue->name.' Role:-<b>'.$uvalue->role_name.'</b></li>';
+                                 $html .= '<li>'.$uvalue->name.'   Role:-<b>'.$uvalue->role_name.'</b></li>';
                             }
                     $html .= '</ul></div>
                         </div>
@@ -373,4 +422,82 @@ class KitchenController extends Controller
         return $html;
     } 
 
+    public function kitchen_target(Request $request)
+    {
+        $id           = $request->id;
+        $data         = $this->base_model->where(['kitchen_id'=>$id])->first();
+        $data['data'] = $data;
+        return view($this->folder_path.'add_target',$data);
+    }
+
+    public function view_target(Request $request)
+    {
+        $id           = base64_decode($request->id);
+        $data         = \DB::table('nutri_trn_kitchen_target')
+                         ->join('nutri_mst_kitchen','nutri_trn_kitchen_target.kitchen_id','=','nutri_mst_kitchen.kitchen_id')
+                         ->select('nutri_mst_kitchen.kitchen_name','nutri_trn_kitchen_target.*')
+                         ->where('nutri_trn_kitchen_target.kitchen_id','=',$id)
+                         ->where('nutri_trn_kitchen_target.is_deleted','<>',1)
+                         ->get()->toArray();
+        //dd($data);                  
+        $data['data']      = $data;
+        $data['page_name'] = "Manage";
+        $data['url_slug']  = 'target';
+        $data['title']     = "Target";
+        return view($this->folder_path.'target_index',$data);
+    }
+
+    public function store_target(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+                "kitchen_id"    => 'required',
+                "month"         => 'required',
+                "target_amt"    => 'required'
+             
+            ]);
+
+        if ($validator->fails()) 
+        {
+            return $validator->errors()->all();
+        }
+      
+        $is_exist = $this->base_target->where(['month'=>$request->input('month'),'kitchen_id'=>$request->input('kitchen_id'),'is_deleted'=>0])->count();
+
+        if($is_exist)
+        {
+            Session::flash('error', "Kitchen target already set.");
+            return \Redirect::back();
+        }
+
+        $arr_data                      = [];
+        $arr_data['kitchen_id']        = $request->input('kitchen_id');
+        $arr_data['month']             = date('M-Y',strtotime($request->input('month')));
+        $arr_data['year']              = date('Y',strtotime($request->input('month')));
+        $arr_data['target_amt']        = $request->input('target_amt');
+        $store_kitchen_target          = $this->base_target->create($arr_data);
+        
+        if(!empty($store_kitchen_target))
+        {
+            Session::flash('success',  "Kitchen target added succesfully");
+            return \Redirect::to('admin/manage_kitchen');
+        }
+        else
+        {
+            Session::flash('error',  $this->Error);
+            return \Redirect::back();
+        }
+    }
+
+
+    public function delete_target($id)
+    {
+        $id=base64_decode($id);
+        $arr_data               = [];
+        $arr_data['is_deleted'] = '1';
+        $this->base_target->where(['target_kitchen_id'=>$id])->update($arr_data);
+        Session::flash('success',"Target delete succesfully.");
+        return \Redirect::to('admin/manage_kitchen');
+    } 
+
+   
 }

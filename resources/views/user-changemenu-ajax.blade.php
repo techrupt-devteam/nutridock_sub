@@ -26,7 +26,7 @@
                 <input type="hidden" name="meal_type" id ="meal_type" value="{{ $program_data->meal_type_name }}">
                 <div class="col-md-12">
                     <div class="form-group">
-                      <label class="d-block"><b>Meal Type:</b> {{ $program_data->meal_type_id }}</label>
+                      <label class="d-block"><b>Meal Type:</b> {{ $program_data->meal_type_name }}</label>
                     </div>
                 </div>
                 </div>

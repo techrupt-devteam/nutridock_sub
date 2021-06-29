@@ -9,18 +9,16 @@
       <div class="col-xs-12"> @include('admin.layout._status_msg')
         <div class="box">
           <div class="box-header">
-            <h3 class="box-title">{{ $page_name." ".$title }}</h3>
-            <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Cloud Kitchen</a> </div>
+          <h3 class="box-title">{{ $page_name." ".$title }} for <strong>{{ucfirst($data[0]->kitchen_name)}}</strong></h3><a href="{{url('/admin')}}/manage_kitchen" class="btn btn-info btn-sm" style="float: right;"><i class="fa fa-arrow-alt-circle-left"></i>Back</a></div>
           <!-- /.box-header -->
           <div class="box-body"><div class="table-responsive">
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th>Sr.No.</th>
-                  <th>Name</th>
-                  <th>State</th>
-                  <th>City</th>
-                  <th>Area</th>
+                  <th>Month</th>
+                  <th>Target Amount</th>
+                  <th>Achive Amount</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -28,18 +26,11 @@
               @foreach($data as $key=>$value)
               <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$value->kitchen_name}}</td>
-                <td>{{$value->state_name}}</td>
-                <td>{{$value->city_name}}</td>
-                <td>{{$value->area_name}}</td>
+                <td>{{$value->month}}</td>
+                <td>{{$value->target_amt}}</td>
+                <td>{{$value->achive_amt}}</td>
                 <td>
-                   <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-add" onclick="addtarget(<?php echo $value->kitchen_id;?>);"><i class="fa fa-plus"></i> Add Target</button>
-                  <!--  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-target-list" onclick="viewtarget(<?php echo $value->kitchen_id;?>);"><i class="fa fa-info-circle"></i> View Targets</button> -->
-                  <a href="{{url('/admin')}}/manage_target/{{base64_encode($value->kitchen_id)}}"  class="btn btn-sm btn-danger"  title="View Target"><i class="fa fa-info-circle"></i> View Targets</a>
-
-
-                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-details" onclick="viewDetails(<?php echo $value->kitchen_id;?>);"><i class="fa fa-info-circle"></i> Kitchen Details</button>
-                  <div class="btn-group"> <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value->kitchen_id)}}"  class="btn btn-primary"  title="Edit"> <i class="fa fa-pencil"></i> </a> <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value->kitchen_id)}}"   class="btn btn-default "  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');"> <i class="fa fa-trash text-danger"></i> </a> </div></td>
+                  <div class="btn-group"> <!-- <a href="{{url('/admin')}}/edit_target/{{base64_encode($value->kitchen_id)}}"  class="btn btn-primary btn-sm"  title="Edit"> <i class="fa fa-pencil"></i> </a> --> <a href="{{url('/admin')}}/delete_target/{{base64_encode($value->target_kitchen_id)}}"   class="btn btn-default"  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');"> <i class="fa fa-trash text-danger"></i> </a> </div></td>
               </tr>
               @endforeach
                 </tbody>

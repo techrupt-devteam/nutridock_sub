@@ -90,8 +90,24 @@
                   <div class="box-body">
                     <div class="row">
                   
-                       <div class="col-md-12">    
-                        <h4>My Latest Subscription</h4><hr/>
+                       <div class="col-md-12"> 
+
+                        <h4>My Latest Subscription
+                        @php 
+                          $no_of_addition_meal = $getadditionalData->duration_additional_meal - $getadditionalData->no_of_additional_meal; 
+                        @endphp  
+
+                            @if($no_of_addition_meal !=0)
+                            <button type='button' class='buttonanm float-right btn btn-danger btn-sm' data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal();' title='Subscriber additional meal'>You have {{ $no_of_addition_meal }} Additional Meal</button>
+                            @endif
+
+
+                        </h4><hr/>
+                          <input type="hidden" id="start_date" value="{{$getadditionalData->start_date}}">
+                          <input type="hidden" id="expiry_date" value="{{$getadditionalData->expiry_date}}">
+                          <input type="hidden" id="subscriber_id" value="{{$getadditionalData->subscriber_id}}">
+                          <input type="hidden" id="subscriber_dtl_id" value="{{$getadditionalData->dll_s_id}}">
+                          
                           <table id="dtable" class="ui celled table table-responsive-sm">
                                 <thead>
                                     <tr>
@@ -224,6 +240,14 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="modal-additional-meal" role="dialog" >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div id="meal-content"  style="background-color: #cff9c41f">          
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -239,78 +263,9 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-
-<style type="text/css">
-  .box-body {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    padding: 10px;
-    background-color: white !important;
-}
-
-.card {
-    font-size: 1em;
-    overflow: hidden;
-    padding: 0;
-    border: none;
-    border-radius: .28571429rem;
-    box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
-}
-
-.card-block {
-    font-size: 1em;
-    position: relative;
-    margin: 0;
-    padding: 1em;
-    border: none;
-    border-top: 1px solid rgba(34, 36, 38, .1);
-    box-shadow: none;
-}
-
-.card-img-top {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.card-title {
-    font-size: 1.28571429em;
-    font-weight: 700;
-    line-height: 1.2857em;
-}
-
-.card-text {
-    clear: both;
-    margin-top: .5em;
-    color: rgba(0, 0, 0, .68);
-}
-
-.card-footer {
-    font-size: 1em;
-    position: static;
-    top: 0;
-    left: 0;
-    max-width: 100%;
-    padding: .75em 1em;
-    color: rgba(0, 0, 0, .4);
-    border-top: 1px solid rgba(0, 0, 0, .05) !important;
-    background: #fff;
-}
-
-.card-inverse .btn {
-    border: 1px solid rgba(0, 0, 0, .05);
-}
-
-
-</style>
-
-
-
-<script>
+<<style type="text/css">@keyframes glowing{0%{background-color:#d43f3a;box-shadow:0 0 5px #d43f3a;font-size:15px}50%{background-color:#d43f3a;box-shadow:0 0 20px #d43f3a;font-size:15px}100%{background-color:#d43f3a;box-shadow:0 0 5px #d43f3a;font-size:15px}}.buttonanm{animation:glowing 1.5s infinite}.box-body{border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:3px;border-bottom-left-radius:3px;padding:10px;background-color:#fff!important}.card{font-size:1em;overflow:hidden;padding:0;border:none;border-radius:.28571429rem;box-shadow:0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5}.card-block{font-size:1em;position:relative;margin:0;padding:1em;border:none;border-top:1px solid rgba(34,36,38,.1);box-shadow:none}.card-img-top{display:block;width:100%;height:auto}.card-title{font-size:1.28571429em;font-weight:700;line-height:1.2857em}.card-text{clear:both;margin-top:.5em;color:rgba(0,0,0,.68)}.card-footer{font-size:1em;position:static;top:0;left:0;max-width:100%;padding:.75em 1em;color:rgba(0,0,0,.4);border-top:1px solid rgba(0,0,0,.05)!important;background:#fff}.card-inverse .btn{border:1px solid rgba(0,0,0,.05)}</style>
+<script >
 $('#dtable').DataTable();  
-
 //function to show details of subscriber
 function viewDetails(id) { 
     var id  = id ;
@@ -353,6 +308,30 @@ function viewDetails1(id) {
     });
     return false;
 } 
+
+function additional_meal(id) { 
+    var id  = id ;
+    var subscriber_id  = $('#subscriber_id').val();
+    var dll_s_id       = $('#subscriber_dtl_id').val();
+    var start_date     = $('#start_date').val();
+    var expiry_date    = $('#expiry_date').val();
+
+
+    $.ajax({
+        url: "{{url('/')}}/set_additional_meal",
+        type: 'post',
+        data: {
+          subscriber_id : subscriber_id, 
+          subscriber_dtl_id :dll_s_id, 
+          subscriber_start_date :start_date, 
+          subscriber_expiry_date :expiry_date, 
+          
+        },
+        success: function (data) {
+            $("#meal-content").html(data);
+        }
+    });
+}
 
 </script>
 @endsection

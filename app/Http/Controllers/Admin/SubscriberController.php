@@ -20,6 +20,8 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Models\Kitchen;
 use App\Models\SubscriberDetails;
+use App\Models\MenuModel;
+use App\Models\SubscriberDefaultMeal;
 use Carbon\Carbon;
 use Session;
 use Sentinel;
@@ -31,7 +33,7 @@ use Illuminate\Contracts\View\View;
 
 class SubscriberController extends Controller
 {
-    public function __construct(State $State,City $City,PhysicalActivity $PhysicalActivity,SubscribeNowPlan $SubscribeNowPlan,FoodAvoid $FoodAvoid,MealType $MealType,SubscriptionPlanDetails $SubscriptionPlanDetails,SubscriptionPlan $SubscriptionPlan,Kitchen $Kitchen,SubscriberMaster $SubscriberMaster,SubscriberDetails $SubscriberDetails)
+    public function __construct(State $State,City $City,PhysicalActivity $PhysicalActivity,SubscribeNowPlan $SubscribeNowPlan,FoodAvoid $FoodAvoid,MealType $MealType,SubscriptionPlanDetails $SubscriptionPlanDetails,SubscriptionPlan $SubscriptionPlan,Kitchen $Kitchen,SubscriberMaster $SubscriberMaster,SubscriberDetails $SubscriberDetails,MenuModel $MenuModel,SubscriberDefaultMeal $SubscriberDefaultMeal)
     {
         $data                         = [];
         //$this->base_model    = $Subscription; 
@@ -43,6 +45,11 @@ class SubscriberController extends Controller
         $this->base_subscription_duration = $SubscriptionPlanDetails; 
         $this->base_meal_plan             = $MealType; 
         $this->base_kitchen               = $Kitchen;
+        //
+        $this->base_menu_model            = $MenuModel; 
+        $this->base_meal_type             = $MealType; 
+        $this->base_default_meal          = $SubscriberDefaultMeal; 
+        $this->base_subscriber_dtl        = $SubscriberDetails;
         //subscriber mst
         $this->base_subscriber_mst        = $SubscriberMaster;
         //subscriber dtl
@@ -238,9 +245,30 @@ class SubscriberController extends Controller
 
         $login_city_id = Session::get('login_city_id'); 
         $assign_subscriber = Session::get('assign_subscriber'); 
+        $login_user_details  = Session::get('user');
+          
+                
+        //kichen id find functionality 
+        $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
+        //dd($kichen_data->kitchen_id);
+        $skitchen_id = $kichen_data->kitchen_id;
+
+
+
+
+       /* $kichen_data = DB::table('nutri_mst_kitchen')->get();
+        foreach ($kichen_data as $key => $value) {
+           $user_id = explode(',',$value->user_id);
+
+           if(in_array($login_user_details->id, $user_id))
+           {
+            $skitchen_id = $value->kitchen_id;
+           }
+        }*/
+        //dd($kitchen_info);
         //dd($assign_subscriber);
         $user = \Sentinel::check();
-        $login_user_details  = Session::get('user');
+
         $columns = array( 
                             0 =>'id', 
                             1 =>'Name',
@@ -251,7 +279,8 @@ class SubscriberController extends Controller
 
              if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin"){
                     $data = \DB::table('nutri_dtl_subscriber')
-                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id') 
+                                    ->join('nutri_mst_kitchen','nutri_dtl_subscriber.skitchen_id','=','nutri_mst_kitchen.kitchen_id')
                                     ->join('city','nutri_dtl_subscriber.city','=','city.id')
                                     ->join('state','nutri_dtl_subscriber.state','=','state.id')
                                     ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
@@ -259,6 +288,7 @@ class SubscriberController extends Controller
 
                 $data = \DB::table('nutri_dtl_subscriber')
                                     ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                                    ->join('nutri_mst_kitchen','nutri_dtl_subscriber.skitchen_id','=','nutri_mst_kitchen.kitchen_id')
                                     ->join('city','nutri_dtl_subscriber.city','=','city.id')
                                     ->join('state','nutri_dtl_subscriber.state','=','state.id')
                                     ->where('nutri_dtl_subscriber.is_deleted','<>',1); 
@@ -283,22 +313,27 @@ class SubscriberController extends Controller
                               ->get();     
 
             }
+
             if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin" && $data!=""){
 
-                $data     =  $data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
-                              ->where('nutri_dtl_subscriber.city','=',$login_city_id)
-                              ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
-                              ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
-                              ->get();   
+                $data      =  $data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
+                               ->where('nutri_dtl_subscriber.city','=',$login_city_id)
+                               ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
+                               ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
+                               ->get();   
       
-            }else if($login_user_details->roles!="admin" && $data!="")
+            }
+            else if($login_user_details->roles!="admin" && $data!="")
             {
-                 $data     =  $data
-                              ->where('nutri_dtl_subscriber.city','=',$login_city_id)
+                 $data     =  $data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
                               ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                               ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
                               ->get();
+
+                              //->where('nutri_dtl_subscriber.city','=',$login_city_id)
+                              
             }
+
         //dd($data);
         $totalData = count($data);
           if($totalData > 0){ 
@@ -362,7 +397,8 @@ class SubscriberController extends Controller
                 }
                 else if($login_user_details->roles!="admin" && $get_tbl_data !="")
                 {
-                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                  //$get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
                                         ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                         ->offset($start)
                                         ->limit($limit)
@@ -423,7 +459,7 @@ class SubscriberController extends Controller
 
                if(isset($assign_subscriber) && !empty($assign_subscriber) && $login_user_details->roles!="admin" && $get_tbl_data!=""){
 
-                  $get_tbl_data     =  $get_tbl_data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
+                  $get_tbl_data     =   $get_tbl_data->whereIn('nutri_dtl_subscriber.id',$assign_subscriber)
                                         ->where('nutri_dtl_subscriber.city','=',$login_city_id) 
                                         ->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
@@ -440,8 +476,9 @@ class SubscriberController extends Controller
                 else if($login_user_details->roles!="admin" && $get_tbl_data!="")
                 {
 
-
-                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id) 
+                        //->where('nutri_dtl_subscriber.city','=',$login_city_id) 
+                     
+                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
                                         ->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
                                         ->orWhere('nutri_mst_subscriber.email', 'LIKE',"%{$search}%")
@@ -512,7 +549,7 @@ class SubscriberController extends Controller
                     $status="Pending <i class='fa fa-times-circle'></i>"; $style="danger";}     
 
                    
-                  $nestedData['action'] = "<button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")' title='subscriber details'><i class='fa fa-info-circle'></i></button>
+                  $nestedData['action'] = "<div class='btn-group'><button type='button' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#modal-details' onclick='viewDetails(".$value->id.")' title='subscriber details'><i class='fa fa-info-circle'></i></button>
                      <input type='hidden' id='status".$value->id."' value=".$value->is_approve.">";
                   if($login_user_details->roles!=1){
                        $nestedData['action'] .="<button type='button' value=".$value->id." id='btn-verify".$value->id."' class='btn btn-sm btn-".$style."' onclick='verified_subscriber(".$value->id.")'>".$status."</button>";
@@ -556,7 +593,43 @@ class SubscriberController extends Controller
                         $nestedData['action'] .=' <a href="'.url('/admin').'/subscriber_bill_pdf/'.$value->id.'" target="_blank" class="btn btn-danger btn-sm"  title="Subscriber Invoice" >
                         Bill <i class="glyphicon glyphicon-open-file"></i>
                         </a>';
+                        
+                        $subscriber_id = $value->id;
+                       // dd($subscriber_id);
+                        $getadditionalData = DB::table('nutri_dtl_subscriber')
+                            ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
+                              ->join('nutri_dtl_subscription_duration','nutri_dtl_subscriber.duration_id', '=', 'nutri_dtl_subscription_duration.duration_id')
+                              ->where('nutri_dtl_subscriber.id','=',$subscriber_id)
+                              //->where('nutri_dtl_subscriber.expiry_date', '>=',date('Y-m-d'))
+                             ->select('nutri_dtl_subscription_duration.no_of_additional_meal as duration_meal','nutri_dtl_subscriber.id as dll_s_id','nutri_dtl_subscriber.*','nutri_mst_subscription_plan.sub_name')
+                              ->first();
+                            //dd($getadditionalData); 
+                          //addtional meal set button
+                        $no_of_addition_meal = $getadditionalData->duration_meal - $getadditionalData->no_of_additional_meal; 
+                        //dd($no_of_addition_meal);
+                            if($no_of_addition_meal !=0)
+                            {
+                                /*$nestedData['action'] .="<input type='hidden' id='start_date' value=".$getadditionalData->start_date.">
+                          <input type='hidden' id='expiry_date' value=".$getadditionalData->expiry_date.">
+                          <input type='hidden' id='subscriber_id' value=".$getadditionalData->subscriber_id.">
+                          <input type='hidden' id='subscriber_dtl_id' value=".$getadditionalData->dll_s_id."><button type='button' class='buttonanm float-right btn btn-info btn-sm' data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal('".date('Y-m-d',strtotime($getadditionalData->start_date))."','".date('Y-m-d',strtotime($getadditionalData->expiry_date))."','".$getadditionalData->subscriber_id."','".$getadditionalData->dll_s_id."');' title='Subscriber additional meal'>".$no_of_addition_meal." Add Meal</button>";*/
+                                $nestedData['action'] .='<input type="hidden" id="start_date" value="'.$getadditionalData->start_date.'">
+                          <input type="hidden" id="expiry_date" value="'.$getadditionalData->expiry_date.'">
+                          <input type="hidden" id="subscriber_id" value="'.$getadditionalData->subscriber_id.'">
+                          <input type="hidden" id="subscriber_dtl_id" value="'.$getadditionalData->dll_s_id.'">
+                          <button type="button" class="buttonanm float-right btn btn-info btn-sm" data-toggle="modal" data-target="#modal-additional-meal" onclick="additional_meal(\''.date('Y-m-d',strtotime($getadditionalData->start_date)).'\',\''.date('Y-m-d',strtotime($getadditionalData->expiry_date)).'\','.$getadditionalData->subscriber_id.','.$getadditionalData->dll_s_id.');" title="Subscriber additional meal">'.$no_of_addition_meal.' Add Meal</button>';
+                            } 
+                        
+
+                        $nestedData['action'] .="</div>";
+
                     }    
+
+
+
+
+
+
                 $nestedData['class_r'] = $class_r;
                 $data[] = $nestedData;
                // dd($data);
@@ -1118,6 +1191,22 @@ class SubscriberController extends Controller
         $assign_subscriber = Session::get('assign_subscriber'); 
         $user = \Sentinel::check();
         $login_user_details  = Session::get('user');
+        $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
+        //dd($kichen_data->kitchen_id);
+        $skitchen_id = $kichen_data->kitchen_id;
+        /*$skitchen_id = 0;
+        $kichen_data = DB::table('nutri_mst_kitchen')->get();
+        foreach ($kichen_data as $key => $value) {
+           $user_id = explode(',',$value->user_id);
+
+           if(in_array($login_user_details->id, $user_id))
+           {
+            $skitchen_id = $value->kitchen_id;
+           }
+        }*/
+
+       
+
         $columns = array( 
                             0 =>'id', 
                             1 =>'Name',
@@ -1127,6 +1216,7 @@ class SubscriberController extends Controller
                         );
         $data = \DB::table('nutri_dtl_subscriber')
                         ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                        ->join('nutri_mst_kitchen','nutri_dtl_subscriber.skitchen_id','=','nutri_mst_kitchen.kitchen_id')
                         ->join('city','nutri_dtl_subscriber.city','=','city.id')
                         ->join('state','nutri_dtl_subscriber.state','=','state.id')
                         ->where('nutri_dtl_subscriber.is_deleted','<>',1)
@@ -1155,11 +1245,13 @@ class SubscriberController extends Controller
             }
             else if($login_user_details->roles!="admin")
             {
-                 $data     =  $data
-                              ->where('nutri_dtl_subscriber.city','=',$login_city_id)
+                 $data     =  $data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
                               ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                               ->orderBy('nutri_dtl_subscriber.sub_plan_id', 'DESC')
                               ->get();
+
+                        //->where('nutri_dtl_subscriber.city','=',$login_city_id)
+                                    
             }
             /*else if($login_user_details->roles!="admin")
             {
@@ -1213,7 +1305,9 @@ class SubscriberController extends Controller
                      
                 }else if($login_user_details->roles!="admin")
                 {
-                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                 // $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
+                              
                                         ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                         ->offset($start)
                                         ->limit($limit)
@@ -1275,7 +1369,9 @@ class SubscriberController extends Controller
                      
                 }  else if($login_user_details->roles!="admin")
                 {
-                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id) 
+                     //$get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id) 
+                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
+                              
                                         ->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
                                         ->orWhere('nutri_mst_subscriber.email', 'LIKE',"%{$search}%")
@@ -1428,6 +1524,20 @@ class SubscriberController extends Controller
         $assign_subscriber = Session::get('assign_subscriber'); 
         $user = \Sentinel::check();
         $login_user_details  = Session::get('user');
+        $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
+        //dd($kichen_data->kitchen_id);
+        $skitchen_id = $kichen_data->kitchen_id;
+        /*$skitchen_id = 0;
+        $kichen_data = DB::table('nutri_mst_kitchen')->get();
+        foreach ($kichen_data as $key => $value) {
+           $user_id = explode(',',$value->user_id);
+
+           if(in_array($login_user_details->id, $user_id))
+           {
+            $skitchen_id = $value->kitchen_id;
+           }
+        }*/
+
         $columns = array( 
                             0 =>'id', 
                             1 =>'Name',
@@ -1437,6 +1547,7 @@ class SubscriberController extends Controller
                         );
         $data = \DB::table('nutri_dtl_subscriber')
                         ->join('nutri_mst_subscriber','nutri_dtl_subscriber.subscriber_id','=','nutri_mst_subscriber.id')
+                        ->join('nutri_mst_kitchen','nutri_dtl_subscriber.skitchen_id','=','nutri_mst_kitchen.kitchen_id')
                         ->join('city','nutri_dtl_subscriber.city','=','city.id')
                         ->join('state','nutri_dtl_subscriber.state','=','state.id')
                         ->where('nutri_dtl_subscriber.is_deleted','<>',1)
@@ -1525,7 +1636,8 @@ class SubscriberController extends Controller
                 } 
                 else if($login_user_details->roles!="admin")
                 {
-                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                  //$get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)  
+                  $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id)
                                         ->select('nutri_dtl_subscriber.*','city.city_name','state.name as state_name','nutri_mst_subscriber.email','nutri_mst_subscriber.mobile')
                                         ->offset($start)
                                         ->limit($limit)
@@ -1593,7 +1705,8 @@ class SubscriberController extends Controller
                      
                 }else if($login_user_details->roles!="admin")
                 {
-                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id) 
+                     /*$get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.city','=',$login_city_id)*/
+                     $get_tbl_data     =  $get_tbl_data->where('nutri_dtl_subscriber.skitchen_id','=',$skitchen_id) 
                                         ->where('nutri_dtl_subscriber.id','LIKE',"%{$search}%")
                                         ->orWhere('nutri_dtl_subscriber.subscriber_name', 'LIKE',"%{$search}%")
                                         ->orWhere('nutri_mst_subscriber.email', 'LIKE',"%{$search}%")
@@ -1790,4 +1903,116 @@ class SubscriberController extends Controller
         return $html;
 
     }
+
+    //set additional meal function
+    public function set_additional_meal(Request $request)
+    {
+      $subscriber_id            = $request->subscriber_id; 
+      $subscriber_dtl_id        = $request->subscriber_dtl_id;  
+      $subscriber_start_date    = date('Y-m-d',strtotime($request->subscriber_start_date));  
+      $subscriber_expiry_date   = date('Y-m-d',strtotime($request->subscriber_expiry_date));  
+      //dd($request);
+      $aditional_menu           = $this->base_menu_model->where('menu_category_id','=',8)
+                                  ->where('is_active','=',1)
+                                  ->get();  
+      $meal_type                = $this->base_meal_type->get();  
+      $days                     = \DB::table('nutri_subscriber_meal_program')
+                                 ->where('nutri_subscriber_meal_program.meal_on_date','>=',$subscriber_start_date)   
+                                 ->where('nutri_subscriber_meal_program.meal_on_date','<=',$subscriber_expiry_date)  
+                                 ->where('nutri_subscriber_meal_program.subcriber_id','=',$subscriber_dtl_id)   
+                                 ->select('nutri_subscriber_meal_program.day','nutri_subscriber_meal_program.meal_on_date')
+                                 ->groupBy('nutri_subscriber_meal_program.day')
+                                 ->get();   
+
+      $data                          =[];
+      $data['aditional_menu']        = $aditional_menu;
+      $data['meal_type']             = $meal_type;
+      $data['days']                  = $days->toArray();
+      $data['subscriber_dtl_id']     = $subscriber_dtl_id;
+      $data['subscriber_start_date']     = $subscriber_start_date;
+      $data['subscriber_expiry_date']     = $subscriber_expiry_date;
+      $data['sdays']     = count($days);
+      return view($this->folder_path.'set-additional-menu-ajax',$data);                           
+
+    }
+
+    public function store_additional_menu(Request $request)
+    {
+
+        $day_array         = explode('#',$request->day);
+        $day               = $day_array[0];
+        $meal_on_date      = date('Y-m-d',strtotime($day_array[1]));
+        $meal_type         = $request->meal_type;
+        $additional_menu   = $request->menu_id; 
+        $subscriber_dtl_id = $request->subscriber_dtl_id; 
+        
+        $arr_data          = [];
+        $arr_data['addition_menu_id']   = $additional_menu;
+        
+        $additional_menu_set     = $this->base_default_meal
+                                   ->where('subcriber_id','=',$subscriber_dtl_id)
+                                   ->where('mealtype','=',$meal_type)
+                                   ->where('day','=',$day)
+                                   ->where('meal_on_date','=',$meal_on_date)
+                                   ->update($arr_data);
+
+        if(!empty($additional_menu_set)){
+        // set additional meal count  on subscriber dtl
+          $subscriber_dtl_meal_count = $this->base_subscriber_dtl
+                                     ->where('id','=',$subscriber_dtl_id)
+                                     ->select('no_of_additional_meal')
+                                     ->first();
+          $old_cnt =  $subscriber_dtl_meal_count['no_of_additional_meal'];
+
+          $arr_data1          = [];
+          $arr_data1['no_of_additional_meal']   = $old_cnt+1;
+          $update_meal_count  = $this->base_subscriber_dtl
+                                ->where('id','=',$subscriber_dtl_id)
+                                ->update($arr_data1);  
+          return "success"; 
+        }else
+        {
+          return "error"; 
+        }                        
+    }
+
+        public function get_menu_macros(Request $request)
+    {
+         $menu_id   = $request->menu_id;
+         $menu_data =  $this->base_menu_model->where('id','=',$menu_id)->select('calories','proteins','carbohydrates','fats')->first();
+         $data      = [];
+         $data[]      = $menu_data->calories;
+         $data[]      = $menu_data->proteins;
+         $data[]      = $menu_data->carbohydrates;
+         $data[]      = $menu_data->fats;
+         $html        ="
+                        <tbody>
+                            <tr>
+                              <td width='60%' >Calories</td>
+                             <td class='text-center' style='background-color: #e1f4d4;'><strong>".$menu_data->calories."</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Proteins</td>
+                             <td class='text-center'  style='background-color: #e1f4d4;'><strong>".$menu_data->proteins."</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Carbohydrates</td>
+                             <td class='text-center'  style='background-color: #e1f4d4;'><strong>".$menu_data->carbohydrates."</strong></td>
+                            </tr>
+                            <tr>
+                              <td>Fats</td>
+                             <td class='text-center'  style='background-color: #e1f4d4;'><strong>".$menu_data->fats."</strong></td>
+                            </tr>
+                            <tr>
+                              <td style='background-color: #f6ff9e;'>Total</strong></td>
+                             <td class='text-center'  style='background-color: #f6ff9e;'><strong>".array_sum($data)."</strong></td>
+
+                            </tr>
+                        </tbody>"; 
+        return $html; 
+
+    }
+
+
+
 }

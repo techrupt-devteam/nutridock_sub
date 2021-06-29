@@ -58,7 +58,7 @@
                             <table id="dtable" class="ui celled table table-sm"  style="width:100%" style="botder-top:1px solid #DEE2E6">                                                   
                                 <thead>
                                     <tr class="text-center">
-                                        <th style="background:#e5e5e5; color:#000">Date</th>
+                                        <th style="background:#e5e5e5; color:#000" width="25%">Date</th>
                                         <th style="border-left: dashed 1px #588937;border-right: dashed 1px #588937">Meal Type</th>
                                         <th>Meal</th>
                                         <th>Calories</th>
@@ -117,10 +117,15 @@
                                     @endif
                                     </td>
                                     <td style="border-left: dashed 1px #588937;border-right: dashed 1px #588937; background:{{ $bgcolor }}" class="pl-3">{{ $value->meal_type_name }}</td>                     
-                                    <td>{{ $value->menu_title }}</td>
-                                    <td><img src="{{ URL('') }}/uploads/images/calories.svg"" alt="your image" width="15" height="15"> {{ $value->calories }}</td>
                                     <td>
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg"" alt="your image" width="15" height="15"> {{ $value->proteins }}</td>
+                                      {{ $value->menu_title }}
+                                      @if(!empty($value->additional_menu_title))
+                                      <span class="text-danger"><strong> + {{$value->additional_menu_title}}</strong><br/><a href="{{url('/')}}/cancel_additional_menu/{{$value->program_id}}/{{$value->subcriber_id}}" onclick="confirm('Are you sure to cancel additonal meal');" tooltip="cancel additional menu"><i class="fa fa-times-circle"></i> cancel meal</a></span>
+                                      @endif
+                                    </td>
+                                    <td><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="15" height="15"> {{ $value->calories }}</td>
+                                    <td>
+                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="15" height="15"> {{ $value->proteins }}</td>
                                     <td>
                                         <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15"> {{ $value->carbohydrates }}</td>
                                     <td>

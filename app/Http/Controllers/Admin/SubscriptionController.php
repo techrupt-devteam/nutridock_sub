@@ -157,6 +157,7 @@ class SubscriptionController extends Controller
                   $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
                   $arr_data1['sub_plan_id']      = $plan->sub_plan_id;
                   $arr_data1['discount_price']   = $request->input('discount_price'.$d);
+                  $arr_data1['no_of_additional_meal']   = $request->input('no_of_additional_meal'.$d);
                   
                   if($request->input('price_type'.$d)=='meal'){
                     $arr_data1['price_per_meal'] = $request->input('price'.$d);
@@ -283,7 +284,8 @@ class SubscriptionController extends Controller
                   $arr_data1['duration']         = ucfirst($request->input('duration'.$d));
                   $arr_data1['sub_plan_id']      = $id;
                   $arr_data1['discount_price']   = $request->input('discount_price'.$d);
-                  
+                  $arr_data1['no_of_additional_meal']   = $request->input('no_of_additional_meal'.$d);
+                 
                   if($request->input('price_type'.$d)=='meal'){
                     $arr_data1['price_per_meal'] = $request->input('price'.$d);
                   }
@@ -373,6 +375,7 @@ class SubscriptionController extends Controller
                        <tr>
                          <th>Sr.No</th>
                          <th>Duration</th>
+                         <th>No of meal</th>
                          <th>Meal Plan</th>
                          <th>Price</th>
                          <th>Discount Price</th>
@@ -398,6 +401,7 @@ class SubscriptionController extends Controller
             $html.= '<tr>
                         <td>'.$i.' </td>
                         <td>'.$value->duration.' Days</td>
+                        <td>'.(!empty($value->no_of_additional_meal)?$value->no_of_additional_meal:"Additional meal not available").'</td>
                         <td>'.$type.'</td>
                         <td> <i class="fa fa-rupee"></i> '.number_format($price,2).'</td>  
                         <td> <i class="fa fa-rupee"></i> '.number_format($value->discount_price,2).'</td>  

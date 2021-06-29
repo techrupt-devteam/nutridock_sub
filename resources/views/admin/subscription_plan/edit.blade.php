@@ -101,7 +101,14 @@
                    <input type="hidden" name="old_icon_image" value="{{$data['icon_image']}}">
                 </div>
               </div> 
-
+<!-- <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-warning col-md-12 mt-4 text-left" style="margin-top: 13px;color:#000000!important;background-color: #f39c1229 !important;">
+                  <strong ><i class="glyphicon glyphicon-warning"></i> Note!</strong>
+                  <strong> If No of meal (additonal meal) </strong> facility not availalble for a day then please enter <strong>0</strong> on that perticular filed.
+              </div>
+            </div>
+          </div> -->
               <div class="row">
                 <div class="col-md-12">
                   <div class="table-responsive">
@@ -109,7 +116,8 @@
                       <thead>
                         <tr>
                           <th width="20%">Duration</th>
-                          <th width="25%">Meal Type</th>
+                          <th width="20%">No of additional meal</th>
+                          <th width="20%">Meal Type</th>
                           <th width="20%">Price</th>
                           <th width="20%">Discounted Price</th>
                           <th class="text-center"><a href="javascript:void(0);" class="btn btn-primary btn-sm addRow" onclick="addDurationRow()"><i class="fa fa-plus"></i></a>
@@ -129,6 +137,11 @@
                                 <span id="duration_msg{{$key+1}}" style="color:red;"></span>
                               </div>
                             </td>
+                             <td>
+                                <input type="text" autocomplete="off" class="form-control" placeholder="No of additional meal" id="no_of_additional_meal{{$key+1}}" name="no_of_additional_meal{{$key+1}}" data-parsley-errors-container="#no_of_additional_meal_error{{$key+1}}" data-parsley-error-message="Enter no of meal" value="{{$durvalue->no_of_additional_meal}}">
+                               
+                                <span id="no_of_additional_meal_error{{$key+1}}" style="color:red;"></span>
+                            </td>
                             <td>
                                 @php $meal_checked="";$pack_checked=""   @endphp
                                 @if(!empty($durvalue->price_per_meal))
@@ -138,7 +151,7 @@
                                 @php $pack_checked ="checked"; @endphp
                                 @endif
 
-                                 <input type="radio" id="price_type1" name="price_type{{$key+1}}" required="true" value="meal" data-parsley-errors-container="#meal_type{{$key+1}}" data-parsley-error-message="Select Meal Type" {{  $meal_checked }}> <b>Price Per Meal</b>
+                                 <input type="radio" id="price_type1" name="price_type{{$key+1}}" required="true" value="meal" data-parsley-errors-container="#meal_type{{$key+1}}" data-parsley-error-message="Select Meal Type" {{  $meal_checked }}> <b>Price Per Meal</b><br/>
                                  <input type="radio" id="price_type1" name="price_type{{$key+1}}" required="true" value="pack" data-parsley-errors-container="#meal_type{{$key+1}}" data-parsley-error-message="Select Meal Type" {{  $pack_checked }}> <b>Price Per Pack</b>
                                  <span id="meal_type{{$key+1}}" style="color:red;"></span>
 
@@ -259,10 +272,11 @@ function addDurationRow()
       var duration_flag = $('#duration_flag').val();
       duration_flag = parseInt(duration_flag)+parseInt(1); 
       $('#duration_flag').val(duration_flag);
-       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" autocomplete="off" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days">  <div class="input-group-addon btn-default"> Days</div></div><span id="duration_msg'+duration_flag +'" style="color:red;"></span></td><td><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price'+ duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Discounted Price" id="discount_price'+duration_flag+ '" name="discount_price'+duration_flag+'" required="true" onchange="get_compair_price('+duration_flag+');" data-parsley-errors-container="#dis_price' + duration_flag + '" data-parsley-error-message="Please enter discount price." ></div><span id="dis_price'+ duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
+       var tr = '<tr class="tr_row_duration' + duration_flag + '"><td><div class="input-group"><input type="text" autocomplete="off" class="form-control" placeholder="Enter Duration Days" id="duration' + duration_flag + '" name="duration' + duration_flag + '" required="true" data-parsley-errors-container="#duration_msg'+duration_flag +'" data-parsley-error-message="Enter Duration Days">  <div class="input-group-addon btn-default"> Days</div></div><span id="duration_msg'+duration_flag +'" style="color:red;"></span></td><td><input type="text" autocomplete="off" class="form-control" placeholder="No of additional meal" id="no_of_additional_meal'+duration_flag+'" name="no_of_additional_meal'+duration_flag+'"data-parsley-errors-container="#no_of_additional_meal_error'+duration_flag+'" data-parsley-error-message="Enter no of meal"><span id="no_of_additional_meal_error'+duration_flag+'" style="color:red;"></span></td><td><input type="radio" id="price_type' +  duration_flag + '" name="price_type' + duration_flag + '" required="true" value="meal" data-parsley-errors-container="#meal_type' + duration_flag + '" data-parsley-error-message="Select Meal Type"> <b>Price Per Meal&nbsp;</b><br/><input type="radio" id="price_type' + duration_flag + '" name="price_type' + duration_flag + '" required="true" value="pack" data-parsley-errors-container="#meal_type' + duration_flag + '"data-parsley-error-message="Select Meal Type"> <b>Price Per Pack</b><span id="meal_type' + duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Price" id="price' + duration_flag + '" name="price' + duration_flag + '" required="true" data-parsley-errors-container="#meal_price' + duration_flag + '" data-parsley-error-message="Please enter price."></div><span id="meal_price'+ duration_flag + '" style="color:red;"></span></td><td><div class="input-group"><div class="input-group-addon"><i class="fa fa-rupee"></i></div><input type="text" autocomplete="off" class="form-control" placeholder="Enter Discounted Price" id="discount_price'+duration_flag+ '" name="discount_price'+duration_flag+'" required="true" data-parsley-errors-container="#dis_price' + duration_flag + '" data-parsley-error-message="Please enter discount price." onchange="get_compair_price('+duration_flag+');"></div><span id="dis_price'+ duration_flag + '" style="color:red;"></span></td><td style="text-align:center"><a href="javascript:void(0);" class="btn btn-danger remove"  onclick="removedurationRow_ajax(' + duration_flag + ')"><i class="fa fa-trash"></i></a></td></tr>';
         $('#duration_body').append(tr);
      
-  }  function removedurationRow_ajax(div_id)
+  }
+ function removedurationRow_ajax(div_id)
   {
       var duration_flag = $('#duration_flag').val();
       if(duration_flag!=1)

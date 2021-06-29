@@ -135,7 +135,7 @@
             <span class="pull-right-container">
             </span>
           </a>
-          <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen') class="active"@endif>
+          <li @if(Request::segment(2)=='manage_kitchen' || Request::segment(2)=='add_kitchen' || Request::segment(2)=='edit_kitchen' || Request::segment(2)=='manage_target' ) class="active"@endif>
           <a href="{{url('/admin')}}/manage_kitchen">
           <i class="fa fa-location-arrow"></i><span>Cloud Kitchen</span>
             <span class="pull-right-container">
@@ -156,6 +156,13 @@
             </span>
           </a>
         </li>
+        <!-- <li @if(Request::segment(2)=='manage_push_notification' || Request::segment(2)=='add_push_notification' || Request::segment(2)=='edit_push_notification') class="active"@endif>
+          <a href="{{url('/admin')}}/manage_push_notification">
+          <i class="fa fa-comments"></i><span>Push Notification</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li> -->
        <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'|| Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen1' || Request::segment(2)=='add_kitchen1' || Request::segment(2)=='edit_kitchen1'||Request::segment(2)=='manage_assign_sub_plan_menu1' || Request::segment(2)=='add_assign_sub_plan_menu1' || Request::segment(2)=='edit_assign_sub_plan_menu1') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>

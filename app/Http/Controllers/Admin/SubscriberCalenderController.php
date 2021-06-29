@@ -11,6 +11,7 @@ use App\Models\SubscriberDetails;
 use App\Models\User;
 use App\Models\City;
 use App\Models\State;
+use App\Models\Kitchen;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Input;
 use DateTime;
@@ -23,7 +24,7 @@ use Carbon\Carbon;
 use DB;
 class SubscriberCalenderController extends Controller
 {
-    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails)
+    public function __construct(AssignNutritionist $AssignNutritionist,Location $Location,City $City,State $State,User $User,SubscriberMealPlan $SubscriberMealPlan,SubscriberDetails $SubscriberDetails,Kitchen $Kitchen)
     {
         $data                           = [];
         
@@ -34,12 +35,10 @@ class SubscriberCalenderController extends Controller
         $this->base_state               = $State; 
         $this->base_subscribermealplan  = $SubscriberMealPlan; 
         $this->base_subscriber_details  = $SubscriberDetails; 
-       
-
+        $this->base_kitchen             = $Kitchen; 
         $this->title                    = "Subscriber";
         $this->url_slug                 = "subscriber_calender";
         $this->folder_path              = "admin/subscriber_calender/";
-
         //Message
         $this->Insert                   = Config::get('constants.messages.Insert');
         $this->Update                   = Config::get('constants.messages.Update');
@@ -52,8 +51,10 @@ class SubscriberCalenderController extends Controller
     public function index()
     {
         $state             = $this->base_state->get();
+        $kitchen           = $this->base_kitchen->get();
         $data['data']      = "";
         $data['state']     = $state;
+        $data['Kitchen']   = $kitchen;
         $data['page_name'] = "View";
         $data['url_slug']  = $this->url_slug;
         $data['title']     = $this->title;
@@ -86,10 +87,11 @@ class SubscriberCalenderController extends Controller
              $program_data   = \DB::table('nutri_subscriber_meal_program')
                                 ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
                                 ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                                ->leftJoin('nutri_mst_menu as a','nutri_subscriber_meal_program.addition_menu_id','=','a.id')
                                 ->where('nutri_subscriber_meal_program.subcriber_id','=',$subscriber_id)
                                 ->where('nutri_subscriber_meal_program.day','=',$i)
                                 ->where('nutri_subscriber_meal_program.skip_meal_flag','=','n')
-                                ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->get();
+                                ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id','a.menu_title as additional_menu_title')->get();
             
             $count = $program_data->count();
             if($count > 0){
@@ -129,9 +131,13 @@ class SubscriberCalenderController extends Controller
                   $calender_data[$i][$key]['start']             = date('Y-m-d', strtotime($subscriber_details->start_date . '+'.$d.' day'));
               
                 }*/
-               
+                $additional_meal = "";
+                if(!empty($value->additional_menu_title))
+                { 
+                  $additional_meal =" + ".$value->additional_menu_title; 
+                }
               
-                $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title);
+                $calender_data[$i][$key]['tooltip']           = ucfirst($value->menu_title)." ".$additional_meal;
                 $calender_data[$i][$key]['backgroundColor']   = $colors[$value->meal_type_id];
                 $calender_data[$i][$key]['borderColor']       = $colors[$value->meal_type_id];
                 $calender_data[$i][$key]['set_date']          = $value->compenset_date;

@@ -132,6 +132,9 @@ Route::get('/cron_schedule', 'Cron\ScheduleController@meal');
 Route::get('/feedback', 'Admin\FeedbackController@add');
 Route::post('/store_feedback', 'Admin\FeedbackController@store');
 Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+//set additional meal route	
+
+//end set additional meal route	
 	
 Route::group(['middleware' => 'subscriber'], function () {
 	// Only authenticated users may access this route...
@@ -139,6 +142,11 @@ Route::group(['middleware' => 'subscriber'], function () {
 	Route::get('/mysubscription', 				'Front\SubscriptionUserController@mySubscription');	
 	Route::get('/profile', 						'Front\SubscriptionUserController@index');
 	Route::post('/details',	  					'Front\SubscriptionUserController@subscriber_details');
+	Route::post('/set_additional_meal',	        'Front\SubscriptionUserController@set_additional_meal');
+	Route::post('/store_additional_menu',	    'Front\SubscriptionUserController@store_additional_menu');
+	Route::get('/cancel_additional_menu/{id}/{subcriber_id}',	    'Front\SubscriptionUserController@cancel_additional_menu');
+
+
 	//Route::post('/chat/{id}',	  				'Front\SubscriptionUserController@subscriber_details');
 	Route::get('/chat', 						'Front\SubscriptionUserController@getChatList');
 	Route::get('/goforchat/{id}', 				'Front\SubscriptionUserController@chatWithNutrionist');
@@ -361,6 +369,11 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::get('/delete_kitchen/{id}',    'Admin\KitchenController@delete');
 	Route::post('/status_kitchen',	      'Admin\KitchenController@status');
 	Route::post('/kitchen_details',	      'Admin\KitchenController@detail');
+	Route::post('/kitchen_target',	      'Admin\KitchenController@kitchen_target');
+	Route::post('/store_target',	      'Admin\KitchenController@store_target');
+	Route::get('/manage_target/{id}',	  'Admin\KitchenController@view_target');
+	Route::get('/delete_target/{id}',     'Admin\KitchenController@delete_target');
+
 
 	//Referal Routes
 	Route::get('/manage_referal',	      'Admin\ReferalController@index');
@@ -418,6 +431,12 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
     Route::post('/get_menu_macros',					  'Admin\SubscriberMealProgramController@get_menu_macros');
     Route::post('/store_change_menu',				  'Admin\SubscriberMealProgramController@store_change_menu');
    
+    //set additional meal routes 
+	Route::post('/set_additional_meal1',   'Admin\SubscriberController@set_additional_meal');
+ 	Route::post('/store_additional_menu1', 'Admin\SubscriberController@store_additional_menu');
+	Route::post('/get_menu_macros1',       'Admin\SubscriberController@get_menu_macros');
+
+
     //Subscriber Calender
     Route::get('/manage_subscriber_calender', 'Admin\SubscriberCalenderController@index');
 	Route::post('/getMealDetails',			  'Admin\SubscriberCalenderController@getMealDetails');
@@ -429,9 +448,20 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/order_resend',  'Admin\OrderHistoryController@order_resend');
 
 	//feedback module
-
 	Route::get('/manage_feedback', 'Admin\FeedbackController@index');
+	Route::post('/feedback_details','Admin\FeedbackController@details');
+	Route::post('/feedback_replay','Admin\FeedbackController@replay');
+	Route::post('/send_replay','Admin\FeedbackController@send_replay');
 
+	//Push notification module
+	
+	Route::get('/manage_push_notification',		  'Admin\PushNotificationController@index');
+	Route::get('/add_push_notification',		 	  'Admin\PushNotificationController@add');
+	Route::post('/store_push_notification',		  'Admin\PushNotificationController@store');
+	Route::get('/edit_push_notification/{id}',	  'Admin\PushNotificationController@edit');
+	Route::post('/update_push_notification/{id}',  'Admin\PushNotificationController@update');
+	Route::get('/delete_push_notification/{id}',	  'Admin\PushNotificationController@delete');
+	Route::post('/push_notification_status',	      'Admin\PushNotificationController@status');
 
 
 });

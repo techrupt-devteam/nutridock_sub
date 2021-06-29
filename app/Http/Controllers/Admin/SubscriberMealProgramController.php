@@ -139,10 +139,11 @@ class SubscriberMealProgramController extends Controller
                    $get_default_menu   = \DB::table('nutri_subscriber_meal_program')
                                           ->join('meal_type','nutri_subscriber_meal_program.mealtype','=','meal_type.meal_type_id')
                                           ->join('nutri_mst_menu','nutri_subscriber_meal_program.menu_id','=','nutri_mst_menu.id')
+                                           ->leftJoin('nutri_mst_menu as a','nutri_subscriber_meal_program.addition_menu_id','=','a.id')
                                           ->where('nutri_subscriber_meal_program.sub_plan_id','=',$sub_plan_id)
                                           ->where('nutri_subscriber_meal_program.duration_id','=',$duration_id)
                                           ->where('nutri_subscriber_meal_program.subcriber_id','=',$id)
-                                          ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id')
+                                          ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','a.menu_title as additional_menu_title')
                                           ->orderBy('nutri_subscriber_meal_program.program_id','ASC')->get();
                   //dd($get_default_menu);        
 

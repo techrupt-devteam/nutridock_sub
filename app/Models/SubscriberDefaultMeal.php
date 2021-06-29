@@ -12,10 +12,12 @@ class SubscriberDefaultMeal extends Model
 							'day',
 							'mealtype',   
 							'menu_id',
+							'addition_menu_id',
 							'subcriber_id',
 							'nutritionist_id',
 							'meal_on_date',
 							'compenset_date',
-							'skip_meal_flag'
+							'skip_meal_flag',
+							'updated_at'
                          ];
 }
