@@ -34,8 +34,33 @@
                       <input type="text" class="form-control" name="notification_name" data-parsley-error-message="Please enter notification name." value="{{$data['notification_name']}}">                    
                     </div>
                   </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="oldpassword">Kitchen<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" id="kitchen_id" name="kitchen_id" required="true"  data-parsley-errors-container="#kitchen_error" data-parsley-error-message="Please select kitchen.">
+                        <option value="">Select kitchen</option>
+                         @php 
+                            $selected1 = "";
+                            if($data['kitchen_id'] == 0){
+                             $selected1 ="selected";
+                            }
+                          @endphp
+                        <option value="0" {{$selected1}}>All</option>
+                        @foreach($kitchen as $kvalue)
+                         @php 
+                            $selected = "";
+                            if($data['kitchen_id'] == $kvalue->kitchen_id){
+                             $selected ="selected";
+                            }
+                          @endphp
+                        <option value="{{$kvalue->kitchen_id}}"  {{$selected}}>{{$kvalue->kitchen_name}}</option>
+                        @endforeach
+                      </select>
+                        <div id="kitchen_error" style="color:red;"></div>                     
+                    </div>
+                  </div>
                 </div>
-                <div class="row">
+<!--                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">State<span style="color:red;" >*</span></label>
@@ -82,7 +107,7 @@
                         <div id="area_error" style="color:red;"></div>         
                     </div>
                   </div> 
-                </div>
+                </div> -->
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

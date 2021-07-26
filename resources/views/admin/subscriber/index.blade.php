@@ -181,9 +181,9 @@ function additional_meal(start_date,expiry_date,subscriber_id,dll_s_id) {
             ],
             rowCallback: function (row, data) {
               if (data.class_r=="expire_row") {
-                $(row).addClass('expire_row');
+                $(row).addClass('expire_row1');
               }else{
-                $(row).addClass('noexp');
+                $(row).addClass('noexp1');
               }
             }
 

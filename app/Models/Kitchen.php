@@ -23,6 +23,7 @@ class Kitchen extends Model
 		"area_id",
 		"customer_key",
 		"is_deleted",
-		""
+		"lat",
+		"lang"
     ];
 }

@@ -52,6 +52,15 @@ class SubscriberCalenderController extends Controller
     {
         $state             = $this->base_state->get();
         $kitchen           = $this->base_kitchen->get();
+        $login_user_details  = Session::get('user');
+        if($login_user_details->roles!='admin'){
+        $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
+        $skitchen_id = $kichen_data->kitchen_id;
+          $data['skitchen_id']     = $skitchen_id;
+        }else
+        {
+          $data['skitchen_id']  = 0;
+        }
         $data['data']      = "";
         $data['state']     = $state;
         $data['Kitchen']   = $kitchen;

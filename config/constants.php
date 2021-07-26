@@ -10,11 +10,17 @@ return [
         'Is_exists' => "Error! Record already exist!",
     ],
 
-    'mail'=>[
+    /*'mail'=>[
 		'email'       	=> "nutridock.health@gmail.com",
 		'host'        	=> "smtp.gmail.com",
 		'port'        	=> 587,
-		'password'    	=> "devtech@2021",
+		'password'    	=> "devtech@2020",
+    ]*/
+    'mail'=>[
+        'email'         => "bhushantechrupt@gmail.com",
+        'host'          => "smtp.gmail.com",
+        'port'          => 587,
+        'password'      => "ramgir@9912",
     ]
     
 ];

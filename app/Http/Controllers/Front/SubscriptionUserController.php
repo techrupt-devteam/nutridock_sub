@@ -84,9 +84,26 @@ class SubscriptionUserController extends Controller
                               ->whereIn('nutri_subscriber_meal_program.subcriber_id',$su_dtl_array)
                               ->where('nutri_subscriber_meal_program.meal_on_date','=',$date)
                               ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','nutri_mst_menu.image','meal_type.meal_type_name','meal_type.meal_type_id','nutri_mst_menu.specification_id','nutri_mst_menu.menu_category_id')->get();
-        //dd($todays_meal_plan);
+           
+           //CONSUME MEAL 
 
-         //dd($data); 
+
+         $consume_meal_cnt   =  \DB::table('nutri_subscriber_meal_program')
+                                ->join('nutri_dtl_subscriber','nutri_subscriber_meal_program.subcriber_id', '=', 'nutri_dtl_subscriber.subscriber_id')
+                                ->whereIn('nutri_subscriber_meal_program.subcriber_id',$su_dtl_array)
+                                ->where('nutri_subscriber_meal_program.meal_on_date','>=',$date)
+                                ->select('nutri_subscriber_meal_program.*','nutri_dtl_subscriber.meal_type_id','nutri_dtl_subscriber.no_of_days')->get();
+           $no_of_meal_cnt = explode(',',$consume_meal_cnt[0]->meal_type_id);                     
+           $consume_cnt    = count($consume_meal_cnt);
+           $total_no_days  = $consume_meal_cnt[0]->no_of_days;
+           
+           //dd(count($no_of_meal_cnt)."".$consume_cnt."".$total_no_days);
+           $total_no_of_meal = (count($no_of_meal_cnt) * $total_no_days); 
+           $total_percent = ceil(($consume_cnt / $total_no_of_meal)*100);
+           //dd($total_percent);
+           //dd($todays_meal_plan);
+
+           //dd($data); 
            //Arr::set($data,NULL, $getSubscriberData);   
            //Arr::set($data,NULL, $todays_meal_plan);   
            $data                      =[];
@@ -94,6 +111,10 @@ class SubscriptionUserController extends Controller
            $data['todays_menu']       = $todays_meal_plan;
            $data['seo_title']         = "Dashboard";
            $data['getadditionalData'] = $getadditionalData;
+           $data['total_percent']     = $total_percent;
+           $data['total_no_of_meal']  = $total_no_of_meal;
+           $data['consume_cnt']       = $consume_cnt;
+           $data['login_user_id']     = Session::get('subscriber_id');
 
             return view('dashboard',$data);
 

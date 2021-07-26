@@ -97,12 +97,28 @@ class NotificationController extends Controller
                                    ->where('is_active','=',1)
                                    ->orderBy('notification_id', 'DESC')
                                    ->get();
-        
+
+      
+
         $count                  = \DB::table('nutri_notification')
                                   ->where('users_role','=',$user_role)
                                   ->where('user_id','=',$login_user_details->id)
                                   ->where('is_active','=',1)
+                                  ->get()->count();  
+
+       if($login_user_details->roles!="admin")
+        {                              
+       $count1                  = \DB::table('nutri_notification')
+                                 ->where('users_role','=',2)
+                                   ->where('is_active','=',1)
+                                   ->where('user_id','=',0)
                                   ->get()->count(); 
+
+        $ccount                 = $count+$count1;
+        }else
+        {
+             $ccount  = $count;
+        }
 
         $message_count          = \DB::table('messages')
                                   ->where('seen','=',0)
@@ -112,12 +128,39 @@ class NotificationController extends Controller
 
         $html  = "";
 
-        foreach ($data as $key => $value) {
+        $data2                  =  \DB::table('nutri_notification')
+                                   ->where('users_role','=',2)
+                                   ->where('is_active','=',1)
+                                   ->where('user_id','=',0)
+                                   ->orderBy('notification_id', 'DESC')
+                                   ->get();    
+
+        $login_user_details     = Session::get('user');
+        $user_role              = $login_user_details->roles;
+
+        if($login_user_details->roles!="admin")
+        {
+            foreach ($data2 as $key1 => $value1)
+            {
+
+               $html .= "<li > <a href='".url('/admin').'/notification/'.$value1->notification_id."'><i class='fa fa-bell'
+               ></i>".ucfirst(html_entity_decode($value1->message))."</a></li>";         
+            }  
+
+        }
+
+
+        foreach ($data as $key => $value)
+        {
 
            $html .= "<li > <a href='".url('/admin').'/notification/'.$value->notification_id."'><i class='fa fa-bell'
            ></i>".ucfirst(html_entity_decode($value->message))."</a></li>";         
-        }        
-        return $html."#".$count.'#'.$message_count;
+        }    
+
+
+
+
+        return $html."#".$ccount.'#'.$message_count;
 
         
         /*$data['message'] = $login_city_id;

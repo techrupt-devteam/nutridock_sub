@@ -10,7 +10,7 @@
       <div class="row">
         
        
-         <!--  <div class="box-body">
+  <!--  <div class="box-body">
              <div class="col-md-12">
               <div class="alert alert-info alert-dismissible">
                 <h4><i class="fa fa-sticky-note"></i> Note!</h4>
@@ -32,10 +32,41 @@
                 <div class="col-md-12">
                     <div class="alert alert-info alert-dismissible">
                       <h4><i class="fa fa-sticky-note"></i> Note!</h4>
-                      <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>
+                      <strong>Please select Kitchen and choose subscriber to detail view meal program !!</strong>
+                      <!--  <strong>Please select state, city and choose subscriber to detail view meal program !!</strong>-->
                     </div>
                 </div>
-                 <div class="col-md-4">
+                <div class="col-md-4">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="kitchen_id">Cloude Kitchen<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" name="kitchen_id" id="kitchen_id" required="true" data-parsley-errors-container="#state_error" data-parsley-error-message="Please select Kichen." onchange="getSubscriber();">
+                        <option value="">-Select Cloude Kitchen-</option>
+                        @foreach($Kitchen as $kvalue)
+
+                           <?php /*if(isset($login_city_state) && !empty($login_city_state) && $login_city_state == $svalue->id)*/
+                          if(isset($skitchen_id) && !empty($skitchen_id) && $skitchen_id == $kvalue->kitchen_id)
+                          {?>
+                             
+                           <option value="{{$kvalue->kitchen_id}}" selected>{{$kvalue->kitchen_name}}</option> 
+                          <?php 
+                           }
+
+                          if($skitchen_id == 0)
+                          {?>
+                               <option value="{{$kvalue->kitchen_id}}">{{$kvalue->kitchen_name}}</option>
+                         
+                          <?php }?> 
+
+                     
+
+                        @endforeach
+                      </select>
+                      <div id="state_error" style="color:red;"></div>
+                    </div>
+                  </div>
+                </div> 
+                <!--  <div class="col-md-4">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="state_id">State<span style="color:red;" >*</span></label>
@@ -67,14 +98,14 @@
                       <div id="city_error" style="color:red;"></div>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-md-4">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="state_id">Subscriber<span style="color:red;" >*</span></label>
                       <select class="form-control select2" name="subscriber_id" id="subscriber_id" required="true" data-parsley-errors-container="#subscriber_error" data-parsley-error-message="Please select Subscriber." onchange="getCalender();" disabled="">
-                        <option value="">-Select State-</option>
+                        <option value="">-Select Subscriber-</option>
                        
                       </select>
                       <div id="subscriber_error" style="color:red;"></div>
@@ -173,17 +204,19 @@
          <?php } ?>
       });
     } 
-  
+  getSubscriber();
   //Subscriber load
   function  getSubscriber(){
-      var city_id = $("#city_id").val();
-      var state_id = $("#state_id").val();
+     // var city_id = $("#city_id").val();
+    //  var state_id = $("#state_id").val();
+      var skitchen_id = $("#kitchen_id").val();
       $.ajax({
         type: "POST",
         url: "{{url('/admin')}}/getSubscriber",
         data: {
-          state: state_id,
-          city : city_id
+       //   state: state_id,
+       //   city : city_id
+       kitchen_id : skitchen_id
         }
       }).done(function(data) {
            $("#subscriber_id").html(data);

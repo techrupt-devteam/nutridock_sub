@@ -41,12 +41,26 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="form-group">
-                      <label for="oldpassword">Notification Name<span style="color:red;" >*</span></label>
-                      <input type="text" class="form-control" name="notification_name" data-parsley-error-message="Please enter notification name.">                    
+                      <label for="oldpassword">Notification Message<span style="color:red;" >*</span></label>
+                      <textarea class="form-control" name="notification_name" data-parsley-error-message="Please enter notification." required=""> </textarea>                   
+                    </div>
+                  </div>
+                
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="oldpassword">Kitchen<span style="color:red;" >*</span></label>
+                      <select class="form-control select2" id="kitchen_id" name="kitchen_id" required="true"  data-parsley-errors-container="#kitchen_error" data-parsley-error-message="Please select kitchen.">
+                        <option value="">Select kitchen</option>
+                        <option value="0">All</option>
+                        @foreach($kitchen as $kvalue)
+                        <option value="{{$kvalue->kitchen_id}}">{{$kvalue->kitchen_name}}</option>
+                        @endforeach
+                      </select>
+                        <div id="kitchen_error" style="color:red;"></div>                     
                     </div>
                   </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="oldpassword">State<span style="color:red;" >*</span></label>
@@ -78,7 +92,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>

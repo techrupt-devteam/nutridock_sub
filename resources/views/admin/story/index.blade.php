@@ -3,18 +3,6 @@
 @section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <!-- <section class="content-header">
-      <h1>
-        {{ $page_name." ".$title }}
-       {{--  <small>advanced tables</small> --}}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{url('/admin')}}/dashbord"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li><a href="#">Manage {{ $title }}</a></li>
-        {{-- <li class="active">{{ $page_name." ".$title }}</li> --}}
-      </ol>
-    </section> -->
 
     <!-- Main content -->
     <section class="content">
@@ -23,57 +11,41 @@
           @include('admin.layout._status_msg')
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">
-                {{ $page_name." ".$title }}
-                {{--  <small>advanced tables</small> --}}
-              </h3>
-              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Push Notification</a>
+              <h3 class="box-title">{{ $page_name." ".$title }}</h3>
+              <a href="{{url('/admin')}}/add_{{$url_slug}}" class="btn btn-primary btn-sm" style="float: right;">Add Story Type</a>
             </div>
-            
-            
             <!-- /.box-header -->
-            <div class="box-body">
-              <div class="table-responsive">
+            <div class="box-body"><div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th  width="10%">Sr. No.</th>
-                  <th>Notification</th>
-              
-                  <th class="text-center" width="20%">Action</th>
+                  <th  width="10%">Sr.No.</th>
+                  <th>Name</th>
+                  <th class="text-center" width="30%">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-
+                
                   @foreach($data as $key=>$value)
                     <tr>
-                      <td width="10%">
-                        {{$key+1}}
-                      </td>
-                      <td>
-                        {{$value->notification_name}}
-                      </td>
-                     
-                      
-                     
-                       <td class="text-center" width="30%">
-                      
-
-                        @if($value->is_active==1)
+                      <td width="10%">{{$key+1}}</td>
+                      <td>{{$value['story_name']}}</td>
+                      <td  class="text-center" width="30%">
+                         @if($value['is_active']==1)
                            @php $checked="checked"; $style="success"; @endphp 
                         @else
                            @php $checked=""; $style="danger";@endphp 
                         @endif
-                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value->push_notification_id; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
-                        <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{$value->push_notification_id}}" class="btn btn-sm btn-primary" title="Edit">
-                          <i class="fa fa-edit"></i>
-                        </a>
-                       
-                      <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{$value->push_notification_id}}"  class="btn btn-sm btn-default" title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
-                          <i class="fa fa-trash"></i>
-                        </a> 
+                        <input type="checkbox" {{$checked}} data-toggle="toggle" data-onstyle="success" title="status" onchange="change_Status(<?php echo $key+1; ?>,<?php echo $value['story_id']; ?>);" data-offstyle="danger" id="{{$key+1}}_is_active" data-size="small" data-style="slow" >
+                        <div class="btn-group">
+                          <a href="{{url('/admin')}}/edit_{{$url_slug}}/{{base64_encode($value['story_id'])}}"  class="btn btn-primary"  title="Edit">
+                            <i class="fa fa-pencil"></i>
+                          </a>
+                          <a href="{{url('/admin')}}/delete_{{$url_slug}}/{{base64_encode($value['story_id'])}}"   class="btn btn-default "  title="Delete" onclick="return confirm('Are you sure you want to delete this record?');">
+                            <i class="fa fa-trash "></i>
+                          </a>
+                        </div>
                       </td>
-                      
                     </tr>
                   @endforeach
                 </tbody>
@@ -100,8 +72,8 @@
     {  
       
       swal({
-        title: "Push Notification Status",
-        text: "Are You sure to change push notification status",
+        title: "Story Type Status",
+        text: "Are You sure to change story type status",
         icon: "warning",
           buttons: [
             'Cancel',
@@ -116,12 +88,12 @@
             var plan_ids = plan_id;
             //alert(status);
              $.ajax({
-                  url: "{{url('/admin')}}/push_notification_status",
+                  url: "{{url('/admin')}}/story_type_status",
                   type: 'post',
                   data: {status:status,plan_ids:plan_id},
                   success: function (data) 
                   {
-                    swal("Success", "push notification status successfully changed !", "success");
+                    swal("Success", "story type status successfully changed !", "success");
                   }
               });
                 
@@ -141,5 +113,5 @@
 
 
      }
-</script>
+  </script>
 @endsection

@@ -82,6 +82,7 @@
                   <li><a href="{{url('')}}/contact">Contact</a></li>
                   <li><a href="{{url('')}}/faq">Help</a></li>
                   <li><a href="{{url('')}}/feedback">FeedBack</a></li>
+                  <li><a href="{{url('')}}/coverage">Coverage</a></li>
                   <li class="under-line-none" style="margin-top: 2px !important;">
                   <a 
                   id="signIn"

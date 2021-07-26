@@ -123,7 +123,20 @@
           <div class="col-md-12">
             <div class="box box-info ">
               <div class="box-header with-border" style="background-color: #c3d4b0 !important;">
-                <h3 class="box-title">Subscriber Monthly Statistics</h3>
+                <div class="row">
+                  <div class="col-md-4">
+                    <h3 class="box-title">Subscriber Monthly Statistics</h3>
+                  </div>
+                  <div class="col-md-5">
+                     <select class="form-control1 select1" id="kitchen_id" name="kitchen_id" required="true"  data-parsley-errors-container="#kitchen_error" data-parsley-error-message="Please select kitchen." onchange="getkichensubscriber();">
+                        <option value="">Select kitchen</option>
+                        <option value="0" selected>All</option>
+                        @foreach($data['kitchen'] as $key=>$kvalue)
+                        <option value="{{$kvalue->kitchen_id}}">{{$kvalue->kitchen_name}}</option>
+                        @endforeach
+                      </select>
+                  </div>
+                </div>
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse">
                   </button>
@@ -132,9 +145,34 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
+                <div class="col-md-8">
                 <div class="chart" style="position: relative; height:40vh;">
                   <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
+              </div>
+
+          @if(isset($data['kitchen_target_list']) && count($data['kitchen_target_list'])>0)
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>Target Completion for {{date('M-Y')}}</strong>
+                  </p>
+                  <hr/>
+               
+                  @foreach($data['kitchen_target_list'] as $kvalue)
+                  <div class="progress-group">
+                    <span class="progress-text">{{ucfirst($kvalue->kitchen_name)}}</span>
+                    <span class="progress-number"><b>@if(!empty($kvalue->achive_amt)){{$kvalue->achive_amt}}@else 0 @endif</b>/{{$kvalue->target_amt}}</span>
+                      <?php   
+                        $percent = ($kvalue->achive_amt/$kvalue->target_amt)*100;
+                      ?>
+                    <div class="progress sm">
+                   
+                      <div class="progress-bar" style="width: {{$percent}}%; background-color:{{$kvalue->process_color}}!important;"></div>
+                    </div>
+                  </div>
+                  @endforeach
+                </div>
+                @endif
               </div>
             </div>
           </div>
@@ -276,14 +314,68 @@
               </div>
               <!-- /.box-header -->
               <div class="box-body">
+                <div class="col-md-8">
                 <div class="chart" style="position: relative; height:40vh;">
                   <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                 </div>
+              </div>
+
+                @if(isset($data['kitchen_target_list']) && count($data['kitchen_target_list'])>0)
+                <div class="col-md-4">
+                  <p class="text-center">
+                    <strong>Target Completion for {{date('M-Y')}}</strong>
+                  </p>
+               
+                  @foreach($data['kitchen_target_list'] as $kvalue)
+                  <div class="progress-group">
+                    <span class="progress-text">{{ucfirst($kvalue->kitchen_name)}}</span>
+                    <span class="progress-number"><b>@if(!empty($kvalue->achive_amt)){{$kvalue->achive_amt}}@else 0 @endif</b>/{{$kvalue->target_amt}}</span>
+                      <?php   
+                        $percent = ($kvalue->achive_amt/$kvalue->target_amt)*100;
+                      ?>
+                    <div class="progress sm">
+                   
+                      <div class="progress-bar" style="width: {{$percent}}%; background-color:{{$kvalue->process_color}}!important;"></div>
+                    </div>
+                  </div>
+                  @endforeach
+                </div>
+                @endif
+                  <!-- /.progress-group -->
+                  <!-- <div class="progress-group">
+                    <span class="progress-text">Complete Purchase</span>
+                    <span class="progress-number"><b>310</b>/400</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-red" style="width: 80%"></div>
+                    </div>
+                  </div> -->
+                  <!-- /.progress-group -->
+                  <!-- <div class="progress-group">
+                    <span class="progress-text">Visit Premium Page</span>
+                    <span class="progress-number"><b>480</b>/800</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
+                    </div>
+                  </div> -->
+                  <!-- /.progress-group -->
+                  <!-- <div class="progress-group">
+                    <span class="progress-text">Send Inquiries</span>
+                    <span class="progress-number"><b>250</b>/500</span>
+
+                    <div class="progress sm">
+                      <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+                    </div>
+                  </div> 
+             
+                </div>-->
               </div>
             </div>
           </div>
         </div>
         <div class="row">
+          @if($session_user->roles=='admin')
           <div class="col-md-6">
             <div class="box box-info ">
               <div class="box-header with-border" style="background-color: #ddd !important;">
@@ -324,6 +416,9 @@
               </div>
             </div>
           </div>
+          @endif
+
+
           <div class="col-md-6">
             <div class="box box-info ">
               <div class="box-header with-border" style="background-color: #ddd !important;">
@@ -417,6 +512,8 @@
                   <button type="button" class="btn btn-box-tool" data-widget="collapse">
                   </button>
                   <!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+                  <input type="text" id="data_active">
+                  <input type="text" id="data_expire">
                 </div>
               </div>
               <!-- /.box-header -->
@@ -469,6 +566,7 @@ var data = {
             hoverBackgroundColor: "#aa7af8",
             hoverBorderColor: "#8845f5",
             //data: [65, 59, 30, 81, 56, 55, 40,80,100,200,80,30],
+            //data:[],
             data: [<?php echo (!empty($data['sub_array']))?implode(',',$data['sub_array']):0?>],
         },
         {
@@ -478,6 +576,7 @@ var data = {
             borderWidth: 2,
             hoverBackgroundColor: "#f1957e",
             hoverBorderColor: "#b94629",
+            //data:[],
             //data: [25, 39, 10, 65, 45, 35, 20,60,50,60,70,10],
             data: [<?php echo (!empty($data['sub_array']))?implode(',',$data['exp_array']):0 ?>],
         }
@@ -573,6 +672,89 @@ var myBarChart = Chart.Bar(canvas,{
 
         });
     });
+
+//getkichensubscriber();
+
+
+
+ function getkichensubscriber()
+ {  
+   var kit_id = $('#kitchen_id').val();
+    $.ajax({
+      url: "{{url('/admin')}}/kitchen_chart",
+      type: 'post',
+      data: {kitchen_id:kit_id},
+      success: function (response) 
+      {    // alert(data1);
+          //var final_data =  data1.split(','); 
+        //  var quantity = data1[0];
+          //$('#data_active').val(data_active);
+         // var quantity2 = data1[1];
+            //$('#data_active').val(data_expire);
+         response = JSON.parse(response);
+         console.log(response.data.quantity);
+          myBarChart.data.datasets[0].data = response.data.quantity; // or you can iterate for multiple datasets
+          myBarChart.data.datasets[1].data = response.data.quantity2; // or you can iterate for multiple datasets
+          myBarChart.update();
+          /*var canvas = document.getElementById('barChart');
+var data = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul" ,"Aug","Sep","Oct","Nov","Dec"],
+
+    datasets: [
+        {
+
+            label: "Active Subscriber",
+            backgroundColor: "#39e21aa1",
+            borderColor: "#1d8c08",
+            borderWidth: 2,
+            hoverBackgroundColor: "#aa7af8",
+            hoverBorderColor: "#8845f5",
+           // data: [65, 59, 30, 81, 56, 55, 40,80,100,200,80,30],
+            data: [data_active],
+        },
+        {
+            label: "Expire Subscriber",
+            backgroundColor: "rgba(155,50,132,0.2)",
+            borderColor: "rgba(255,99,132,1)",
+            borderWidth: 2,
+            hoverBackgroundColor: "#f1957e",
+            hoverBorderColor: "#b94629",
+           // data: [25, 39, 10, 65, 45, 35, 20,60,50,60,70,10],
+            data: [data_expire],
+        }
+    ]
+};
+var option = {
+animation: {
+        duration:5000
+},
+x: {
+      gridLines: {
+          offsetGridLines: true
+      }
+
+  },
+scales: {
+    yAxes: [{
+        ticks: {
+                min: 0,
+                stepSize:1,
+                max:<?php echo  (!empty($data['total_subscriber_count']))?$data['total_subscriber_count']:0?>,
+            }
+    }]
+}
+};
+*/
+
+
+      }
+    });
+
+
+ }
+
+
+
  </script> 
  
 @endsection

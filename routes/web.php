@@ -130,8 +130,12 @@ Route::get('/cron_schedule', 'Cron\ScheduleController@meal');
 
 
 Route::get('/feedback', 'Admin\FeedbackController@add');
+Route::get('/coverage', 'Admin\LinkController@home');
 Route::post('/store_feedback', 'Admin\FeedbackController@store');
 Route::post('/getArea',	 			 'Admin\AjaxController@getArea');
+
+
+
 //set additional meal route	
 
 //end set additional meal route	
@@ -193,7 +197,9 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 {
 	
 	Route::get('/dashbord',		 	      'Admin\DashboardController@dashbord');
+	
 	Route::post('/getSubscriberDatadash', 'Admin\DashboardController@get_expiry_subcriber');
+	Route::post('/kitchen_chart', 'Admin\DashboardController@get_subscriber_chart_kichenwise');
 	
 	//notification show
 	Route::post('/notification_data',  'Admin\NotificationController@dbnotification');
@@ -462,6 +468,35 @@ Route::group(['prefix' => 'admin','middleware' => 'admin'], function ()
 	Route::post('/update_push_notification/{id}',  'Admin\PushNotificationController@update');
 	Route::get('/delete_push_notification/{id}',	  'Admin\PushNotificationController@delete');
 	Route::post('/push_notification_status',	      'Admin\PushNotificationController@status');
+
+	//plan master routes
+	
+	Route::get('/manage_story_type',		  'Admin\StoryController@index');
+	Route::get('/add_story_type',		 	  'Admin\StoryController@add');
+	Route::post('/store_story_type',		  'Admin\StoryController@store');
+	Route::get('/edit_story_type/{id}',	 	  'Admin\StoryController@edit');
+	Route::post('/update_story_type/{id}',    'Admin\StoryController@update');
+	Route::get('/delete_story_type/{id}',	  'Admin\StoryController@delete');
+	Route::post('/story_type_status',	      'Admin\StoryController@status');
+
+	//link 
+
+	Route::get('/manage_link',		  'Admin\LinkController@index');
+	Route::get('/add_link',		 	  'Admin\LinkController@add');
+	Route::post('/store_link',		  'Admin\LinkController@store');
+	Route::get('/edit_link/{id}',	  'Admin\LinkController@edit');
+	Route::post('/update_link/{id}',  'Admin\LinkController@update');
+	Route::get('/delete_link/{id}',	  'Admin\LinkController@delete');
+	Route::post('/link_status',	      'Admin\LinkController@status');
+	Route::post('/link_details',	      'Admin\LinkController@link_details');
+	
+	//pincode location find
+	Route::get('/latlong',	      'Admin\KitchenController@getlatlong');
+	Route::post('/nearKitchen',	  'Admin\KitchenController@nearest_kitchen');
+	
+
+
+
 
 
 });

@@ -116,6 +116,35 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-4">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="Kitchen_name">Kitechen Latitude<span style="color:red;" >*</span></label>
+                  <input type="text" autocomplete="off" class="form-control" id="lat" name="lat" data-parsley-errors-container="#lat_names" data-parsley-error-message="Please enter latitude."  placeholder="Kitchen Latitude" required>
+                  <div id="lat_names" style="color:red;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="Kitchen_name">Kitechen Longitude<span style="color:red;" >*</span></label>
+                  <input type="text" autocomplete="off" class="form-control" id="lang" name="lang" data-parsley-errors-container="#long_names" data-parsley-error-message="Please enter logitude."  placeholder="Kitchen Longitude" required>
+                  <div id="long_names" style="color:red;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="Kitchen_name">Kitechen Dashboard progress bar color<span style="color:red;" >*</span></label>
+                  <input type="color" autocomplete="off" class="form-control" id="process_color" name="process_color" data-parsley-errors-container="#_names" data-parsley-error-message="Please enter color."  placeholder="Dashboard progress bar color"  required>
+                  <div id="_names" style="color:red;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-md-12">
               <div class="box-body">
                 <div class="form-group">
@@ -130,7 +159,8 @@
             <div class="col-md-12">
               <div class="alert alert-warning col-md-12 mt-4 text-left" style="margin-top: 13px;color:#000000!important;background-color: #f39c1229 !important;">
                   <strong ><i class="glyphicon glyphicon-warning"></i> Note!</strong>
-                 To add Cloud Kitchen, Please make sure you have <strong>"Assign User to Kitchen", "Add Subscription plan" and "Assign Menu To Kitchen".</strong>
+                 To add Cloud Kitchen, Please make sure you have <strong>"Assign User to Kitchen", "Add Subscription plan" and "Assign Menu To Kitchen".</strong><br/>
+                 <strong><i class="glyphicon glyphicon-warning"></i> Note!</strong> Assign user show on <b>red color</b> background and not assign user show <b>green color</b> background </strong>
               </div>
             </div>
           </div>
@@ -156,13 +186,24 @@
                         <tbody>
                         
                         @foreach($users as $key => $uvalue)
-                        <tr>
-                          <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one kitchen user"></td>
-                            
+
+                        @if(in_array($uvalue->id,$assign_user))
+                        <tr style="background-color: #e80f0f1c !important;">     
+                          <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one kitchen user" onclick="alert('this user already assign to kichen please select anather user');" tooltip="test" disabled=""></td>
                           <td>{{ucfirst($uvalue->name)}}</td>
                           <td>{{ucfirst($uvalue->role_name)}}</td>
                           <td><strong>State:</strong>{{ucfirst($uvalue->state_name)}}, <strong>city:</strong>{{ucfirst($uvalue->city_name)}} , <strong>Area:</strong> {{ucfirst($uvalue->area_name)}} </td>
-                        </tr>
+                          </tr>
+                        @else
+                         <tr style="background-color: #38ff514a !important;">     
+                           <td><input type="checkbox" name="users[]" class="checkbox_allmenu" id="users" value="{{$uvalue->id}}" required data-parsley-errors-container="#checkbox_error" data-parsley-error-message="Please select at least one kitchen user"></td>
+                       
+                          <td>{{ucfirst($uvalue->name)}}</td>
+                          <td>{{ucfirst($uvalue->role_name)}}</td>
+                          <td><strong>State:</strong>{{ucfirst($uvalue->state_name)}}, <strong>city:</strong>{{ucfirst($uvalue->city_name)}} , <strong>Area:</strong> {{ucfirst($uvalue->area_name)}} </td> </tr>
+
+                        @endif     
+                        
                         @endforeach
                           </tbody>
                         

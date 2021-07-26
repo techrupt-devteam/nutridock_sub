@@ -10,6 +10,7 @@ class PushNotification extends Model
     protected $primaryKey  = "push_notification_id";
     protected $fillable = [
 		"notification_name",
+		"kitchen_id",
 		"state_id",
 		"city_id",
 		"area_id",

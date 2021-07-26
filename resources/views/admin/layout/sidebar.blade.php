@@ -156,13 +156,13 @@
             </span>
           </a>
         </li>
-        <!-- <li @if(Request::segment(2)=='manage_push_notification' || Request::segment(2)=='add_push_notification' || Request::segment(2)=='edit_push_notification') class="active"@endif>
+        <li @if(Request::segment(2)=='manage_push_notification' || Request::segment(2)=='add_push_notification' || Request::segment(2)=='edit_push_notification') class="active"@endif>
           <a href="{{url('/admin')}}/manage_push_notification">
           <i class="fa fa-comments"></i><span>Push Notification</span>
             <span class="pull-right-container">
             </span>
           </a>
-        </li> -->
+        </li>
        <li class="treeview  @if(Request::segment(2)=='manage_menucategory' || Request::segment(2)=='add_menucategory' || Request::segment(2)=='edit_menucategory'||Request::segment(2)=='manage_menu_specification' || Request::segment(2)=='add_menu_specification' || Request::segment(2)=='edit_menu_specification'||Request::segment(2)=='manage_menu' || Request::segment(2)=='add_menu' || Request::segment(2)=='edit_menu'|| Request::segment(2)=='add_location' || Request::segment(2)=='edit_location'||Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan'|| Request::segment(2)=='manage_assign_location_menu' || Request::segment(2)=='add_assign_location_menu' || Request::segment(2)=='edit_assign_location_menu'||Request::segment(2)=='manage_kitchen1' || Request::segment(2)=='add_kitchen1' || Request::segment(2)=='edit_kitchen1'||Request::segment(2)=='manage_assign_sub_plan_menu1' || Request::segment(2)=='add_assign_sub_plan_menu1' || Request::segment(2)=='edit_assign_sub_plan_menu1') active @endif ">
             <a href="#">
               <i class="fa fa-cutlery"></i> <span>Menu</span>
@@ -235,6 +235,7 @@
                   </span>
                 </a>
               </li>
+             
               
               <!-- <li @if(Request::segment(2)=='manage_plan' || Request::segment(2)=='add_plan' || Request::segment(2)=='edit_plan') class="active" @endif>
                 <a href="{{url('/admin')}}/manage_plan">
@@ -252,7 +253,30 @@
               </li>
             </ul>
         </li>  
- 
+           <li class="treeview  @if(Request::segment(2)=='manage_link' || Request::segment(2)=='add_link' || Request::segment(2)=='edit_link'||Request::segment(2)=='manage_story_type' || Request::segment(2)=='add_story_type' || Request::segment(2)=='edit_story_type') active @endif ">
+            <a href="#">
+              <i class="fa fa-link"></i> <span>Coverage Master</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li @if(Request::segment(2)=='manage_link' || Request::segment(2)=='add_link' || Request::segment(2)=='edit_link') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_link">
+                  <i class="fa fa-circle-o"></i> <span>Coverages Link</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+              <li @if(Request::segment(2)=='manage_story_type' || Request::segment(2)=='add_story_type' || Request::segment(2)=='edit_story_type') class="active" @endif>
+                <a href="{{url('/admin')}}/manage_story_type">
+                  <i class="fa fa-circle-o"></i> <span>Story Type</span>
+                  <span class="pull-right-container">
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
          <li class="treeview  @if(Request::segment(2)=='manage_module' || Request::segment(2)=='add_module' || Request::segment(2)=='edit_module' ||Request::segment(2)=='manage_role' || Request::segment(2)=='add_role' || Request::segment(2)=='edit_role'||Request::segment(2)=='manage_permission' || Request::segment(2)=='add_permission' || Request::segment(2)=='edit_permission') active @endif ">
             <a href="#">
               <i class="fa fa-sitemap"></i> <span>Role Setting</span>

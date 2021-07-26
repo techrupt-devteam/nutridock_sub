@@ -94,8 +94,14 @@ class KitchenController extends Controller
     public function add()
     {
        
-        $state              = $this->base_state->get();
-        $menu_model         = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
+        $state             = $this->base_state->get();
+        $menu_model        = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
+        $kitchen_user_data =  $this->base_kitchen_user->select('user_id')->get()->toArray();
+        $assign_user       = [];
+        foreach ($kitchen_user_data as $key => $value) {
+           $assign_user [$key] = $value['user_id'];
+        }
+
         $users              =  \DB::table('users')
                                 ->join('role','users.roles','=','role.role_id')
                                 ->join('state','users.state','=','state.id')
@@ -112,6 +118,7 @@ class KitchenController extends Controller
         $data['subscriptionplan'] = $subscription_plan;
         $data['menu']       = $menu_model;
         $data['users']      = $users;
+        $data['assign_user']= $assign_user;
         $data['state']      = $state;
         $data['title']      = $this->title;
         $data['url_slug']   = $this->url_slug;
@@ -129,7 +136,8 @@ class KitchenController extends Controller
                 "city_id"      => 'required',
                 "area_id"      => 'required',
                 "pincode"      => 'required',
-                "address"      => 'required'
+                "address"      => 'required',
+                "lat"          => 'required',
             ]);
 
         if ($validator->fails()) 
@@ -160,6 +168,9 @@ class KitchenController extends Controller
         $arr_data['address']         = $request->input('address');
         $arr_data['menu_id']         = $menu_data;
         $arr_data['sub_plan_id']     = $subscriptionplan_data;
+        $arr_data['lat']             = $request->input('lat');
+        $arr_data['lang']            = $request->input('lang');
+        $arr_data['process_color']   = $request->input('process_color');
         //$arr_data['user_id']         = $users_data;
 
         $store_kitchen = $this->base_model->create($arr_data);
@@ -202,6 +213,12 @@ class KitchenController extends Controller
         foreach ($user_data as $key => $uid) {
            $user_id_arr[] = $uid->user_id;
         }
+
+         $kitchen_user_data =  $this->base_kitchen_user->select('user_id')->where('kitchen_id','<>',$id)->get()->toArray();
+        $assign_user       = [];
+        foreach ($kitchen_user_data as $key => $value) {
+           $assign_user [$key] = $value['user_id'];
+        }
      
         $state          = $this->base_state->get();
         $menu_model     = $this->base_menu_model->select('menu_title','id')->where('is_active','=',1)->get();
@@ -225,6 +242,7 @@ class KitchenController extends Controller
        
         $data['data']      = $arr_data;
         $data['user_data'] = $user_id_arr;
+        $data['assign_user'] = $assign_user;
         $data['page_name'] = "Edit";
         $data['subscriptionplan'] = $subscription_plan;
         $data['menu']       = $menu_model;
@@ -245,7 +263,9 @@ class KitchenController extends Controller
                 "city_id"      => 'required',
                 "area_id"      => 'required',
                 "pincode"      => 'required',
-                "address"      => 'required'
+                "address"      => 'required',
+                "lat"          => 'required'
+              
             ]);
         if ($validator->fails()) 
         {
@@ -263,7 +283,6 @@ class KitchenController extends Controller
         $menu_data                   = implode(",",$request->input('menu'));
         $subscriptionplan_data       = implode(",",$request->input('subscription_plan'));
        // $users_data                  = implode(",",$request->input('users'));
-
         $arr_data                    = [];
         $arr_data['kitchen_name']    = $request->input('kitchen_name');
         $arr_data['customer_key']    = $request->input('customer_key');
@@ -272,15 +291,15 @@ class KitchenController extends Controller
         $arr_data['area_id']         = $request->input('area_id');
         $arr_data['pincode']         = $request->input('pincode');
         $arr_data['address']         = $request->input('address');
-         $arr_data['menu_id']        = $menu_data;
+        $arr_data['lat']             = $request->input('lat');
+        $arr_data['lang']            = $request->input('lang');
+        $arr_data['menu_id']         = $menu_data;
         $arr_data['sub_plan_id']     = $subscriptionplan_data;
+        $arr_data['process_color']   = $request->input('process_color');
         //$arr_data['user_id']         = $users_data;
-
         $update_kitchen  = $this->base_model->where(['kitchen_id'=>$id])->update($arr_data);
         if($update_kitchen){
-
             $this->base_kitchen_user->where(['kitchen_id'=>$id])->delete();
-
             $user = $request->input('users');
             foreach($user as $uid){
             
@@ -315,40 +334,38 @@ class KitchenController extends Controller
 
     public function status(Request $request)
     {
-        $status  = $request->status;
-        $id = $request->plan_ids;
-        $arr_data               = [];
+        $status   = $request->status;
+        $id       = $request->plan_ids;
+        $arr_data = [];
+
         if($status=="true")
         {
            $arr_data['is_active'] = '1';
         }
+
         if($status=="false")
         {
            $arr_data['is_active'] = '0';
-        }   
+        }
+
         $this->base_model->where(['id'=>$id])->update($arr_data);
         //return \Redirect::back();
     }
     
     public function detail(Request $request)
     {
-        $kitchen_id = $request->input('kitchen_id');   
-
-        $kitchen            = $this->base_model->where(['kitchen_id'=>$kitchen_id])->first();
-
-      
-       // $user_data         = explode(",",  $kitchen->user_id); 
+        $kitchen_id        = $request->input('kitchen_id');   
+        $kitchen           = $this->base_model->where(['kitchen_id'=>$kitchen_id])->first();
+        // $user_data      = explode(",",  $kitchen->user_id); 
         $menu_data         = explode(",",  $kitchen->menu_id); 
         $subscription_data = explode(",",  $kitchen->sub_plan_id); 
-
-
-        $state              = $this->base_state->get();
-        $menu_model         = $this->base_menu_model->select('menu_title','id')->whereIn('id', $menu_data)->get();
-
-         $user_data      = $this->base_kitchen_user->where(['kitchen_id'=>$kitchen_id])->select('user_id')->get();
-        $user_id_arr    = []; 
+        $state             = $this->base_state->get();
+        $menu_model        = $this->base_menu_model->select('menu_title','id')->whereIn('id', $menu_data)->get();
+        $user_data         = $this->base_kitchen_user->where(['kitchen_id'=>$kitchen_id])->select('user_id')->get();
+        
+        $user_id_arr       = []; 
         foreach ($user_data as $key => $uid) {
-           $user_id_arr[] = $uid->user_id;
+           $user_id_arr[]  = $uid->user_id;
         }
      
         $users              =   \DB::table('users')
@@ -439,8 +456,12 @@ class KitchenController extends Controller
                          ->where('nutri_trn_kitchen_target.kitchen_id','=',$id)
                          ->where('nutri_trn_kitchen_target.is_deleted','<>',1)
                          ->get()->toArray();
-        //dd($data);                  
+        //dd($data);   
+        if(count($data)>0){
         $data['data']      = $data;
+        }else{
+        $data['data']  = [];
+        }               
         $data['page_name'] = "Manage";
         $data['url_slug']  = 'target';
         $data['title']     = "Target";
@@ -499,5 +520,81 @@ class KitchenController extends Controller
         return \Redirect::to('admin/manage_kitchen');
     } 
 
-   
+    public function getlatlong(Request $request)
+    {
+        $data['page_name'] = "Manage";
+        $data['url_slug']  = $this->url_slug;
+        $data['title']     = $this->title;
+        return view($this->folder_path.'test',$data);
+    }
+
+    public function nearest_kitchen(Request $request)
+    {
+        $zip = $request->pincode;
+
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($zip)."&key=AIzaSyDm2WEkNxEQTvrl2wWwXu6YCklHFmoBLx0"; //AIzaSyC-Nh0CBhe1CnvAmULB8HCqJRSzGi5NiHc
+        $result_string = file_get_contents($url);
+        $result = json_decode($result_string, true);
+      
+        $result1[] = $result['results'][0];
+        $result2[] = $result1[0]['geometry'];
+        $result3[] = $result2[0]['location'];
+      //  dd($result1);
+        $lattitude = $result3[0]['lat'];
+        $longitude = $result3[0]['lng'];
+
+        $data1 = DB::select("SELECT kitchen_name,lat,lang,SQRT(
+        POW(69.1 * (lat - ".$lattitude."), 2) +
+        POW(69.1 * (".$longitude." - lang) * COS(lat/ 57.3), 2)) AS distance
+        FROM nutri_mst_kitchen HAVING distance < 25 ORDER BY distance");
+
+       // dd($data);
+          $data   = \DB::table('nutri_mst_kitchen')->get();
+          foreach($data as $kvalue){  
+
+          echo "<br/><b>Search Pincode City: </b>".$result1[0]['address_components'][1]['long_name'];  
+          echo "<br/><b>Kitchen Name:   </b>".$kvalue->kitchen_name;  
+/*          echo "<br/><b>Kitchen distance:   </b>".$this->getDistance($result3[0]['lat'], $result3[0]['lng'], $kvalue->lat, $kvalue->lang, $earthRadius = 6371000);
+          echo "<br/><b>Origin: </b>".$origin      = $kvalue->lat.','.$kvalue->lang;  
+          echo "<br/><b>Destination:    </b>".$destination = $result3[0]['lat'].','.$result3[0]['lng']."<br/><hr/>";*/
+
+        $origin      = $kvalue->lat.','.$kvalue->lang; 
+        $destination = $result3[0]['lat'].','.$result3[0]['lng'];
+       $api = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=km&origins=".$origin."&destinations=".$destination."&key=AIzaSyC-Nh0CBhe1CnvAmULB8HCqJRSzGi5NiHc");
+          $data = json_decode($api);
+            dd($data);
+
+          }
+
+//AIzaSyC-Nh0CBhe1CnvAmULB8HCqJRSzGi5NiHc
+
+        /*SELECT * ,SQRT(
+        POW(69.1 * (lat - '20.457809'), 2) +
+        POW(69.1 * ('74.182648' - lang) * COS(lat/ 57.3), 2)) AS distance
+        FROM nutri_mst_kitchen HAVING distance < 10 ORDER BY distance*/
+
+    }
+
+     Public  function getDistance($lat1, $lon1, $lat2, $lon2)
+    {
+         // convert from degrees to radians
+      
+          $delta_lat = $lat1 - $lat2 ;
+          $delta_lon = $lon1 - $lon2;
+
+          $earth_radius = 6372.795477598;
+
+          $alpha    = $delta_lat/2;
+          $beta     = $delta_lon/2;
+          $a        = sin(deg2rad($alpha)) * sin(deg2rad($alpha)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin(deg2rad($beta)) * sin(deg2rad($beta)) ;
+          $c        = asin(min(1, sqrt($a)));
+          $distance = 2*$earth_radius * $c;
+          $distance = round($distance, 4);
+          $this->measure = $distance;
+          return $distance;
+
+    }
+
+
+
 }

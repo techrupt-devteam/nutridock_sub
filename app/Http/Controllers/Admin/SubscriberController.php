@@ -249,22 +249,27 @@ class SubscriberController extends Controller
           
                 
         //kichen id find functionality 
-        $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
-        //dd($kichen_data->kitchen_id);
-        $skitchen_id = $kichen_data->kitchen_id;
+         $skitchen_id = 0;
+          if($login_user_details->roles!='admin'){
+         $kichen_data = DB::table('nutri_mst_kitchen_users')->where('user_id','=',$login_user_details->id)->select('kitchen_id')->first();
+         $skitchen_id = $kichen_data->kitchen_id;
+     }
+        // dd($skitchen_id);
 
 
 
-
-       /* $kichen_data = DB::table('nutri_mst_kitchen')->get();
+        /*$kichen_data = DB::table('nutri_mst_kitchen')->get();
         foreach ($kichen_data as $key => $value) {
+
            $user_id = explode(',',$value->user_id);
 
            if(in_array($login_user_details->id, $user_id))
            {
-            $skitchen_id = $value->kitchen_id;
+                $skitchen_id = $value->kitchen_id;
            }
         }*/
+
+
         //dd($kitchen_info);
         //dd($assign_subscriber);
         $user = \Sentinel::check();

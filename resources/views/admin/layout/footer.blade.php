@@ -92,7 +92,8 @@
       //$("#datepicker").datepicker({ format: "dd/mm/yyyy" }).val();
       //$("#datepicker1").datepicker({ format: "dd/mm/yyyy" }).val();
       $('.my-colorpicker1').colorpicker()
-      $("#datepicker_today").datepicker({ format: "yyyy-mm-dd",startDate:'today' }).val();
+      $("#cdate").datepicker({ format: "dd-mm-yyyy",startDate:'today' }).val();
+      $("#datepicker_today ").datepicker({ format: "yyyy-mm-dd",startDate:'today' }).val();
       $("#datepicker_today1").datepicker({ format: "yyyy-mm-dd",startDate:'today' }).val();
 
       $("#datepicker").datepicker({ format: "yyyy-mm-dd",autoclose: true}).val();

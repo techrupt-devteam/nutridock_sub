@@ -102,10 +102,11 @@ class AjaxController extends Controller
 
     public function getSubscriber(Request $request)
     {
-        $state_id = $request->state;
-        $city_id  = $request->city;
-
-        $get_subscriber = $this->base_subscriber_details->where(['state'=>$state_id,'city'=>$city_id,'is_approve'=>'1'])->get();
+        //$state_id = $request->state;
+        //$city_id  = $request->city;
+        $skitchen_id = $request->kitchen_id;
+     /*   $get_subscriber = $this->base_subscriber_details->where(['state'=>$state_id,'city'=>$city_id,'is_approve'=>'1'])->get(); */
+     $get_subscriber = $this->base_subscriber_details->where(['skitchen_id'=>$skitchen_id,'is_approve'=>'1'])->get();
 
         $html = "";
         $html = "<option value=''>-Select-</option>";
