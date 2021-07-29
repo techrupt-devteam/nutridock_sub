@@ -102,6 +102,68 @@
           scrollbar-width: thin !important;
         }
       </style>
+      <style type="text/css">
+  .notification_ul .header {
+    font-size: 14px;
+  }
+  .notification_ul {
+    max-width: 263px;
+    margin-top: 65px !important;
+    transform: none !important;
+   border-radius: 0px !important;
+}
+.notifications-menu a #notification_count_span {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background-color: #8bc34a;
+    font-size: 12px;
+    border-radius: 50%;
+    font-weight: 600;
+    margin-left: -11px;
+    margin-top: -7px;
+    text-align: center;
+    padding: 4px 0px;
+}
+.notification_ul li.footer a {
+    color: #034eab;
+    text-align: center;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+.notification_ul li.footer {
+    padding: 1px 0px 6px;
+    background-color: #e9ecef;
+}
+.notification_ul .menu li a {
+    text-transform: capitalize;
+    font-size: 13px !important;
+    font-weight: 400;
+    word-break: normal;
+    white-space: normal !important;
+    color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.nav-menu a:hover #notification_count_span {
+    color: #FFF;
+}
+.notification_ul ul.menu li {
+    border-bottom: 1px solid #8bc34a;
+    padding-bottom: 6px;
+}
+.notification_ul .header {
+    font-size: 14px;
+    background-color: #5eca38;
+    color: #fff;
+    padding: 8px !important;
+    width: 200px;
+    font-weight: 600;
+}
+</style>
    </head>
    <body> 
     <header class="fixed-top"id="header">
@@ -148,24 +210,24 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Account </a>
                     <ul class="dropdown-menu account-Modal__inner">
                         <li class="media ">
-                          <div class="media-left">
+                          <div class="media-left icon">
                             <i class="fa fa-envelope-open" aria-hidden="true"></i> 
                           </div>
-                          <div class="media-body">
+                          <div class="media-body ml-0 border-left">
                             {{ Session::get('subscriber_email') }}
                           </div>
                         </li>
 
-                        <li class="media ">
-                          <div class="media-left">
-                            <i class="fa fa-mobile" aria-hidden="true" style="font-size:22px"></i> 
+                        <li class="media mt-1 mb-2">
+                          <div class="media-left icon">
+                            <i class="fa fa-phone" aria-hidden="true" style="font-size:22px"></i> 
                           </div>
-                          <div class="media-body">
+                          <div class="media-body ml-0 border-left">
                             {{ Session::get('subscriber_mobile') }}
                           </div>
                         </li>
-                        <div class="divider">
-                        </div>
+                        <!-- <div class="divider">
+                        </div> -->
                             
                             <div class="navbar-footer">
                               <div class="navbar-footer-content">
@@ -217,68 +279,7 @@
         notification(); 
       }, 3000);
 </script>
-<style type="text/css">
-  .notification_ul .header {
-    font-size: 14px;
-  }
-  .notification_ul {
-    max-width: 263px;
-    margin-top: 72px !important;
-    transform: none !important;
-   border-radius: 0px;
-}
-.notifications-menu a #notification_count_span {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    background-color: #8bc34a;
-    font-size: 12px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 1.8;
-    font-weight: 600;
-    margin-left: -11px;
-    margin-top: -7px;
-}
-.notification_ul li.footer a {
-    color: #034eab;
-    text-align: center;
-    font-size: 14px;
-    text-transform: capitalize;
-}
-.notification_ul li.footer {
-    padding: 1px 0px 6px;
-    background-color: #e9ecef;
-}
-.notification_ul .menu li a {
-    text-transform: capitalize;
-    font-size: 13px !important;
-    font-weight: 400;
-    word-break: normal;
-    white-space: normal !important;
-    color: #222;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-.nav-menu a:hover #notification_count_span {
-    color: #FFF;
-}
-.notification_ul ul.menu li {
-    border-bottom: 1px solid #8bc34a;
-    padding-bottom: 6px;
-}
-.notification_ul .header {
-    font-size: 14px;
-    background-color: #5eca38;
-    color: #fff;
-    padding: 8px !important;
-    width: 200px;
-    font-weight: 600;
-}
-</style>
+
 </header>
 
 

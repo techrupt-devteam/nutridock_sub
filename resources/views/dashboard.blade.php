@@ -1,8 +1,20 @@
 @extends('layouts.subscriber_master')
 @section('content')
 <main>
+<link rel="stylesheet"href="{{url('')}}/public/front/css/dashboard.css">
+  <section class="breadcum">
+    <div class="container-fluid">
+      <div class="col-sm-6">
+        <h4>Welcome To NutridockFit</h4>
+        <!-- <ol class="breadcrumb product_des-breadcrumb">
+          <li><a href="http://localhost/nutridock_sub">Home &nbsp;</a></li>
+          <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span>Profile</span></li>
+        </ol> -->
+      </div>
+    </div>
+  </section>
    <section class="user-panel">
-      <div class="container">
+      <div class="container-fluid">
           @php $title ="Profile"; @endphp 
           <!-- @include('layouts.bread_crum') -->
            <div class="row">
@@ -10,40 +22,45 @@
               <div class="col-md-8 col-lg-9  my-account">
                <div class="dashboard_section">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-5">
                         <!--begin::Engage Widget 8-->
-                        <div class="card days-7-plan">
-                            <div class="card-body p-0 d-flex ">
-                                <div class="d-flex align-items-start w-100 justify-content-start bg-light-warning p-8 card-rounded position-relative" style="border-radius: 25px;">
-                                  <div class="col-md-4">
+                        <div class="card days-7-plan bg-light-primary">
+                            <div class="card-body d-flex ">
+                                <div class="align-items-start w-100 justify-content-start position-relative">
+                                  <div class="col-md-12">
                                     <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
                                         <div class="p-3 flex-grow-1">
-                                            <h4 class="text-warning font-weight-bold">
-                                            {{ $getadditionalData->no_of_days}} Plan</h4>
-                                            <p class="text-dark-50 font-weight-bold mt-3">{{date('d-M-Y',strtotime($getadditionalData->start_date))}} - {{date('d-m-Y',strtotime($getadditionalData->expiry_date))}}</p>
+                                            <h2 class="text-white font-weight-bold">
+                                            {{ $getadditionalData->no_of_days}} Plan</h2>
+                                            <p class="text-dark-50 mt-3">{{date('d-M-Y',strtotime($getadditionalData->start_date))}} - {{date('d-m-Y',strtotime($getadditionalData->expiry_date))}}</p>
                                         </div>
-                                        <a href="{{url('')}}/editmealprogram/{{$getadditionalData->dll_s_id}}" class="btn btn-success btn-round btn-sm ml-3"><i class="glyphicon glyphicon-hand-right"></i>  View Meal Plan  </a>
-                                       
-                                         <button type='button' class='btn btn-info btn-sm ml-3 mt-4' data-toggle='modal' data-target='#modal-details' onclick='viewDetails1({{$getadditionalData->dll_s_id}})' title='Meal Program calendar'><i class="fa fa-calendar" aria-hidden="true" style="font-size: 16px;"></i> View Datewise</button>
+                                      
+                                        <a href="{{url('')}}/editmealprogram/{{$getadditionalData->dll_s_id}}" class="btn btn-light" style="width: 135px;">
+                                          <i class="glyphicon glyphicon-hand-right"></i>  View Meal  
+                                        </a>
+                                         <button type='button' class='btn btn-default mt-4' data-toggle='modal' data-target='#modal-details' onclick='viewDetails1({{$getadditionalData->dll_s_id}})' title='Meal Program calendar'>
+                                          <i class="fa fa-calendar" aria-hidden="true" style="font-size: 16px;"></i> View Datewise
+                                        </button>
                                     </div>
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-12">
                                       @php 
                                     $no_of_addition_meal = $getadditionalData->duration_additional_meal - $getadditionalData->no_of_additional_meal; 
                                     @endphp  
 
                                     @if($no_of_addition_meal !=0)
                                      <div class="d-flex flex-column align-items-start flex-grow-1 h-100">
-                                        <div class="p-3 flex-grow-1">
-                                            <h4 class="text-warning font-weight-bold">Get Your Additional meal </h4>
-                                           <p class="text-dark-50 font-weight-bold mt-3" ><label id="blink">Click Here <i class="glyphicon glyphicon-hand-down"></i></label></p>
+                                        <div class="flex-grow-1">
+                                            <h3 class="text-white font-weight-bold">Get Additional Meal </h3>
+                                           <p class="text-dark-50 font-weight-bold mt-3" style="max-height: 24px;">
+                                             <label id="blink">Click Here <i class="glyphicon glyphicon-hand-down"></i></label>
+                                            </p>
                                         </div>
                                   
-                                    <button type='button' class='buttonanm btn btn-danger btn-sm' data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal();' title='Subscriber additional meal'> <i class="glyphicon glyphicon-hand-right"></i> You have {{ $no_of_addition_meal }} Additional Meal</button>
+                                    <button type='button' class='buttonanm btn btn-dark' data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal();' title='Subscriber additional meal'> 
+                                      <i class="glyphicon glyphicon-hand-right"></i> You have {{ $no_of_addition_meal }} Additional Meal
+                                    </button>
                                     @endif
-
-
-
                                     </h4><hr/>
                                     <input type="hidden" id="start_date" value="{{$getadditionalData->start_date}}">
                                     <input type="hidden" id="expiry_date" value="{{$getadditionalData->expiry_date}}">
@@ -59,55 +76,64 @@
                                 </div>
                             </div>
                         </div>
-
+                     
                         <!--end::Engage Widget 8-->
                        </div>
-                    <div class="col-md-12">
-                       <div class="row">
-                           <div class="col-md-12 mb-5 mt-3">
-                               <h4><strong>Today</strong> Meal </h4>
-                           </div>
-                           <?php  
+                         <?php  
                                   $calories_array = [];
                                   $proteins_array = [];
                                   $carbo_array = [];
                                   $fats_array = [];
                             ?>
+                      
+                    <div class="col-md-7">
+                       <div class="row">
+                           <div class="col-md-12 mb-2 mt-1 pl-md-1">
+                               <h4><strong>Today</strong> Meal </h4>
+                           </div>
+                         
                           @foreach($todays_menu as $mvalue) 
                             @if($mvalue->meal_type_id == 1)
-                               <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 ">                           
+                               <div class="col-lg-6 col-md-6 col-sm-6 pl-md-1">                           
                                 <div class="ms-card">
                                   <div class="ms-card-img">
-                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> <p class="text-center text-success"><strong>{{$mvalue->meal_type_name}}</strong></p>
-                                  </div>
-                                  <div class="ms-card-body">
-                                    <div class="ms-card-heading-title text-center" style="justify-content: center;">
-                                      <h5 class="text-center font-weight-bold">{{ucwords($mvalue->menu_title)}}</h5>
-                                     </div>
-                                    <hr/>
-                                    <div class="ms-card-heading-title">
-                                      <div class="row">
-                                        <span class="col-sm-6"><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->calories }}
+                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> 
+                                    <p class="text-success text-center mb-1 mt-3">
+                                         {{ $mvalue->calories }}
                                         @php 
                                         $calories_array [] = $mvalue->calories;
                                         $proteins_array [] = $mvalue->proteins;
                                         $carbo_array    [] = $mvalue->carbohydrates;
                                         $fats_array     [] = $mvalue->fats;
                                         @endphp  
-                                        </strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->proteins }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                        <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->carbohydrates }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> <strong>{{ $mvalue->fats }}</strong>
-                                      </span>
+                                        <span>Kcal</span>
+                                    </p>
+                                  </div>
+                                  <div class="ms-card-body">
+                                   <h4 class="text-dark mb-0"> <strong>{{$mvalue->meal_type_name}}</strong></h4>
+                                    <div class="ms-card-heading-title">
+                                      {{ucwords($mvalue->menu_title)}}
+                                     </div>
+                                    <hr/>
+                                    <div class="ms-card-heading-title">
+                                      <div class="row">
+                                       
+                                    <div class="col-xs-4">
+                                      <span class="protein-title">Protein</span>
+                                      <!-- <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20">  -->
+                                     <div class="proccessing-div"> {{ $mvalue->proteins }}  </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                      <span class="protein-title">Carbs</span>
+                                        <!-- <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20">  -->
+                                       <div class="proccessing-div" style="border: 2px solid #8ec743;"> {{ $mvalue->carbohydrates }} </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                     <span class="protein-title">Fat</span>
+                                      <!-- <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> -->
+                                      <div class="proccessing-div" style="border: 2px solid #e18d24;"> {{ $mvalue->fats }} </div>
+                                    </div>
                                       </div>
-                                      <p></p>
-                                     
                                     </div>
                                   </div>
                                 </div>
@@ -115,133 +141,169 @@
                             @endif
                            
                           @if($mvalue->meal_type_id == 2)  
-                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 >">
-                            <div class="ms-card" style="background-color: #bcf4b1;"> 
+                          <div class="col-lg-6 col-md-6 col-sm-6 pl-md-1">
+                            <div class="ms-card"> 
                                   <div class="ms-card-img">
-                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> <p class="text-center text-success"><strong>{{$mvalue->meal_type_name}}</strong></p>
-                                  </div>
-                                  <div class="ms-card-body">
-                                    <div class="ms-card-heading-title text-center" style="justify-content: center;">
-                                      <h5 class="text-center font-weight-bold">{{ucwords($mvalue->menu_title)}}</h5>
-                                     </div>
-                                    <hr/>
-                                    <div class="ms-card-heading-title">
-                                      <div class="row">
-                                        <span class="col-sm-6"><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->calories }}</strong>
+                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid">
+                                    <p class="text-success text-center mb-1 mt-3">
+                                    {{ $mvalue->calories }}
                                           @php 
                                         $calories_array [] = $mvalue->calories;
                                         $proteins_array [] = $mvalue->proteins;
                                         $carbo_array    [] = $mvalue->carbohydrates;
                                         $fats_array     [] = $mvalue->fats;
-                                        @endphp  
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->proteins }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                        <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->carbohydrates }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> <strong>{{ $mvalue->fats }}</strong>
-                                      </span>
-                                      </div>
-                                      <p></p>
-                                     
+                                        @endphp 
+                                        <span>Kcal</span>
+                                    </p>
+                                  </div>
+                                  <div class="ms-card-body">
+                                    <h4 class="text-dark mb-0"><strong>{{$mvalue->meal_type_name}}</strong></h4>
+                                    <div class="ms-card-heading-title">
+                                      {{ucwords($mvalue->menu_title)}}
                                     </div>
+                                    <hr/>
+                                    <div class="ms-card-heading-title">
+                                      <div class="row">
+                                       
+                                    <div class="col-xs-4">
+                                    <span class="protein-title">Protein</span>
+                                      <!-- <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20">  -->
+                                      <div class="proccessing-div">
+                                       {{ $mvalue->proteins }}
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <!-- <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> -->
+                                        <span class="protein-title">Carbs</span>
+                                        <div class="proccessing-div" style="border: 2px solid #8ec743;">
+                                           {{ $mvalue->carbohydrates }}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                      <!-- <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20">  -->
+                                      <span class="protein-title">Fat</span>
+                                        <div class="proccessing-div" style="border: 2px solid #e18d24;">
+                                        {{ $mvalue->fats }}
+                                        </div>
+                                    </div>
+                                      </div>
+                                   </div>
                                   </div>
                                 </div>
                           </div>
                           @endif
 
                           @if($mvalue->meal_type_id == 3)  
-                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6>">
+                          <div class="col-lg-6 col-md-6 col-sm-6 pl-md-1">
                             <div class="ms-card">
                                   <div class="ms-card-img">
-                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> <p class="text-center text-success"><strong>{{$mvalue->meal_type_name}}</strong></p>
+                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> 
+                                    <p class="text-success text-center mb-1 mt-3">
+                                    {{ $mvalue->calories }}
+                                        @php 
+                                            $calories_array [] = $mvalue->calories;
+                                            $proteins_array [] = $mvalue->proteins;
+                                            $carbo_array    [] = $mvalue->carbohydrates;
+                                            $fats_array     [] = $mvalue->fats;
+                                        @endphp  
+                                        <span>Kcal</span>
+                                    </p>
                                   </div>
                                   <div class="ms-card-body">
-                                    <div class="ms-card-heading-title text-center" style="justify-content: center;">
-                                      <h5 class="text-center font-weight-bold">{{ucwords($mvalue->menu_title)}}</h5>
+                                     <h4 class="text-dark mb-0"> 
+                                       <strong>{{$mvalue->meal_type_name}}</strong> 
+                                      </h4>
+                                      <div class="ms-card-heading-title">
+                                         {{ucwords($mvalue->menu_title)}} 
                                      </div>
                                     <hr/>
                                     <div class="ms-card-heading-title">
                                       <div class="row">
-                                        <span class="col-sm-6"><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->calories }}</strong>
-                                          @php 
-                                        $calories_array [] = $mvalue->calories;
-                                        $proteins_array [] = $mvalue->proteins;
-                                        $carbo_array    [] = $mvalue->carbohydrates;
-                                        $fats_array     [] = $mvalue->fats;
-                                        @endphp  
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->proteins }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                        <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->carbohydrates }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> <strong>{{ $mvalue->fats }}</strong>
-                                      </span>
+                                        <div class="col-xs-4">
+                                          <!-- <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20">  -->
+                                          <span class="protein-title">Protein</span>
+                                          <div class="proccessing-div"> {{ $mvalue->proteins }} </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <!-- <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20">  -->
+                                            <span class="protein-title">Carbs</span>
+                                            <div class="proccessing-div" style="border: 2px solid #8ec743;"> {{ $mvalue->carbohydrates }} </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                          <!-- <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20">  -->
+                                          <span class="protein-title">Fat</span>
+                                          <div class="proccessing-div" style="border: 2px solid #e18d24;"> {{ $mvalue->fats }} </div>
+                                         
+                                        </div>
                                       </div>
-                                      <p></p>
-                                     
-                                    </div>
+                                     </div>
                                   </div>
                                 </div>
                           </div>
                           @endif
                           
                           @if($mvalue->meal_type_id == 4)  
-                          <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6>">
-                            <div class="ms-card" style="background-color: #bcf4b1;">
-                               
-                                  <div class="ms-card-img">
-                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> <p class="text-center text-success"><strong>{{$mvalue->meal_type_name}}</strong></p>
-                                  </div>
-                                  <div class="ms-card-body">
-                                    <div class="ms-card-heading-title text-center" style="justify-content: center;">
-                                      <h5 class="text-center font-weight-bold">{{ucwords($mvalue->menu_title)}}</h5>
-                                     </div>
-                                    <hr/>
-                                    <div class="ms-card-heading-title">
-                                      <div class="row">
-                                        <span class="col-sm-6"><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->calories }}</strong>
-                                          @php 
+                          <div class="col-lg-6 col-md-6 col-sm-6 pl-md-1">
+                            <div class="ms-card">
+                               <div class="ms-card-img">
+                                    <img src="{{ url('/')}}/uploads/menu/{{$mvalue->image}}" class="img-fluid"> 
+                                    <p class="text-success text-center mb-1 mt-3">
+                                      {{ $mvalue->calories }}
+                                        @php 
                                         $calories_array [] = $mvalue->calories;
                                         $proteins_array [] = $mvalue->proteins;
                                         $carbo_array    [] = $mvalue->carbohydrates;
                                         $fats_array     [] = $mvalue->fats;
-                                        @endphp  
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->proteins }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                        <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> <strong>{{ $mvalue->carbohydrates }}</strong>
-                                    </span>
-                                    <span class="col-sm-6">
-                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20"> <strong>{{ $mvalue->fats }}</strong>
-                                      </span>
+                                        @endphp 
+                                        <span>Kcal</span>
+                                    </p>
+                                    
+                                  </p>
+                                  </div>
+                                  <div class="ms-card-body">
+                                  <h4 class="text-dark mb-0"><strong>{{$mvalue->meal_type_name}}</strong></h4>
+                                    <div class="ms-card-heading-title">
+                                      {{ucwords($mvalue->menu_title)}}
+                                     </div>
+                                    <hr/>
+                                    <div class="ms-card-heading-title">
+                                      <div class="row">
+                                        <div class="col-xs-4">
+                                          <!-- <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="20" height="20"> -->
+                                          <span class="protein-title">Protein</span>
+                                          <div class="proccessing-div">
+                                            {{ $mvalue->proteins }}
+                                          </div> 
+                                          
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <!-- <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="20" height="20"> -->
+                                            <span class="protein-title">Carbs</span>
+                                            <div class="proccessing-div" style="border: 2px solid #8ec743;">
+                                              {{ $mvalue->carbohydrates }}
+                                            </div>  
+                                        </div>
+                                        <div class="col-xs-4">
+                                          <!-- <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="20" height="20">  -->
+                                          <span class="protein-title">Fat</span>
+                                            <div class="proccessing-div" style="border: 2px solid #8ec743;">
+                                            {{ $mvalue->fats }}
+                                            </div>
+                                        </div>
                                       </div>
-                                      <p></p>
-                                     
                                     </div>
                                   </div>
                                 </div>
                           </div>
                           @endif
-
-
-
                           @endforeach
                        </div> 
                      </div>
+                    
 
 
 
-                      <div class="col-md-6">
-                        <h4 class="my-3"><strong>Todays</strong> Calories </h4>
+                      <div class="col-md-6 mt-3">
                         <!--begin::Engage Widget 8-->
                        <!--  <div class="card">
                             <img src="{{url('')}}/public/front/img/Screenshot_2.png" class="img-fluid"/>
@@ -253,34 +315,46 @@
                            $carbo_array_final    [] = $carbo_array;
                            $fats_array_final     [] = $fats_array;
                           @endphp  
-                         <div class="card border-0" style="border-radius: 15px;">
-                            <div class="card-body">
-                                <h3 style="font-weight: 600;">
-                                    You have Taken  <strong class="text-success">  {{array_sum($calories_array)}} </strong>K calories of your today food.
-                                </h3>
+
+                        
+                          
+                          <div class="card">
+                            <div class="card-header"  style="background-color: #f4ffe5;">
+                              <h4 class="my-3"><strong>Todays</strong> Calories </h4>
                             </div>
-                        </div>               
-                        <div class="card">
-                           <div id="piechart_3d" style="width:400px; height:250px;"></div>
+                        <div class="card-body">
+                           <div id="piechart_3d"></div>
+                           <h3 class="text-center" style="max-width: 360px;margin: 0 auto 15px;">
+                              You have Taken  <strong class="text-success">  {{array_sum($calories_array)}} </strong>
+                              K calories of your today food.
+                          </h3>
                         </div>
-                    </div> 
+                  </div>
+                </div> 
                   
-                    <div class="col-md-6">
-                        <h4 class="my-3"><strong>Meal </strong> Consumtion </h4>
-                        <div class="card border-0" style="border-radius: 15px;">
+                <div class="col-md-6 mt-3">
+                    
+                       
+                        <div class="card">
+                          <div class="card-header" style="background-color: #f4ffe5;">
+                            <h4 class="my-3"><strong>Meal </strong> Consumtion </h4>
+                          </div>
                           <div class="card-body">
-                                <h3 style="font-weight: 600;">
+                            <div id="donut_single" style="min-height:210px"></div>
+                                <h3 class="text-center">
                                     You have Taken Food <strong class="text-success"> {{ $total_percent }}% </strong> of your Goal</h3>
                                 </div>
                              <!--     &nbsp;<span> <small><strong>&nbsp;Consume Meal : {{$consume_cnt}}</strong>&nbsp;|&nbsp;<strong> Total Meal:{{$total_no_of_meal}} </strong></small></span> -->
                            
                         </div>
-                          <div class="card">
-                             <div id="donut_single" style="width: 400px; height: 250px;"></div>
-                          </div>
-                        </div> 
+                       </div> 
                     </div>
                  
+
+
+
+
+
                 </div>
             </div>
              </div> 
@@ -385,19 +459,8 @@
 <script src="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/js/select2.full.min.js"></script>
 <link rel="stylesheet" href="{{ url('/admin_css_js')}}/css_and_js/admin/select2/dist/css/select2.min.css">
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-<<style type="text/css">
-@keyframes glowing{0%{background-color:#d43f3a;box-shadow:0 0 5px #d43f3a;font-size:15px}50%{background-color:#d43f3a;box-shadow:0 0 20px #d43f3a;font-size:15px}100%{background-color:#d43f3a;box-shadow:0 0 5px #d43f3a;font-size:15px}}@keyframes glowing_lbl{0%{font-size:15px}}
-.buttonanm1{animation:glowing 1.5s infinite}
-#blink{animation:glowing_lbl 1.5s infinite}.box-body{border-top-left-radius:0;border-top-right-radius:0;border-bottom-right-radius:3px;border-bottom-left-radius:3px;padding:10px;background-color:#fff!important}.card{font-size:1em;overflow:hidden;padding:0;border:none;border-radius:.28571429rem;box-shadow:0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5}.card-block{font-size:1em;position:relative;margin:0;padding:1em;border:none;border-top:1px solid rgba(34,36,38,.1);box-shadow:none}.card-img-top{display:block;width:100%;height:auto}.card-title{font-size:1.28571429em;font-weight:700;line-height:1.2857em}.card-text{clear:both;margin-top:.5em;color:rgba(0,0,0,.68)}.card-footer{font-size:1em;position:static;top:0;left:0;max-width:100%;padding:.75em 1em;color:rgba(0,0,0,.4);border-top:1px solid rgba(0,0,0,.05)!important;background:#fff}.card-inverse .btn{border:1px solid rgba(0,0,0,.05)}
+<style type="text/css">
 
-  body{background-color:#ecf0f5}.card{margin-bottom:24px;box-shadow:0 .75rem 1.5rem rgba(18,38,63,.03);border-radius:.45rem}.meal_plan_img{border-radius:50%;height:100px;width:100px;object-fit:cover;float:right;border:3px solid #fff}.ms-card{background-color:#fff;-webkit-box-shadow:0 1px 6px 1px rgba(69,65,78,.1);-moz-box-shadow:0 1px 6px 1px rgba(69,65,78,.1);box-shadow:0 1px 6px 1px rgba(69,65,78,.1);margin-bottom:2rem;border-radius:15px}.ms-card-body p{margin-bottom:8px;line-height:1;font-size:12px;color:#119f05}.ms-card-heading-title h6{margin-bottom:5px}.ms-card-body,.ms-card-footer{position:relative;padding:0 .7rem 8px;font-size:14px}.ms-card-heading-title{display:flex;justify-content:space-between;align-items:end}.green-text{color:green}.bg-light-warning{background-color:#fff4de!important;border-radius:.45rem}.max-h-xl-275px{max-height:255px!important}.mb-n20,.my-n20{margin-bottom:-2rem!important}.bottom-0{bottom:0!important}.right-0{right:0!important}.overflow-hidden{overflow:hidden!important}.ms-card-img .img-fluid{width:100%;height:100%;border-radius:50%;object-fit:cover}.ms-card-img{width:100px;height:100px;transform:translateY(-30px);margin:0 auto}.days-7-plan{border:0;min-height:200px;border-radius:25px}.ms-card-heading-title h6{margin-bottom:5px;height:40px;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical
-  }
-  hr {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    border: 0 !important;
-    border-top: 1px solid #eee !important;
- }
 </style>
 <script >
 $('#dtable').DataTable();  

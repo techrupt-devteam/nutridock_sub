@@ -2,12 +2,23 @@
 @section('content')
 <style>
     .user-panel {
-        margin-top: 5rem;
+        margin-top: 1rem;
     }
 </style>
 <main>
+<section class="breadcum" >
+    <div class="container-fluid">
+      <div class="col-sm-6">
+        <!-- <h4 class="mb-0">Subscription</h4> -->
+        <ol class="breadcrumb product_des-breadcrumb bg-white mb-0 pl-0">
+        <li><a href="http://localhost/nutridock_sub">Dashboard &nbsp;</a></li>
+          <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span> Chat with Nutrionist</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
    <section class="user-panel">
-      <div class="container mt-3">
+      <div class="container-fluid mt-3">
           @php $title ="Chat with nutritionist"; @endphp 
           <!-- @include('layouts.bread_crum') -->
            <div class="row">
@@ -41,7 +52,8 @@
                                     <td>{{ date('d-M-Y', strtotime($value->expiry_date)) }}</td>                   
                                     <td>
                                   
-                                    <a href="goforchat/{{ $value->id }}" target="_blank"  class='btn btn-warning btn-sm' title='Chat with Nutrionist' style="font-size: 20px; color: #000"><i class="fa fa-weixin" aria-hidden="true" ></i>
+                                    <a href="goforchat/{{ $value->id }}" target="_blank"  class='btn btn-primary btn-sm' title='Chat with Nutrionist'>
+                                        <i class="fa fa-weixin" aria-hidden="true" ></i>
                                     </a>
                                     </td>
                                     </tr>

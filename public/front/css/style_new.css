@@ -15,8 +15,11 @@ a:hover {
 	text-decoration:none
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family:"Prata", Arial, Helvetica, sans-serif;
+	/* font-family:"Prata", Arial, Helvetica, sans-serif; */
 	letter-spacing:.02rem
+}
+.btn-dark:hover{
+	color: #fff !important;
 }
 #preloader {
 	position:fixed;
@@ -4413,12 +4416,16 @@ font-size:.9375rem;
 }
 
 .user-panel {
-    margin-top: 7rem;
+    margin-top: 2rem;
 	background-color: #ecf0f5;
 	padding-bottom: 70px;
 	min-height: 90vh;
 }
-
+section.breadcum {
+    margin-top: 80px;
+    padding: 15px 5px 0px;
+    background-color: #fff;
+}
 .user-left-nav .user-nav-list {
     background-color: #fff;
     border-radius: 2px;
@@ -5226,7 +5233,7 @@ input[type=number] {
 }
 .account-Modal__inner.show {
     max-width: 250px;
-    margin-top: 15px;
+    margin-top: 25px;
 }
 .account-Modal__inner .navbar-content {
     width: 100%;
@@ -5246,8 +5253,8 @@ input[type=number] {
 }
 .btn-danger:not(:disabled):not(.disabled).active, .btn-danger:not(:disabled):not(.disabled):active, .show > .btn-danger.dropdown-toggle {
     color: #fff;
-    background-color: #dd3445;
-    border-color: #dd3445;
+    background-color: #fd1f1f;
+    border-color: #fd1f1f;
 }
 .notif-count.circle_notification {
     float: right;
