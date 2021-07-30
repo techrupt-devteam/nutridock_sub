@@ -6,10 +6,6 @@
     <div class="container-fluid">
       <div class="col-sm-6">
         <h4>Welcome To NutridockFit</h4>
-        <!-- <ol class="breadcrumb product_des-breadcrumb">
-          <li><a href="http://localhost/nutridock_sub">Home &nbsp;</a></li>
-          <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span>Profile</span></li>
-        </ol> -->
       </div>
     </div>
   </section>
