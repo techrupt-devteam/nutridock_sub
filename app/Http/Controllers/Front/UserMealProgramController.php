@@ -31,8 +31,8 @@ use Config;
 use Image;
 use Session;
 use Sentinel;
-use Validator;
 use Carbon\Carbon;
+use Validator;
 use DB;
 
 class UserMealProgramController extends Controller
@@ -197,7 +197,7 @@ class UserMealProgramController extends Controller
                             ->join('nutri_mst_subscription_plan','nutri_mst_subscription_plan.sub_plan_id', '=', 'nutri_dtl_subscriber.sub_plan_id')
                             ->where('nutri_subscriber_meal_program.subcriber_id','=',$request->id)
                             ->orderby('nutri_subscriber_meal_program.program_id', 'ASC')
-                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date','a.menu_title as additional_menu_title')->get();
+                            ->select('nutri_subscriber_meal_program.*','nutri_mst_menu.menu_title','nutri_mst_menu.calories','nutri_mst_menu.proteins','nutri_mst_menu.carbohydrates','nutri_mst_menu.fats','meal_type.meal_type_name','meal_type.meal_type_id','nutri_dtl_subscriber.start_date','nutri_dtl_subscriber.id','nutri_dtl_subscriber.subscriber_name','nutri_dtl_subscriber.sub_email','nutri_mst_subscription_plan.sub_name','nutri_dtl_subscriber.expiry_date','a.menu_title as additional_menu_title','a.calories as acalories','a.proteins as aproteins','a.carbohydrates as acarbohydrates','a.fats as afats')->get();
       //dd($get_default_menu);
      /*$get_compenset_menu   =  \DB::table('nutri_subscriber_compenset_meal_program')
                               ->join('meal_type','nutri_subscriber_compenset_meal_program.mealtype','=','meal_type.meal_type_id')
@@ -627,6 +627,32 @@ class UserMealProgramController extends Controller
     }
 
 
+    public function edit_additional_meal(Request $request)
+    {
+    
+      $aditional_menu           = $this->base_menu->where('menu_category_id','=',8)
+                                  ->where('is_active','=',1)
+                                  ->get(); 
 
+
+      $data                          =[];
+      $data['aditional_menu']        = $aditional_menu;
+      $data['program_id']            = $request->program_id;
+      return view('edit-additional-menu-ajax',$data);                           
+
+    }
+
+    public function update_additional_menu(Request $request)
+    {
+
+          $arr_data['addition_menu_id'] = $request->input('menu_id');
+          $menu_update                  = \DB::table('nutri_subscriber_meal_program')
+                                          ->where(['program_id'=>$request->input('program_id')])
+                                          ->update($arr_data);
+          return "success"; 
+
+    }
+
+ 
 }
 ?>

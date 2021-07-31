@@ -60,11 +60,11 @@
                                     <tr class="text-center">
                                         <th style="background:#e5e5e5; color:#000" width="25%">Date</th>
                                         <th style="border-left: dashed 1px #588937;border-right: dashed 1px #588937">Meal Type</th>
-                                        <th >Meal</th>
+                                        <th>Meal</th>
                                         <th>Calories</th>
-                                       <!--  <th>Proteins</th>
+                                        <th>Proteins</th>
                                         <th>Carbs</th>
-                                        <th>fats</th> -->
+                                        <th>fats</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -118,38 +118,18 @@
                                     </td>
                                     <td style="border-left: dashed 1px #588937;border-right: dashed 1px #588937; background:{{ $bgcolor }}" class="pl-3">{{ $value->meal_type_name }}</td>                     
                                     <td>
-                                      {{ $value->menu_title }}<br/>
-                                      <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="15" height="15"> {{ $value->proteins }}
-                                       <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15"> {{ $value->carbohydrates }}
-                                       <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->fats }}
+                                      {{ $value->menu_title }}
                                       @if(!empty($value->additional_menu_title))
-                                      <hr/>
-                                      <span class="text-danger">
-                                       <strong> + {{$value->additional_menu_title}}</strong>
-                                       <a href="javascript:void(0)" data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal(<?php echo $value->program_id;?>);'><i class="icon fa fa-pencil"></i></a>
-                                       <a href="{{url('/')}}/cancel_additional_menu/{{$value->program_id}}/{{$value->subcriber_id}}" onclick="confirm('Are you sure to cancel additonal meal');" tooltip="cancel additional menu"><i class="fa fa-times-circle"></i> </a></span><br/>
-                                       <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="15" height="15"> {{ $value->aproteins }}
-                                       <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15"> {{ $value->acarbohydrates }}
-                                       <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->afats }}
-                                      
+                                      <span class="text-danger"><strong> + {{$value->additional_menu_title}}</strong><br/><a href="{{url('/')}}/cancel_additional_menu/{{$value->program_id}}/{{$value->subcriber_id}}" onclick="confirm('Are you sure to cancel additonal meal');" tooltip="cancel additional menu"><i class="fa fa-times-circle"></i> cancel meal</a></span>
                                       @endif
                                     </td>
+                                    <td><img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="15" height="15"> {{ $value->calories }}</td>
                                     <td>
-                                      <img src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="15" height="15"> {{ $value->calories }}
-                                       @if(!empty($value->additional_menu_title))<br/>
-                                      <br>
-                                      <hr/>
-                                      <img  src="{{ URL('') }}/uploads/images/calories.svg" alt="your image" width="15" height="15"> {{ $value->acalories }}
-                                      @endif
-
-
-                                    </td>
-                                   <!--  <td>
                                       <img src="{{ URL('') }}/uploads/images/protein.svg" alt="your image" width="15" height="15"> {{ $value->proteins }}</td>
                                     <td>
                                         <img src="{{ URL('') }}/uploads/images/carbohydrates.svg" alt="your image" width="15" height="15"> {{ $value->carbohydrates }}</td>
                                     <td>
-                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->fats }}</td> -->                   
+                                      <img src="{{ URL('') }}/uploads/images/fat.png" alt="your image" width="15" height="15"> {{ $value->fats }}</td>                   
                                     <td>  
                                      
                                       @if(strtotime($value->meal_on_date." 20:00:00") >= strtotime($currentdate)) 
@@ -194,14 +174,6 @@
       </div>
     </div>
   </div>
-    <div class="modal fade" id="modal-additional-meal" role="dialog" >
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div id="meal-content"  style="background-color: #cff9c41f">          
-        </div>
-      </div>
-    </div>
-  </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -209,7 +181,7 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.18.10/slimselect.min.css" rel="stylesheet"> -->
 <script>
-  //$('#dtable').DataTable();  
+	//$('#dtable').DataTable();  
 // $(document).ready(function() {
 //   var x = new SlimSelect({
 //     select: '#menu_specifiation'
@@ -244,24 +216,5 @@ function skip_meal(id){
         }
     });
 } 
-
-
-
-function additional_meal(id) { 
-   
-    $.ajax({
-        url: "{{url('/')}}/edit_additional_meal",
-     
-        type: 'get',
-        data: {
-          program_id : id
-        },
-        success: function (data) {
-
-            $("#meal-content").html(data);
-            
-        }
-    });
-}
 </script>
 @endsection

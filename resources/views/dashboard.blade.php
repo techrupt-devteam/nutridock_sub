@@ -12,6 +12,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!--begin::Engage Widget 8-->
+
+                      
                         <div class="card days-7-plan">
                             <div class="card-body p-0 d-flex ">
                                 <div class="d-flex align-items-start w-100 justify-content-start bg-light-warning p-8 card-rounded position-relative" style="border-radius: 25px;">
@@ -41,9 +43,6 @@
                                   
                                     <button type='button' class='buttonanm btn btn-danger btn-sm' data-toggle='modal' data-target='#modal-additional-meal' onclick='additional_meal();' title='Subscriber additional meal'> <i class="glyphicon glyphicon-hand-right"></i> You have {{ $no_of_addition_meal }} Additional Meal</button>
                                     @endif
-
-
-
                                     </h4><hr/>
                                     <input type="hidden" id="start_date" value="{{$getadditionalData->start_date}}">
                                     <input type="hidden" id="expiry_date" value="{{$getadditionalData->expiry_date}}">
@@ -59,20 +58,22 @@
                                 </div>
                             </div>
                         </div>
-
+                     
                         <!--end::Engage Widget 8-->
                        </div>
-                    <div class="col-md-12">
-                       <div class="row">
-                           <div class="col-md-12 mb-5 mt-3">
-                               <h4><strong>Today</strong> Meal </h4>
-                           </div>
-                           <?php  
+                         <?php  
                                   $calories_array = [];
                                   $proteins_array = [];
                                   $carbo_array = [];
                                   $fats_array = [];
                             ?>
+                      
+                    <div class="col-md-12">
+                       <div class="row">
+                           <div class="col-md-12 mb-5 mt-3">
+                               <h4><strong>Today</strong> Meal </h4>
+                           </div>
+                         
                           @foreach($todays_menu as $mvalue) 
                             @if($mvalue->meal_type_id == 1)
                                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 ">                           
@@ -237,11 +238,11 @@
                           @endforeach
                        </div> 
                      </div>
+                    
 
 
 
                       <div class="col-md-6">
-                        <h4 class="my-3"><strong>Todays</strong> Calories </h4>
                         <!--begin::Engage Widget 8-->
                        <!--  <div class="card">
                             <img src="{{url('')}}/public/front/img/Screenshot_2.png" class="img-fluid"/>
@@ -253,6 +254,10 @@
                            $carbo_array_final    [] = $carbo_array;
                            $fats_array_final     [] = $fats_array;
                           @endphp  
+
+                        
+                          <h4 class="my-3"><strong>Todays</strong> Calories </h4>
+                     
                          <div class="card border-0" style="border-radius: 15px;">
                             <div class="card-body">
                                 <h3 style="font-weight: 600;">
@@ -263,9 +268,11 @@
                         <div class="card">
                            <div id="piechart_3d" style="width:400px; height:250px;"></div>
                         </div>
+                     
                     </div> 
                   
                     <div class="col-md-6">
+                    
                         <h4 class="my-3"><strong>Meal </strong> Consumtion </h4>
                         <div class="card border-0" style="border-radius: 15px;">
                           <div class="card-body">
@@ -278,9 +285,15 @@
                           <div class="card">
                              <div id="donut_single" style="width: 400px; height: 250px;"></div>
                           </div>
+                        
                         </div> 
                     </div>
                  
+
+
+
+
+
                 </div>
             </div>
              </div> 

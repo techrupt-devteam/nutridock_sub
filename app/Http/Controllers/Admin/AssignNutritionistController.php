@@ -36,18 +36,18 @@ class AssignNutritionistController extends Controller
         $this->url_slug             = "assign_nutritionist";
         $this->folder_path          = "admin/assign_nutritionist/";
         //Push Notification 
-        $this->options = array(
+     /*   $this->options = array(
         'cluster' => env('PUSHER_APP_CLUSTER'),
         'encrypted' => true
-        );
+        );*/
 
         //Default set pusher api code 
-        $this->pusher = new Pusher(
+      /*  $this->pusher = new Pusher(
         env('PUSHER_APP_KEY'),
         env('PUSHER_APP_SECRET'),
         env('PUSHER_APP_ID'), 
         $this->options
-        );
+        );*/
         //Message
         $this->Insert        = Config::get('constants.messages.Insert');
         $this->Update        = Config::get('constants.messages.Update');

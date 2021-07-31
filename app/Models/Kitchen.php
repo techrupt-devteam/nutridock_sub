@@ -24,6 +24,7 @@ class Kitchen extends Model
 		"customer_key",
 		"is_deleted",
 		"lat",
-		"lang"
+		"lang",
+		""
     ];
 }

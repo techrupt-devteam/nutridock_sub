@@ -13,8 +13,6 @@ use Illuminate\Support\Arr;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-
 use Config;
 use Mail;
 use Session;
@@ -55,6 +53,8 @@ class LoginController extends Controller
     public function checkLogin()
     {
      
+    
+
       $input = Input::all(); 
       
       $mobile_no = $input['mobile'];
@@ -80,26 +80,42 @@ class LoginController extends Controller
      
       Session::put('subscriber_email', $checkExist->email);
 
-      $msg='You system generated One time password is '.$randstring.'. ';   
+      $msg=$randstring;   
       Arr::set($data, 'mobile', $input['mobile']);
       Arr::set($data, 'msg', $msg);            
       /* @Start: code to send email through smtp */
                           
       $to = $checkExist->email;
-      $cc = 'developer@techrupt.in';
+      //$cc = 'developer@techrupt.in';
       //$bcc = array('it@sevagroup.co.in', 'marketing@nutridock.com', 'eatoasb@gmail.com', 'sales@nutridock.com');
-       $subject = 'Nutridock Fit - Otp verification';
-       $customer_mail = Mail::send('loginmail', $data, function($message) use($to, $subject) {
-            $message->to($to);
-            //$message->cc($cc);
+      $subject = 'Nutridock Fit - Otp verification';
+      $customer_mail = Mail::send('loginmail', $data, function($message) use($to, $subject) {
+           $message->to($to);
+           //$message->cc($cc);
             //$message->bcc($bcc);
             $message->subject($subject);
             $message->from('admin@nutridock.com','Nutridock Fit');
-              /* $message->getHeaders()->addTextHeader(
-            'Custom-Header', 'Content-Type: image/jpeg');*/
-        });   
+            $message->getHeaders()->addTextHeader(
+            'Custom-Header', 'Content-Type: image/jpeg');
+       });   
 
-        return "success";
+        /* @End: code to send email through smtp */   
+
+
+        // if(strlen($input['mobile'])>10)
+        // {
+        //     $keycount=strlen($mobile_no)-10;
+        //     $mobile_no = substr($mobile_no,$keycount);
+        // }
+        // $url='http://fastsms.way2mint.com/SendSMS/sendmsg.php?uname=hoh12&pass=admin@12&send=CHKTLK&dest=91'.$mobile_no.'&msg='.urlencode($msg).'&prty=1&vp=30';
+        // $ch = curl_init();
+        // curl_setopt( $ch,CURLOPT_URL, $url);
+        // curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+        // curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+        // curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        // $result = curl_exec($ch );
+        // curl_close( $ch );
+        return 'success';
         }
       }   
       else {

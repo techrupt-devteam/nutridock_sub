@@ -543,26 +543,32 @@ class KitchenController extends Controller
         $lattitude = $result3[0]['lat'];
         $longitude = $result3[0]['lng'];
 
-        $data1 = DB::select("SELECT kitchen_name,lat,lang,SQRT(
+        /*$data1 = DB::select("SELECT kitchen_name,lat,lang,SQRT(
         POW(69.1 * (lat - ".$lattitude."), 2) +
         POW(69.1 * (".$longitude." - lang) * COS(lat/ 57.3), 2)) AS distance
-        FROM nutri_mst_kitchen HAVING distance < 25 ORDER BY distance");
+        FROM nutri_mst_kitchen HAVING distance < 25 ORDER BY distance");*/
 
-       // dd($data);
-          $data   = \DB::table('nutri_mst_kitchen')->get();
+         $query = "SELECT *, (((acos(sin((".$lattitude."*pi()/180)) * sin((`lat`*pi()/180)) + cos((".$lattitude."*pi()/180)) * cos((`lat`*pi()/180)) * cos(((".$longitude."- `lang`) * pi()/180)))) * 180/pi()) * 60 * 1.1515 * 1.609344) as distance FROM `nutri_mst_kitchen` HAVING distance <= 100";
+          $data = DB::select($query);
+        //dd($data);
+          //$data   = \DB::table('nutri_mst_kitchen')->get();
           foreach($data as $kvalue){  
 
           echo "<br/><b>Search Pincode City: </b>".$result1[0]['address_components'][1]['long_name'];  
-          echo "<br/><b>Kitchen Name:   </b>".$kvalue->kitchen_name;  
-/*          echo "<br/><b>Kitchen distance:   </b>".$this->getDistance($result3[0]['lat'], $result3[0]['lng'], $kvalue->lat, $kvalue->lang, $earthRadius = 6371000);
-          echo "<br/><b>Origin: </b>".$origin      = $kvalue->lat.','.$kvalue->lang;  
-          echo "<br/><b>Destination:    </b>".$destination = $result3[0]['lat'].','.$result3[0]['lng']."<br/><hr/>";*/
+          echo "<br/><b>Kitchen Name: </b>".$kvalue->kitchen_name;  
+          /*echo "<br/><b>Kitchen distance:   </b>".$this->getDistance($result3[0]['lat'], $result3[0]['lng'], $kvalue->lat, $kvalue->lang, $earthRadius = 6371000); */
+          echo "<br/><b>Kitchen distance by function: </b>".$this->getDistanceFromLatLonInKm($result3[0]['lat'], $result3[0]['lng'], $kvalue->lat, $kvalue->lang);
+          $distance =round($kvalue->distance);
+          echo "<br/><b>Kitchen distance by query: </b>".$distance;
+          echo "<br/><b>Origin: </b>".$origin = $kvalue->lat.','.$kvalue->lang;  
+          echo "<br/><b>Destination: </b>".$destination = $result3[0]['lat'].','.$result3[0]['lng']."<br/><hr/>";
 
-        $origin      = $kvalue->lat.','.$kvalue->lang; 
-        $destination = $result3[0]['lat'].','.$result3[0]['lng'];
-       $api = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=km&origins=".$origin."&destinations=".$destination."&key=AIzaSyC-Nh0CBhe1CnvAmULB8HCqJRSzGi5NiHc");
-          $data = json_decode($api);
-            dd($data);
+            ///$origin      = $kvalue->lat.','.$kvalue->lang; 
+            //$destination = $result3[0]['lat'].','.$result3[0]['lng'];
+          echo "https://maps.googleapis.com/maps/api/distancematrix/json?units=km&origins=".$origin."&destinations=".$destination."&key=AIzaSyBrp4M6XSgtQyj4o0WZd5v2VStG8LR3dN8";
+            $api = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=km&origins=".$origin."&destinations=".$destination."&key=AIzaSyBrp4M6XSgtQyj4o0WZd5v2VStG8LR3dN8");
+            $data22 = json_decode($api);
+            dd($data22);
 
           }
 
@@ -595,6 +601,62 @@ class KitchenController extends Controller
 
     }
 
+ /*   public function  getDistanceFromLatLonInKm($lat1,$lon1,$lat2,$lon2)
+    {
+           $long1 = deg2rad($lon1);
+           $long2 = deg2rad($lon2);
+           $lat1 = deg2rad($lat1);
+           $lat2 = deg2rad($lat2);
+             
+           //Haversine Formula
+           $dlong = $long2 - $long1;
+           $dlati = $lat2 - $lat1;
+             
+           $val = pow(sin($dlati/2),2)+cos($lat1)*cos($lat2)*pow(sin($dlong/2),2);
+             
+           $res = 2 * asin(sqrt($val));
+             
+           $radius = 3958.756;
+             
+           return ($res*$radius);
+
+    }*/
+
+    public function getDistanceFromLatLonInKm($latitude1, $longitude1, $latitude2, $longitude2, $unit = 'kilometers')
+    {
+              $theta = $longitude1 - $longitude2; 
+              $distance = (sin(deg2rad($latitude1)) * sin(deg2rad($latitude2))) + (cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * cos(deg2rad($theta))); 
+              $distance = acos($distance); 
+              $distance = rad2deg($distance); 
+              $distance = $distance * 60 * 1.1515; 
+              switch($unit) { 
+                case 'miles': 
+                  break; 
+                case 'kilometers' : 
+                  $distance = $distance * 1.609344; 
+              } 
+              return (round($distance,2))." km"; 
+    }
+
+
+  /*  Public function getDistanceFromLatLonInKm($lat1,$lon1,$lat2,$lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        return d;
+        }
+
+    Public function deg2rad($deg) {
+        return deg * (Math.PI/180)
+    }
+*/
 
 
 }

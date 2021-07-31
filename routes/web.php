@@ -166,8 +166,10 @@ Route::group(['middleware' => 'subscriber'], function () {
 	Route::get('/subscriber_calendar', 			'Front\UserMealProgramController@getCalendar');
 	Route::get('/editmealprogram/{id}', 		'Front\UserMealProgramController@editMealProgram');
 	Route::get('/editmeal', 					'Front\UserMealProgramController@menuEdit');
+	Route::get('/edit_additional_meal', 		'Front\UserMealProgramController@edit_additional_meal');
 	Route::get('/skipmeal', 					'Front\UserMealProgramController@skipMeal');
 	Route::post('/store_skip_menu', 		    'Front\UserMealProgramController@store_skip_menu');
+	Route::post('/update_additional_menu', 		'Front\UserMealProgramController@update_additional_menu');
 	Route::post('/get_menu_dropdown',			'Front\UserMealProgramController@get_menu');
     Route::post('/get_menu_macros',				'Front\UserMealProgramController@get_menu_macros');
 	Route::post('/store_change_menu',			'Front\UserMealProgramController@changeMenu');
@@ -180,7 +182,8 @@ Route::group(['middleware' => 'subscriber'], function () {
 	//Delivery Address
     Route::post('/change_address', 				'Front\SubscriptionUserController@subscriber_address_changed');
 	Route::post('/update-address', 	    		'Front\SubscriptionUserController@update_address');
-	Route::post('/chk_pincode', 	    		'Front\SubscriptionUserController@pincode_check');	
+	Route::post('/chk_pincode', 	    		'Front\SubscriptionUserController@pincode_check');
+	//	
 	
 });
 
