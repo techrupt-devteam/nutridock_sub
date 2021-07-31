@@ -1,14 +1,21 @@
 <?php $seo_title = "";?>
 @extends('layouts.subscriber_master')
 @section('content')
-<style>
-   .user-panel {
-       margin-top: 4.5rem;
-   }
-</style>
+
 <main>
-   <section class="user-panel">
-      <div class="container mt-3">
+<section class="breadcum">
+    <div class="container-fluid">
+      <div class="col-sm-6">
+        <!-- <h4 class="mb-0">Notification</h4> -->
+        <ol class="breadcrumb product_des-breadcrumb bg-white mb-0 pl-0">
+          <li><a href="http://localhost/nutridock_sub">Dashboard &nbsp;</a></li>
+          <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span>Notification</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+   <section class="user-panel" style="margin-top: 0.8rem;">
+      <div class="container-fluid mt-3">
             @php $title ="notification"; @endphp 
             <!-- @include('layouts.bread_crum') -->
            <div class="row">

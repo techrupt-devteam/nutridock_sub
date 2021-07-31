@@ -1,8 +1,20 @@
 @extends('layouts.subscriber_master')
 @section('content')
 <main>
+<section class="breadcum">
+    <div class="container-fluid">
+      <div class="col-sm-6">
+        <!-- <h4 class="mb-0">Subscription</h4> -->
+        <ol class="breadcrumb product_des-breadcrumb bg-white mb-0 pl-0">
+          <li><a href="http://localhost/nutridock_sub">Dashboard &nbsp;</a></li>
+          <li class="breadcrumb-item active breadCrumbLevel">  &nbsp; <span>Health History</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
    <section class="user-panel">
-      <div class="container mt-3">
+      <div class="container-fluid mt-3">
          @php $title ="My Health History"; @endphp 
           <!-- @include('layouts.bread_crum') -->
            <div class="row">

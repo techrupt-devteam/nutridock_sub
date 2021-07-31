@@ -1,13 +1,21 @@
 @extends('layouts.subscriber_master')
 @section('content')
-<style>
-  .user-panel{
-    margin-top: 4.3rem;
-  }
-</style>
+
 <main>
-   <section class="user-panel">
-      <div class="container mt-3">
+<section class="breadcum" style="margin-top: 70px;">
+    <div class="container-fluid">
+      <div class="col-sm-6">
+        <!-- <h4 class="mb-0"> Meal Program</h4> -->
+        <ol class="breadcrumb product_des-breadcrumb bg-white mb-0 pl-0">
+          <li><a href="http://localhost/nutridock_sub/mealprogram">Meal Program &nbsp;</a></li>
+          <li class="breadcrumb-item active breadCrumbLevel"> / &nbsp; <span>Edit Meal Program </span>
+        </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+   <section class="user-panel" style="margin-top: 1rem">
+      <div class="container-fluid mt-3">
           @php $title ="Edit Meal Program"; @endphp 
           <!-- @include('layouts.bread_crum') -->
            <div class="row">

@@ -2,12 +2,14 @@
 <?php session_start();?>
 @section('content')
 <section class="breadcrumbs-custom">
-    <div class="parallax-container"data-parallax-img="{{url('')}}/public/front/img/faq-bg.jpg">
+    <div class="parallax-container"data-parallax-img="{{url('')}}/public/front/img/text-slider-2.png">
         <div class="material-parallax parallax">
-            <img alt=""src="{{url('')}}/public/front/img/faq-bg.jpg"style="display:block;transform:translate3d(-50%,149px,0)">
+            <img alt=""src="{{url('')}}/public/front/img/text-slider-2.png" style="display:block;transform:translate3d(-50%,149px,0)">
         </div>
-        <div class="breadcrumbs-custom-body context-dark parallax-content"><div class="container"><h2 class="breadcrumbs-custom-title">Feed Back</h2>
-        </div>
+        <div class="breadcrumbs-custom-body context-dark parallax-content">
+          <div class="container">
+            <h2 class="breadcrumbs-custom-title">Feedback</h2>
+         </div>
     </div>
     </div>
         <div class="breadcrumbs-custom-footer"><div class="container">
@@ -22,7 +24,7 @@
     <section class="mt-4 bg-default section section-xl text-md-left">
         <div class="container">
            <div class="row">
-             <div class="col-md-12">
+             <div class="col-md-12 col-xl-7 mx-auto">
 
                             @if(Session::has('error'))
                               <div class="alert alert-danger alert_msg alert1">
@@ -40,20 +42,20 @@
                     <form action="{{ url('')}}/store_{{$url_slug}}" method="post" role="form" data-parsley-validate="parsley" enctype="multipart/form-data">
                       {!! csrf_field() !!}
                         <div class="row">  
-                          <div class="col-md-4">
+                          <div class="col-md-6 col-xl-12">
                               <div class="form-group">
-                                <label for="name">Name<span style="color:red;" >*</span></label>
+                                <label for="name">Full Name<span style="color:red;" >*</span></label>
                                   <input class="form-control"data-msg="Please enter at least 4 chars"data-rule="minlen:4"id="name"name="name"placeholder="Your Name"required>
                               </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-7">
                             <div class="form-group">
                                 <label for="email">Email<span style="color:red;" >*</span></label>
                                  <input class="form-control"data-msg="Please enter a valid email"data-rule="email"id="email"name="email"placeholder="Your Email"required type="email">
              
                               </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-5">
                               <div class="form-group">
                                 <label for="Phonene">Phone<span style="color:red;" >*</span></label>
                                    <input class="form-control"data-msg="Please enter a valid mobile number" id="mobile_no"name="mobile_no"placeholder="Your Mobile No"required type="number">
@@ -61,7 +63,7 @@
                           </div>
                         </div>
                         <div class="row">  
-                          <div class="col-md-4">
+                          <div class="col-md-6">
                               <div class="form-group">
                                 <label for="city_id">City<span style="color:red;" >*</span></label>
                                  <select class="form-control select2" name="city" id="city" required="true"  data-parsley-errors-container="#city_error" data-parsley-error-message="Please select city." onchange="getArea();">
@@ -73,7 +75,7 @@
                                  <div id="city_error" style="color:red;"></div>
                               </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-6">
                               <div class="form-group">
                                 <label for="nutritionsit_id">Area<span style="color:red;" >*</span></label>
                                  <select class="form-control select2" name="area" id="area" required="true"  data-parsley-errors-container="#area_error" data-parsley-error-message="Please select Area">
@@ -83,20 +85,19 @@
                               </div>
                           </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="">Feed Back<span style="color:red;">*</span></label>
-                                <textarea name="feedback" class="form-control" data-parsley-error-message="Please select feedback." required=""></textarea>    
+                                <label for="">Feed Back <span style="color:red;">*</span></label>
+                                <textarea name="feedback" class="form-control" rows="3" data-parsley-error-message="Please select feedback." placeholder="Please give your feedback." required=""></textarea>    
                             </div>
                         </div>
                          
                         </div> 
 
-                      <div class="box-footer"> <div class="col-md-12">      <br/> 
-                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
-                         <a href="{{url('/admin')}}/manage_{{$url_slug}}"  class="btn btn-default">Back</a>
-
-                      </div>
+                      <div class="col-md-12 col-xl-7 mx-auto"> 
+                        <button type="submit" class="btn btn-dark" style="min-width: 140px;">Submit</button>
+                         <a href="{{url('/admin')}}/manage_{{$url_slug}}" class="btn btn-default">Back</a>
                       </div>
                      
 
